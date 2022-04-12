@@ -1,7 +1,7 @@
 # Survey
 
 ## Functional roles
-||ADMIN|CLIENT|VISITOR|
+||ADMIN|USER|GUEST|
 | :- | :-: | :-: | :-: |
 |Sign in/up|+|+|+|
 |View available surveys|+|+|+|
