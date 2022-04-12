@@ -24,7 +24,7 @@ public class Controller extends HttpServlet {
     private static final String CONTENT_TYPE = "text/html";
 
     public void init() {
-        //ConnectionPool.getInstance();
+        ConnectionPool.getInstance();
         logger.info("---------------> Servlet init");
     }
 
@@ -48,8 +48,7 @@ public class Controller extends HttpServlet {
     }
 
     public void destroy() {
-        //ConnectionPool.getInstance().destroyPool();
-        // + закрытие драйверов
+        ConnectionPool.getInstance().destroyPool();
         logger.info("---------------> Servlet destroy");
     }
 }
