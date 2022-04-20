@@ -11,17 +11,6 @@ public class User extends AbstractEntity {
     private UserRole role;
     private UserStatus status;
 
-    public enum UserRole {
-        ADMIN,
-        USER,
-        GUEST
-    }
-
-    public enum UserStatus {
-        ACTIVE,
-        BANNED
-    }
-
     public User() {
         userId = -1;
     }

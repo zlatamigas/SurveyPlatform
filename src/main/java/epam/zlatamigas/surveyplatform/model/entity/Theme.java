@@ -5,11 +5,6 @@ public class Theme extends AbstractEntity {
     private String themeName;
     private ThemeStatus themeStatus;
 
-    public enum ThemeStatus {
-        WAITING,
-        CONFIRMED
-    }
-
     public Theme() {
         themeId = -1;
         themeStatus = ThemeStatus.WAITING;

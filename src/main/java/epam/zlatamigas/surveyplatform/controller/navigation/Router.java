@@ -1,4 +1,4 @@
-package epam.zlatamigas.surveyplatform.model.navigation;
+package epam.zlatamigas.surveyplatform.controller.navigation;
 
 public class Router {
     private String page = PageNavigation.DEFAULT_PAGE;

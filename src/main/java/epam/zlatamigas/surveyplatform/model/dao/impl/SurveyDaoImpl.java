@@ -15,29 +15,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static epam.zlatamigas.surveyplatform.model.dao.DbTableInfo.*;
+
 public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
     private static final Logger logger = LogManager.getLogger();
-
-    //DB column names
-
-    //Table: surveys
-    private static final String ID_SURVEY_COLUMN = "id_survey";
-    private static final String SURVEY_NAME_COLUMN = "survey_name";
-    private static final String SURVEY_DESCRIPTION_COLUMN = "survey_description";
-    private static final String SURVEY_STATUS_COLUMN = "survey_status";
-    private static final String THEME_ID_COLUMN = "theme_id";
-    private static final String CREATOR_ID_COLUMN = "creator_id";
-    //Table: questions
-    private static final String ID_QUESTION_COLUMN = "id_question";
-    private static final String SELECT_MULTIPLE_COLUMN = "select_multiple";
-    private static final String FORMULATION_COLUMN = "formulation";
-    private static final String SURVEY_ID_COLUMN = "survey_id";
-    //Table: question_answers
-    private static final String ID_QUESTION_ANSWER_COLUMN = "id_question_answer";
-    private static final String ANSWER_COLUMN = "answer";
-    private static final String SELECTED_COUNT_COLUMN = "selected_count";
-
 
     //Insert survey info statements
 
@@ -104,12 +86,8 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     //SurveyDaoImpl instance
 
     private static SurveyDaoImpl instance;
-    private static UserDaoImpl userDao;
-    private static ThemeDaoImpl themeDao;
 
     private SurveyDaoImpl() {
-        userDao = UserDaoImpl.getInstance();
-        themeDao = ThemeDaoImpl.getInstance();
     }
 
     public static SurveyDaoImpl getInstance() {
@@ -121,63 +99,64 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
     @Override
     public boolean insert(Survey survey) throws DaoException {
+
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             connection.setAutoCommit(false);
 
             // Insert new survey data
-
-            PreparedStatement psInsertSurvey =
-                    connection.prepareStatement(INSERT_SURVEY_STATEMENT);
-            psInsertSurvey.setString(1, survey.getName());
-            psInsertSurvey.setString(2, survey.getDescription());
-            psInsertSurvey.setString(3, survey.getStatus().name());
-            psInsertSurvey.setInt(4, survey.getTheme().getThemeId());
-            psInsertSurvey.setInt(5, survey.getCreator().getUserId());
-            psInsertSurvey.executeUpdate();
+            try (PreparedStatement psInsertSurvey = connection.prepareStatement(INSERT_SURVEY_STATEMENT)) {
+                psInsertSurvey.setString(1, survey.getName());
+                psInsertSurvey.setString(2, survey.getDescription());
+                psInsertSurvey.setString(3, survey.getStatus().name());
+                psInsertSurvey.setInt(4, survey.getTheme().getThemeId());
+                psInsertSurvey.setInt(5, survey.getCreator().getUserId());
+                psInsertSurvey.executeUpdate();
+            }
 
             // Get id of inserted survey
-
-            PreparedStatement psFindSurveyAdded =
-                    connection.prepareStatement(FIND_SURVEY_ID_BY_NAME_STATEMENT);
-            psFindSurveyAdded.setString(1, survey.getName());
-            ResultSet rsSurveyAddedId = psFindSurveyAdded.executeQuery();
             int surveyId = -1;
-            if (rsSurveyAddedId.next()) {
-                surveyId = rsSurveyAddedId.getInt(1);
+            try (PreparedStatement psFindSurveyAdded = connection.prepareStatement(FIND_SURVEY_ID_BY_NAME_STATEMENT)) {
+                psFindSurveyAdded.setString(1, survey.getName());
+                try (ResultSet rsSurveyAddedId = psFindSurveyAdded.executeQuery()) {
+                    if (rsSurveyAddedId.next()) {
+                        surveyId = rsSurveyAddedId.getInt(SURVEYS_TABLE_PK_COLUMN);
+                    }
+                }
             }
 
             // Insert survey questions
-
             for (SurveyQuestion question : survey.getQuestions()) {
+                try (PreparedStatement psInsertSurveyQuestion = connection.prepareStatement(INSERT_SURVEY_QUESTION_STATEMENT)) {
+                    psInsertSurveyQuestion.setBoolean(1, question.isSelectMultiple());
+                    psInsertSurveyQuestion.setString(2, question.getFormulation());
+                    psInsertSurveyQuestion.setInt(3, surveyId);
+                    psInsertSurveyQuestion.executeUpdate();
+                }
 
-                PreparedStatement psInsertSurveyQuestion =
-                        connection.prepareStatement(INSERT_SURVEY_QUESTION_STATEMENT);
-                psInsertSurveyQuestion.setBoolean(1, question.isSelectMultiple());
-                psInsertSurveyQuestion.setString(2, question.getFormulation());
-                psInsertSurveyQuestion.setInt(3, surveyId);
-                psInsertSurveyQuestion.executeUpdate();
-
-                PreparedStatement psFindSurveyQuestionAdded =
-                        connection.prepareStatement(FIND_SURVEY_QUESTION_ID_BY_FORMULATION_AND_SURVEY_ID_STATEMENT);
-                psFindSurveyQuestionAdded.setString(1, question.getFormulation());
-                psFindSurveyQuestionAdded.setInt(2, surveyId);
-                ResultSet rsSurveyQuestionAddedId = psFindSurveyQuestionAdded.executeQuery();
+                // Get id of inserted question
                 int surveyQuestionId = -1;
-                if (rsSurveyQuestionAddedId.next()) {
-                    surveyQuestionId = rsSurveyQuestionAddedId.getInt(1);
+                try (PreparedStatement psFindSurveyQuestionAdded =
+                             connection.prepareStatement(FIND_SURVEY_QUESTION_ID_BY_FORMULATION_AND_SURVEY_ID_STATEMENT)) {
+                    psFindSurveyQuestionAdded.setString(1, question.getFormulation());
+                    psFindSurveyQuestionAdded.setInt(2, surveyId);
+                    try (ResultSet rsSurveyQuestionAddedId = psFindSurveyQuestionAdded.executeQuery()) {
+                        if (rsSurveyQuestionAddedId.next()) {
+                            surveyQuestionId = rsSurveyQuestionAddedId.getInt(QUESTIONS_TABLE_PK_COLUMN);
+                        }
+                    }
                 }
 
                 // Insert survey question answers
                 for (SurveyQuestionAnswer answer : question.getAnswers()) {
-
-                    PreparedStatement psInsertSurveyQuestionAnswer =
-                            connection.prepareStatement(INSERT_SURVEY_QUESTION_ANSWER_STATEMENT);
-                    psInsertSurveyQuestionAnswer.setString(1, answer.getAnswer());
-                    psInsertSurveyQuestionAnswer.setInt(2, answer.getSelectedCount());
-                    psInsertSurveyQuestionAnswer.setInt(3, surveyQuestionId);
-                    psInsertSurveyQuestionAnswer.executeUpdate();
+                    try (PreparedStatement psInsertSurveyQuestionAnswer =
+                                 connection.prepareStatement(INSERT_SURVEY_QUESTION_ANSWER_STATEMENT)) {
+                        psInsertSurveyQuestionAnswer.setString(1, answer.getAnswer());
+                        psInsertSurveyQuestionAnswer.setInt(2, answer.getSelectedCount());
+                        psInsertSurveyQuestionAnswer.setInt(3, surveyQuestionId);
+                        psInsertSurveyQuestionAnswer.executeUpdate();
+                    }
                 }
             }
 
@@ -187,18 +166,18 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                logger.error(ex.getMessage());
+                logger.error("Error while rollback changes: " + ex.getMessage());
+                throw new DaoException("Error while rollback changes: " + ex.getMessage(), e);
             }
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage(), e);
+            logger.error("Error while executing insert: " + e.getMessage());
+            throw new DaoException("Error while executing insert: " + e.getMessage(), e);
         } finally {
             if (connection != null) {
                 try {
-                    connection.setAutoCommit(true);
+                    connection.close();
                 } catch (SQLException ex) {
-                    logger.error(ex.getMessage());
+                    logger.error("Error while closing connection: " + ex.getMessage());
                 }
-                ConnectionPool.getInstance().releaseConnection(connection);
             }
         }
 
@@ -208,22 +187,13 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     @Override
     public boolean delete(int id) throws DaoException {
 
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement ps = connection.prepareStatement(DELETE_SURVEY_STATEMENT);
-
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(DELETE_SURVEY_STATEMENT)) {
             ps.setInt(1, id);
-
             ps.executeUpdate();
-
         } catch (SQLException e) {
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage(), e);
-        } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().releaseConnection(connection);
-            }
+            logger.error("Error while executing delete: " + e.getMessage());
+            throw new DaoException("Error while executing delete: " + e.getMessage(), e);
         }
 
         return true;
@@ -321,16 +291,16 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             if (rsSurvey.next()) {
 
-                Theme theme = themeDao.findById(rsSurvey.getInt(THEME_ID_COLUMN));
-                User creator = userDao.findById(rsSurvey.getInt(CREATOR_ID_COLUMN));
+//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
+//                User creator = userDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_CREATOR_ID_COLUMN));
 
                 survey = new Survey.SurveyBuilder()
-                        .setSurveyId(rsSurvey.getInt(ID_SURVEY_COLUMN))
-                        .setName(rsSurvey.getString(SURVEY_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEY_DESCRIPTION_COLUMN))
-                        .setStatus(Survey.SurveyStatus.valueOf(rsSurvey.getString(SURVEY_STATUS_COLUMN)))
-                        .setTheme(theme)
-                        .setCreator(creator)
+                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+//                        .setTheme(theme)
+//                        .setCreator(creator)
                         .getSurvey();
 
                 //Find survey questions
@@ -344,10 +314,10 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                 while (rsSurveyQuestion.next()) {
                     question = new SurveyQuestion();
 
-                    questionId = rsSurveyQuestion.getInt(ID_QUESTION_COLUMN);
+                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
                     question.setQuestionId(questionId);
-                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(SELECT_MULTIPLE_COLUMN));
-                    question.setFormulation(rsSurveyQuestion.getString(FORMULATION_COLUMN));
+                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN));
+                    question.setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN));
 
                     //Find survey question answers
 
@@ -358,9 +328,9 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                     SurveyQuestionAnswer answer;
                     while (rsSurveyQuestionAnswer.next()) {
                         answer = new SurveyQuestionAnswer();
-                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ID_QUESTION_ANSWER_COLUMN));
-                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWER_COLUMN));
-                        answer.setSelectedCount(rsSurveyQuestionAnswer.getInt(SELECTED_COUNT_COLUMN));
+                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN));
+                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN));
+                        answer.setSelectedCount(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_SELECTED_COUNT_COLUMN));
 
                         question.addAnswer(answer);
                     }
@@ -397,17 +367,17 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             while (rsSurvey.next()) {
 
-                Theme theme = themeDao.findById(rsSurvey.getInt(THEME_ID_COLUMN));
-                User creator = userDao.findById(rsSurvey.getInt(CREATOR_ID_COLUMN));
+//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
+//                User creator = userDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_CREATOR_ID_COLUMN));
 
-                int id = rsSurvey.getInt(ID_SURVEY_COLUMN);
+                int id = rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN);
                 survey = new Survey.SurveyBuilder()
                         .setSurveyId(id)
-                        .setName(rsSurvey.getString(SURVEY_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEY_DESCRIPTION_COLUMN))
-                        .setStatus(Survey.SurveyStatus.valueOf(rsSurvey.getString(SURVEY_STATUS_COLUMN)))
-                        .setTheme(theme)
-                        .setCreator(creator)
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+//                        .setTheme(theme)
+//                        .setCreator(creator)
                         .getSurvey();
 
                 //Find survey questions
@@ -421,10 +391,10 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                 while (rsSurveyQuestion.next()) {
                     question = new SurveyQuestion();
 
-                    questionId = rsSurveyQuestion.getInt(ID_QUESTION_COLUMN);
+                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
                     question.setQuestionId(questionId);
-                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(SELECT_MULTIPLE_COLUMN));
-                    question.setFormulation(rsSurveyQuestion.getString(FORMULATION_COLUMN));
+                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN));
+                    question.setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN));
 
                     //Find survey question answers
 
@@ -435,9 +405,9 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                     SurveyQuestionAnswer answer;
                     while (rsSurveyQuestionAnswer.next()) {
                         answer = new SurveyQuestionAnswer();
-                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ID_QUESTION_ANSWER_COLUMN));
-                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWER_COLUMN));
-                        answer.setSelectedCount(rsSurveyQuestionAnswer.getInt(SELECTED_COUNT_COLUMN));
+                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN));
+                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN));
+                        answer.setSelectedCount(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_SELECTED_COUNT_COLUMN));
 
                         question.addAnswer(answer);
                     }
@@ -476,13 +446,13 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             while (rsSurvey.next()) {
 
-                Theme theme = themeDao.findById(rsSurvey.getInt(THEME_ID_COLUMN));
+//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
 
                 survey = new Survey.SurveyBuilder()
-                        .setSurveyId(rsSurvey.getInt(ID_SURVEY_COLUMN))
-                        .setName(rsSurvey.getString(SURVEY_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEY_DESCRIPTION_COLUMN))
-                        .setTheme(theme)
+                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+//                        .setTheme(theme)
                         .getSurvey();
 
                 surveys.add(survey);
@@ -505,7 +475,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
         List<Survey> surveys = new ArrayList<>();
         Survey survey = null;
 
-        User creator = userDao.findById(userId);
+//        User creator = userDao.findById(userId);
 
         Connection connection = null;
         try {
@@ -519,15 +489,15 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             while (rsSurvey.next()) {
 
-                Theme theme = themeDao.findById(rsSurvey.getInt(THEME_ID_COLUMN));
+//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
 
                 survey = new Survey.SurveyBuilder()
-                        .setSurveyId(rsSurvey.getInt(ID_SURVEY_COLUMN))
-                        .setName(rsSurvey.getString(SURVEY_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEY_DESCRIPTION_COLUMN))
-                        .setStatus(Survey.SurveyStatus.valueOf(rsSurvey.getString(SURVEY_STATUS_COLUMN)))
-                        .setTheme(theme)
-                        .setCreator(creator)
+                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+//                        .setTheme(theme)
+//                        .setCreator(creator)
                         .getSurvey();
 
                 surveys.add(survey);
@@ -561,13 +531,13 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             if (rsSurvey.next()) {
 
-                Theme theme = themeDao.findById(rsSurvey.getInt(THEME_ID_COLUMN));
+//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
 
                 survey = new Survey.SurveyBuilder()
                         .setSurveyId(surveyId)
-                        .setName(rsSurvey.getString(SURVEY_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEY_DESCRIPTION_COLUMN))
-                        .setTheme(theme)
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+//                        .setTheme(theme)
                         .getSurvey();
 
                 //Find survey questions
@@ -581,10 +551,10 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                 while (rsSurveyQuestion.next()) {
                     question = new SurveyQuestion();
 
-                    questionId = rsSurveyQuestion.getInt(ID_QUESTION_COLUMN);
+                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
                     question.setQuestionId(questionId);
-                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(SELECT_MULTIPLE_COLUMN));
-                    question.setFormulation(rsSurveyQuestion.getString(FORMULATION_COLUMN));
+                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN));
+                    question.setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN));
 
                     //Find survey question answers
 
@@ -595,8 +565,8 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                     SurveyQuestionAnswer answer;
                     while (rsSurveyQuestionAnswer.next()) {
                         answer = new SurveyQuestionAnswer();
-                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ID_QUESTION_ANSWER_COLUMN));
-                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWER_COLUMN));
+                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN));
+                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN));
                         answer.setSelectedCount(0);
 
                         question.addAnswer(answer);

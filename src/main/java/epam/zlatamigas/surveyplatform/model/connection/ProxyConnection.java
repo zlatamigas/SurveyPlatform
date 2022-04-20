@@ -15,11 +15,13 @@ public class ProxyConnection implements Connection {
 
     @Override
     public void close() throws SQLException {
-
-        ConnectionPool.getInstance().releaseConnection(connection);
+        if(connection.getAutoCommit()){
+            connection.setAutoCommit(true);
+        }
+        ConnectionPool.getInstance().releaseConnection(this);
     }
 
-    void releaseConnection() throws SQLException {
+    void finalClose() throws SQLException {
         connection.close();
     }
 

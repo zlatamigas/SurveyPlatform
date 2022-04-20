@@ -13,12 +13,6 @@ public class Survey extends AbstractEntity {
     private User creator;
     private List<SurveyQuestion> questions;
 
-    public enum SurveyStatus {
-        NOT_STARTED,
-        STARTED,
-        CLOSED
-    }
-
     public Survey() {
         surveyId = -1;
         questions = new ArrayList<>();

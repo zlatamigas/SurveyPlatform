@@ -4,7 +4,7 @@ import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.command.Command;
 import epam.zlatamigas.surveyplatform.model.entity.User;
-import epam.zlatamigas.surveyplatform.model.navigation.PageNavigation;
+import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.model.service.UserService;
 import epam.zlatamigas.surveyplatform.model.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;

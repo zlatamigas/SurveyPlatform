@@ -7,6 +7,7 @@ import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.command.Command;
 import epam.zlatamigas.surveyplatform.model.command.CommandType;
+import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
 import epam.zlatamigas.surveyplatform.model.dao.impl.UserDaoImpl;
 import epam.zlatamigas.surveyplatform.model.entity.User;
 import jakarta.servlet.ServletException;

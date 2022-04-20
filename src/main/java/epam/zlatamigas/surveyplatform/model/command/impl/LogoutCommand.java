@@ -2,7 +2,7 @@ package epam.zlatamigas.surveyplatform.model.command.impl;
 
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.model.command.Command;
-import epam.zlatamigas.surveyplatform.model.navigation.PageNavigation;
+import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class LogoutCommand implements Command {
