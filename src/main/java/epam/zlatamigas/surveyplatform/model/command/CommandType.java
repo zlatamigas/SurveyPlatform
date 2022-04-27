@@ -4,11 +4,13 @@ package epam.zlatamigas.surveyplatform.model.command;
 import epam.zlatamigas.surveyplatform.model.command.impl.DefaultCommand;
 import epam.zlatamigas.surveyplatform.model.command.impl.LoginCommand;
 import epam.zlatamigas.surveyplatform.model.command.impl.LogoutCommand;
+import epam.zlatamigas.surveyplatform.model.command.impl.StartAuthenticationCommand;
 
 public enum CommandType {
+    DEFAULT(new DefaultCommand()),
+    START_AUTHENTICATION(new StartAuthenticationCommand()),
     LOGIN(new LoginCommand()),
-    LOGOUT(new LogoutCommand()),
-    DEFAULT(new DefaultCommand());
+    LOGOUT(new LogoutCommand());
 
     private Command command;
 

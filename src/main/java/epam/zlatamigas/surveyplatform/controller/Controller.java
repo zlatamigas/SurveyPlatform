@@ -3,6 +3,7 @@ package epam.zlatamigas.surveyplatform.controller;
 import java.io.*;
 import java.sql.Date;
 
+import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.command.Command;
@@ -24,30 +25,47 @@ public class Controller extends HttpServlet {
     private static final String COMMAND_PARAMETER = "command";
     private static final String CONTENT_TYPE = "text/html";
 
+    @Override
     public void init() {
         ConnectionPool.getInstance();
         logger.info("---------------> Servlet init");
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processCommand(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processCommand(request, response);
+    }
+
+    private void processCommand(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType(CONTENT_TYPE);
 
         String commandStr = request.getParameter(COMMAND_PARAMETER);
         Command command = CommandType.define(commandStr);
-        String page = null;
+
         try {
-            page = command.execute(request);
-            request.getRequestDispatcher(page).forward(request, response);
-            //response.sendRedirect( page); // защита от F5 - не работает пока что
-            // forward - передает пару запрос-ответ дальше, redirect - сбрасывает данные
+
+            Router router = command.execute(request);
+            String page = router.getPage();
+            switch(router.getType()){
+                case FORWARD -> request.getRequestDispatcher(page).forward(request, response);
+                case REDIRECT -> response.sendRedirect(request.getContextPath() + page);
+                default -> {
+                    logger.error("Invalid routing type!");
+                    response.sendError(500);
+                }
+            }
+
         } catch (CommandException e) {
-            //request.setAttribute("error_msg", e.getMessage());
-            //request.getRequestDispatcher(PageNavigation.ERROR_500_PAGE).forward(request, response); // 3 - без выброса ошибки, просто переход
-            //response.sendError(500);// 1 - Сообщение от ошибки сюда не уйдет?
-            throw new ServletException(e); // 2 - От сервлета: Кидает на страницу ошибки, обозначенной в web.xml по коду с сообщением об ошибке
+            throw new ServletException(e);
         }
     }
 
+    @Override
     public void destroy() {
         ConnectionPool.getInstance().destroyPool();
         logger.info("---------------> Servlet destroy");

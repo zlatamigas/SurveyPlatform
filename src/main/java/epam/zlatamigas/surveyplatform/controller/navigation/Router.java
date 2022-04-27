@@ -1,10 +1,14 @@
 package epam.zlatamigas.surveyplatform.controller.navigation;
 
-public class Router {
-    private String page = PageNavigation.DEFAULT_PAGE;
-    private PageChangeType type = PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.DEFAULT;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.*;
 
-    enum PageChangeType{
+public class Router {
+
+    private String page = DEFAULT;
+    private PageChangeType type = FORWARD;
+
+    public enum PageChangeType {
         FORWARD, REDIRECT;
     }
 
@@ -12,12 +16,12 @@ public class Router {
     }
 
     public Router(String page) {
-        this.page = page;
+        this.page = (page != null ? page : DEFAULT);
     }
 
     public Router(String page, PageChangeType type) {
-        this.page = page;
-        this.type = type;
+        this.page = (page != null ? page : DEFAULT);
+        this.type = (type != null ? type : FORWARD);
     }
 
     public String getPage() {
@@ -25,10 +29,18 @@ public class Router {
     }
 
     public void setPage(String page) {
-        this.page = page;
+        this.page = (page != null ? page : DEFAULT);
     }
 
     public void setRedirect() {
-        this.type = PageChangeType.REDIRECT;
+        this.type = REDIRECT;
+    }
+
+    public void setForward() {
+        this.type = FORWARD;
+    }
+
+    public PageChangeType getType() {
+        return type;
     }
 }
