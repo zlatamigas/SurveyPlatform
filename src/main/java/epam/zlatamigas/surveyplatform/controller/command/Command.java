@@ -1,4 +1,4 @@
-package epam.zlatamigas.surveyplatform.model.command;
+package epam.zlatamigas.surveyplatform.controller.command;
 
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;

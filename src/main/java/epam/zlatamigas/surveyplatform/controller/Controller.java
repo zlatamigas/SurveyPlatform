@@ -1,16 +1,12 @@
 package epam.zlatamigas.surveyplatform.controller;
 
 import java.io.*;
-import java.sql.Date;
 
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
-import epam.zlatamigas.surveyplatform.exception.DaoException;
-import epam.zlatamigas.surveyplatform.model.command.Command;
-import epam.zlatamigas.surveyplatform.model.command.CommandType;
+import epam.zlatamigas.surveyplatform.controller.command.Command;
+import epam.zlatamigas.surveyplatform.controller.command.CommandType;
 import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
-import epam.zlatamigas.surveyplatform.model.dao.impl.UserDaoImpl;
-import epam.zlatamigas.surveyplatform.model.entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -61,6 +57,7 @@ public class Controller extends HttpServlet {
             }
 
         } catch (CommandException e) {
+            logger.error("Error while command execution: " + commandStr, e);
             throw new ServletException(e);
         }
     }

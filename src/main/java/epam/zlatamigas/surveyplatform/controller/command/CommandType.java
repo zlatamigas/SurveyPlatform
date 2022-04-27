@@ -1,10 +1,10 @@
-package epam.zlatamigas.surveyplatform.model.command;
+package epam.zlatamigas.surveyplatform.controller.command;
 
 
-import epam.zlatamigas.surveyplatform.model.command.impl.DefaultCommand;
-import epam.zlatamigas.surveyplatform.model.command.impl.LoginCommand;
-import epam.zlatamigas.surveyplatform.model.command.impl.LogoutCommand;
-import epam.zlatamigas.surveyplatform.model.command.impl.StartAuthenticationCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.DefaultCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.LoginCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.LogoutCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.StartAuthenticationCommand;
 
 public enum CommandType {
     DEFAULT(new DefaultCommand()),

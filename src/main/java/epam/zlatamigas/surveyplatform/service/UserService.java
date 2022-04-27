@@ -1,4 +1,4 @@
-package epam.zlatamigas.surveyplatform.model.service;
+package epam.zlatamigas.surveyplatform.service;
 
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.User;

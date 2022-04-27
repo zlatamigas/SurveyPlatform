@@ -10,10 +10,7 @@ import epam.zlatamigas.surveyplatform.model.entity.UserStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -65,7 +62,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
                 if (resultSet.next()) {
                     user = Optional.of(new User.UserBuilder()
                             .setEmail(email)
-                            .setRegistrationDate(resultSet.getDate(1))
+                            .setRegistrationDate(resultSet.getDate(1).toLocalDate())
                             .setRole(UserRole.valueOf(resultSet.getString(2)))
                             .setStatus(UserStatus.valueOf(resultSet.getString(3)))
                             .getUser());
@@ -88,7 +85,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPassword());
-            ps.setDate(3, user.getRegistrationDate());
+            ps.setDate(3, Date.valueOf(user.getRegistrationDate()));
             ps.setString(4, user.getRole().name());
             ps.setString(5, user.getStatus().name());
             ps.executeUpdate();
@@ -132,7 +129,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPassword());
-            ps.setDate(3, user.getRegistrationDate());
+            ps.setDate(3, Date.valueOf(user.getRegistrationDate()));
             ps.setString(4, user.getRole().name());
             ps.setString(5, user.getStatus().name());
             ps.setInt(6, id);
@@ -162,7 +159,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
                             .setUserId(resultSet.getInt(id))
                             .setEmail(resultSet.getString(USERS_TABLE_EMAIL_COLUMN))
                             .setPassword(resultSet.getString(USERS_TABLE_PASSWORD_COLUMN))
-                            .setRegistrationDate(resultSet.getDate(USERS_TABLE_REGISTRATION_DATE_COLUMN))
+                            .setRegistrationDate(resultSet.getDate(USERS_TABLE_REGISTRATION_DATE_COLUMN).toLocalDate())
                             .setRole(UserRole.valueOf(resultSet.getString(USERS_TABLE_ROLE_COLUMN)))
                             .setStatus(UserStatus.valueOf(resultSet.getString(USERS_TABLE_STATUS_COLUMN)))
                             .getUser();
@@ -192,7 +189,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
                         .setUserId(resultSet.getInt(USERS_TABLE_PK_COLUMN))
                         .setEmail(resultSet.getString(USERS_TABLE_EMAIL_COLUMN))
                         .setPassword(resultSet.getString(USERS_TABLE_PASSWORD_COLUMN))
-                        .setRegistrationDate(resultSet.getDate(USERS_TABLE_REGISTRATION_DATE_COLUMN))
+                        .setRegistrationDate(resultSet.getDate(USERS_TABLE_REGISTRATION_DATE_COLUMN).toLocalDate())
                         .setRole(UserRole.valueOf(resultSet.getString(USERS_TABLE_ROLE_COLUMN)))
                         .setStatus(UserStatus.valueOf(resultSet.getString(USERS_TABLE_STATUS_COLUMN)))
                         .getUser();

@@ -1,11 +1,11 @@
-package epam.zlatamigas.surveyplatform.model.service.impl;
+package epam.zlatamigas.surveyplatform.service.impl;
 
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.dao.impl.UserDaoImpl;
 import epam.zlatamigas.surveyplatform.model.entity.User;
-import epam.zlatamigas.surveyplatform.model.service.UserService;
-import epam.zlatamigas.surveyplatform.model.util.PasswordEncoder;
+import epam.zlatamigas.surveyplatform.service.UserService;
+import epam.zlatamigas.surveyplatform.util.PasswordEncoder;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;

@@ -25,7 +25,7 @@
         <input type="hidden" name="command" value="login">
         <div class="form-group">
             <label><fmt:message key="authorisation.email"/></label>
-            <input type="text" class="form-control" name="login">
+            <input type="text" class="form-control" name="email">
         </div>
         <div class="form-group">
             <label><fmt:message key="authorisation.password"/></label>

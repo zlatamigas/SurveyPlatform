@@ -1,9 +1,8 @@
-package epam.zlatamigas.surveyplatform.model.command.impl;
+package epam.zlatamigas.surveyplatform.controller.command.impl;
 
-import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
-import epam.zlatamigas.surveyplatform.model.command.Command;
+import epam.zlatamigas.surveyplatform.controller.command.Command;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.AUTHORIZATION;

@@ -1,4 +1,4 @@
-package epam.zlatamigas.surveyplatform.model.util;
+package epam.zlatamigas.surveyplatform.util;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
