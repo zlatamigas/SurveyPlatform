@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Index</title>
 </head>
 <body>
 

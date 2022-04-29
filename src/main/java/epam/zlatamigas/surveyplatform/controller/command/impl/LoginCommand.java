@@ -1,5 +1,6 @@
 package epam.zlatamigas.surveyplatform.controller.command.impl;
 
+import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
@@ -52,13 +53,13 @@ public class LoginCommand implements Command {
                 session.setAttribute(USER_STATUS_PARAMETER, user.getStatus().name());
 
                 page = switch (user.getRole()){
-                    case ADMIN -> ADMIN_HOME;
-                    case USER -> CLIENT_HOME;
-                    default -> VISITOR_HOME;
+                    case ADMIN -> PageNavigation.HOME;
+                    case USER -> HOME;
+                    default -> PageNavigation.HOME;
                 };
             } else {
                 request.setAttribute(LOGIN_MSG_PARAMETER, LOGIN_MSG);
-                page = AUTHORIZATION;
+                page = AUTHORISATION;
             }
 
             session.setAttribute(CURRENT_PAGE, page);
