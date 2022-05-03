@@ -60,7 +60,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     private static final String FIND_ALL_SURVEYS_STATEMENT =
             "SELECT * FROM surveys";
     private static final String FIND_SURVEY_BY_ID_STATEMENT =
-            "SELECT * FROM surveys WHERE id_survey = ?";
+            "SELECT id_survey, survey_name, survey_status, survey_description, theme_id, theme_name, theme_status FROM surveys INNER JOIN themes on theme_id = id_theme WHERE id_survey = ?";
     private static final String FIND_SURVEY_QUESTION_BY_ID_STATEMENT =
             "SELECT * FROM questions WHERE id_question = ?";
     private static final String FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT =
@@ -77,9 +77,9 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     private static final String FIND_PARTICIPANT_SURVEY_COMMON_INFO_BY_ID_STATEMENT =
             "SELECT survey_name, survey_description, theme_id FROM surveys WHERE id_survey = ?";
     private static final String FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT =
-            "SELECT id_survey, survey_name, survey_description, theme_id FROM surveys";
+            "SELECT id_survey, survey_name, survey_description, theme_id, theme_name, theme_status FROM surveys INNER JOIN themes on theme_id = id_theme WHERE survey_status = 'STARTED'";
     private static final String FIND_CREATOR_SURVEYS_COMMON_INFO_STATEMENT =
-            "SELECT id_survey, survey_name, survey_description, theme_id, survey_status FROM surveys WHERE creator_id = ?";
+            "SELECT id_survey, survey_name, survey_description, theme_id, theme_name, theme_status, survey_status FROM surveys INNER JOIN themes on theme_id = id_theme WHERE creator_id = ?";
     private static final String FIND_PARTICIPANT_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT =
             "SELECT id_question_answer, answer FROM question_answers WHERE question_id = ?";
 
@@ -291,15 +291,18 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             if (rsSurvey.next()) {
 
-//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
-//                User creator = userDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_CREATOR_ID_COLUMN));
+                Theme theme = new Theme(
+                        rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN),
+                        rsSurvey.getString(THEMES_TABLE_NAME_COLUMN),
+                        ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)));
+
 
                 survey = new Survey.SurveyBuilder()
                         .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
                         .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
                         .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
                         .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
-//                        .setTheme(theme)
+                        .setTheme(theme)
 //                        .setCreator(creator)
                         .getSurvey();
 
@@ -435,24 +438,23 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
         List<Survey> surveys = new ArrayList<>();
         Survey survey = null;
 
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-
-            //Find survey
+        try(Connection connection = ConnectionPool.getInstance().getConnection();){
 
             PreparedStatement psFindSurvey = connection.prepareStatement(FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT);
             ResultSet rsSurvey = psFindSurvey.executeQuery();
 
             while (rsSurvey.next()) {
 
-//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
+                Theme theme = new Theme(
+                        rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN),
+                        rsSurvey.getString(THEMES_TABLE_NAME_COLUMN),
+                        ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)));
 
                 survey = new Survey.SurveyBuilder()
                         .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
                         .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
                         .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
-//                        .setTheme(theme)
+                        .setTheme(theme)
                         .getSurvey();
 
                 surveys.add(survey);
@@ -461,10 +463,6 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new DaoException(e.getMessage(), e);
-        } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().releaseConnection(connection);
-            }
         }
 
         return surveys;
@@ -475,13 +473,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
         List<Survey> surveys = new ArrayList<>();
         Survey survey = null;
 
-//        User creator = userDao.findById(userId);
-
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-
-            //Find survey
+        try(Connection connection = ConnectionPool.getInstance().getConnection()){
 
             PreparedStatement psFindSurvey = connection.prepareStatement(FIND_CREATOR_SURVEYS_COMMON_INFO_STATEMENT);
             psFindSurvey.setInt(1, userId);
@@ -489,15 +481,18 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             while (rsSurvey.next()) {
 
-//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
+                Theme theme = new Theme(
+                        rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN),
+                        rsSurvey.getString(THEMES_TABLE_NAME_COLUMN),
+                        ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)));
 
                 survey = new Survey.SurveyBuilder()
                         .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
                         .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
                         .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
                         .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
-//                        .setTheme(theme)
-//                        .setCreator(creator)
+                        .setTheme(theme)
+                        .setCreator(new User.UserBuilder().setUserId(userId).getUser())
                         .getSurvey();
 
                 surveys.add(survey);
@@ -506,10 +501,6 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new DaoException(e.getMessage(), e);
-        } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().releaseConnection(connection);
-            }
         }
 
         return surveys;

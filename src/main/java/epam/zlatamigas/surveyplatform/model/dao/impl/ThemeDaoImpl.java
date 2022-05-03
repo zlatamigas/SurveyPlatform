@@ -30,6 +30,8 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
             = "DELETE FROM themes WHERE id_theme = ?";
     private static final String FIND_ALL_STATEMENT
             = "SELECT id_theme, theme_name, theme_status FROM themes";
+    private static final String FIND_ALL_CONFIRMED_STATEMENT
+            = "SELECT id_theme, theme_name FROM themes where theme_status='CONFIRMED'";
     private static final String FIND_STATEMENT
             = "SELECT theme_name, theme_status FROM themes WHERE id_theme = ?";
 
@@ -145,6 +147,31 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
                 theme.setThemeId(resultSet.getInt(THEMES_TABLE_PK_COLUMN));
                 theme.setThemeName(resultSet.getString(THEMES_TABLE_NAME_COLUMN));
                 theme.setThemeStatus(ThemeStatus.valueOf(resultSet.getString(THEMES_TABLE_STATUS_COLUMN)));
+                themes.add(theme);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error while execute query: " + e.getMessage());
+            throw new DaoException("Error while while execute query: " + e.getMessage(), e);
+        }
+
+        return themes;
+    }
+
+    @Override
+    public List<Theme> findAllConfirmed() throws DaoException {
+        List<Theme> themes = new ArrayList<>();
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(FIND_ALL_CONFIRMED_STATEMENT);
+             ResultSet resultSet = ps.executeQuery()) {
+
+            Theme theme;
+            while (resultSet.next()) {
+                theme = new Theme();
+                theme.setThemeId(resultSet.getInt(THEMES_TABLE_PK_COLUMN));
+                theme.setThemeName(resultSet.getString(THEMES_TABLE_NAME_COLUMN));
+                theme.setThemeStatus(ThemeStatus.CONFIRMED);
                 themes.add(theme);
             }
 
