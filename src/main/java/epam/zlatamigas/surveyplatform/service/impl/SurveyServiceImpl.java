@@ -69,4 +69,37 @@ public class SurveyServiceImpl implements SurveyService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean insert(Survey survey) throws ServiceException {
+        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+
+        try {
+            return surveyDao.insert(survey);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean delete(int id) throws ServiceException {
+        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+
+        try {
+            return surveyDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Survey update(Survey survey) throws ServiceException {
+        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+
+        try {
+            return surveyDao.update(survey);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

@@ -3,7 +3,7 @@ package epam.zlatamigas.surveyplatform.controller.command.impl.list;
 import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
-import epam.zlatamigas.surveyplatform.controller.navigation.SessionAttributeHolder;
+import epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
@@ -15,7 +15,9 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder.ATTRIBUTE_CURRENT_PAGE;
 
 public class ListUserCreatedSurveysCommand implements Command {
     @Override
@@ -23,16 +25,17 @@ public class ListUserCreatedSurveysCommand implements Command {
 
         SurveyService service = SurveyServiceImpl.getInstance();
         HttpSession session = request.getSession();
+        String page = PageNavigation.USER_SURVEYS;
         try {
 
-            int creatorId = ((User)session.getAttribute(SessionAttributeHolder.USER)).getUserId();
+            int creatorId = ((User)session.getAttribute(ATTRIBUTE_USER)).getUserId();
             List<Survey> surveys = service.findCreatorSurveysCommonInfo(creatorId);
-            session.setAttribute(SessionAttributeHolder.USER_SURVEYS, surveys);
-
+            session.setAttribute(ATTRIBUTE_USER_SURVEYS, surveys);
+            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e);
         }
 
-        return new Router(PageNavigation.USER_SURVEYS, FORWARD);
+        return new Router(page, FORWARD);
     }
 }

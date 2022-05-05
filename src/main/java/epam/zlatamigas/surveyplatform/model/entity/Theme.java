@@ -10,6 +10,10 @@ public class Theme extends AbstractEntity {
         themeStatus = ThemeStatus.WAITING;
     }
 
+    public Theme(int themeId) {
+        this.themeId = themeId;
+    }
+
     public Theme(String themeName, ThemeStatus themeStatus) {
         this(-1, themeName, themeStatus);
     }

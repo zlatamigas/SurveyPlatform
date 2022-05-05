@@ -1,6 +1,5 @@
 package epam.zlatamigas.surveyplatform.controller.command.impl;
 
-import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
@@ -14,11 +13,11 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.RequestParameterHolder.EMAIL;
-import static epam.zlatamigas.surveyplatform.controller.navigation.RequestParameterHolder.PASSWORD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder.PARAMETER_EMAIL;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder.PARAMETER_PASSWORD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.controller.navigation.SessionAttributeHolder.CURRENT_PAGE;
-import static epam.zlatamigas.surveyplatform.controller.navigation.SessionAttributeHolder.USER;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder.ATTRIBUTE_CURRENT_PAGE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder.ATTRIBUTE_USER;
 
 public class LoginCommand implements Command {
 
@@ -28,8 +27,8 @@ public class LoginCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
-        String login = request.getParameter(EMAIL);
-        String password = request.getParameter(PASSWORD);
+        String login = request.getParameter(PARAMETER_EMAIL);
+        String password = request.getParameter(PARAMETER_PASSWORD);
 
         UserService service = UserServiceImpl.getInstance();
         String page;
@@ -41,14 +40,14 @@ public class LoginCommand implements Command {
             if (userFromDb.isPresent()) {
 
                 User user = userFromDb.get();
-                session.setAttribute(USER, user);
-                page =  HOME;
+                session.setAttribute(ATTRIBUTE_USER, user);
+                page = HOME;
             } else {
                 request.setAttribute(LOGIN_MSG_PARAMETER, LOGIN_MSG);
                 page = AUTHORISATION;
             }
 
-            session.setAttribute(CURRENT_PAGE, page);
+            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
         } catch (ServiceException e) {
             throw  new CommandException(e.getMessage(), e);
         }

@@ -2,6 +2,7 @@ package epam.zlatamigas.surveyplatform.controller.command;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
+import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditSurveyCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.list.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.start.*;
 
@@ -14,7 +15,9 @@ public enum CommandType {
     LIST_SURVEYS(new ListSurveysCommand()),
 //    LIST_USER_FINISHED_SURVEYS(new ListSurveysCommand()),
     LIST_USER_CREATED_SURVEYS(new ListUserCreatedSurveysCommand()),
-    START_EDIT_SURVEY(new StartEditSurveyCommand());
+    START_EDIT_SURVEY(new StartEditSurveyCommand()),
+    FINISH_EDIT_SURVEY(new FinishEditSurveyCommand()),
+    CHANGE_LOCALISATION(new ChangeLocalisationCommand());
 
     private Command command;
 

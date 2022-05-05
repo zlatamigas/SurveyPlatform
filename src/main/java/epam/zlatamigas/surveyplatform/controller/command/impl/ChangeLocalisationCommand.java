@@ -1,23 +1,23 @@
-package epam.zlatamigas.surveyplatform.controller.command.impl.list;
+package epam.zlatamigas.surveyplatform.controller.command.impl;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
+import epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USERS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageDataHolder.ATTRIBUTE_CURRENT_PAGE;
 
-public class ListUsersCommand implements Command {
+public class ChangeLocalisationCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-
-
         HttpSession session = request.getSession();
-        String page = USERS;
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+
+        String localisation = request.getParameter(PageDataHolder.PARAMETER_LOCALISATION);
+        session.setAttribute(PageDataHolder.ATTRIBUTE_LOCALISATION, localisation);
+        String page = (String) session.getAttribute(ATTRIBUTE_CURRENT_PAGE);
 
         return new Router(page, FORWARD);
     }

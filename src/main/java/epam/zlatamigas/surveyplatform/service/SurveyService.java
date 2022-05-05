@@ -54,4 +54,8 @@ public interface SurveyService {
     boolean updateParticipantSurveyResult(Survey survey) throws ServiceException;
 
     Survey findById(int id) throws ServiceException;
+
+    boolean insert(Survey survey) throws ServiceException;
+    boolean delete(int id) throws ServiceException;
+    Survey update(Survey survey) throws ServiceException;
 }

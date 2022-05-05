@@ -22,17 +22,17 @@
 
     <form action="controller" method="POST">
 
-        <input type="hidden" name="command" value="save_survey">
+        <input type="hidden" name="command" value="finish_edit_survey">
 
         <div class="form-group">
-            <label for="surveyName">Survey name</label>
-            <input type="text" class="form-control" id="surveyName" minlength="1" maxlength="200"
+            <label for="surveyName"><fmt:message key="editsurvey.label.surveyname"/></label>
+            <input name="survey_name" type="text" class="form-control" id="surveyName" minlength="1" maxlength="200"
                    value="${sessionScope.current_survey.name}">
         </div>
 
         <div class="form-group">
-            <label for="surveyTheme">Theme</label>
-            <select id="surveyTheme" class="form-control">
+            <label for="surveyTheme"><fmt:message key="editsurvey.label.surveytheme"/></label>
+            <select name="survey_theme_id" id="surveyTheme" class="form-control">
                 <c:forEach items="${sessionScope.themes}" var="theme">
                     <c:choose>
                         <c:when test="${theme.themeId != sessionScope.current_survey.theme.themeId}">
@@ -47,12 +47,12 @@
         </div>
 
         <div class="form-group">
-            <label for="surveyDescription">Description</label>
-            <textarea class="form-control" id="surveyDescription"
+            <label for="surveyDescription"><fmt:message key="editsurvey.label.surveydescription"/> </label>
+            <textarea name="survey_description" class="form-control" id="surveyDescription"
                       rows="3">${sessionScope.current_survey.description}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="editsurvey.savesurvey"/></button>
     </form>
 
     <hr>
@@ -78,8 +78,8 @@
                         </form>
 
                         <div class="btn-group" role="group">
-                            <button type="submit" form="startEditQuestionForm" class="btn btn-primary">Edit</button>
-                            <button type="submit" form="deleteQuestionForm" class="btn btn-warning">Delete</button>
+                            <button type="submit" form="startEditQuestionForm" class="btn btn-primary"><fmt:message key="editsurvey.editquestion"/></button>
+                            <button type="submit" form="deleteQuestionForm" class="btn btn-warning"><fmt:message key="editsurvey.deletequestion"/></button>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
 
             </div>
             <div class="card-body">
-                <p class="card-subtitle mb-2 text-muted">Select multiply: ${question.selectMultiple}</p>
+                <p class="card-subtitle mb-2 text-muted"><fmt:message key="editsurvey.question.selectmultiple"/> ${question.selectMultiple}</p>
                 <ul>
                     <c:forEach items="${question.answers}" var="answer">
                         <li class="card-text">${answer.answer}</li>
