@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -23,8 +25,9 @@
             <div class="col">
                 <h3 class="display-4"><fmt:message key="error404.title"/></h3>
                 <hr class="my-4">
+
                 <form class="form-inline" action="controller">
-                    <input type="hidden" name="command" value="default">
+                    <input type="hidden" name="command" value="${CommandType.HOME}">
                     <label class="mr-sm-2"><fmt:message key="error404.text"/></label>
                     <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">&#8962;</button>
                 </form>

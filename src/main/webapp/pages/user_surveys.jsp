@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -24,8 +26,8 @@
 <div class="container">
 
     <form action="controller" method="POST">
-        <input type="hidden" name="command" value="start_edit_survey">
-        <input type="hidden" name="create_new" value="true">
+        <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
+        <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}" value="true">
         <button type="submit" class="btn btn-primary"><fmt:message key="usersurvey.createsurvey"/></button>
     </form>
 
@@ -61,21 +63,21 @@
 
                         <div class="btn-toolbar justify-content-end" role="toolbar">
 
-                            <form id="startEditSurveyForm" action="controller" method="POST">
-                                <input type="hidden" name="command" value="start_edit_survey">
-                                <input type="hidden" name="create_new" value="false">
-                                <input type="hidden" name="survey_id" value="${survey.surveyId}">
+                            <form id="startEditSurveyForm${survey.surveyId}" action="controller" method="POST">
+                                <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
+                                <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}" value="false">
+                                <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 
-                            <form id="deleteSurveyForm" action="controller" method="POST">
-                                <input type="hidden" name="command" value="delete_survey">
-                                <input type="hidden" name="survey_id" value="${survey.surveyId}">
+                            <form id="deleteSurveyForm${survey.surveyId}" action="controller" method="POST">
+                                <input type="hidden" name="command" value="">
+                                <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 
                             <div class="btn-group" role="group">
-                                <button form="startEditSurveyForm" type="submit" class="btn btn-primary"><fmt:message
+                                <button form="startEditSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary"><fmt:message
                                         key="usersurvey.editsurvey"/></button>
-                                <button form="deleteSurveyForm" type="submit" class="btn btn-warning"><fmt:message
+                                <button form="deleteSurveyForm${survey.surveyId}" type="submit" class="btn btn-warning"><fmt:message
                                         key="usersurvey.deletesurvey"/></button>
                             </div>
 

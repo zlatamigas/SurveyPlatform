@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -21,14 +24,14 @@
     <hr class="my-4">
 
     <form action="controller" method="POST">
-        <input type="hidden" name="command" value="login">
+        <input type="hidden" name="command" value="${CommandType.LOGIN}">
         <div class="form-group">
             <label><fmt:message key="authorisation.email"/></label>
-            <input type="text" class="form-control" name="email">
+            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}">
         </div>
         <div class="form-group">
             <label><fmt:message key="authorisation.password"/></label>
-            <input type="password" class="form-control" name="password">
+            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}">
         </div>
         <button type="submit" class="btn btn-primary" ><fmt:message key="authorisation.credentials.submit"/></button>
     </form>

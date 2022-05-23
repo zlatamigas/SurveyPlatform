@@ -1,6 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -26,16 +28,16 @@
 
         <div class="form-group">
             <label for="surveyName"><fmt:message key="editsurvey.label.surveyname"/></label>
-            <input name="survey_name" type="text" class="form-control" id="surveyName" minlength="1" maxlength="200"
-                   value="${sessionScope.current_survey.name}">
+            <input name="${DataHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName" minlength="1" maxlength="200"
+                   value="${sessionScope.edited_survey.name}">
         </div>
 
         <div class="form-group">
             <label for="surveyTheme"><fmt:message key="editsurvey.label.surveytheme"/></label>
-            <select name="survey_theme_id" id="surveyTheme" class="form-control">
+            <select name="${DataHolder.PARAMETER_SURVEY_THEME_ID}" id="surveyTheme" class="form-control">
                 <c:forEach items="${sessionScope.themes}" var="theme">
                     <c:choose>
-                        <c:when test="${theme.themeId != sessionScope.current_survey.theme.themeId}">
+                        <c:when test="${theme.themeId != sessionScope.edited_survey.theme.themeId}">
                             <option value="${theme.themeId}">${theme.themeName}</option>
                         </c:when>
                         <c:otherwise>
@@ -48,17 +50,16 @@
 
         <div class="form-group">
             <label for="surveyDescription"><fmt:message key="editsurvey.label.surveydescription"/> </label>
-            <textarea name="survey_description" class="form-control" id="surveyDescription"
-                      rows="3">${sessionScope.current_survey.description}</textarea>
+            <textarea name="${DataHolder.PARAMETER_SURVEY_DESCRIPTION}" class="form-control" id="surveyDescription"
+                      rows="3">${sessionScope.edited_survey.description}</textarea>
         </div>
 
         <button type="submit" class="btn btn-primary"><fmt:message key="editsurvey.savesurvey"/></button>
     </form>
-
     <hr>
 
 
-    <c:forEach items="${sessionScope.current_survey.questions}" var="question">
+    <c:forEach items="${sessionScope.edited_survey.questions}" var="question">
         <div class="card">
             <div class="card-header">
 
@@ -68,18 +69,18 @@
                     </div>
                     <div class="col col-auto">
 
-                        <form id="startEditQuestionForm" action="controller" method="post">
-                            <input type="hidden" name="command" value="start_edit_question">
+                        <form id="startEditQuestionForm${question.questionId}" action="controller" method="post">
+                            <input type="hidden" name="command" value="${CommandType.START_EDIT_QUESTION}">
                             <input type="hidden" name="question_id" value="${question.questionId}">
                         </form>
-                        <form id="deleteQuestionForm" action="controller" method="post">
-                            <input type="hidden" name="command" value="delete_question">
+                        <form id="deleteQuestionForm${question.questionId}" action="controller" method="post">
+                            <input type="hidden" name="command" value="">
                             <input type="hidden" name="question_id" value="${question.questionId}">
                         </form>
 
                         <div class="btn-group" role="group">
-                            <button type="submit" form="startEditQuestionForm" class="btn btn-primary"><fmt:message key="editsurvey.editquestion"/></button>
-                            <button type="submit" form="deleteQuestionForm" class="btn btn-warning"><fmt:message key="editsurvey.deletequestion"/></button>
+                            <button type="submit" form="startEditQuestionForm${question.questionId}" class="btn btn-primary"><fmt:message key="editsurvey.editquestion"/></button>
+                            <button type="submit" form="deleteQuestionForm${question.questionId}" class="btn btn-warning"><fmt:message key="editsurvey.deletequestion"/></button>
                         </div>
                     </div>
                 </div>

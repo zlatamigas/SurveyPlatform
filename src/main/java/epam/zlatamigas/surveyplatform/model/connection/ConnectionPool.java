@@ -1,5 +1,6 @@
 package epam.zlatamigas.surveyplatform.model.connection;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,7 +76,7 @@ public class ConnectionPool {
                 try {
                     poolSize = Integer.parseInt(poolSizeParameter);
                 } catch (NumberFormatException nfe) {
-                    logger.warn("Invalid pool size parameter in properties file: " + poolSizeParameter);
+                    logger.error("Invalid pool size parameter in properties file: " + poolSizeParameter);
                 }
             }
             CONNECTION_POOL_SIZE = poolSize;
@@ -129,7 +130,7 @@ public class ConnectionPool {
                 available.put((ProxyConnection) connection);
                 result = true;
             } catch (InterruptedException e) {
-                logger.warn("Thread killed while waiting "
+                logger.error("Thread killed while waiting "
                         + "ID - "+ Thread.currentThread().getId()
                         + ", name - " + Thread.currentThread().getName()
                         + ": " + e.getMessage());
@@ -145,7 +146,7 @@ public class ConnectionPool {
             connection = available.take();
             occupied.put(connection);
         } catch (InterruptedException e) {
-            logger.warn("Thread killed while waiting "
+            logger.error("Thread killed while waiting "
                     + "ID - "+ Thread.currentThread().getId()
                     + ", name - " + Thread.currentThread().getName()
                     + ": " + e.getMessage());
@@ -158,13 +159,13 @@ public class ConnectionPool {
         for (int i = 0; i < CONNECTION_POOL_SIZE; i++) {
             try {
                 available.take().finalClose();
-            } catch (InterruptedException e) {
-                logger.warn("Thread killed while waiting: "
-                        + "ID - "+ Thread.currentThread().getId()
-                        + ", name - " + Thread.currentThread().getName());
-                Thread.currentThread().interrupt(); // Should kill?
             } catch (SQLException e) {
                 logger.error("Cannot close connection: " + e.getMessage());
+            } catch (InterruptedException e) {
+                logger.error("Thread killed while waiting: "
+                        + "ID - "+ Thread.currentThread().getId()
+                        + ", name - " + Thread.currentThread().getName());
+                Thread.currentThread().interrupt();
             }
         }
         deregisterDriver();

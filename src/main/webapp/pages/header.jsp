@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -31,32 +33,32 @@
 
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=home">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=${CommandType.HOME}">
                         <fmt:message key="header.navbar.homepage"/>
                     </a>
                 </li>
                 <c:if test="${sessionScope.user.role == UserRole.ADMIN}">
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="${pageContext.request.contextPath}/controller?command=list_users">
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USERS}">
                             <fmt:message key="header.navbar.users"/>
                         </a>
                     </li>
                 </c:if>
                 <li class="nav-item">
                     <a class="nav-link"
-                       href="${pageContext.request.contextPath}/controller?command=list_surveys">
+                       href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_SURVEYS}">
                         <fmt:message key="header.navbar.surveys"/>
                     </a>
                 </li>
                 <c:if test="${sessionScope.user != null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=list_user_created_surveys">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USER_CREATED_SURVEYS}">
                             <fmt:message key="header.navbar.createdsurveys"/>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=list_user_finished_surveys">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=">
                             <fmt:message key="header.navbar.finishedsurveys"/>
                         </a>
                     </li>
@@ -69,10 +71,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=change_localisation&localisation=en">en</a>
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.PARAMETER_LOCALISATION}=en">en</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=change_localisation&localisation=ru">ru</a>
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.PARAMETER_LOCALISATION}=ru">ru</a>
                     </div>
                 </li>
             </ul>
@@ -80,7 +82,7 @@
             <c:choose>
                 <c:when test="${sessionScope.user != null}">
                     <form class="form-inline my-2 my-lg-0" action="controller">
-                        <input type="hidden" name="command" value="logout">
+                        <input type="hidden" name="command" value="${CommandType.LOGOUT}">
                         <label class="mr-sm-2">
                             <c:choose>
                                 <c:when test="${sessionScope.user.role == UserRole.ADMIN}"><fmt:message key="header.navbar.userroe.admin"/></c:when>
@@ -94,7 +96,7 @@
                 </c:when>
                 <c:otherwise>
                     <form class="form-inline mt-2 mt-lg-0" action="controller">
-                        <input type="hidden" name="command" value="start_authentication">
+                        <input type="hidden" name="command" value="${CommandType.START_AUTHENTICATION}">
                         <button type="submit" class="btn btn-sm btn-outline-primary">
                             <fmt:message key="header.navbar.login"/>
                         </button>
