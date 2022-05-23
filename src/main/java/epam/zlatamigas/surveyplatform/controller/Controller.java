@@ -1,33 +1,30 @@
 package epam.zlatamigas.surveyplatform.controller;
 
 import java.io.*;
-import java.sql.Date;
 
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
-import epam.zlatamigas.surveyplatform.exception.DaoException;
-import epam.zlatamigas.surveyplatform.model.command.Command;
-import epam.zlatamigas.surveyplatform.model.command.CommandType;
+import epam.zlatamigas.surveyplatform.controller.command.Command;
+import epam.zlatamigas.surveyplatform.controller.command.CommandType;
 import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
-import epam.zlatamigas.surveyplatform.model.dao.impl.UserDaoImpl;
-import epam.zlatamigas.surveyplatform.model.entity.User;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@WebServlet(name = "appController", value = "/controller")
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
+
+@WebServlet(name = "AppController",urlPatterns = { "/controller", "/pages/controller"})
 public class Controller extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String COMMAND_PARAMETER = "command";
-    private static final String CONTENT_TYPE = "text/html";
+    private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+    private static final String CHARACTER_ENCODING = "UTF-8";
 
     @Override
     public void init() {
-        ConnectionPool.getInstance();
         logger.info("---------------> Servlet init");
     }
 
@@ -43,8 +40,9 @@ public class Controller extends HttpServlet {
 
     private void processCommand(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType(CONTENT_TYPE);
+        response.setCharacterEncoding(CHARACTER_ENCODING);
 
-        String commandStr = request.getParameter(COMMAND_PARAMETER);
+        String commandStr = request.getParameter(PARAMETER_COMMAND);
         Command command = CommandType.define(commandStr);
 
         try {
@@ -61,13 +59,13 @@ public class Controller extends HttpServlet {
             }
 
         } catch (CommandException e) {
+            logger.error("Error while command execution: " + commandStr, e);
             throw new ServletException(e);
         }
     }
 
     @Override
     public void destroy() {
-        ConnectionPool.getInstance().destroyPool();
         logger.info("---------------> Servlet destroy");
     }
 }

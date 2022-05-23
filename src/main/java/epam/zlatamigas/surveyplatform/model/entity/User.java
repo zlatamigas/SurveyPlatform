@@ -1,13 +1,14 @@
 package epam.zlatamigas.surveyplatform.model.entity;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 public class User extends AbstractEntity {
 
     private int userId;
     private String email;
     private String password;
-    private Date registrationDate;
+    private LocalDate registrationDate;
     private UserRole role;
     private UserStatus status;
 
@@ -39,11 +40,11 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
-    public Date getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 
@@ -87,7 +88,8 @@ public class User extends AbstractEntity {
             user.password = password;
             return this;
         }
-        public UserBuilder setRegistrationDate(Date registrationDare) {
+
+        public UserBuilder setRegistrationDate(LocalDate registrationDare) {
             user.registrationDate = registrationDare;
             return this;
         }
@@ -102,7 +104,7 @@ public class User extends AbstractEntity {
             return this;
         }
 
-        public User getUser(){
+        public User getUser() {
             return user;
         }
     }

@@ -6,12 +6,12 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/pages/error_404.jsp</location>
+        <location>/pages/errors/error_404.jsp</location>
     </error-page>
-<!--    <error-page>-->
-<!--        <error-code>500</error-code>-->
-<!--        <location>/pages/error_500.jsp</location>-->
-<!--    </error-page>-->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pages/errors/error_500.jsp</location>
+    </error-page>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>

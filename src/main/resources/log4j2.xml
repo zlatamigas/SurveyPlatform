@@ -20,8 +20,8 @@
     <Loggers>
 
         <Logger name="epam.zlatamigas.surveyplatform" level="debug" additivity="false">
-            <AppenderRef ref="Logger"/>
-            <AppenderRef ref="STDOUT" level="info"/>
+            <AppenderRef ref="Logger" level="info"/>
+            <AppenderRef ref="STDOUT"/>
         </Logger>
         <Root level="debug" additivity="true">
             <AppenderRef ref="STDOUT"/>
