@@ -13,7 +13,7 @@ public class User extends AbstractEntity {
     private UserStatus status;
 
     public User() {
-        userId = -1;
+        userId = 0;
     }
 
     public int getUserId() {

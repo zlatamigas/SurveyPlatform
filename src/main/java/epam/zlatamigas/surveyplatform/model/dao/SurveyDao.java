@@ -3,6 +3,7 @@ package epam.zlatamigas.surveyplatform.model.dao;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion;
+import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
 
 import java.util.List;
 
@@ -53,4 +54,6 @@ public interface SurveyDao {
      * @throws DaoException
      */
     boolean updateParticipantSurveyResult(Survey survey) throws DaoException;
+
+    boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws DaoException;
 }

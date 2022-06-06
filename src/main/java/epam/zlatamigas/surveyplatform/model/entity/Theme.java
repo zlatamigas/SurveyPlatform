@@ -6,7 +6,7 @@ public class Theme extends AbstractEntity {
     private ThemeStatus themeStatus;
 
     public Theme() {
-        themeId = -1;
+        themeId = 0;
         themeStatus = ThemeStatus.WAITING;
     }
 
@@ -15,7 +15,7 @@ public class Theme extends AbstractEntity {
     }
 
     public Theme(String themeName, ThemeStatus themeStatus) {
-        this(-1, themeName, themeStatus);
+        this(0, themeName, themeStatus);
     }
 
     public Theme(int themeId, String themeName, ThemeStatus themeStatus) {

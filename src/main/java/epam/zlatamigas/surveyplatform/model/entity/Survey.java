@@ -14,7 +14,7 @@ public class Survey extends AbstractEntity {
     private List<SurveyQuestion> questions;
 
     public Survey() {
-        surveyId = -1;
+        surveyId = 0;
         questions = new ArrayList<>();
     }
 

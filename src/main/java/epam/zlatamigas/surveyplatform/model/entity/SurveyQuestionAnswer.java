@@ -6,7 +6,7 @@ public class SurveyQuestionAnswer {
     private int selectedCount;
 
     public SurveyQuestionAnswer() {
-        questionAnswerId = -1;
+        questionAnswerId = 0;
         selectedCount = 0;
     }
 
@@ -16,7 +16,7 @@ public class SurveyQuestionAnswer {
     }
 
     public SurveyQuestionAnswer(String answer, int selectedCount) {
-        this(-1, answer, selectedCount);
+        this(0, answer, selectedCount);
     }
 
     public SurveyQuestionAnswer(int questionAnswerId, String answer, int selectedCount) {

@@ -10,13 +10,13 @@ public class SurveyUserAttempt {
     private Survey survey;
 
     public SurveyUserAttempt() {
-        surveyAttemptId = -1;
+        surveyAttemptId = 0;
         user = new User();
         survey = new Survey();
     }
 
     public SurveyUserAttempt(Date finishedDate, User user, Survey survey) {
-        this(-1, finishedDate, user, survey);
+        this(0, finishedDate, user, survey);
     }
 
     public SurveyUserAttempt(int surveyAttemptId, Date finishedDate, User user, Survey survey) {

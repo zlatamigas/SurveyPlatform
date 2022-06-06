@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyStatus" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -74,11 +75,37 @@
                                 <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 
+                            <form id="stopSurveyForm${survey.surveyId}" action="controller" method="POST">
+                                <input type="hidden" name="command" value="${CommandType.STOP_SURVEY}">
+                                <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
+                            </form>
+
+                            <form id="viewResultSurveyForm${survey.surveyId}" action="controller" method="POST">
+                                <input type="hidden" name="command" value="">
+                                <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
+                            </form>
+
                             <div class="btn-group" role="group">
-                                <button form="startEditSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary"><fmt:message
-                                        key="usersurvey.editsurvey"/></button>
-                                <button form="deleteSurveyForm${survey.surveyId}" type="submit" class="btn btn-warning"><fmt:message
-                                        key="usersurvey.deletesurvey"/></button>
+                                <c:choose>
+                                    <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
+                                        <button form="startEditSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary"><fmt:message
+                                                key="usersurvey.editsurvey"/></button>
+                                    </c:when>
+                                    <c:when test="${survey.status == SurveyStatus.STARTED}">
+                                        <button form="stopSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary"><fmt:message
+                                                key="usersurvey.stopsurvey"/></button>
+                                    </c:when>
+                                    <c:when test="${survey.status == SurveyStatus.CLOSED}">
+                                        <button form="viewResultSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary"><fmt:message
+                                                key="usersurvey.viewresultsurvey"/></button>
+                                    </c:when>
+                                </c:choose>
+
+                                <c:if test="${survey.status != SurveyStatus.STARTED}">
+                                    <button form="deleteSurveyForm${survey.surveyId}" type="submit" class="btn btn-warning"><fmt:message
+                                            key="usersurvey.deletesurvey"/></button>
+                                </c:if>
+
                             </div>
 
                         </div>

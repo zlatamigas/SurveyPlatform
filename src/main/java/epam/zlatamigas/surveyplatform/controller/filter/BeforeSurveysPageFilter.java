@@ -22,7 +22,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.AT
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_USER;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEYS;
 
-//@WebFilter(filterName = "BeforeProductsPageFilter", dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST}, urlPatterns = "/pages/surveys.jsp")
+@WebFilter(filterName = "BeforeSurveysPageFilter", dispatcherTypes = {DispatcherType.FORWARD}, urlPatterns = "/pages/surveys.jsp")
 public class BeforeSurveysPageFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();
@@ -44,14 +44,17 @@ public class BeforeSurveysPageFilter implements Filter {
            logger.error(e);
         }
 
-        User user = (User) session.getAttribute(ATTRIBUTE_USER);
+        filterChain.doFilter(servletRequest, servletResponse);
 
-        if( user!= null && user.getRole() == UserRole.ADMIN){
-            HttpServletResponse response = (HttpServletResponse) servletResponse;
-            response.sendRedirect(request.getContextPath() + SURVEYS);
-        } else {
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
+
+//        User user = (User) session.getAttribute(ATTRIBUTE_USER);
+//
+//        if( user!= null && user.getRole() == UserRole.ADMIN){
+//            HttpServletResponse response = (HttpServletResponse) servletResponse;
+//            response.sendRedirect(request.getContextPath() + SURVEYS);
+//        } else {
+//            filterChain.doFilter(servletRequest, servletResponse);
+//        }
     }
 
     @Override

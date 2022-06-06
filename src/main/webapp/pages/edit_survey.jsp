@@ -22,16 +22,13 @@
 
 <div class="container">
 
-    <form action="controller" method="POST">
-
-        <input type="hidden" name="command" value="finish_edit_survey">
-
+    <form id="editSurveyForm" action="controller" method="POST">
         <div class="form-group">
             <label for="surveyName"><fmt:message key="editsurvey.label.surveyname"/></label>
-            <input name="${DataHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName" minlength="1" maxlength="200"
+            <input name="${DataHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName"
+                   minlength="1" maxlength="200"
                    value="${sessionScope.edited_survey.name}">
         </div>
-
         <div class="form-group">
             <label for="surveyTheme"><fmt:message key="editsurvey.label.surveytheme"/></label>
             <select name="${DataHolder.PARAMETER_SURVEY_THEME_ID}" id="surveyTheme" class="form-control">
@@ -47,58 +44,53 @@
                 </c:forEach>
             </select>
         </div>
-
         <div class="form-group">
             <label for="surveyDescription"><fmt:message key="editsurvey.label.surveydescription"/> </label>
             <textarea name="${DataHolder.PARAMETER_SURVEY_DESCRIPTION}" class="form-control" id="surveyDescription"
                       rows="3">${sessionScope.edited_survey.description}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary"><fmt:message key="editsurvey.savesurvey"/></button>
-    </form>
-    <hr>
+        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_SURVEY}" type="submit"
+                class="btn btn-primary"><fmt:message key="editsurvey.savesurvey"/></button>
+        <hr>
 
-
-    <c:forEach items="${sessionScope.edited_survey.questions}" var="question">
-        <div class="card">
-            <div class="card-header">
-
-                <div class="row justify-content-between">
-                    <div class="col">
-                        <h5 class="card-title">${question.formulation}</h5>
-                    </div>
-                    <div class="col col-auto">
-
-                        <form id="startEditQuestionForm${question.questionId}" action="controller" method="post">
-                            <input type="hidden" name="command" value="${CommandType.START_EDIT_QUESTION}">
-                            <input type="hidden" name="question_id" value="${question.questionId}">
-                        </form>
-                        <form id="deleteQuestionForm${question.questionId}" action="controller" method="post">
-                            <input type="hidden" name="command" value="">
-                            <input type="hidden" name="question_id" value="${question.questionId}">
-                        </form>
-
-                        <div class="btn-group" role="group">
-                            <button type="submit" form="startEditQuestionForm${question.questionId}" class="btn btn-primary"><fmt:message key="editsurvey.editquestion"/></button>
-                            <button type="submit" form="deleteQuestionForm${question.questionId}" class="btn btn-warning"><fmt:message key="editsurvey.deletequestion"/></button>
+        <c:set var="i" value="0"/>
+        <c:forEach items="${sessionScope.edited_survey.questions}" var="question">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <h5 class="card-title">${question.formulation}</h5>
+                        </div>
+                        <div class="col col-auto">
+                            <div class="btn-group" role="group">
+                                <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
+                                        type="submit" class="btn btn-primary"><fmt:message
+                                        key="editsurvey.editquestion"/></button>
+                                <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_QUESTION}&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
+                                        type="submit" class="btn btn-primary"><fmt:message
+                                        key="editsurvey.deletequestion"/></button>
+                            </div>
+                            <c:set var="i" value="${i+1}"/>
                         </div>
                     </div>
+
                 </div>
-
-
+                <div class="card-body">
+                    <p class="card-subtitle mb-2 text-muted"><fmt:message
+                            key="editsurvey.question.selectmultiple"/> ${question.selectMultiple}</p>
+                    <ul>
+                        <c:forEach items="${question.answers}" var="answer">
+                            <li class="card-text">${answer.answer}</li>
+                        </c:forEach>
+                    </ul>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="card-subtitle mb-2 text-muted"><fmt:message key="editsurvey.question.selectmultiple"/> ${question.selectMultiple}</p>
-                <ul>
-                    <c:forEach items="${question.answers}" var="answer">
-                        <li class="card-text">${answer.answer}</li>
-                    </c:forEach>
-                </ul>
-            </div>
-        </div>
-    </c:forEach>
+        </c:forEach>
 
-
+        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
+                type="submit" class="btn btn-primary"><fmt:message key="editsurvey.addquestion"/></button>
+    </form>
 </div>
 
 </body>

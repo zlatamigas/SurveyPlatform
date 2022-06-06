@@ -5,65 +5,70 @@ import epam.zlatamigas.surveyplatform.controller.command.CommandType;
 import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.model.entity.UserRole;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.model.entity.UserRole.GUEST;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_USER;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
+import static epam.zlatamigas.surveyplatform.model.entity.UserRole.*;
 
-@WebFilter(
-        filterName = "CheckUserStatusFilter",
-        dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
-        urlPatterns = {"/controller", "/pages/controller"})
-public class CheckUserStatusFilter implements Filter {
+//@WebFilter(
+//        filterName = "CheckUserRoleFilter",
+//        dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
+//        urlPatterns = {"/controller", "/pages/controller"})
+public class CheckUserRoleFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private EnumSet<CommandType> adminCommands;
-    private EnumSet<CommandType> userCommands;
-    private EnumSet<CommandType> guestCommands;
+    private Map<UserRole, EnumSet<CommandType>> userCommands ;
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        adminCommands = EnumSet.of(
-                DEFAULT,
-                HOME,
-                CHANGE_LOCALISATION,
-                LOGOUT,
-                LIST_USERS,
-                LIST_SURVEYS,
-                LIST_USER_CREATED_SURVEYS,
-                START_EDIT_SURVEY,
-                FINISH_EDIT_SURVEY,
-                START_EDIT_QUESTION
-        );
-        userCommands = EnumSet.of(
-                DEFAULT,
-                HOME,
-                CHANGE_LOCALISATION,
-                LOGOUT,
-                LIST_SURVEYS,
-                LIST_USER_CREATED_SURVEYS,
-                START_EDIT_SURVEY,
-                FINISH_EDIT_SURVEY,
-                START_EDIT_QUESTION
-        );
-        guestCommands = EnumSet.of(
-                DEFAULT,
-                HOME,
-                CHANGE_LOCALISATION,
-                LOGIN,
-                START_AUTHENTICATION,
-                LIST_SURVEYS
+        userCommands = Map.of(
+                ADMIN, EnumSet.of(
+                        DEFAULT,
+                        HOME,
+                        CHANGE_LOCALISATION,
+                        LOGOUT,
+                        LIST_USERS,
+                        LIST_SURVEYS,
+                        LIST_USER_CREATED_SURVEYS,
+                        START_EDIT_SURVEY,
+                        FINISH_EDIT_SURVEY,
+                        START_EDIT_QUESTION,
+                        STOP_SURVEY
+                ),
+                USER, EnumSet.of(
+                        DEFAULT,
+                        HOME,
+                        CHANGE_LOCALISATION,
+                        LOGOUT,
+                        LIST_SURVEYS,
+                        LIST_USER_CREATED_SURVEYS,
+                        START_EDIT_SURVEY,
+                        FINISH_EDIT_SURVEY,
+                        START_EDIT_QUESTION,
+                        STOP_SURVEY
+                ),
+                GUEST, EnumSet.of(
+                        DEFAULT,
+                        HOME,
+                        CHANGE_LOCALISATION,
+                        LOGIN,
+                        START_AUTHENTICATION,
+                        LIST_SURVEYS
+                )
         );
     }
 
@@ -78,14 +83,7 @@ public class CheckUserStatusFilter implements Filter {
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
         UserRole userRole = user != null ? user.getRole() : GUEST;
 
-        EnumSet<CommandType> allowedCommands = null;
-        switch (userRole) {
-            case ADMIN -> allowedCommands = adminCommands;
-            case USER -> allowedCommands = userCommands;
-            case GUEST -> allowedCommands = guestCommands;
-            default -> response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
-
+        EnumSet<CommandType> allowedCommands = userCommands.get(userRole);
         CommandType command = CommandType.defineCommandType(commandStr);
 
 //        String previousPage = (String) session.getAttribute(ATTRIBUTE_CURRENT_PAGE);

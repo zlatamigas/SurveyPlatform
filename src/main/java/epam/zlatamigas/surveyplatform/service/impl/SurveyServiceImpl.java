@@ -5,6 +5,7 @@ import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.dao.SurveyDao;
 import epam.zlatamigas.surveyplatform.model.dao.impl.SurveyDaoImpl;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
+import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 
 import java.util.List;
@@ -57,6 +58,17 @@ public class SurveyServiceImpl implements SurveyService {
     @Override
     public boolean updateParticipantSurveyResult(Survey survey) throws ServiceException {
         return false;
+    }
+
+    @Override
+    public boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws ServiceException {
+        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+
+        try {
+            return surveyDao.updateSurveyStatus(surveyId, status);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override

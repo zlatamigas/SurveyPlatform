@@ -3,6 +3,7 @@ package epam.zlatamigas.surveyplatform.service;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
+import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
 
 import java.util.List;
 
@@ -52,6 +53,8 @@ public interface SurveyService {
      * @throws ServiceException
      */
     boolean updateParticipantSurveyResult(Survey survey) throws ServiceException;
+
+    boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws ServiceException;
 
     Survey findById(int id) throws ServiceException;
 

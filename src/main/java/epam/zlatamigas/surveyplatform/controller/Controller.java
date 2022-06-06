@@ -21,7 +21,6 @@ public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-    private static final String CHARACTER_ENCODING = "UTF-8";
 
     @Override
     public void init() {
@@ -40,7 +39,6 @@ public class Controller extends HttpServlet {
 
     private void processCommand(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType(CONTENT_TYPE);
-        response.setCharacterEncoding(CHARACTER_ENCODING);
 
         String commandStr = request.getParameter(PARAMETER_COMMAND);
         Command command = CommandType.define(commandStr);

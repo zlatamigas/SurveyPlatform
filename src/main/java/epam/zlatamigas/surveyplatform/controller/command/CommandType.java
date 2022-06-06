@@ -2,8 +2,13 @@ package epam.zlatamigas.surveyplatform.controller.command;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
+import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditQuestionCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditSurveyCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.list.*;
+import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.AddAnswerCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.ChangeLocalisationCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.RemoveAnswerCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.RemoveQuestionCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.to.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.start.*;
 
 public enum CommandType {
@@ -30,11 +35,12 @@ public enum CommandType {
     // CRUD survey and its parts
     START_EDIT_SURVEY(new StartEditSurveyCommand()),
     FINISH_EDIT_SURVEY(new FinishEditSurveyCommand()),
-    START_EDIT_QUESTION(new StartEditQuestionCommand())
+    START_EDIT_QUESTION(new StartEditQuestionCommand()),
     // TODO
-    // FINISH_EDIT_QUESTION(new FinishEditQuestionCommand()),
-    // START_EDIT_ANSWER(new StartEditAnswerCommand()),
-    // FINISH_EDIT_ANSWER(new FinishEditAnswerCommand()),
+    FINISH_EDIT_QUESTION(new FinishEditQuestionCommand()),
+    REMOVE_QUESTION(new RemoveQuestionCommand()),
+    ADD_ANSWER(new AddAnswerCommand()),
+    REMOVE_ANSWER(new RemoveAnswerCommand()),
     // CANCEL_EDIT_SURVEY(new CancelEditSurveyCommand()),
     // CANCEL_EDIT_QUESTION(new CancelEditQuestionCommand()),
     // CANCEL_EDIT_ANSWER(new CancelEditAnswerCommand()),
@@ -44,6 +50,7 @@ public enum CommandType {
     // CONFIRM_DELETE_SURVEY(new ConfirmDeleteSurveyCommand()),
     // CONFIRM_DELETE_QUESTION(new ConfirmDeleteQuestionCommand()),
     // CONFIRM_DELETE_ANSWER(new ConfirmDeleteAnswerCommand()),
+    STOP_SURVEY(new StopSurveyCommand())
 
     // Participate in survey
     // TODO

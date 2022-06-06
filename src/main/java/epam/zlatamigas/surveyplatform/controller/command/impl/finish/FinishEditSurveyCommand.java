@@ -1,6 +1,7 @@
 package epam.zlatamigas.surveyplatform.controller.command.impl.finish;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
+import epam.zlatamigas.surveyplatform.controller.navigation.DataHolder;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
@@ -26,22 +27,22 @@ public class FinishEditSurveyCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
-        boolean createNew = Boolean.parseBoolean(request.getParameter(PARAMETER_CREATE_NEW_SURVEY));
-
         HttpSession session = request.getSession();
         String page = USER_SURVEYS;
 
         Survey survey = (Survey) session.getAttribute(ATTRIBUTE_EDITED_SURVEY);
         survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
         survey.setTheme(new Theme(Integer.parseInt(request.getParameter(PARAMETER_SURVEY_THEME_ID))));
-        survey.setDescription(request.getParameter(PARAMETER_SURVEY_DESCRIPTION));survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
+        survey.setDescription(request.getParameter(PARAMETER_SURVEY_DESCRIPTION));
+        survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
+
         User creator = (User)session.getAttribute(ATTRIBUTE_USER);
         survey.setCreator(creator);
         survey.setStatus(SurveyStatus.NOT_STARTED);
 
         SurveyService surveyService = SurveyServiceImpl.getInstance();
         try{
-            if(survey.getSurveyId() == -1){
+            if(survey.getSurveyId() == 0){
                 surveyService.insert(survey);
             } else {
                 surveyService.update(survey);

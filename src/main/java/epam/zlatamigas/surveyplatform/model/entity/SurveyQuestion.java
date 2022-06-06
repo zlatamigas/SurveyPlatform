@@ -12,17 +12,17 @@ public class SurveyQuestion {
     private List<SurveyQuestionAnswer> answers;
 
     public SurveyQuestion() {
-        questionId = -1;
+        questionId = 0;
         selectMultiple = false;
         answers = new ArrayList<>();
     }
 
     public SurveyQuestion(String formulation, boolean selectMultiple) {
-        this(-1, formulation, selectMultiple, new ArrayList<>());
+        this(0, formulation, selectMultiple, new ArrayList<>());
     }
 
     public SurveyQuestion(String formulation, boolean selectMultiple, List<SurveyQuestionAnswer> answers) {
-        this(-1, formulation, selectMultiple, answers);
+        this(0, formulation, selectMultiple, answers);
     }
 
     public SurveyQuestion(int questionId, String formulation, boolean selectMultiple, List<SurveyQuestionAnswer> answers) {
