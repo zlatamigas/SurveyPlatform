@@ -26,7 +26,7 @@
 
 <div class="container">
 
-    <form action="controller" method="POST">
+    <form action="controller" method="post">
         <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
         <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}" value="true">
         <button type="submit" class="btn btn-primary"><fmt:message key="usersurvey.createsurvey"/></button>
@@ -64,23 +64,23 @@
 
                         <div class="btn-toolbar justify-content-end" role="toolbar">
 
-                            <form id="startEditSurveyForm${survey.surveyId}" action="controller" method="POST">
+                            <form id="startEditSurveyForm${survey.surveyId}" action="controller" method="post">
                                 <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
                                 <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}" value="false">
                                 <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 
-                            <form id="deleteSurveyForm${survey.surveyId}" action="controller" method="POST">
+                            <form id="deleteSurveyForm${survey.surveyId}" action="controller" method="post">
                                 <input type="hidden" name="command" value="${CommandType.DELETE_SURVEY}">
                                 <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 
-                            <form id="stopSurveyForm${survey.surveyId}" action="controller" method="POST">
+                            <form id="stopSurveyForm${survey.surveyId}" action="controller" method="post">
                                 <input type="hidden" name="command" value="${CommandType.STOP_SURVEY}">
                                 <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 
-                            <form id="viewResultSurveyForm${survey.surveyId}" action="controller" method="POST">
+                            <form id="viewResultSurveyForm${survey.surveyId}" action="controller" method="post">
                                 <input type="hidden" name="command" value="">
                                 <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>

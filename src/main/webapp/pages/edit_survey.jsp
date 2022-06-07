@@ -22,7 +22,7 @@
 
 <div class="container">
 
-    <form id="editSurveyForm" action="controller" method="POST">
+    <form id="editSurveyForm" action="controller" method="post">
         <div class="form-group">
             <label for="surveyName"><fmt:message key="editsurvey.label.surveyname"/></label>
             <input name="${DataHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName"
@@ -50,8 +50,9 @@
                       rows="3">${sessionScope.edited_survey.description}</textarea>
         </div>
 
-        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_SURVEY}" type="submit"
-                class="btn btn-primary"><fmt:message key="editsurvey.savesurvey"/></button>
+        <button formmethod="post"
+                formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_SURVEY}"
+                type="submit" class="btn btn-primary"><fmt:message key="editsurvey.savesurvey"/></button>
         <hr>
 
         <c:set var="i" value="0"/>
@@ -64,11 +65,11 @@
                         </div>
                         <div class="col col-auto">
                             <div class="btn-group" role="group">
-                                <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false"
-                                        type="submit" class="btn btn-primary"><fmt:message
+                                <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
+                                        type="submit" class="btn btn-primary" formmethod="post"><fmt:message
                                         key="editsurvey.editquestion"/></button>
                                 <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_QUESTION}&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
-                                        type="submit" class="btn btn-primary"><fmt:message
+                                        type="submit" class="btn btn-primary" formmethod="post"><fmt:message
                                         key="editsurvey.deletequestion"/></button>
                             </div>
                             <c:set var="i" value="${i+1}"/>
@@ -88,8 +89,9 @@
             </div>
         </c:forEach>
 
-        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
-                type="submit" class="btn btn-primary"><fmt:message key="editsurvey.addquestion"/></button>
+        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
+                formmethod="post" type="submit"  class="btn btn-primary"><fmt:message
+                key="editsurvey.addquestion"/></button>
     </form>
 </div>
 

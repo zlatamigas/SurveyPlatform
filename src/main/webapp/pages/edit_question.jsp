@@ -22,7 +22,7 @@
 
 <div class="container">
 
-    <form id="editQuestionForm" action="controller" method="POST">
+    <form id="editQuestionForm" action="controller" method="post">
 
         <div class="form-group">
             <label for="questionFormulation"><fmt:message key="editquestion.label.questionformulation"/></label>
@@ -46,7 +46,7 @@
                                value="${answer.answer}"/>
                     </div>
                     <div class="col-auto">
-                        <button type="submit"
+                        <button type="submit" formmethod="post"
                                 formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_ANSWER}&${DataHolder.PARAMETER_ANSWER_POSITION}=${i}"
                                 class="btn btn-primary mb-3">Delete
                         </button>
@@ -56,11 +56,11 @@
             </c:forEach>
         </div>
 
-        <button type="submit" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.ADD_ANSWER}"
+        <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.ADD_ANSWER}"
                 class="btn btn-primary">Add
         </button>
         <hr>
-        <button type="submit" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_QUESTION}"
+        <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_QUESTION}"
                 class="btn btn-primary"><fmt:message
                 key="editquestion.savequestion"/></button>
 

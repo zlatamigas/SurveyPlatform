@@ -23,7 +23,7 @@
     <h1 class="display-4"><fmt:message key="authorisation.header"/></h1>
     <hr class="my-4">
 
-    <form action="controller" method="POST">
+    <form action="controller" method="post">
         <input type="hidden" name="command" value="${CommandType.LOGIN}">
         <div class="form-group">
             <label><fmt:message key="authorisation.email"/></label>
