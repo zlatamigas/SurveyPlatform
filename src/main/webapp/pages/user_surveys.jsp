@@ -71,7 +71,7 @@
                             </form>
 
                             <form id="deleteSurveyForm${survey.surveyId}" action="controller" method="POST">
-                                <input type="hidden" name="command" value="">
+                                <input type="hidden" name="command" value="${CommandType.DELETE_SURVEY}">
                                 <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 

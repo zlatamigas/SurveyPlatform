@@ -20,17 +20,6 @@
 
 <jsp:include page="header.jsp"/>
 
-<%--<form id="editQuestionForm" action="controller" method="POST">--%>
-<%--    <input form="editQuestionForm" type="hidden" name="command" value="finish_edit_question">--%>
-<%--</form>--%>
-<%--<form id="deleteAnswerForm" action="controller" method="POST">--%>
-<%--    <input form="deleteAnswerForm" type="hidden" name="command" value="delete_answer">--%>
-<%--</form>--%>
-<%--<form id="addAnswerForm" action="controller" method="POST">--%>
-<%--    <input form="addAnswerForm" type="hidden" name="command" value="add_answer">--%>
-<%--    <input form="addAnswerForm" type="hidden" name="${DataHolder.PARAMETER_QUESTION_ID}" value="${sessionScope.edited_question.questionId}">--%>
-<%--</form>--%>
-
 <div class="container">
 
     <form id="editQuestionForm" action="controller" method="POST">

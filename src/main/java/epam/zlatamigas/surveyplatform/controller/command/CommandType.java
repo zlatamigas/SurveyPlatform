@@ -4,10 +4,7 @@ package epam.zlatamigas.surveyplatform.controller.command;
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditQuestionCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditSurveyCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.AddAnswerCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.ChangeLocalisationCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.RemoveAnswerCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.RemoveQuestionCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.to.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.start.*;
 
@@ -44,6 +41,7 @@ public enum CommandType {
     // CANCEL_EDIT_SURVEY(new CancelEditSurveyCommand()),
     // CANCEL_EDIT_QUESTION(new CancelEditQuestionCommand()),
     // CANCEL_EDIT_ANSWER(new CancelEditAnswerCommand()),
+    DELETE_SURVEY(new DeleteSurveyCommand()),
     // SHOW_DELETE_SURVEY(new ShowDeleteSurveyCommand()),
     // SHOW_DELETE_QUESTION(new ShowDeleteQuestionCommand()),
     // SHOW_DELETE_ANSWER(new ShowDeleteAnswerCommand()),

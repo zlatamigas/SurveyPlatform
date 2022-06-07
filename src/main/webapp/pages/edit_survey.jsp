@@ -64,7 +64,7 @@
                         </div>
                         <div class="col col-auto">
                             <div class="btn-group" role="group">
-                                <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
+                                <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false"
                                         type="submit" class="btn btn-primary"><fmt:message
                                         key="editsurvey.editquestion"/></button>
                                 <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_QUESTION}&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"

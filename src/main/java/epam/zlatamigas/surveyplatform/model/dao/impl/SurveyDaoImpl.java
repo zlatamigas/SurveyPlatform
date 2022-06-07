@@ -14,8 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static epam.zlatamigas.surveyplatform.model.dao.DbTableInfo.*;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
@@ -62,28 +60,19 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
     private static final String DELETE_SURVEY_STATEMENT = "DELETE FROM surveys WHERE id_survey = ?";
     private static final String DELETE_QUESTION_STATEMENT = "DELETE FROM questions WHERE id_question = ?";
-    private static final String DELETE_QUESTION_ANSWER_STATEMENT = "DELETE FROM question_answer WHERE id_question_answer = ?";
+    private static final String DELETE_QUESTION_ANSWER_STATEMENT = "DELETE FROM question_answers WHERE id_question_answer = ?";
 
 
     // Find survey info statements
 
     private static final String FIND_ALL_SURVEYS_STATEMENT =
-            "SELECT * FROM surveys";
+            "SELECT id_survey, survey_name, survey_description, survey_status, theme_id, creator_id FROM surveys";
     private static final String FIND_SURVEY_BY_ID_STATEMENT =
             "SELECT id_survey, survey_name, survey_status, survey_description, theme_id, theme_name, theme_status FROM surveys INNER JOIN themes on theme_id = id_theme WHERE id_survey = ?";
-    private static final String FIND_SURVEY_QUESTION_BY_ID_STATEMENT =
-            "SELECT * FROM questions WHERE id_question = ?";
     private static final String FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT =
-            "SELECT * FROM questions WHERE survey_id = ?";
-    private static final String FIND_SURVEY_QUESTION_ANSWER_BY_ID_STATEMENT =
-            "SELECT * FROM question_answers WHERE id_question_answer = ?";
+            "SELECT id_question, formulation, select_multiple FROM questions WHERE survey_id = ?";
     private static final String FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT =
-            "SELECT * FROM question_answers WHERE question_id = ?";
-    private static final String FIND_SURVEY_ID_BY_NAME_STATEMENT =
-            "SELECT id_survey FROM surveys WHERE survey_name = ?";
-    private static final String FIND_SURVEY_QUESTION_ID_BY_FORMULATION_AND_SURVEY_ID_STATEMENT =
-            "SELECT id_question FROM questions WHERE formulation = ? AND survey_id = ?";
-
+            "SELECT id_question_answer, answer, selected_count FROM question_answers WHERE question_id = ?";
     private static final String FIND_PARTICIPANT_SURVEY_COMMON_INFO_BY_ID_STATEMENT =
             "SELECT survey_name, survey_description, theme_id FROM surveys WHERE id_survey = ?";
     private static final String FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT =
@@ -210,86 +199,120 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             connection.setAutoCommit(false);
 
             // 1. Update common survey data
-            if (survey.getName() != oldSurvey.getName()
-                    || survey.getDescription() != oldSurvey.getDescription()
-                    || survey.getStatus().name() != oldSurvey.getStatus().name()
-                    || survey.getTheme().getThemeId() != oldSurvey.getTheme().getThemeId()
-                    || survey.getCreator().getUserId() != oldSurvey.getCreator().getUserId()) {
 
-                PreparedStatement psInsertSurvey =
-                        connection.prepareStatement(UPDATE_SURVEY_STATEMENT, RETURN_GENERATED_KEYS);
-                psInsertSurvey.setString(1, survey.getName());
-                psInsertSurvey.setString(2, survey.getDescription());
-                psInsertSurvey.setString(3, survey.getStatus().name());
-                psInsertSurvey.setInt(4, survey.getTheme().getThemeId());
-                psInsertSurvey.setInt(5, survey.getCreator().getUserId());
-                psInsertSurvey.setInt(6, surveyId);
-                psInsertSurvey.executeUpdate();
+            try (PreparedStatement psUpdateSurvey =
+                         connection.prepareStatement(UPDATE_SURVEY_STATEMENT, RETURN_GENERATED_KEYS)) {
+                psUpdateSurvey.setString(1, survey.getName());
+                psUpdateSurvey.setString(2, survey.getDescription());
+                psUpdateSurvey.setString(3, survey.getStatus().name());
+                psUpdateSurvey.setInt(4, survey.getTheme().getThemeId());
+                psUpdateSurvey.setInt(5, survey.getCreator().getUserId());
+                psUpdateSurvey.setInt(6, surveyId);
+                psUpdateSurvey.executeUpdate();
             }
 
-
-            // 2. Sort questions
             List<SurveyQuestion> oldQuestions = oldSurvey.getQuestions();
             List<SurveyQuestion> newQuestions = survey.getQuestions();
 
-            for (SurveyQuestion newQuestion : newQuestions) {
-                // 2.1. Search for question with same id in old questions (result: updated or new)
-                Optional<SurveyQuestion> updateQuestionOptional = oldQuestions.stream()
-                        .filter(oldQuestion -> oldQuestion.getQuestionId() == newQuestion.getQuestionId())
-                        .findFirst();
+            // 2.1. Search for question with same id in old questions (result: updated or new)
 
-                // Updated
-                if(updateQuestionOptional.isPresent()){
+            for (SurveyQuestion question : newQuestions) {
+                if (question.getQuestionId() > 0) {
+                    // 2.2 Updated question
 
-                    // TODO - Update
-                    // 0 - same common and answers
-                    // 1 - same common, diff answers
-                    // 2 - diff common, common answers
-                    // 3 - diff common and answers
+                    try (PreparedStatement psUpdateSurveyQuestion = connection.prepareStatement(UPDATE_SURVEY_QUESTION_STATEMENT)) {
+                        psUpdateSurveyQuestion.setBoolean(1, question.isSelectMultiple());
+                        psUpdateSurveyQuestion.setString(2, question.getFormulation());
+                        psUpdateSurveyQuestion.setInt(3, surveyId);
+                        psUpdateSurveyQuestion.setInt(4, question.getQuestionId());
+                        psUpdateSurveyQuestion.executeUpdate();
+                    }
+
+                    // 2.3 Update answers
+                    SurveyQuestion oldQuestion = oldQuestions.stream()
+                            .filter(q -> q.getQuestionId() == question.getQuestionId())
+                            .findFirst()
+                            .orElseThrow(() -> new DaoException("No question found with id = " + question.getQuestionId()));
+
+                    for (SurveyQuestionAnswer answer : question.getAnswers()) {
+                        if (answer.getQuestionAnswerId() > 0) {
+                            // 2.3.1. Update answer
+
+                            try (PreparedStatement psUpdateSurveyQuestionAnswer =
+                                         connection.prepareStatement(UPDATE_SURVEY_QUESTION_ANSWER_STATEMENT)) {
+                                psUpdateSurveyQuestionAnswer.setString(1, answer.getAnswer());
+                                psUpdateSurveyQuestionAnswer.setInt(2, answer.getSelectedCount());
+                                psUpdateSurveyQuestionAnswer.setInt(3, question.getQuestionId());
+                                psUpdateSurveyQuestionAnswer.setInt(4, answer.getQuestionAnswerId());
+                                psUpdateSurveyQuestionAnswer.executeUpdate();
+                            }
+                        } else {
+                            // 2.3.2. New answer
+
+                            try (PreparedStatement psInsertSurveyQuestionAnswer =
+                                         connection.prepareStatement(INSERT_SURVEY_QUESTION_ANSWER_STATEMENT)) {
+                                psInsertSurveyQuestionAnswer.setString(1, answer.getAnswer());
+                                psInsertSurveyQuestionAnswer.setInt(2, answer.getSelectedCount());
+                                psInsertSurveyQuestionAnswer.setInt(3, question.getQuestionId());
+
+                                psInsertSurveyQuestionAnswer.executeUpdate();
+                            }
+                        }
+                    }
+
+                    // 2.3.3 Delete answer
+                    for (SurveyQuestionAnswer deleteAnswer : oldQuestion.getAnswers()) {
+                        if (question.getAnswers().stream()
+                                .noneMatch(newQuestionAnswer -> newQuestionAnswer.getQuestionAnswerId() == deleteAnswer.getQuestionAnswerId())) {
+                            try (PreparedStatement psDeleteQuestionAnswer = connection.prepareStatement(DELETE_QUESTION_ANSWER_STATEMENT)) {
+                                psDeleteQuestionAnswer.setInt(1, deleteAnswer.getQuestionAnswerId());
+                                psDeleteQuestionAnswer.executeUpdate();
+                            }
+
+                        }
+                    }
+
 
                 } else {
-                // New
+                    // 2.3 New question
 
-                    // TODO - Add new
+                    try (PreparedStatement psInsertSurveyQuestion = connection.prepareStatement(INSERT_SURVEY_QUESTION_STATEMENT, RETURN_GENERATED_KEYS)) {
+                        psInsertSurveyQuestion.setBoolean(1, question.isSelectMultiple());
+                        psInsertSurveyQuestion.setString(2, question.getFormulation());
+                        psInsertSurveyQuestion.setInt(3, surveyId);
+                        psInsertSurveyQuestion.executeUpdate();
 
+                        // Get id of inserted question
+                        ResultSet rsSurveyQuestionId = psInsertSurveyQuestion.getGeneratedKeys();
+                        if (rsSurveyQuestionId.next()) {
+                            int surveyQuestionId = rsSurveyQuestionId.getInt(1);
+
+                            // Insert survey question answers
+                            for (SurveyQuestionAnswer answer : question.getAnswers()) {
+                                try (PreparedStatement psInsertSurveyQuestionAnswer =
+                                             connection.prepareStatement(INSERT_SURVEY_QUESTION_ANSWER_STATEMENT)) {
+                                    psInsertSurveyQuestionAnswer.setString(1, answer.getAnswer());
+                                    psInsertSurveyQuestionAnswer.setInt(2, answer.getSelectedCount());
+                                    psInsertSurveyQuestionAnswer.setInt(3, surveyQuestionId);
+                                    psInsertSurveyQuestionAnswer.executeUpdate();
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-            // Deleted
-            oldQuestions.stream()
-                    .filter(question ->  newQuestions.stream()
-                            .noneMatch(newQuestion -> newQuestion.getQuestionId() == question.getQuestionId()))
-                    .forEach(deleteQuestion -> {
-                        // TODO - Delete
-                    });
+            // 2.4 Delete question
+            for (SurveyQuestion deleteQuestion : oldQuestions) {
+                if (newQuestions.stream()
+                        .noneMatch(newQuestion -> newQuestion.getQuestionId() == deleteQuestion.getQuestionId())) {
+                    try (PreparedStatement psDeleteQuestion = connection.prepareStatement(DELETE_QUESTION_STATEMENT)) {
+                        psDeleteQuestion.setInt(1, deleteQuestion.getQuestionId());
+                        psDeleteQuestion.executeUpdate();
+                    }
 
-
-            // ---------------------------------
-            // Update survey questions
-            for (SurveyQuestion question : survey.getQuestions()) {
-
-                int surveyQuestionId = question.getQuestionId();
-                PreparedStatement psInsertSurveyQuestion =
-                        connection.prepareStatement(UPDATE_SURVEY_QUESTION_STATEMENT, RETURN_GENERATED_KEYS);
-                psInsertSurveyQuestion.setBoolean(1, question.isSelectMultiple());
-                psInsertSurveyQuestion.setString(2, question.getFormulation());
-                psInsertSurveyQuestion.setInt(3, surveyId);
-                psInsertSurveyQuestion.setInt(4, surveyQuestionId);
-                psInsertSurveyQuestion.executeUpdate();
-
-                // Insert survey question answers
-                for (SurveyQuestionAnswer answer : question.getAnswers()) {
-
-                    PreparedStatement psInsertSurveyQuestionAnswer =
-                            connection.prepareStatement(UPDATE_SURVEY_QUESTION_ANSWER_STATEMENT, RETURN_GENERATED_KEYS);
-                    psInsertSurveyQuestionAnswer.setString(1, answer.getAnswer());
-                    psInsertSurveyQuestionAnswer.setInt(2, answer.getSelectedCount());
-                    psInsertSurveyQuestionAnswer.setInt(3, surveyQuestionId);
-                    psInsertSurveyQuestionAnswer.setInt(4, answer.getQuestionAnswerId());
-                    psInsertSurveyQuestionAnswer.executeUpdate();
                 }
             }
-            // ---------------------------------
 
             connection.commit();
 
@@ -314,91 +337,6 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
         return oldSurvey;
     }
-
-    // OLD
-//    @Override
-//    public Survey update(Survey survey) throws DaoException {
-//
-//        Survey oldSurvey = findById(survey.getSurveyId());
-//        int surveyId = oldSurvey.getSurveyId();
-//
-//        Connection connection = null;
-//        try {
-//            connection = ConnectionPool.getInstance().getConnection();
-//            connection.setAutoCommit(false);
-//
-//            // Update survey data
-//            PreparedStatement psInsertSurvey =
-//                    connection.prepareStatement(UPDATE_SURVEY_STATEMENT, RETURN_GENERATED_KEYS);
-//            psInsertSurvey.setString(1, survey.getName());
-//            psInsertSurvey.setString(2, survey.getDescription());
-//            psInsertSurvey.setString(3, survey.getStatus().name());
-//            psInsertSurvey.setInt(4, survey.getTheme().getThemeId());
-//            psInsertSurvey.setInt(5, survey.getCreator().getUserId());
-//            psInsertSurvey.setInt(6, surveyId);
-//            psInsertSurvey.executeUpdate();
-//
-//            // Sort questions
-//            List<SurveyQuestion> oldQuestions = oldSurvey.getQuestions();
-//            List<SurveyQuestion> newQuestions = survey.getQuestions();
-//
-//            List<SurveyQuestion> updatedQuestions = new ArrayList<>();
-//            List<SurveyQuestion> createdQuestions = new ArrayList<>();
-//            List<SurveyQuestion> deletedQuestions = new ArrayList<>();
-//
-//            for(SurveyQuestion question : oldQuestions){
-//
-//            }
-//
-//            // Update survey questions
-//
-//            for (SurveyQuestion question : survey.getQuestions()) {
-//
-//                int surveyQuestionId = question.getQuestionId();
-//                PreparedStatement psInsertSurveyQuestion =
-//                        connection.prepareStatement(UPDATE_SURVEY_QUESTION_STATEMENT, RETURN_GENERATED_KEYS);
-//                psInsertSurveyQuestion.setBoolean(1, question.isSelectMultiple());
-//                psInsertSurveyQuestion.setString(2, question.getFormulation());
-//                psInsertSurveyQuestion.setInt(3, surveyId);
-//                psInsertSurveyQuestion.setInt(4, surveyQuestionId);
-//                psInsertSurveyQuestion.executeUpdate();
-//
-//                // Insert survey question answers
-//                for (SurveyQuestionAnswer answer : question.getAnswers()) {
-//
-//                    PreparedStatement psInsertSurveyQuestionAnswer =
-//                            connection.prepareStatement(UPDATE_SURVEY_QUESTION_ANSWER_STATEMENT, RETURN_GENERATED_KEYS);
-//                    psInsertSurveyQuestionAnswer.setString(1, answer.getAnswer());
-//                    psInsertSurveyQuestionAnswer.setInt(2, answer.getSelectedCount());
-//                    psInsertSurveyQuestionAnswer.setInt(3, surveyQuestionId);
-//                    psInsertSurveyQuestionAnswer.setInt(4, answer.getQuestionAnswerId());
-//                    psInsertSurveyQuestionAnswer.executeUpdate();
-//                }
-//            }
-//
-//            connection.commit();
-//
-//        } catch (SQLException e) {
-//            try {
-//                connection.rollback();
-//            } catch (SQLException ex) {
-//                logger.error(ex.getMessage());
-//            }
-//            logger.error(e.getMessage());
-//            throw new DaoException(e.getMessage(), e);
-//        } finally {
-//            if (connection != null) {
-//                try {
-//                    connection.setAutoCommit(true);
-//                } catch (SQLException ex) {
-//                    logger.error(ex.getMessage());
-//                }
-//                ConnectionPool.getInstance().releaseConnection(connection);
-//            }
-//        }
-//
-//        return oldSurvey;
-//    }
 
     @Override
     public Survey findById(int id) throws DaoException {
