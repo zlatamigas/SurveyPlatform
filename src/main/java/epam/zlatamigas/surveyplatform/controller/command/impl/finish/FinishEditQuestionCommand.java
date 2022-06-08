@@ -13,10 +13,8 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.EDIT_QUESTION;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.EDIT_SURVEY;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
@@ -34,9 +32,9 @@ public class FinishEditQuestionCommand implements Command {
         int answerNumber = question.getAnswers().size();
         List<SurveyQuestionAnswer> answers = new LinkedList<>();
         String answer;
-        for(int i = 0; i < answerNumber; i++){
+        for (int i = 0; i < answerNumber; i++) {
             answer = request.getParameter(DataHolder.PARAMETER_ANSWER_TEXT + i);
-            answers.add(new SurveyQuestionAnswer(answer));
+            answers.add(new SurveyQuestionAnswer.SurveyQuestionAnswerBuilder().setAnswer(answer).getSurveyQuestionAnswer());
         }
 
         question.setFormulation(formulation);
@@ -44,11 +42,11 @@ public class FinishEditQuestionCommand implements Command {
         question.setAnswers(answers);
 
         Survey survey = (Survey) session.getAttribute(ATTRIBUTE_EDITED_SURVEY);
-        if(question.getQuestionId() != 0){
-            List<SurveyQuestion> questions = new ArrayList<>(survey.getQuestions());
+        if (question.getQuestionId() != 0) {
+            List<SurveyQuestion> questions = survey.getQuestions();
             int i = 0;
-            while (i < questions.size()){
-                if(questions.get(i).getQuestionId() == question.getQuestionId()){
+            while (i < questions.size()) {
+                if (questions.get(i).getQuestionId() == question.getQuestionId()) {
                     questions.set(i, question);
                     break;
                 }

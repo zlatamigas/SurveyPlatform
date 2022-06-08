@@ -22,6 +22,10 @@
 
 <div class="container">
 
+    <form id="cancelEditSurveyForm" action="controller" method="post">
+        <input type="hidden" name="command" value="${CommandType.CANCEL_EDIT_SURVEY}">
+    </form>
+
     <form id="editSurveyForm" action="controller" method="post">
         <div class="form-group">
             <label for="surveyName"><fmt:message key="editsurvey.label.surveyname"/></label>
@@ -50,9 +54,6 @@
                       rows="3">${sessionScope.edited_survey.description}</textarea>
         </div>
 
-        <button formmethod="post"
-                formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_SURVEY}"
-                type="submit" class="btn btn-primary"><fmt:message key="editsurvey.savesurvey"/></button>
         <hr>
 
         <c:set var="i" value="0"/>
@@ -80,9 +81,9 @@
                 <div class="card-body">
                     <p class="card-subtitle mb-2 text-muted"><fmt:message
                             key="editsurvey.question.selectmultiple"/> ${question.selectMultiple}</p>
-                    <ul>
+                    <ul class="list-group list-group-flush">
                         <c:forEach items="${question.answers}" var="answer">
-                            <li class="card-text">${answer.answer}</li>
+                            <li class="card-text list-group-item">${answer.answer}</li>
                         </c:forEach>
                     </ul>
                 </div>
@@ -90,9 +91,22 @@
         </c:forEach>
 
         <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
-                formmethod="post" type="submit"  class="btn btn-primary"><fmt:message
+                formmethod="post" type="submit" class="btn btn-primary"><fmt:message
                 key="editsurvey.addquestion"/></button>
+
+        <hr>
+
+
+        <div class="btn-group" role="group">
+            <button formmethod="post"
+                    formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_SURVEY}"
+                    type="submit" class="btn btn-success"><fmt:message key="editsurvey.savesurvey"/></button>
+            <button form="cancelEditSurveyForm" type="submit" class="btn btn-warning">
+                <fmt:message key="editsurvey.cancel"/></button>
+        </div>
     </form>
+
+
 </div>
 
 </body>

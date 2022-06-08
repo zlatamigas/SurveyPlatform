@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -47,7 +46,7 @@ public class CheckUserRoleFilter implements Filter {
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
                         START_EDIT_QUESTION,
-                        STOP_SURVEY
+                        CHANGE_SURVEY_STATUS_CLOSED
                 ),
                 USER, EnumSet.of(
                         DEFAULT,
@@ -59,7 +58,7 @@ public class CheckUserRoleFilter implements Filter {
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
                         START_EDIT_QUESTION,
-                        STOP_SURVEY
+                        CHANGE_SURVEY_STATUS_CLOSED
                 ),
                 GUEST, EnumSet.of(
                         DEFAULT,

@@ -38,9 +38,8 @@ public enum CommandType {
     REMOVE_QUESTION(new RemoveQuestionCommand()),
     ADD_ANSWER(new AddAnswerCommand()),
     REMOVE_ANSWER(new RemoveAnswerCommand()),
-    // CANCEL_EDIT_SURVEY(new CancelEditSurveyCommand()),
-    // CANCEL_EDIT_QUESTION(new CancelEditQuestionCommand()),
-    // CANCEL_EDIT_ANSWER(new CancelEditAnswerCommand()),
+    CANCEL_EDIT_SURVEY(new CancelEditSurveyCommand()),
+    CANCEL_EDIT_QUESTION(new CancelEditQuestionCommand()),
     DELETE_SURVEY(new DeleteSurveyCommand()),
     // SHOW_DELETE_SURVEY(new ShowDeleteSurveyCommand()),
     // SHOW_DELETE_QUESTION(new ShowDeleteQuestionCommand()),
@@ -48,7 +47,8 @@ public enum CommandType {
     // CONFIRM_DELETE_SURVEY(new ConfirmDeleteSurveyCommand()),
     // CONFIRM_DELETE_QUESTION(new ConfirmDeleteQuestionCommand()),
     // CONFIRM_DELETE_ANSWER(new ConfirmDeleteAnswerCommand()),
-    STOP_SURVEY(new StopSurveyCommand())
+    CHANGE_SURVEY_STATUS_CLOSED(new ChangeSurveyStatusClosedCommand()),
+    CHANGE_SURVEY_STATUS_STARTED(new ChangeSurveyStatusStartedCommand())
 
     // Participate in survey
     // TODO

@@ -10,7 +10,6 @@ import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestionAnswer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class AddAnswerCommand implements Command {
         String answer;
         for(int i = 0; i < answerNumber; i++){
             answer = request.getParameter(DataHolder.PARAMETER_ANSWER_TEXT + i);
-            answers.add(new SurveyQuestionAnswer(answer));
+            answers.add(new SurveyQuestionAnswer.SurveyQuestionAnswerBuilder().setAnswer(answer).getSurveyQuestionAnswer());
         }
         answers.add(new SurveyQuestionAnswer());
 

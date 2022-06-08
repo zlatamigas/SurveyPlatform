@@ -15,17 +15,6 @@ public class SurveyUserAttempt {
         survey = new Survey();
     }
 
-    public SurveyUserAttempt(Date finishedDate, User user, Survey survey) {
-        this(0, finishedDate, user, survey);
-    }
-
-    public SurveyUserAttempt(int surveyAttemptId, Date finishedDate, User user, Survey survey) {
-        this.surveyAttemptId = surveyAttemptId;
-        this.finishedDate = finishedDate;
-        this.user = user;
-        this.survey = survey;
-    }
-
     public int getSurveyAttemptId() {
         return surveyAttemptId;
     }
@@ -56,6 +45,39 @@ public class SurveyUserAttempt {
 
     public void setSurvey(Survey survey) {
         this.survey = survey;
+    }
+
+    public static class SurveyUserAttemptBuilder {
+        private final SurveyUserAttempt surveyUserAttempt;
+
+        public SurveyUserAttemptBuilder() {
+            surveyUserAttempt = new SurveyUserAttempt();
+        }
+
+
+        public SurveyUserAttemptBuilder setSurveyAttemptId(int surveyAttemptId) {
+            surveyUserAttempt.setSurveyAttemptId(surveyAttemptId);
+            return this;
+        }
+
+        public SurveyUserAttemptBuilder setFinishedDate(Date finishedDate) {
+            surveyUserAttempt.setFinishedDate(finishedDate);
+            return this;
+        }
+
+        public SurveyUserAttemptBuilder setUser(User user) {
+            surveyUserAttempt.setUser(user);
+            return this;
+        }
+
+        public SurveyUserAttemptBuilder setSurvey(Survey survey) {
+            surveyUserAttempt.setSurvey(survey);
+            return this;
+        }
+
+        public SurveyUserAttempt getSurveyUserAttempt() {
+            return surveyUserAttempt;
+        }
     }
 
     @Override

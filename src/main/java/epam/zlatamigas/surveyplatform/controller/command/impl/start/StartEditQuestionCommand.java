@@ -33,7 +33,7 @@ public class StartEditQuestionCommand implements Command {
 
         Survey survey = (Survey) session.getAttribute(ATTRIBUTE_EDITED_SURVEY);
         survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
-        survey.setTheme(new Theme(Integer.parseInt(request.getParameter(PARAMETER_SURVEY_THEME_ID))));
+        survey.setTheme(new Theme.ThemeBuilder().setThemeId(Integer.parseInt(request.getParameter(PARAMETER_SURVEY_THEME_ID))).getTheme());
         survey.setDescription(request.getParameter(PARAMETER_SURVEY_DESCRIPTION));
         survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
 
@@ -44,7 +44,7 @@ public class StartEditQuestionCommand implements Command {
             int questionId = Integer.parseInt(request.getParameter(PARAMETER_QUESTION_ID));
 
             Optional<SurveyQuestion> surveyQuestion = survey.getQuestions().stream().filter(q -> q.getQuestionId() == questionId).findFirst();
-            question = surveyQuestion.orElseGet(SurveyQuestion::new);
+            question = surveyQuestion.isPresent() ? surveyQuestion.get().clone() : new SurveyQuestion();
         }
 
         String page = EDIT_QUESTION;

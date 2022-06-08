@@ -354,10 +354,11 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             if (rsSurvey.next()) {
 
-                Theme theme = new Theme(
-                        rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN),
-                        rsSurvey.getString(THEMES_TABLE_NAME_COLUMN),
-                        ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)));
+                Theme theme = new Theme.ThemeBuilder()
+                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
+                        .getTheme();
 
 
                 survey = new Survey.SurveyBuilder()
@@ -508,10 +509,11 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             while (rsSurvey.next()) {
 
-                Theme theme = new Theme(
-                        rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN),
-                        rsSurvey.getString(THEMES_TABLE_NAME_COLUMN),
-                        ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)));
+                Theme theme = new Theme.ThemeBuilder()
+                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
+                        .getTheme();
 
                 survey = new Survey.SurveyBuilder()
                         .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
@@ -544,10 +546,11 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
             while (rsSurvey.next()) {
 
-                Theme theme = new Theme(
-                        rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN),
-                        rsSurvey.getString(THEMES_TABLE_NAME_COLUMN),
-                        ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)));
+                Theme theme = new Theme.ThemeBuilder()
+                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
+                        .getTheme();
 
                 survey = new Survey.SurveyBuilder()
                         .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))

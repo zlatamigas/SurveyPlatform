@@ -76,7 +76,12 @@
                             </form>
 
                             <form id="stopSurveyForm${survey.surveyId}" action="controller" method="post">
-                                <input type="hidden" name="command" value="${CommandType.STOP_SURVEY}">
+                                <input type="hidden" name="command" value="${CommandType.CHANGE_SURVEY_STATUS_CLOSED}">
+                                <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
+                            </form>
+
+                            <form id="startSurveyForm${survey.surveyId}" action="controller" method="post">
+                                <input type="hidden" name="command" value="${CommandType.CHANGE_SURVEY_STATUS_STARTED}">
                                 <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 
@@ -88,6 +93,8 @@
                             <div class="btn-group" role="group">
                                 <c:choose>
                                     <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
+                                        <button form="startSurveyForm${survey.surveyId}" type="submit" class="btn btn-success"><fmt:message
+                                                key="usersurvey.startsurvey"/></button>
                                         <button form="startEditSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary"><fmt:message
                                                 key="usersurvey.editsurvey"/></button>
                                     </c:when>

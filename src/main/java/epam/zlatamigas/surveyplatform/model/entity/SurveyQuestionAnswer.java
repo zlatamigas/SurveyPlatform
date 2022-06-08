@@ -1,6 +1,7 @@
 package epam.zlatamigas.surveyplatform.model.entity;
 
-public class SurveyQuestionAnswer {
+public class SurveyQuestionAnswer implements Cloneable{
+
     private int questionAnswerId;
     private String answer;
     private int selectedCount;
@@ -8,21 +9,6 @@ public class SurveyQuestionAnswer {
     public SurveyQuestionAnswer() {
         questionAnswerId = 0;
         selectedCount = 0;
-    }
-
-    public SurveyQuestionAnswer(String answer) {
-        this();
-        this.answer = answer;
-    }
-
-    public SurveyQuestionAnswer(String answer, int selectedCount) {
-        this(0, answer, selectedCount);
-    }
-
-    public SurveyQuestionAnswer(int questionAnswerId, String answer, int selectedCount) {
-        this.questionAnswerId = questionAnswerId;
-        this.answer = answer;
-        this.selectedCount = selectedCount;
     }
 
     public int getQuestionAnswerId() {
@@ -47,6 +33,33 @@ public class SurveyQuestionAnswer {
 
     public void setSelectedCount(int selectedCount) {
         this.selectedCount = selectedCount;
+    }
+
+    public static class SurveyQuestionAnswerBuilder {
+        private final SurveyQuestionAnswer surveyQuestionAnswer;
+
+        public SurveyQuestionAnswerBuilder() {
+            surveyQuestionAnswer = new SurveyQuestionAnswer();
+        }
+
+        public SurveyQuestionAnswerBuilder setQuestionAnswerId(int questionAnswerId) {
+            surveyQuestionAnswer.setQuestionAnswerId(questionAnswerId);
+            return this;
+        }
+
+        public SurveyQuestionAnswerBuilder setAnswer(String answer) {
+            surveyQuestionAnswer.setAnswer(answer);
+            return this;
+        }
+
+        public SurveyQuestionAnswerBuilder setSelectedCount(int selectedCount) {
+            surveyQuestionAnswer.setSelectedCount(selectedCount);
+            return this;
+        }
+
+        public SurveyQuestionAnswer getSurveyQuestionAnswer() {
+            return surveyQuestionAnswer;
+        }
     }
 
     @Override
@@ -74,6 +87,15 @@ public class SurveyQuestionAnswer {
         hash = seed * hash + selectedCount;
 
         return hash;
+    }
+
+    @Override
+    public SurveyQuestionAnswer clone() {
+        return new SurveyQuestionAnswerBuilder()
+                .setQuestionAnswerId(questionAnswerId)
+                .setAnswer(answer)
+                .setSelectedCount(selectedCount)
+                .getSurveyQuestionAnswer();
     }
 
     @Override

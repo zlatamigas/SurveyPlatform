@@ -1,6 +1,6 @@
 package epam.zlatamigas.surveyplatform.model.entity;
 
-public class Theme extends AbstractEntity {
+public class Theme extends AbstractEntity implements Cloneable{
     private int themeId;
     private String themeName;
     private ThemeStatus themeStatus;
@@ -9,21 +9,6 @@ public class Theme extends AbstractEntity {
         themeId = 0;
         themeStatus = ThemeStatus.WAITING;
     }
-
-    public Theme(int themeId) {
-        this.themeId = themeId;
-    }
-
-    public Theme(String themeName, ThemeStatus themeStatus) {
-        this(0, themeName, themeStatus);
-    }
-
-    public Theme(int themeId, String themeName, ThemeStatus themeStatus) {
-        this.themeId = themeId;
-        this.themeName = themeName;
-        this.themeStatus = themeStatus;
-    }
-
 
     public int getThemeId() {
         return themeId;
@@ -47,6 +32,34 @@ public class Theme extends AbstractEntity {
 
     public void setThemeStatus(ThemeStatus themeStatus) {
         this.themeStatus = themeStatus;
+    }
+
+    public static class ThemeBuilder {
+        private final Theme theme;
+
+        public ThemeBuilder() {
+            theme = new Theme();
+        }
+
+        public ThemeBuilder setThemeId(int themeId) {
+            theme.setThemeId(themeId);
+            return this;
+        }
+
+        public ThemeBuilder setThemeName(String themeName) {
+            theme.setThemeName(themeName);
+            return this;
+        }
+
+        public ThemeBuilder setThemeStatus(ThemeStatus themeStatus) {
+            theme.setThemeStatus(themeStatus);
+            return this;
+        }
+
+
+        public Theme getTheme() {
+            return theme;
+        }
     }
 
     @Override
@@ -74,6 +87,15 @@ public class Theme extends AbstractEntity {
         hash = seed * hash + (themeStatus != null ? themeStatus.hashCode() : 0);
 
         return hash;
+    }
+
+    @Override
+    public Theme clone() {
+        return new ThemeBuilder()
+                .setThemeId(themeId)
+                .setThemeName(themeName)
+                .setThemeStatus(themeStatus)
+                .getTheme();
     }
 
     @Override

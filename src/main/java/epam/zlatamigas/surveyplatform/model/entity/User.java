@@ -3,7 +3,7 @@ package epam.zlatamigas.surveyplatform.model.entity;
 
 import java.time.LocalDate;
 
-public class User extends AbstractEntity {
+public class User extends AbstractEntity{
 
     private int userId;
     private String email;

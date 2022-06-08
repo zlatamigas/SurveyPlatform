@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SurveyQuestion {
+public class SurveyQuestion implements Cloneable {
 
     private int questionId;
     private String formulation;
@@ -15,21 +15,6 @@ public class SurveyQuestion {
         questionId = 0;
         selectMultiple = false;
         answers = new ArrayList<>();
-    }
-
-    public SurveyQuestion(String formulation, boolean selectMultiple) {
-        this(0, formulation, selectMultiple, new ArrayList<>());
-    }
-
-    public SurveyQuestion(String formulation, boolean selectMultiple, List<SurveyQuestionAnswer> answers) {
-        this(0, formulation, selectMultiple, answers);
-    }
-
-    public SurveyQuestion(int questionId, String formulation, boolean selectMultiple, List<SurveyQuestionAnswer> answers) {
-        this.questionId = questionId;
-        this.formulation = formulation;
-        this.selectMultiple = selectMultiple;
-        this.answers = answers;
     }
 
     public int getQuestionId() {
@@ -72,6 +57,38 @@ public class SurveyQuestion {
         return answers.remove(answer);
     }
 
+    public static class SurveyQuestionBuilder {
+        private final SurveyQuestion surveyQuestion;
+
+        public SurveyQuestionBuilder() {
+            surveyQuestion = new SurveyQuestion();
+        }
+
+        public SurveyQuestionBuilder setQuestionId(int questionId) {
+            surveyQuestion.setQuestionId(questionId);
+            return this;
+        }
+
+        public SurveyQuestionBuilder setFormulation(String formulation) {
+            surveyQuestion.setFormulation(formulation);
+            return this;
+        }
+
+        public SurveyQuestionBuilder setSelectMultiple(boolean selectMultiple) {
+            surveyQuestion.setSelectMultiple(selectMultiple);
+            return this;
+        }
+
+        public SurveyQuestionBuilder setAnswers(List<SurveyQuestionAnswer> answers) {
+            surveyQuestion.setAnswers(answers);
+            return this;
+        }
+
+        public SurveyQuestion getSurveyQuestion() {
+            return surveyQuestion;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -100,6 +117,23 @@ public class SurveyQuestion {
         hash = seed * hash + (answers != null ? answers.hashCode() : 0);
 
         return hash;
+    }
+
+    @Override
+    public SurveyQuestion clone() {
+
+        List<SurveyQuestionAnswer> surveyQuestionAnswers = answers.stream()
+                .map(SurveyQuestionAnswer::clone)
+                .collect(Collectors.toList());
+
+        SurveyQuestion question = new SurveyQuestionBuilder()
+                .setQuestionId(questionId)
+                .setFormulation(formulation)
+                .setSelectMultiple(selectMultiple)
+                .setAnswers(surveyQuestionAnswers)
+                .getSurveyQuestion();
+
+        return question;
     }
 
     @Override

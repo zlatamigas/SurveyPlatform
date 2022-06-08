@@ -3,7 +3,7 @@ package epam.zlatamigas.surveyplatform.model.entity;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Survey extends AbstractEntity {
+public class Survey extends AbstractEntity implements Cloneable {
 
     private int surveyId;
     private String name;
@@ -167,6 +167,26 @@ public class Survey extends AbstractEntity {
         }
 
         return hash;
+    }
+
+    @Override
+    public Survey clone() {
+
+        List<SurveyQuestion> surveyQuestions = questions.stream()
+                .map(SurveyQuestion::clone)
+                .collect(Collectors.toList());
+
+        Survey survey = new Survey.SurveyBuilder()
+                .setSurveyId(surveyId)
+                .setName(name)
+                .setDescription(description)
+                .setStatus(status)
+                .setTheme(theme)
+                .setCreator(creator)
+                .setQuestions(surveyQuestions)
+                .getSurvey();
+
+        return survey;
     }
 
     @Override

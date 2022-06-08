@@ -22,6 +22,11 @@
 
 <div class="container">
 
+
+    <form id="cancelEditQuestionForm" action="controller" method="post">
+        <input type="hidden" name="command" value="${CommandType.CANCEL_EDIT_QUESTION}">
+    </form>
+
     <form id="editQuestionForm" action="controller" method="post">
 
         <div class="form-group">
@@ -59,11 +64,16 @@
         <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.ADD_ANSWER}"
                 class="btn btn-primary">Add
         </button>
-        <hr>
-        <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_QUESTION}"
-                class="btn btn-primary"><fmt:message
-                key="editquestion.savequestion"/></button>
 
+        <hr>
+
+        <div class="btn-group" role="group">
+            <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_QUESTION}"
+                    class="btn btn-primary"><fmt:message
+                    key="editquestion.savequestion"/></button>
+            <button form="cancelEditQuestionForm" type="submit" class="btn btn-warning">
+                <fmt:message key="editquestion.cancel"/></button>
+        </div>
     </form>
 </div>
 

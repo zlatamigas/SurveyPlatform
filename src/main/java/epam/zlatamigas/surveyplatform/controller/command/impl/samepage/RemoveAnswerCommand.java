@@ -38,7 +38,7 @@ public class RemoveAnswerCommand implements Command {
                 continue;
             }
             answer = request.getParameter(DataHolder.PARAMETER_ANSWER_TEXT + i);
-            answers.add(new SurveyQuestionAnswer(answer));
+            answers.add(new SurveyQuestionAnswer.SurveyQuestionAnswerBuilder().setAnswer(answer).getSurveyQuestionAnswer());
         }
 
         question.setFormulation(formulation);
