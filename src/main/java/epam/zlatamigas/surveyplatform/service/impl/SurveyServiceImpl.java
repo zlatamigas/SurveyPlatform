@@ -6,6 +6,7 @@ import epam.zlatamigas.surveyplatform.model.dao.SurveyDao;
 import epam.zlatamigas.surveyplatform.model.dao.impl.SurveyDaoImpl;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
+import epam.zlatamigas.surveyplatform.model.entity.SurveyUserAttempt;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 
 import java.util.List;
@@ -47,17 +48,35 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public Survey findParticipantSurveyInfo(int surveyId) throws ServiceException {
-        return null;
+        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+
+        try {
+            return surveyDao.findParticipantSurveyInfo(surveyId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public Survey findCreatorSurveyInfo(int surveyId) throws ServiceException {
-        return null;
+        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+
+        try {
+            return surveyDao.findCreatorSurveyInfo(surveyId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean updateParticipantSurveyResult(Survey survey) throws ServiceException {
-        return false;
+    public boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws ServiceException {
+        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+
+        try {
+            return surveyDao.updateParticipantSurveyResult(surveyAttempt);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
@@ -66,17 +85,6 @@ public class SurveyServiceImpl implements SurveyService {
 
         try {
             return surveyDao.updateSurveyStatus(surveyId, status);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Survey findById(int id) throws ServiceException {
-        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
-
-        try {
-            return surveyDao.findById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

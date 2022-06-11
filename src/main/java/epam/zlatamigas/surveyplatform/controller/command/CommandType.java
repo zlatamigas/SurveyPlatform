@@ -2,6 +2,10 @@ package epam.zlatamigas.surveyplatform.controller.command;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
+import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelEditQuestionCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelEditSurveyCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelSurveyAttemptCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishSurveyAttemptCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditQuestionCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditSurveyCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.*;
@@ -48,13 +52,13 @@ public enum CommandType {
     // CONFIRM_DELETE_QUESTION(new ConfirmDeleteQuestionCommand()),
     // CONFIRM_DELETE_ANSWER(new ConfirmDeleteAnswerCommand()),
     CHANGE_SURVEY_STATUS_CLOSED(new ChangeSurveyStatusClosedCommand()),
-    CHANGE_SURVEY_STATUS_STARTED(new ChangeSurveyStatusStartedCommand())
+    CHANGE_SURVEY_STATUS_STARTED(new ChangeSurveyStatusStartedCommand()),
 
     // Participate in survey
     // TODO
-    // START_TRY_SURVEY(new StartTrySurveyCommand()),
-    // FINISH_TRY_SURVEY(new FinishTrySurveyCommand()),
-    // CANCEL_TRY_SURVEY(new CancelTrySurveyCommand()),
+    START_SURVEY_ATTEMPT(new StartSurveyAttemptCommand()),
+    FINISH_SURVEY_ATTEMPT(new FinishSurveyAttemptCommand()),
+    CANCEL_SURVEY_ATTEMPT(new CancelSurveyAttemptCommand())
     ;
 
     private Command command;

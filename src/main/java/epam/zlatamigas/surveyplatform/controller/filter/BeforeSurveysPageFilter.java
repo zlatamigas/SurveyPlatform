@@ -28,25 +28,21 @@ public class BeforeSurveysPageFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
-
-    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession(false);
 
         try {
-            SurveyService productService = SurveyServiceImpl.getInstance();
-            List<Survey> products =  productService.findParticipantSurveysCommonInfo();
-            session.setAttribute(ATTRIBUTE_SURVEYS, products);
+            SurveyService service = SurveyServiceImpl.getInstance();
+            List<Survey> surveys =  service.findParticipantSurveysCommonInfo();
+            session.setAttribute(ATTRIBUTE_SURVEYS, surveys);
         } catch (ServiceException e) {
            logger.error(e);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
 
-
+//
 //        User user = (User) session.getAttribute(ATTRIBUTE_USER);
 //
 //        if( user!= null && user.getRole() == UserRole.ADMIN){

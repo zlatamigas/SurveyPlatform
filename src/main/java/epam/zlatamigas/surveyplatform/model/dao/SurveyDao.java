@@ -4,6 +4,7 @@ import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
+import epam.zlatamigas.surveyplatform.model.entity.SurveyUserAttempt;
 
 import java.util.List;
 
@@ -44,16 +45,7 @@ public interface SurveyDao {
      */
     Survey findCreatorSurveyInfo(int surveyId) throws DaoException;
 
-    /**
-     * Update survey results.
-     *
-     * @param survey Survey object with correct id for survey, questions and answers.
-     *               Answer data must contain real id and selected_count = 1
-     *               if participant selected the answer, otherwise selected_count = 0;
-     * @return  true - if operation succeeded, else false.
-     * @throws DaoException
-     */
-    boolean updateParticipantSurveyResult(Survey survey) throws DaoException;
+    boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws DaoException;
 
     boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws DaoException;
 }

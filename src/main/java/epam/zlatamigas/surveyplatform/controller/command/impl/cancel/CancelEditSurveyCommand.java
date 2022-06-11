@@ -1,4 +1,4 @@
-package epam.zlatamigas.surveyplatform.controller.command.impl.to;
+package epam.zlatamigas.surveyplatform.controller.command.impl.cancel;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;

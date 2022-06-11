@@ -1,11 +1,11 @@
 package epam.zlatamigas.surveyplatform.model.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class SurveyUserAttempt {
 
     private int surveyAttemptId;
-    private Date finishedDate;
+    private LocalDateTime finishedDate;
     private User user;
     private Survey survey;
 
@@ -23,11 +23,11 @@ public class SurveyUserAttempt {
         this.surveyAttemptId = surveyAttemptId;
     }
 
-    public Date getFinishedDate() {
+    public LocalDateTime getFinishedDate() {
         return finishedDate;
     }
 
-    public void setFinishedDate(Date finishedDate) {
+    public void setFinishedDate(LocalDateTime finishedDate) {
         this.finishedDate = finishedDate;
     }
 
@@ -60,7 +60,7 @@ public class SurveyUserAttempt {
             return this;
         }
 
-        public SurveyUserAttemptBuilder setFinishedDate(Date finishedDate) {
+        public SurveyUserAttemptBuilder setFinishedDate(LocalDateTime finishedDate) {
             surveyUserAttempt.setFinishedDate(finishedDate);
             return this;
         }

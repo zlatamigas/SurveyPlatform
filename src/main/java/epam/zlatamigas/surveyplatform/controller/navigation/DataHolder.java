@@ -47,6 +47,14 @@ public final class DataHolder {
     public static final String ATTRIBUTE_EDITED_ANSWER = "edited_answer";
     // User edit (ADMIN)
     public static final String ATTRIBUTE_EDITED_USER = "edited_user";
+    // User attempt
+    public static final String ATTRIBUTE_SURVEY_ATTEMPT = "survey_attempt";
+
+
+    // Button groups
+
+    public static final String BUTTONGROUP_NAME_CHECKBOX_ANSWERS = "check_question";
+    public static final String BUTTONGROUP_NAME_RADIO_ANSWERS = "radio_question";
 
     private DataHolder() {};
 

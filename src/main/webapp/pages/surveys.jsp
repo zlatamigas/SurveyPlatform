@@ -53,7 +53,12 @@
 
                         <form ></form>
 
-                        <a href="#" class="card-link"></a>
+                        <form id="startAttemptSurveyForm${survey.surveyId}" action="controller" method="post">
+                            <input type="hidden" name="command" value="${CommandType.START_SURVEY_ATTEMPT}">
+                            <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
+                            <button form="startAttemptSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary">
+                                <fmt:message key="surveyattempt.startattempt"/></button>
+                        </form>
                     </div>
                 </div>
 

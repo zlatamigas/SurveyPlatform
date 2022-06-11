@@ -1,5 +1,6 @@
 package epam.zlatamigas.surveyplatform.model.dao.impl;
 
+import com.mysql.cj.MysqlType;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
 import epam.zlatamigas.surveyplatform.model.dao.BaseDao;
@@ -8,13 +9,13 @@ import epam.zlatamigas.surveyplatform.model.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mysql.cj.MysqlType.DATETIME;
 import static epam.zlatamigas.surveyplatform.model.dao.DbTableInfo.*;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
@@ -23,17 +24,16 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     private static final Logger logger = LogManager.getLogger();
 
     //Insert survey info statements
-
     private static final String INSERT_SURVEY_STATEMENT =
             "INSERT INTO surveys(survey_name, survey_description, survey_status, theme_id, creator_id) VALUES (?,?,?,?,?)";
     private static final String INSERT_SURVEY_QUESTION_STATEMENT =
             "INSERT INTO questions(select_multiple, formulation, survey_id) VALUES (?,?,?)";
     private static final String INSERT_SURVEY_QUESTION_ANSWER_STATEMENT =
             "INSERT INTO question_answers(answer, selected_count, question_id) VALUES (?,?,?)";
-
+    public static final String INSERT_SURVEY_USER_ATTEMPT = "INSERT INTO survey_user_attempts(finished_date_time, survey_id, user_id) VALUES (CONVERT(?, DATETIME), ?, ?)";
+    public static final String INSERT_SURVEY_GUEST_ATTEMPT = "INSERT INTO survey_user_attempts(finished_date_time, survey_id) VALUES (CONVERT(?, DATETIME), ?)";
 
     //Update survey info statements
-
     private static final String UPDATE_SURVEY_STATEMENT = """
             UPDATE surveys 
             SET survey_name = ?, survey_description = ?, survey_status = ?, theme_id = ?, creator_id = ? 
@@ -54,33 +54,59 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             SET answer = ?, selected_count = ?, question_id = ? 
             WHERE id_question_answer = ?;
             """;
-
+    private static final String INCREMENT_SURVEY_QUESTION_ANSWER_ATTEMPT_STATEMENT = """
+            UPDATE question_answers 
+            SET selected_count = selected_count + 1 
+            WHERE id_question_answer = ?;
+            """;
 
     // Cascade delete for survey, questions, answers
-
     private static final String DELETE_SURVEY_STATEMENT = "DELETE FROM surveys WHERE id_survey = ?";
     private static final String DELETE_QUESTION_STATEMENT = "DELETE FROM questions WHERE id_question = ?";
     private static final String DELETE_QUESTION_ANSWER_STATEMENT = "DELETE FROM question_answers WHERE id_question_answer = ?";
 
 
-    // Find survey info statements
+    // Get survey info
+    private static final String FIND_CREATOR_SURVEYS_COMMON_INFO_STATEMENT = """
+            SELECT id_survey, survey_name, survey_description, theme_id, theme_name, theme_status, survey_status 
+            FROM surveys 
+            INNER JOIN themes 
+            ON theme_id = id_theme 
+            WHERE creator_id = ?
+            """;
+    private static final String FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT = """
+            SELECT id_survey, survey_name, survey_description, theme_id, theme_name, theme_status 
+            FROM surveys 
+            INNER JOIN themes 
+            ON theme_id = id_theme 
+            WHERE survey_status = 'STARTED'
+            """;
+    private static final String FIND_PARTICIPANT_SURVEY_BY_ID_STATEMENT = """
+            SELECT survey_name, survey_description, theme_id, theme_name 
+            FROM surveys 
+            INNER JOIN themes 
+            ON theme_id = id_theme 
+            WHERE id_survey = ?
+            """;
+    private static final String FIND_CREATOR_SURVEY_BY_ID_STATEMENT = """
+            SELECT survey_name, survey_status, survey_description, theme_id, theme_name, theme_status, creator_id 
+            FROM surveys 
+            INNER JOIN themes 
+            ON theme_id = id_theme 
+            WHERE id_survey = ?
+            """;
+    private static final String FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT = """
+            SELECT id_question, formulation, select_multiple 
+            FROM questions 
+            WHERE survey_id = ?
+            """;
+    private static final String FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT = """
+            SELECT id_question_answer, answer, selected_count 
+            FROM question_answers 
+            WHERE question_id = ?
+            """;
 
-    private static final String FIND_ALL_SURVEYS_STATEMENT =
-            "SELECT id_survey, survey_name, survey_description, survey_status, theme_id, creator_id FROM surveys";
-    private static final String FIND_SURVEY_BY_ID_STATEMENT =
-            "SELECT id_survey, survey_name, survey_status, survey_description, theme_id, theme_name, theme_status FROM surveys INNER JOIN themes on theme_id = id_theme WHERE id_survey = ?";
-    private static final String FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT =
-            "SELECT id_question, formulation, select_multiple FROM questions WHERE survey_id = ?";
-    private static final String FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT =
-            "SELECT id_question_answer, answer, selected_count FROM question_answers WHERE question_id = ?";
-    private static final String FIND_PARTICIPANT_SURVEY_COMMON_INFO_BY_ID_STATEMENT =
-            "SELECT survey_name, survey_description, theme_id FROM surveys WHERE id_survey = ?";
-    private static final String FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT =
-            "SELECT id_survey, survey_name, survey_description, theme_id, theme_name, theme_status FROM surveys INNER JOIN themes on theme_id = id_theme WHERE survey_status = 'STARTED'";
-    private static final String FIND_CREATOR_SURVEYS_COMMON_INFO_STATEMENT =
-            "SELECT id_survey, survey_name, survey_description, theme_id, theme_name, theme_status, survey_status FROM surveys INNER JOIN themes on theme_id = id_theme WHERE creator_id = ?";
-    private static final String FIND_PARTICIPANT_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT =
-            "SELECT id_question_answer, answer FROM question_answers WHERE question_id = ?";
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     //SurveyDaoImpl instance
 
@@ -94,6 +120,240 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             instance = new SurveyDaoImpl();
         }
         return instance;
+    }
+
+
+    @Override
+    public List<Survey> findParticipantSurveysCommonInfo() throws DaoException {
+        List<Survey> surveys = new ArrayList<>();
+        Survey survey = null;
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();) {
+
+            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT);
+            ResultSet rsSurvey = psFindSurvey.executeQuery();
+
+            while (rsSurvey.next()) {
+
+                Theme theme = new Theme.ThemeBuilder()
+                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
+                        .getTheme();
+
+                survey = new Survey.SurveyBuilder()
+                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setTheme(theme)
+                        .getSurvey();
+
+                surveys.add(survey);
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e.getMessage(), e);
+        }
+
+        return surveys;
+    }
+
+    @Override
+    public List<Survey> findCreatorSurveysCommonInfo(int userId) throws DaoException {
+        List<Survey> surveys = new ArrayList<>();
+        Survey survey = null;
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+
+            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_CREATOR_SURVEYS_COMMON_INFO_STATEMENT);
+            psFindSurvey.setInt(1, userId);
+            ResultSet rsSurvey = psFindSurvey.executeQuery();
+
+            while (rsSurvey.next()) {
+
+                Theme theme = new Theme.ThemeBuilder()
+                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
+                        .getTheme();
+
+                survey = new Survey.SurveyBuilder()
+                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+                        .setTheme(theme)
+                        .setCreator(new User.UserBuilder().setUserId(userId).getUser())
+                        .getSurvey();
+
+                surveys.add(survey);
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e.getMessage(), e);
+        }
+
+        return surveys;
+    }
+
+    @Override
+    public Survey findParticipantSurveyInfo(int surveyId) throws DaoException {
+        Survey survey = null;
+
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+
+            //Find survey
+
+            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_PARTICIPANT_SURVEY_BY_ID_STATEMENT);
+            psFindSurvey.setInt(1, surveyId);
+            ResultSet rsSurvey = psFindSurvey.executeQuery();
+
+            if (rsSurvey.next()) {
+
+                Theme theme = new Theme.ThemeBuilder()
+                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+                        .getTheme();
+
+
+                survey = new Survey.SurveyBuilder()
+                        .setSurveyId(surveyId)
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setTheme(theme)
+                        .getSurvey();
+
+                //Find survey questions
+
+                PreparedStatement psFindSurveyQuestion = connection.prepareStatement(FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT);
+                psFindSurveyQuestion.setInt(1, surveyId);
+                ResultSet rsSurveyQuestion = psFindSurveyQuestion.executeQuery();
+
+                SurveyQuestion question;
+                int questionId;
+                while (rsSurveyQuestion.next()) {
+
+                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
+                    question = new SurveyQuestion.SurveyQuestionBuilder()
+                            .setQuestionId(questionId)
+                            .setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN))
+                            .setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN))
+                            .getSurveyQuestion();
+
+                    //Find survey question answers
+
+                    PreparedStatement psFindSurveyQuestionAnswer = connection.prepareStatement(FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT);
+                    psFindSurveyQuestionAnswer.setInt(1, questionId);
+                    ResultSet rsSurveyQuestionAnswer = psFindSurveyQuestionAnswer.executeQuery();
+
+                    SurveyQuestionAnswer answer;
+                    while (rsSurveyQuestionAnswer.next()) {
+                        answer = new SurveyQuestionAnswer.SurveyQuestionAnswerBuilder()
+                                .setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN))
+                                .setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN))
+                                .getSurveyQuestionAnswer();
+
+                        question.addAnswer(answer);
+                    }
+
+                    survey.addQuestion(question);
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
+        }
+
+        return survey;
+    }
+
+    @Override
+    public Survey findCreatorSurveyInfo(int surveyId) throws DaoException {
+        Survey survey = null;
+
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+
+            //Find survey
+
+            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_CREATOR_SURVEY_BY_ID_STATEMENT);
+            psFindSurvey.setInt(1, surveyId);
+            ResultSet rsSurvey = psFindSurvey.executeQuery();
+
+            if (rsSurvey.next()) {
+
+                Theme theme = new Theme.ThemeBuilder()
+                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
+                        .getTheme();
+
+
+                survey = new Survey.SurveyBuilder()
+                        .setSurveyId(surveyId)
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+                        .setTheme(theme)
+                        .setCreator(new User.UserBuilder()
+                                .setUserId(rsSurvey.getInt(SURVEYS_TABLE_FK_CREATOR_ID_COLUMN)).getUser())
+                        .getSurvey();
+
+                //Find survey questions
+
+                PreparedStatement psFindSurveyQuestion = connection.prepareStatement(FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT);
+                psFindSurveyQuestion.setInt(1, surveyId);
+                ResultSet rsSurveyQuestion = psFindSurveyQuestion.executeQuery();
+
+                SurveyQuestion question;
+                int questionId;
+                while (rsSurveyQuestion.next()) {
+                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
+                    question = new SurveyQuestion.SurveyQuestionBuilder()
+                            .setQuestionId(questionId)
+                            .setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN))
+                            .setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN))
+                            .getSurveyQuestion();
+                    //Find survey question answers
+
+                    PreparedStatement psFindSurveyQuestionAnswer = connection.prepareStatement(FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT);
+                    psFindSurveyQuestionAnswer.setInt(1, questionId);
+                    ResultSet rsSurveyQuestionAnswer = psFindSurveyQuestionAnswer.executeQuery();
+
+                    SurveyQuestionAnswer answer;
+                    while (rsSurveyQuestionAnswer.next()) {
+                        answer = new SurveyQuestionAnswer.SurveyQuestionAnswerBuilder()
+                                .setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN))
+                                .setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN))
+                                .setSelectedCount(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_SELECTED_COUNT_COLUMN))
+                                .getSurveyQuestionAnswer();
+                        question.addAnswer(answer);
+                    }
+
+                    survey.addQuestion(question);
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
+        }
+
+        return survey;
     }
 
     @Override
@@ -186,11 +446,10 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
         return true;
     }
 
-    // NEW
     @Override
     public Survey update(Survey survey) throws DaoException {
 
-        Survey oldSurvey = findById(survey.getSurveyId());
+        Survey oldSurvey = findCreatorSurveyInfo(survey.getSurveyId());
         int surveyId = oldSurvey.getSurveyId();
 
         Connection connection = null;
@@ -339,324 +598,6 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     }
 
     @Override
-    public Survey findById(int id) throws DaoException {
-        Survey survey = null;
-
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-
-            //Find survey
-
-            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_SURVEY_BY_ID_STATEMENT);
-            psFindSurvey.setInt(1, id);
-            ResultSet rsSurvey = psFindSurvey.executeQuery();
-
-            if (rsSurvey.next()) {
-
-                Theme theme = new Theme.ThemeBuilder()
-                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
-                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
-                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
-                        .getTheme();
-
-
-                survey = new Survey.SurveyBuilder()
-                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
-                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
-                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
-                        .setTheme(theme)
-//                        .setCreator(creator)
-                        .getSurvey();
-
-                //Find survey questions
-
-                PreparedStatement psFindSurveyQuestion = connection.prepareStatement(FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT);
-                psFindSurveyQuestion.setInt(1, id);
-                ResultSet rsSurveyQuestion = psFindSurveyQuestion.executeQuery();
-
-                SurveyQuestion question;
-                int questionId;
-                while (rsSurveyQuestion.next()) {
-                    question = new SurveyQuestion();
-
-                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
-                    question.setQuestionId(questionId);
-                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN));
-                    question.setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN));
-
-                    //Find survey question answers
-
-                    PreparedStatement psFindSurveyQuestionAnswer = connection.prepareStatement(FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT);
-                    psFindSurveyQuestionAnswer.setInt(1, questionId);
-                    ResultSet rsSurveyQuestionAnswer = psFindSurveyQuestionAnswer.executeQuery();
-
-                    SurveyQuestionAnswer answer;
-                    while (rsSurveyQuestionAnswer.next()) {
-                        answer = new SurveyQuestionAnswer();
-                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN));
-                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN));
-                        answer.setSelectedCount(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_SELECTED_COUNT_COLUMN));
-
-                        question.addAnswer(answer);
-                    }
-
-                    survey.addQuestion(question);
-                }
-            }
-
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage(), e);
-        } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().releaseConnection(connection);
-            }
-        }
-
-        return survey;
-    }
-
-    @Override
-    public List<Survey> findAll() throws DaoException {
-        List<Survey> surveys = new ArrayList<>();
-        Survey survey = null;
-
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-
-            //Find survey
-
-            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_ALL_SURVEYS_STATEMENT);
-            ResultSet rsSurvey = psFindSurvey.executeQuery();
-
-            while (rsSurvey.next()) {
-
-//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
-//                User creator = userDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_CREATOR_ID_COLUMN));
-
-                int id = rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN);
-                survey = new Survey.SurveyBuilder()
-                        .setSurveyId(id)
-                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
-                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
-//                        .setTheme(theme)
-//                        .setCreator(creator)
-                        .getSurvey();
-
-                //Find survey questions
-
-                PreparedStatement psFindSurveyQuestion = connection.prepareStatement(FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT);
-                psFindSurveyQuestion.setInt(1, id);
-                ResultSet rsSurveyQuestion = psFindSurveyQuestion.executeQuery();
-
-                SurveyQuestion question;
-                int questionId;
-                while (rsSurveyQuestion.next()) {
-                    question = new SurveyQuestion();
-
-                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
-                    question.setQuestionId(questionId);
-                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN));
-                    question.setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN));
-
-                    //Find survey question answers
-
-                    PreparedStatement psFindSurveyQuestionAnswer = connection.prepareStatement(FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT);
-                    psFindSurveyQuestionAnswer.setInt(1, questionId);
-                    ResultSet rsSurveyQuestionAnswer = psFindSurveyQuestionAnswer.executeQuery();
-
-                    SurveyQuestionAnswer answer;
-                    while (rsSurveyQuestionAnswer.next()) {
-                        answer = new SurveyQuestionAnswer();
-                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN));
-                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN));
-                        answer.setSelectedCount(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_SELECTED_COUNT_COLUMN));
-
-                        question.addAnswer(answer);
-                    }
-
-                    survey.addQuestion(question);
-                }
-
-                surveys.add(survey);
-            }
-
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage(), e);
-        } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().releaseConnection(connection);
-            }
-        }
-
-        return surveys;
-    }
-
-    @Override
-    public List<Survey> findParticipantSurveysCommonInfo() throws DaoException {
-        List<Survey> surveys = new ArrayList<>();
-        Survey survey = null;
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection();) {
-
-            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT);
-            ResultSet rsSurvey = psFindSurvey.executeQuery();
-
-            while (rsSurvey.next()) {
-
-                Theme theme = new Theme.ThemeBuilder()
-                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
-                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
-                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
-                        .getTheme();
-
-                survey = new Survey.SurveyBuilder()
-                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
-                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
-                        .setTheme(theme)
-                        .getSurvey();
-
-                surveys.add(survey);
-            }
-
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage(), e);
-        }
-
-        return surveys;
-    }
-
-    @Override
-    public List<Survey> findCreatorSurveysCommonInfo(int userId) throws DaoException {
-        List<Survey> surveys = new ArrayList<>();
-        Survey survey = null;
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
-
-            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_CREATOR_SURVEYS_COMMON_INFO_STATEMENT);
-            psFindSurvey.setInt(1, userId);
-            ResultSet rsSurvey = psFindSurvey.executeQuery();
-
-            while (rsSurvey.next()) {
-
-                Theme theme = new Theme.ThemeBuilder()
-                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
-                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
-                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
-                        .getTheme();
-
-                survey = new Survey.SurveyBuilder()
-                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
-                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
-                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
-                        .setTheme(theme)
-                        .setCreator(new User.UserBuilder().setUserId(userId).getUser())
-                        .getSurvey();
-
-                surveys.add(survey);
-            }
-
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage(), e);
-        }
-
-        return surveys;
-    }
-
-    @Override
-    public Survey findParticipantSurveyInfo(int surveyId) throws DaoException {
-        Survey survey = null;
-
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-
-            //Find survey
-
-            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_PARTICIPANT_SURVEY_COMMON_INFO_BY_ID_STATEMENT);
-            psFindSurvey.setInt(1, surveyId);
-            ResultSet rsSurvey = psFindSurvey.executeQuery();
-
-            if (rsSurvey.next()) {
-
-//                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
-
-                survey = new Survey.SurveyBuilder()
-                        .setSurveyId(surveyId)
-                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
-//                        .setTheme(theme)
-                        .getSurvey();
-
-                //Find survey questions
-
-                PreparedStatement psFindSurveyQuestion = connection.prepareStatement(FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT);
-                psFindSurveyQuestion.setInt(1, surveyId);
-                ResultSet rsSurveyQuestion = psFindSurveyQuestion.executeQuery();
-
-                SurveyQuestion question;
-                int questionId;
-                while (rsSurveyQuestion.next()) {
-                    question = new SurveyQuestion();
-
-                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
-                    question.setQuestionId(questionId);
-                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN));
-                    question.setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN));
-
-                    //Find survey question answers
-
-                    PreparedStatement psFindSurveyQuestionAnswer = connection.prepareStatement(FIND_PARTICIPANT_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT);
-                    psFindSurveyQuestionAnswer.setInt(1, questionId);
-                    ResultSet rsSurveyQuestionAnswer = psFindSurveyQuestionAnswer.executeQuery();
-
-                    SurveyQuestionAnswer answer;
-                    while (rsSurveyQuestionAnswer.next()) {
-                        answer = new SurveyQuestionAnswer();
-                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN));
-                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN));
-                        answer.setSelectedCount(0);
-
-                        question.addAnswer(answer);
-                    }
-
-                    survey.addQuestion(question);
-                }
-            }
-
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage(), e);
-        } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().releaseConnection(connection);
-            }
-        }
-
-        return survey;
-    }
-
-    @Override
-    public Survey findCreatorSurveyInfo(int surveyId) throws DaoException {
-        return findById(surveyId);
-    }
-
-    @Override
-    public boolean updateParticipantSurveyResult(Survey survey) throws DaoException {
-        //TODO
-        return false;
-    }
-
-    @Override
     public boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws DaoException {
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -670,4 +611,239 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             throw new DaoException(e.getMessage(), e);
         }
     }
+
+    @Override
+    public boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws DaoException {
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            connection.setAutoCommit(false);
+
+            String dateTime = surveyAttempt.getFinishedDate().format(dateTimeFormatter);
+            User user = surveyAttempt.getUser();
+            Survey survey = surveyAttempt.getSurvey();
+
+            if(user.getUserId() != 0){
+                try(PreparedStatement psInsertUserAttempt = connection.prepareStatement(INSERT_SURVEY_USER_ATTEMPT)){
+                     psInsertUserAttempt.setString(1, dateTime);
+                     psInsertUserAttempt.setInt(2, survey.getSurveyId());
+                     psInsertUserAttempt.setInt(3, user.getUserId());
+                     psInsertUserAttempt.executeUpdate();
+                }
+            } else {
+                try(PreparedStatement psInsertGuestAttempt = connection.prepareStatement(INSERT_SURVEY_GUEST_ATTEMPT)){
+                    psInsertGuestAttempt.setString(1, dateTime);
+                    psInsertGuestAttempt.setInt(2, survey.getSurveyId());
+                    psInsertGuestAttempt.executeUpdate();
+                }
+            }
+
+            for (SurveyQuestion question : survey.getQuestions()) {
+                for (SurveyQuestionAnswer answer : question.getAnswers()) {
+                    if (answer.getSelectedCount() == 1) {
+                        try (PreparedStatement psIncrementAnswerAttempt = connection.prepareStatement(INCREMENT_SURVEY_QUESTION_ANSWER_ATTEMPT_STATEMENT)) {
+                            psIncrementAnswerAttempt.setInt(1, answer.getQuestionAnswerId());
+                            psIncrementAnswerAttempt.executeUpdate();
+                        }
+                    }
+
+                }
+            }
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                logger.error("Error while rollback changes: " + ex.getMessage());
+                throw new DaoException("Error while rollback changes: " + ex.getMessage(), e);
+            }
+            logger.error("Error while executing insert: " + e.getMessage());
+            throw new DaoException("Error while executing insert: " + e.getMessage(), e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    logger.error("Error while closing connection: " + ex.getMessage());
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // TODO
+    /////////////////////////////////////
+
+
+    @Override
+    public Survey findById(int id) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Survey> findAll() throws DaoException {
+        return null;
+    }
+
+    //    @Override
+//    public Survey findById(int id) throws DaoException {
+//        Survey survey = null;
+//
+//        Connection connection = null;
+//        try {
+//            connection = ConnectionPool.getInstance().getConnection();
+//
+//            //Find survey
+//
+//            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_SURVEY_BY_ID_STATEMENT);
+//            psFindSurvey.setInt(1, id);
+//            ResultSet rsSurvey = psFindSurvey.executeQuery();
+//
+//            if (rsSurvey.next()) {
+//
+//                Theme theme = new Theme.ThemeBuilder()
+//                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+//                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+//                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
+//                        .getTheme();
+//
+//
+//                survey = new Survey.SurveyBuilder()
+//                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
+//                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+//                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+//                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+//                        .setTheme(theme)
+////                        .setCreator(creator)
+//                        .getSurvey();
+//
+//                //Find survey questions
+//
+//                PreparedStatement psFindSurveyQuestion = connection.prepareStatement(FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT);
+//                psFindSurveyQuestion.setInt(1, id);
+//                ResultSet rsSurveyQuestion = psFindSurveyQuestion.executeQuery();
+//
+//                SurveyQuestion question;
+//                int questionId;
+//                while (rsSurveyQuestion.next()) {
+//                    question = new SurveyQuestion();
+//
+//                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
+//                    question.setQuestionId(questionId);
+//                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN));
+//                    question.setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN));
+//
+//                    //Find survey question answers
+//
+//                    PreparedStatement psFindSurveyQuestionAnswer = connection.prepareStatement(FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT);
+//                    psFindSurveyQuestionAnswer.setInt(1, questionId);
+//                    ResultSet rsSurveyQuestionAnswer = psFindSurveyQuestionAnswer.executeQuery();
+//
+//                    SurveyQuestionAnswer answer;
+//                    while (rsSurveyQuestionAnswer.next()) {
+//                        answer = new SurveyQuestionAnswer();
+//                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN));
+//                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN));
+//                        answer.setSelectedCount(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_SELECTED_COUNT_COLUMN));
+//
+//                        question.addAnswer(answer);
+//                    }
+//
+//                    survey.addQuestion(question);
+//                }
+//            }
+//
+//        } catch (SQLException e) {
+//            logger.error(e.getMessage());
+//            throw new DaoException(e.getMessage(), e);
+//        } finally {
+//            if (connection != null) {
+//                ConnectionPool.getInstance().releaseConnection(connection);
+//            }
+//        }
+//
+//        return survey;
+//    }
+//
+//    @Override
+//    public List<Survey> findAll() throws DaoException {
+//        List<Survey> surveys = new ArrayList<>();
+//        Survey survey = null;
+//
+//        Connection connection = null;
+//        try {
+//            connection = ConnectionPool.getInstance().getConnection();
+//
+//            //Find survey
+//
+//            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_ALL_SURVEYS_STATEMENT);
+//            ResultSet rsSurvey = psFindSurvey.executeQuery();
+//
+//            while (rsSurvey.next()) {
+//
+////                Theme theme = themeDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN));
+////                User creator = userDao.findById(rsSurvey.getInt(SURVEYS_TABLE_FK_CREATOR_ID_COLUMN));
+//
+//                int id = rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN);
+//                survey = new Survey.SurveyBuilder()
+//                        .setSurveyId(id)
+//                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+//                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+//                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+////                        .setTheme(theme)
+////                        .setCreator(creator)
+//                        .getSurvey();
+//
+//                //Find survey questions
+//
+//                PreparedStatement psFindSurveyQuestion = connection.prepareStatement(FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT);
+//                psFindSurveyQuestion.setInt(1, id);
+//                ResultSet rsSurveyQuestion = psFindSurveyQuestion.executeQuery();
+//
+//                SurveyQuestion question;
+//                int questionId;
+//                while (rsSurveyQuestion.next()) {
+//                    question = new SurveyQuestion();
+//
+//                    questionId = rsSurveyQuestion.getInt(QUESTIONS_TABLE_PK_COLUMN);
+//                    question.setQuestionId(questionId);
+//                    question.setSelectMultiple(rsSurveyQuestion.getBoolean(QUESTIONS_TABLE_SELECT_MULTIPLE_COLUMN));
+//                    question.setFormulation(rsSurveyQuestion.getString(QUESTIONS_TABLE_FORMULATION_COLUMN));
+//
+//                    //Find survey question answers
+//
+//                    PreparedStatement psFindSurveyQuestionAnswer = connection.prepareStatement(FIND_SURVEY_QUESTION_ANSWERS_BY_SURVEY_ID_STATEMENT);
+//                    psFindSurveyQuestionAnswer.setInt(1, questionId);
+//                    ResultSet rsSurveyQuestionAnswer = psFindSurveyQuestionAnswer.executeQuery();
+//
+//                    SurveyQuestionAnswer answer;
+//                    while (rsSurveyQuestionAnswer.next()) {
+//                        answer = new SurveyQuestionAnswer();
+//                        answer.setQuestionAnswerId(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_PK_COLUMN));
+//                        answer.setAnswer(rsSurveyQuestionAnswer.getString(ANSWERS_TABLE_ANSWER_COLUMN));
+//                        answer.setSelectedCount(rsSurveyQuestionAnswer.getInt(ANSWERS_TABLE_SELECTED_COUNT_COLUMN));
+//
+//                        question.addAnswer(answer);
+//                    }
+//
+//                    survey.addQuestion(question);
+//                }
+//
+//                surveys.add(survey);
+//            }
+//
+//        } catch (SQLException e) {
+//            logger.error(e.getMessage());
+//            throw new DaoException(e.getMessage(), e);
+//        } finally {
+//            if (connection != null) {
+//                ConnectionPool.getInstance().releaseConnection(connection);
+//            }
+//        }
+//
+//        return surveys;
+//    }
 }

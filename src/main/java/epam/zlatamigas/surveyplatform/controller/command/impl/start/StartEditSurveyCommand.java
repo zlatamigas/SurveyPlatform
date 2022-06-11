@@ -34,7 +34,7 @@ public class StartEditSurveyCommand implements Command {
 
             SurveyService surveyService = SurveyServiceImpl.getInstance();
             try {
-               survey  = surveyService.findById(surveyId);
+               survey  = surveyService.findCreatorSurveyInfo(surveyId);
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }
