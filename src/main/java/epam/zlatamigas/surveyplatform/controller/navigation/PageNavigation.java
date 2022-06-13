@@ -12,6 +12,7 @@ public final class PageNavigation {
     public static final String EDIT_QUESTION = "/pages/edit_question.jsp";
     public static final String EDIT_ANSWER = "/pages/edit_answer.jsp";
     public static final String SURVEY_ATTEMPT = "/pages/survey_attempt.jsp";
+    public static final String SURVEY_RESULT = "/pages/survey_result.jsp";
 
     public static final String ERROR_404 = "/pages/error_404.jsp";
     public static final String ERROR_500 = "/pages/error_500.jsp";

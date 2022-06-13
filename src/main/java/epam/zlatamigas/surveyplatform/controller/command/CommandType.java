@@ -58,7 +58,9 @@ public enum CommandType {
     // TODO
     START_SURVEY_ATTEMPT(new StartSurveyAttemptCommand()),
     FINISH_SURVEY_ATTEMPT(new FinishSurveyAttemptCommand()),
-    CANCEL_SURVEY_ATTEMPT(new CancelSurveyAttemptCommand())
+    CANCEL_SURVEY_ATTEMPT(new CancelSurveyAttemptCommand()),
+
+    VIEW_SURVEY_RESULT(new ViewSurveyResultCommand())
     ;
 
     private Command command;

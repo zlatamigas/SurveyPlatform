@@ -86,7 +86,7 @@
                             </form>
 
                             <form id="viewResultSurveyForm${survey.surveyId}" action="controller" method="post">
-                                <input type="hidden" name="command" value="">
+                                <input type="hidden" name="command" value="${CommandType.VIEW_SURVEY_RESULT}">
                                 <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             </form>
 

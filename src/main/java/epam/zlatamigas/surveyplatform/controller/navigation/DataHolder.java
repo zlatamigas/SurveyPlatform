@@ -45,6 +45,8 @@ public final class DataHolder {
     public static final String ATTRIBUTE_EDITED_SURVEY = "edited_survey";
     public static final String ATTRIBUTE_EDITED_QUESTION = "edited_question";
     public static final String ATTRIBUTE_EDITED_ANSWER = "edited_answer";
+    // Survey result
+    public static final String ATTRIBUTE_SURVEY_RESULT = "survey_result";
     // User edit (ADMIN)
     public static final String ATTRIBUTE_EDITED_USER = "edited_user";
     // User attempt
