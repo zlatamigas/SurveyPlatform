@@ -5,9 +5,7 @@ import epam.zlatamigas.surveyplatform.controller.command.impl.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelEditQuestionCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelEditSurveyCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelSurveyAttemptCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishSurveyAttemptCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditQuestionCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.finish.FinishEditSurveyCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.finish.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.to.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.start.*;
@@ -18,13 +16,17 @@ public enum CommandType {
     HOME(new HomeCommand()),
     CHANGE_LOCALISATION(new ChangeLocalisationCommand()),
 
-    // User confirmation
-    LOGIN(new LoginCommand()),
+    // User authentication
+    START_SIGN_IN(new StartSignInCommand()),
+    FINISH_SIGN_IN(new FinishSignInCommand()),
+    START_SIGN_UP(new StartSignUpCommand()),
+    FINISH_SIGN_UP(new FinishSignUpCommand()),
     LOGOUT(new LogoutCommand()),
-    START_AUTHENTICATION(new StartAuthenticationCommand()),
-    // TODO
-    // LOGUP(new LogupCommand()),
-    // CONFIRM_LOGUP(new ConfirmLogupCommand()),
+
+    TO_FORGOT_PASSWORD(new ToForgotPasswordCommand()),
+    // SEND_FORGOTTEN_PASSWORD_KEY(new SendForgottenPasswordKeyCommand()),
+    // CONFIRM_CHANGE_PASSWORD_KEY(new ConfirmPasswordKeyCommand()),
+    // CHANGE_PASSWORD(new ChangePasswordCommand()),
 
     // List data
     LIST_USERS(new ListUsersCommand()),

@@ -96,7 +96,7 @@
                 </c:when>
                 <c:otherwise>
                     <form class="form-inline mt-2 mt-lg-0" action="controller">
-                        <input type="hidden" name="command" value="${CommandType.START_AUTHENTICATION}">
+                        <input type="hidden" name="command" value="${CommandType.START_SIGN_IN}">
                         <button type="submit" class="btn btn-sm btn-outline-primary">
                             <fmt:message key="header.navbar.login"/>
                         </button>

@@ -64,8 +64,8 @@ public class CheckUserRoleFilter implements Filter {
                         DEFAULT,
                         HOME,
                         CHANGE_LOCALISATION,
-                        LOGIN,
-                        START_AUTHENTICATION,
+                        FINISH_SIGN_IN,
+                        START_SIGN_IN,
                         LIST_SURVEYS
                 )
         );

@@ -1,4 +1,4 @@
-package epam.zlatamigas.surveyplatform.controller.command.impl.to;
+package epam.zlatamigas.surveyplatform.controller.command.impl.finish;
 
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
@@ -19,7 +19,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageCh
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_USER;
 
-public class LoginCommand implements Command {
+public class FinishSignInCommand implements Command {
 
     private static final String LOGIN_MSG_PARAMETER = "login_msg";
     private static final String LOGIN_MSG = "Incorrect login or password";
@@ -44,7 +44,7 @@ public class LoginCommand implements Command {
                 page = HOME;
             } else {
                 request.setAttribute(LOGIN_MSG_PARAMETER, LOGIN_MSG);
-                page = AUTHORISATION;
+                page = SIGN_IN;
             }
 
             session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);

@@ -10,6 +10,8 @@ public final class DataHolder {
     // Log in/up
     public static final String PARAMETER_EMAIL = "email";
     public static final String PARAMETER_PASSWORD = "password";
+    public static final String PARAMETER_PASSWORD_REPEAT = "password_repeat";
+
     // CRUD survey
     public static final String PARAMETER_CREATE_NEW_SURVEY = "create_new_survey";
     public static final String PARAMETER_CREATE_NEW_QUESTION = "create_new_question";
