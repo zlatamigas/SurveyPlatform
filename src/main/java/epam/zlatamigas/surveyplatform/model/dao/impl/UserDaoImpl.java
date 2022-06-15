@@ -29,9 +29,11 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
             = "DELETE FROM users WHERE id_user = ?";
     private static final String FIND_ALL_STATEMENT
             = "SELECT id_user, email, password, registration_date, user_role, user_status FROM users";
-    private static final String FIND_STATEMENT
+    private static final String FIND_BY_ID_STATEMENT
             = "SELECT email, password, registration_date, user_role, user_status FROM users WHERE id_user = ?";
-    private static final String LOGIN_QUERY
+    private static final String FIND_BY_EMAIL_STATEMENT
+            = "SELECT id_user, password, registration_date, user_role, user_status FROM users WHERE email = ?";
+    private static final String AUTHENTICATE_STATEMENT
             = "SELECT id_user, registration_date, user_role, user_status FROM users WHERE email = ? AND password = ?";
 
     private static UserDaoImpl instance;
@@ -53,7 +55,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
         Optional<User> user = Optional.empty();
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement st = connection.prepareStatement(LOGIN_QUERY)) {
+             PreparedStatement st = connection.prepareStatement(AUTHENTICATE_STATEMENT)) {
 
             st.setString(1, email);
             st.setString(2, password);
@@ -77,6 +79,37 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
 
         return user;
     }
+
+    @Override
+    public Optional<User> findByEmail(String email) throws DaoException {
+
+        Optional<User> user = Optional.empty();
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement st = connection.prepareStatement(FIND_BY_EMAIL_STATEMENT)) {
+
+            st.setString(1, email);
+
+            try (ResultSet resultSet = st.executeQuery()) {
+                if (resultSet.next()) {
+                    user = Optional.of(new User.UserBuilder()
+                            .setUserId(resultSet.getInt(USERS_TABLE_PK_COLUMN))
+                            .setEmail(email)
+                            .setRegistrationDate(resultSet.getDate(USERS_TABLE_REGISTRATION_DATE_COLUMN).toLocalDate())
+                            .setRole(UserRole.valueOf(resultSet.getString(USERS_TABLE_ROLE_COLUMN)))
+                            .setStatus(UserStatus.valueOf(resultSet.getString(USERS_TABLE_STATUS_COLUMN)))
+                            .getUser());
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error while authenticate: " + e.getMessage());
+            throw new DaoException("Error while while authenticate: " + e.getMessage(), e);
+        }
+
+        return user;
+    }
+
 
     @Override
     public boolean insert(User user) throws DaoException {
@@ -150,14 +183,14 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
         User user = null;
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(FIND_STATEMENT)) {
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_ID_STATEMENT)) {
 
             ps.setInt(1, id);
 
             try (ResultSet resultSet = ps.executeQuery()) {
                 if (resultSet.next()) {
                     user = new User.UserBuilder()
-                            .setUserId(resultSet.getInt(id))
+                            .setUserId(id)
                             .setEmail(resultSet.getString(USERS_TABLE_EMAIL_COLUMN))
                             .setPassword(resultSet.getString(USERS_TABLE_PASSWORD_COLUMN))
                             .setRegistrationDate(resultSet.getDate(USERS_TABLE_REGISTRATION_DATE_COLUMN).toLocalDate())

@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.forgotpassword"/></title>
+    <title><fmt:message key="title.forgotpasswordreceivekey"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -20,15 +20,15 @@
 
 <div class="container">
 
-    <h1 class="display-4"><fmt:message key="forgotpassword.header"/></h1>
+    <h1 class="display-4"><fmt:message key="forgotpasswordreceivekey.header"/></h1>
     <hr class="my-4">
 
     <form action="controller" method="post">
-        <input type="hidden" name="command" value="${CommandType.SEND_FORGOTTEN_PASSWORD_KEY}">
+        <input type="hidden" name="command" value="${CommandType.CONFIRM_CHANGE_PASSWORD_KEY}">
         <div class="form-group">
-            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="forgotpassword.email.placeholder"/>">
+            <input type="text" class="form-control" name="${DataHolder.PARAMETER_FORGOT_PASSWORD_CHANGE_KEY}" placeholder="<fmt:message key="forgotpasswordreceivekey.key"/>">
         </div>
-        <button type="submit" class="btn btn-primary" ><fmt:message key="forgotpassword.credentials.submit"/></button>
+        <button type="submit" class="btn btn-primary" ><fmt:message key="forgotpasswordreceivekey.credentials.submit"/></button>
     </form>
 
 </div>

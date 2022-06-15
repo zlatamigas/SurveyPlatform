@@ -1,4 +1,4 @@
-package epam.zlatamigas.surveyplatform.util;
+package epam.zlatamigas.surveyplatform.util.encoder;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

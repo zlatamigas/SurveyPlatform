@@ -11,6 +11,7 @@ public final class DataHolder {
     public static final String PARAMETER_EMAIL = "email";
     public static final String PARAMETER_PASSWORD = "password";
     public static final String PARAMETER_PASSWORD_REPEAT = "password_repeat";
+    public static final String PARAMETER_FORGOT_PASSWORD_CHANGE_KEY = "forgot_password_change_key";
 
     // CRUD survey
     public static final String PARAMETER_CREATE_NEW_SURVEY = "create_new_survey";
@@ -53,7 +54,9 @@ public final class DataHolder {
     public static final String ATTRIBUTE_EDITED_USER = "edited_user";
     // User attempt
     public static final String ATTRIBUTE_SURVEY_ATTEMPT = "survey_attempt";
-
+    // Change password key
+    public static final String ATTRIBUTE_CHANGE_PASSWORD_KEY = "change_password_key";
+    public static final String ATTRIBUTE_CHANGE_PASSWORD_EMAIL = "change_password_email";
 
     // Button groups
 

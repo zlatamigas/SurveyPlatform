@@ -9,7 +9,7 @@ public final class PageNavigation {
     public static final String SIGN_UP = "/pages/sign_up.jsp";
     public static final String FORGOT_PASSWORD = "/pages/forgot_password.jsp";
     public static final String FORGOT_PASSWORD_RECEIVE_KEY = "/pages/forgot_password_receive_key.jsp";
-    public static final String FORGOT_PASSWORD_CHANGE = "/pages/forgot_password_change.jsp";
+    public static final String FORGOT_PASSWORD_CHANGE_PASSWORD = "/pages/forgot_password_change_password.jsp";
 
 
     public static final String SURVEYS = "/pages/surveys.jsp";

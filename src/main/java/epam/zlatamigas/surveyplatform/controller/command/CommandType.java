@@ -24,9 +24,9 @@ public enum CommandType {
     LOGOUT(new LogoutCommand()),
 
     TO_FORGOT_PASSWORD(new ToForgotPasswordCommand()),
-    // SEND_FORGOTTEN_PASSWORD_KEY(new SendForgottenPasswordKeyCommand()),
-    // CONFIRM_CHANGE_PASSWORD_KEY(new ConfirmPasswordKeyCommand()),
-    // CHANGE_PASSWORD(new ChangePasswordCommand()),
+    SEND_FORGOTTEN_PASSWORD_KEY(new SendForgottenPasswordKeyCommand()),
+    CONFIRM_CHANGE_PASSWORD_KEY(new ConfirmPasswordKeyCommand()),
+    CHANGE_PASSWORD(new ChangePasswordCommand()),
 
     // List data
     LIST_USERS(new ListUsersCommand()),

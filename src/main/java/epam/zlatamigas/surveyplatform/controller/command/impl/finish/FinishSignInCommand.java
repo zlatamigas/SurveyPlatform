@@ -27,15 +27,16 @@ public class FinishSignInCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
-        String login = request.getParameter(PARAMETER_EMAIL);
+        HttpSession session = request.getSession();
+        String page;
+
+        String email = request.getParameter(PARAMETER_EMAIL);
         String password = request.getParameter(PARAMETER_PASSWORD);
 
         UserService service = UserServiceImpl.getInstance();
-        String page;
-        HttpSession session = request.getSession();
         try {
 
-            Optional<User> userFromDb = service.authenticate(login, password);
+            Optional<User> userFromDb = service.authenticate(email, password);
 
             if (userFromDb.isPresent()) {
 
