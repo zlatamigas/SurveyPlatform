@@ -31,21 +31,21 @@ public class QuestionFormValidator implements FormValidator {
             validationResult.put(PARAMETER_QUESTION_FORMULATION, MESSAGE_QUESTION_FORMULATION_WRONG);
         }
 
-        String[] answer;
-        int i = 0;
-        while (true) {
-
-            answer = data.get(PARAMETER_ANSWER_TEXT);
-            if(answer==null){
-                break;
-            }
-
-            if(!answer[0].matches(UNLIMITED_TEXT_PATTERN)){
-                validationResult.put(PARAMETER_ANSWER_TEXT + i, MESSAGE_ANSWER_WRONG);
-            }
-
-            i++;
-        }
+//        String[] answer;
+//        int i = 0;
+//        while (true) {
+//
+//            answer = data.get(PARAMETER_ANSWER_TEXT);
+//            if(answer==null){
+//                break;
+//            }
+//
+//            if(!answer[0].matches(UNLIMITED_TEXT_PATTERN)){
+//                validationResult.put(PARAMETER_ANSWER_TEXT + i, MESSAGE_ANSWER_WRONG);
+//            }
+//
+//            i++;
+//        }
 
         return validationResult;
     }

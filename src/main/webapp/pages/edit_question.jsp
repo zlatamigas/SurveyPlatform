@@ -52,11 +52,6 @@
             <c:forEach items="${sessionScope.edited_question.answers}" var="answer">
                 <div class="row g-2">
                     <div class="col">
-                        <div class="text-danger">
-                            <c:if test="${requestScope.form_invalid.answer_text(i)!=null}">
-                                <fmt:message key="${requestScope.form_invalid.answer_text(i)}"/>
-                            </c:if>
-                        </div>
                         <input name="${DataHolder.PARAMETER_ANSWER_TEXT}${i}" type="text" class="form-control"
                                value="${answer.answer}"/>
                     </div>
