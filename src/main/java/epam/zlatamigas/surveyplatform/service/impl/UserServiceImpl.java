@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
 
         UserDaoImpl userDao = UserDaoImpl.getInstance();
         try {
+
             PasswordEncoder encoder = new PasswordEncoder();
             String encodedPassword = encoder.encode(password);
 

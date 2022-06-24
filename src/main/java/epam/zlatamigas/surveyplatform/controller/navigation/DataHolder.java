@@ -63,6 +63,12 @@ public final class DataHolder {
     public static final String BUTTONGROUP_NAME_CHECKBOX_ANSWERS = "check_question";
     public static final String BUTTONGROUP_NAME_RADIO_ANSWERS = "radio_question";
 
+    // Request
+
+    public static final String REQUEST_ATTRIBUTE_USER_EXISTS = "user_exists";
+    public static final String REQUEST_ATTRIBUTE_USER_INVALID = "user_invalid";
+    public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";
+
     private DataHolder() {};
 
 }

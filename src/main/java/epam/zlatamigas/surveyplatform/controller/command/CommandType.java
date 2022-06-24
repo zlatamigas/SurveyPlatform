@@ -21,7 +21,7 @@ public enum CommandType {
     FINISH_SIGN_IN(new FinishSignInCommand()),
     START_SIGN_UP(new StartSignUpCommand()),
     FINISH_SIGN_UP(new FinishSignUpCommand()),
-    LOGOUT(new LogoutCommand()),
+    LOGOUT(new LogOutCommand()),
 
     TO_FORGOT_PASSWORD(new ToForgotPasswordCommand()),
     SEND_FORGOTTEN_PASSWORD_KEY(new SendForgottenPasswordKeyCommand()),

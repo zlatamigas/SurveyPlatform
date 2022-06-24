@@ -30,6 +30,11 @@
     <form id="editQuestionForm" action="controller" method="post">
 
         <div class="form-group">
+            <div class="text-danger">
+                <c:if test="${requestScope.form_invalid.question_formulation!=null}">
+                    <fmt:message key="${requestScope.form_invalid.question_formulation}"/>
+                </c:if>
+            </div>
             <label for="questionFormulation"><fmt:message key="editquestion.label.questionformulation"/></label>
             <input type="text" name="${DataHolder.PARAMETER_QUESTION_FORMULATION}" class="form-control"
                    id="questionFormulation" minlength="1"
@@ -47,6 +52,11 @@
             <c:forEach items="${sessionScope.edited_question.answers}" var="answer">
                 <div class="row g-2">
                     <div class="col">
+                        <div class="text-danger">
+                            <c:if test="${requestScope.form_invalid.answer_text(i)!=null}">
+                                <fmt:message key="${requestScope.form_invalid.answer_text(i)}"/>
+                            </c:if>
+                        </div>
                         <input name="${DataHolder.PARAMETER_ANSWER_TEXT}${i}" type="text" class="form-control"
                                value="${answer.answer}"/>
                     </div>

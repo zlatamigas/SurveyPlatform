@@ -11,12 +11,18 @@ import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
+import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
+import epam.zlatamigas.surveyplatform.util.validator.impl.SignInFormValidator;
+import epam.zlatamigas.surveyplatform.util.validator.impl.SurveyFormValidator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.EDIT_SURVEY;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USER_SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
@@ -30,35 +36,44 @@ public class FinishEditSurveyCommand implements Command {
         HttpSession session = request.getSession();
         String page = USER_SURVEYS;
 
+        FormValidator validator = SurveyFormValidator.getInstance();
+        Map<String, String[]> requestParameters = request.getParameterMap();
+        Map<String, String> validationFeedback = validator.validateForm(requestParameters);
+
         Survey survey = (Survey) session.getAttribute(ATTRIBUTE_EDITED_SURVEY);
         survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
-        survey.setTheme(new Theme.ThemeBuilder().setThemeId(Integer.parseInt(request.getParameter(PARAMETER_SURVEY_THEME_ID))).getTheme());
         survey.setDescription(request.getParameter(PARAMETER_SURVEY_DESCRIPTION));
-        survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
-
+        survey.setTheme(new Theme.ThemeBuilder().setThemeId(Integer.parseInt(request.getParameter(PARAMETER_SURVEY_THEME_ID))).getTheme());
+        survey.setStatus(SurveyStatus.NOT_STARTED);
         User creator = (User)session.getAttribute(ATTRIBUTE_USER);
         survey.setCreator(creator);
-        survey.setStatus(SurveyStatus.NOT_STARTED);
 
-        SurveyService surveyService = SurveyServiceImpl.getInstance();
-        try{
-            if(survey.getSurveyId() == 0){
-                surveyService.insert(survey);
-            } else {
-                surveyService.update(survey);
+        session.setAttribute(ATTRIBUTE_EDITED_SURVEY, survey);
+
+        if(validationFeedback.isEmpty()){
+
+            SurveyService surveyService = SurveyServiceImpl.getInstance();
+            try{
+                if(survey.getSurveyId() == 0){
+                    surveyService.insert(survey);
+                } else {
+                    surveyService.update(survey);
+                }
+
+                List<Survey> surveys = surveyService.findCreatorSurveysCommonInfo(creator.getUserId());
+                session.setAttribute(ATTRIBUTE_USER_SURVEYS, surveys);
+
+            } catch (ServiceException e) {
+                throw new CommandException(e);
             }
 
-            List<Survey> surveys = surveyService.findCreatorSurveysCommonInfo(creator.getUserId());
-            session.setAttribute(ATTRIBUTE_USER_SURVEYS, surveys);
-
-        } catch (ServiceException e) {
-            throw new CommandException(e);
+            session.removeAttribute(ATTRIBUTE_EDITED_SURVEY);
+            session.removeAttribute(ATTRIBUTE_THEMES);
+            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        } else {
+            page = EDIT_SURVEY;
+            request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }
-        
-        session.removeAttribute(ATTRIBUTE_EDITED_SURVEY);
-        session.removeAttribute(ATTRIBUTE_THEMES);
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
-
 
         return new Router(page, FORWARD);
     }

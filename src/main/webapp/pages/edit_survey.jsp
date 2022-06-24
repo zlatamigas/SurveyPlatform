@@ -28,6 +28,11 @@
 
     <form id="editSurveyForm" action="controller" method="post">
         <div class="form-group">
+            <div class="text-danger">
+                <c:if test="${requestScope.form_invalid.survey_name!=null}">
+                    <fmt:message key="${requestScope.form_invalid.survey_name}"/>
+                </c:if>
+            </div>
             <label for="surveyName"><fmt:message key="editsurvey.label.surveyname"/></label>
             <input name="${DataHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName"
                    minlength="1" maxlength="200"
@@ -49,6 +54,11 @@
             </select>
         </div>
         <div class="form-group">
+            <div class="text-danger">
+                <c:if test="${requestScope.form_invalid.survey_description!=null}">
+                    <fmt:message key="${requestScope.form_invalid.survey_description}"/>
+                </c:if>
+            </div>
             <label for="surveyDescription"><fmt:message key="editsurvey.label.surveydescription"/> </label>
             <textarea name="${DataHolder.PARAMETER_SURVEY_DESCRIPTION}" class="form-control" id="surveyDescription"
                       rows="3">${sessionScope.edited_survey.description}</textarea>

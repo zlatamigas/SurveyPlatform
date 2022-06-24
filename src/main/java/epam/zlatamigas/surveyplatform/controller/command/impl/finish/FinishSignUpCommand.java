@@ -2,49 +2,59 @@ package epam.zlatamigas.surveyplatform.controller.command.impl.finish;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
+import epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
-import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.UserService;
 import epam.zlatamigas.surveyplatform.service.impl.UserServiceImpl;
+import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
+import epam.zlatamigas.surveyplatform.util.validator.impl.SignUpFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
+import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SIGN_IN;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SIGN_UP;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_USER_EXISTS;
 
-// TODO
 public class FinishSignUpCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page;
+        String page = SIGN_UP;
+        PageChangeType pageChangeType = FORWARD;
 
         String email = request.getParameter(PARAMETER_EMAIL);
         String password = request.getParameter(PARAMETER_PASSWORD);
-        String passwordRepeat = request.getParameter(PARAMETER_PASSWORD_REPEAT);
 
-        // TODO: validation
+        FormValidator validator = SignUpFormValidator.getInstance();
+        Map<String, String[]> requestParameters = request.getParameterMap();
+        Map<String, String> validationFeedback = validator.validateForm(requestParameters);
 
-        UserService service = UserServiceImpl.getInstance();
-        try {
-            if(service.insertNewUser(email, password)){
-                page = SIGN_IN;
-            } else {
-                // TODO: user exists
-                page = SIGN_UP;
+        if (validationFeedback.isEmpty()) {
+            UserService service = UserServiceImpl.getInstance();
+            try {
+                if (service.insertNewUser(email, password)) {
+                    page = SIGN_IN;
+                    pageChangeType = REDIRECT;
+                } else {
+                    request.setAttribute(REQUEST_ATTRIBUTE_USER_EXISTS, MESSAGE_USER_EXISTS);
+                }
+
+            } catch (ServiceException e) {
+                throw new CommandException(e.getMessage(), e);
             }
 
-        } catch (ServiceException e) {
-            throw  new CommandException(e.getMessage(), e);
+            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        } else {
+            request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
-        return new Router(page, FORWARD);
+        return new Router(page, pageChangeType);
     }
 }

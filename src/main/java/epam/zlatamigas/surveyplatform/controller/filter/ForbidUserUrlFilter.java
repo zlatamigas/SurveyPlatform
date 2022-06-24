@@ -13,9 +13,9 @@ import java.io.IOException;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
 
-@WebFilter(filterName = "ForbidUserUrlFilter",
-        dispatcherTypes = {DispatcherType.REQUEST},
-        urlPatterns = {"/pages/*"})
+//@WebFilter(filterName = "ForbidUserUrlFilter",
+//        dispatcherTypes = {DispatcherType.REQUEST},
+//        urlPatterns = {"/pages/*"})
 public class ForbidUserUrlFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();

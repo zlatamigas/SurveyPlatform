@@ -11,7 +11,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigatio
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
 
-public class LogoutCommand implements Command {
+public class LogOutCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 

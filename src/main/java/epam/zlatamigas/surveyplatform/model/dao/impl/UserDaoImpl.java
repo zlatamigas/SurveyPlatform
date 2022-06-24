@@ -114,6 +114,12 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
     @Override
     public boolean insert(User user) throws DaoException {
 
+        Optional<User> dbUser = findByEmail(user.getEmail());
+        if(dbUser.isPresent()){
+            logger.error("Already exists user with email: " + user.getEmail());
+            return false;
+        }
+
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(INSERT_STATEMENT)) {
 
