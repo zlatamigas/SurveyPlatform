@@ -25,6 +25,47 @@
 
 <div class="container">
 
+    <div>
+        <form action="controller" method="get">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Search.." name="search">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-warning" onclick=""><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+            <div class="form-row justify-content-md-end">
+                <div class="col-md-6">
+                    <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
+                </div>
+                <select id="theme" class="form-control">
+                    <option value="0" selected>All</option>
+                    <option>theme</option>
+                </select>
+            </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-filter"></i></div>
+                </div>
+                <select id="sort" class="form-control">
+                    <option selected>A-Z</option>
+                    <option>Z-A</option>
+                </select>
+            </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
     <div class="accordion" id="allSurveys">
 
 
@@ -68,6 +109,20 @@
 
     </div>
 
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 </body>
