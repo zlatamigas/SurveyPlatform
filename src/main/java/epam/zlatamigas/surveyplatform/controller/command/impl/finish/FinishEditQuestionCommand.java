@@ -9,11 +9,9 @@ import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestionAnswer;
 import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
 import epam.zlatamigas.surveyplatform.util.validator.impl.QuestionFormValidator;
-import epam.zlatamigas.surveyplatform.util.validator.impl.SurveyFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,6 @@
 package epam.zlatamigas.surveyplatform.controller.command.impl.finish;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
-import epam.zlatamigas.surveyplatform.controller.navigation.DataHolder;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
@@ -12,8 +11,7 @@ import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
 import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
-import epam.zlatamigas.surveyplatform.util.validator.impl.SignInFormValidator;
-import epam.zlatamigas.surveyplatform.util.validator.impl.SurveyFormValidator;
+import epam.zlatamigas.surveyplatform.util.validator.impl.SurveyEditFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,7 +34,7 @@ public class FinishEditSurveyCommand implements Command {
         HttpSession session = request.getSession();
         String page = USER_SURVEYS;
 
-        FormValidator validator = SurveyFormValidator.getInstance();
+        FormValidator validator = SurveyEditFormValidator.getInstance();
         Map<String, String[]> requestParameters = request.getParameterMap();
         Map<String, String> validationFeedback = validator.validateForm(requestParameters);
 

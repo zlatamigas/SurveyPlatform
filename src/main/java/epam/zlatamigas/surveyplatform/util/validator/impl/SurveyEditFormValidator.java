@@ -9,14 +9,14 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.*;
 import static epam.zlatamigas.surveyplatform.util.validator.ValidatorPatternHolder.*;
 
-public class SurveyFormValidator implements FormValidator {
+public class SurveyEditFormValidator implements FormValidator {
     private static FormValidator instance;
 
-    private SurveyFormValidator(){}
+    private SurveyEditFormValidator(){}
 
     public static FormValidator getInstance() {
         if(instance == null){
-            instance = new SurveyFormValidator();
+            instance = new SurveyEditFormValidator();
         }
         return instance;
     }

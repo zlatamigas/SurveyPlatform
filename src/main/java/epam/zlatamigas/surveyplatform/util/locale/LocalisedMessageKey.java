@@ -14,5 +14,9 @@ public final class LocalisedMessageKey {
     public static final String MESSAGE_QUESTION_FORMULATION_WRONG = "message.question.formulation.wrong";
     public static final String MESSAGE_ANSWER_WRONG = "message.answer.wrong";
 
+    public static final String MESSAGE_REQUIRE_SELECT_MULTIPLE = "message.require.select.multiple";
+    public static final String MESSAGE_REQUIRE_SELECT_SINGLE = "message.require.select.single";
+
+
     private LocalisedMessageKey(){};
 }
