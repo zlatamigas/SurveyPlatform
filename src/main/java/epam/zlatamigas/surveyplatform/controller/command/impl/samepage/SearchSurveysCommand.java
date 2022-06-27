@@ -32,6 +32,10 @@ public class SearchSurveysCommand implements Command {
         int filterThemeId = Integer.parseInt(request.getParameter(PARAMETER_FILTER_THEME_ID));
         String orderTypeName = request.getParameter(PARAMETER_ORDER_TYPE);
 
+        request.setAttribute(PARAMETER_SEARCH_WORDS, searchWordsStr);
+        request.setAttribute(PARAMETER_FILTER_THEME_ID, filterThemeId);
+        request.setAttribute(PARAMETER_ORDER_TYPE, orderTypeName);
+
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
             List<Survey> surveys = service.findParticipantSurveysCommonInfoSearch(filterThemeId, searchWordsStr, orderTypeName);
@@ -40,7 +44,6 @@ public class SearchSurveysCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-
 
         return new Router(page, FORWARD);
     }

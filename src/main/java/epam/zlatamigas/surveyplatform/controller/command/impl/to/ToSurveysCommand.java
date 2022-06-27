@@ -31,6 +31,10 @@ public class ToSurveysCommand implements Command {
         HttpSession session = request.getSession();
         String page = PageNavigation.SURVEYS;
 
+        request.setAttribute(PARAMETER_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
+        request.setAttribute(PARAMETER_FILTER_THEME_ID, DEFAULT_THEMES_ALL);
+        request.setAttribute(PARAMETER_ORDER_TYPE, DEFAULT_ORDER);
+
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
             List<Survey> surveys =

@@ -30,7 +30,7 @@
             <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_SURVEYS}">
             <div class="form-row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Search.." name="${DataHolder.PARAMETER_SEARCH_WORDS}">
+                    <input type="text" class="form-control" placeholder="Search.." name="${DataHolder.PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
@@ -46,9 +46,9 @@
                     <div class="input-group-text"><i class="fas fa-filter"></i></div>
                 </div>
                 <select id="theme" class="form-control" name="${DataHolder.PARAMETER_FILTER_THEME_ID}">
-                    <option value="0" selected><fmt:message key="surveys.themes.all"/></option>
+                    <option value="0" <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="surveys.themes.all"/></option>
                     <c:forEach items="${sessionScope.themes}" var="theme">
-                        <option value="${theme.themeId}">${theme.themeName}</option>
+                        <option value="${theme.themeId}" <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -59,8 +59,8 @@
                     <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                 </div>
                 <select id="order" class="form-control" name="${DataHolder.PARAMETER_ORDER_TYPE}">
-                    <option value="ASC" selected><fmt:message key="surveys.order.az"/></option>
-                    <option value="DESC"><fmt:message key="surveys.order.za"/></option>
+                    <option value="ASC" <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="surveys.order.az"/></option>
+                    <option value="DESC" <c:if test="${requestScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="surveys.order.za"/></option>
                 </select>
             </div>
                 </div>
