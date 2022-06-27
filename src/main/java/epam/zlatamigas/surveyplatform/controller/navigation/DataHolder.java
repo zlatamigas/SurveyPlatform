@@ -34,9 +34,11 @@ public final class DataHolder {
 
     public static final String PARAMETER_ANSWER_TEXT = "answer_text";
 
-    public static final String PARAMETER_SEARCH_WORDS = "search_words";
-    public static final String PARAMETER_FILTER_THEME_ID = "filter_theme_id";
-    public static final String PARAMETER_ORDER_TYPE = "order_type";
+    public static final String PARAMETER_ATTRIBUTE_SEARCH_WORDS = "search_words";
+    public static final String PARAMETER_ATTRIBUTE_FILTER_THEME_ID = "filter_theme_id";
+    public static final String PARAMETER_ATTRIBUTE_ORDER_TYPE = "order_type";
+
+    public static final String PARAMETER_PAGINATION_PAGE_OFFSET = "pagination_page_offset";
 
     // Session attributes
 
@@ -66,6 +68,7 @@ public final class DataHolder {
     public static final String ATTRIBUTE_CHANGE_PASSWORD_KEY = "change_password_key";
     public static final String ATTRIBUTE_CHANGE_PASSWORD_EMAIL = "change_password_email";
 
+
     // Button groups
 
     public static final String BUTTONGROUP_NAME_CHECKBOX_ANSWERS = "check_question";
@@ -76,6 +79,8 @@ public final class DataHolder {
     public static final String REQUEST_ATTRIBUTE_USER_EXISTS = "user_exists";
     public static final String REQUEST_ATTRIBUTE_USER_INVALID = "user_invalid";
     public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";
+
+    public static final String ATTRIBUTE_PAGINATION_CURRENT_PAGE = "pagination_current_page";
 
     private DataHolder() {};
 

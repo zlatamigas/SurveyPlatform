@@ -30,7 +30,7 @@
             <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_SURVEYS}">
             <div class="form-row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Search.." name="${DataHolder.PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                    <input type="text" class="form-control" placeholder="Search.." name="${DataHolder.PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${sessionScope.search_words}">
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
@@ -45,10 +45,10 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fas fa-filter"></i></div>
                 </div>
-                <select id="theme" class="form-control" name="${DataHolder.PARAMETER_FILTER_THEME_ID}">
-                    <option value="0" <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="surveys.themes.all"/></option>
+                <select id="theme" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_FILTER_THEME_ID}">
+                    <option value="0" <c:if test="${sessionScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="surveys.themes.all"/></option>
                     <c:forEach items="${sessionScope.themes}" var="theme">
-                        <option value="${theme.themeId}" <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
+                        <option value="${theme.themeId}" <c:if test="${sessionScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -58,9 +58,9 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                 </div>
-                <select id="order" class="form-control" name="${DataHolder.PARAMETER_ORDER_TYPE}">
-                    <option value="ASC" <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="surveys.order.az"/></option>
-                    <option value="DESC" <c:if test="${requestScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="surveys.order.za"/></option>
+                <select id="order" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_ORDER_TYPE}">
+                    <option value="ASC" <c:if test="${sessionScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="surveys.order.az"/></option>
+                    <option value="DESC" <c:if test="${sessionScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="surveys.order.za"/></option>
                 </select>
             </div>
                 </div>
@@ -112,16 +112,26 @@
 
     </div>
 
+    <c:set var="forbidPrevious" value="${sessionScope.pagination_current_page <= 0}"/>
+    <c:set var="forbidNext" value="${(sessionScope.pagination_current_page + 1) * DataHolder.SURVEYS_PER_PAGE >= sessionScope.surveys.size()}"/>
+
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            <li class="page-item <c:if test="${forbidPrevious}">disabled</c:if>">
+
+                <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page - 1}"
+                <c:if test="${forbidPrevious}">
+                   tabindex="-1" aria-disabled="true"
+                </c:if>
+                >Previous</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+            <li class="page-item  <c:if test="${forbidNext}">disabled</c:if>">
+
+                <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page + 1}"
+                <c:if test="${forbidNext}">
+                    tabindex="-1" aria-disabled="true"
+                </c:if>
+                >Next</a>
             </li>
         </ul>
     </nav>

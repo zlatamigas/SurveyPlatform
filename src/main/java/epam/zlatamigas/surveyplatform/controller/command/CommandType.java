@@ -31,6 +31,7 @@ public enum CommandType {
     // List data
     TO_SURVEYS(new ToSurveysCommand()),
     SEARCH_SURVEYS(new SearchSurveysCommand()),
+    PAGINATE_SURVEYS(new PaginateSurveysCommand()),
     LIST_USERS(new ListUsersCommand()),
     LIST_USER_CREATED_SURVEYS(new ListUserCreatedSurveysCommand()),
     // TODO

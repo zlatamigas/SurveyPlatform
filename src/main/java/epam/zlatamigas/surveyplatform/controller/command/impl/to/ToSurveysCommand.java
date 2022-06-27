@@ -31,9 +31,9 @@ public class ToSurveysCommand implements Command {
         HttpSession session = request.getSession();
         String page = PageNavigation.SURVEYS;
 
-        request.setAttribute(PARAMETER_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
-        request.setAttribute(PARAMETER_FILTER_THEME_ID, DEFAULT_THEMES_ALL);
-        request.setAttribute(PARAMETER_ORDER_TYPE, DEFAULT_ORDER);
+        session.setAttribute(PARAMETER_ATTRIBUTE_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
+        session.setAttribute(PARAMETER_ATTRIBUTE_FILTER_THEME_ID, DEFAULT_THEMES_ALL);
+        session.setAttribute(PARAMETER_ATTRIBUTE_ORDER_TYPE, DEFAULT_ORDER);
 
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
@@ -41,6 +41,7 @@ public class ToSurveysCommand implements Command {
                     service.findParticipantSurveysCommonInfoSearch(DEFAULT_THEMES_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
             session.setAttribute(DataHolder.ATTRIBUTE_SURVEYS, surveys);
             session.setAttribute(ATTRIBUTE_SURVEYS_PAGE, surveys.subList(0, Math.min(SURVEYS_PER_PAGE, surveys.size())));
+            session.setAttribute(ATTRIBUTE_PAGINATION_CURRENT_PAGE, 0);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
