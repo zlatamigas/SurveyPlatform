@@ -2,6 +2,8 @@ package epam.zlatamigas.surveyplatform.controller.navigation;
 
 public final class DataHolder {
 
+    public static final int SURVEYS_PER_PAGE = 4;
+
     // Request parameters
 
     // Shared
@@ -32,6 +34,9 @@ public final class DataHolder {
 
     public static final String PARAMETER_ANSWER_TEXT = "answer_text";
 
+    public static final String PARAMETER_SEARCH_WORDS = "search_words";
+    public static final String PARAMETER_FILTER_THEME_ID = "filter_theme_id";
+    public static final String PARAMETER_ORDER_TYPE = "order_type";
 
     // Session attributes
 
@@ -44,6 +49,9 @@ public final class DataHolder {
     public static final String ATTRIBUTE_THEMES = "themes";
     public static final String ATTRIBUTE_USER_SURVEYS = "user_surveys";
     public static final String ATTRIBUTE_SURVEYS = "surveys";
+
+    public static final String ATTRIBUTE_SURVEYS_PAGE = "surveys_page";
+
     // Edit survey
     public static final String ATTRIBUTE_EDITED_SURVEY = "edited_survey";
     public static final String ATTRIBUTE_EDITED_QUESTION = "edited_question";

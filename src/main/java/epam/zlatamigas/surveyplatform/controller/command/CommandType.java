@@ -29,8 +29,9 @@ public enum CommandType {
     CHANGE_PASSWORD(new ChangePasswordCommand()),
 
     // List data
+    TO_SURVEYS(new ToSurveysCommand()),
+    SEARCH_SURVEYS(new SearchSurveysCommand()),
     LIST_USERS(new ListUsersCommand()),
-    LIST_SURVEYS(new ListSurveysCommand()),
     LIST_USER_CREATED_SURVEYS(new ListUserCreatedSurveysCommand()),
     // TODO
     // LIST_USER_FINISHED_SURVEYS(new ListUserFinishedSurveysCommand()),
@@ -39,7 +40,6 @@ public enum CommandType {
     START_EDIT_SURVEY(new StartEditSurveyCommand()),
     FINISH_EDIT_SURVEY(new FinishEditSurveyCommand()),
     START_EDIT_QUESTION(new StartEditQuestionCommand()),
-    // TODO
     FINISH_EDIT_QUESTION(new FinishEditQuestionCommand()),
     REMOVE_QUESTION(new RemoveQuestionCommand()),
     ADD_ANSWER(new AddAnswerCommand()),
@@ -47,6 +47,7 @@ public enum CommandType {
     CANCEL_EDIT_SURVEY(new CancelEditSurveyCommand()),
     CANCEL_EDIT_QUESTION(new CancelEditQuestionCommand()),
     DELETE_SURVEY(new DeleteSurveyCommand()),
+    // TODO
     // SHOW_DELETE_SURVEY(new ShowDeleteSurveyCommand()),
     // SHOW_DELETE_QUESTION(new ShowDeleteQuestionCommand()),
     // SHOW_DELETE_ANSWER(new ShowDeleteAnswerCommand()),
@@ -57,7 +58,6 @@ public enum CommandType {
     CHANGE_SURVEY_STATUS_STARTED(new ChangeSurveyStatusStartedCommand()),
 
     // Participate in survey
-    // TODO
     START_SURVEY_ATTEMPT(new StartSurveyAttemptCommand()),
     FINISH_SURVEY_ATTEMPT(new FinishSurveyAttemptCommand()),
     CANCEL_SURVEY_ATTEMPT(new CancelSurveyAttemptCommand()),

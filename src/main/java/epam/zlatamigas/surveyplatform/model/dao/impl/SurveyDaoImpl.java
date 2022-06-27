@@ -1,21 +1,19 @@
 package epam.zlatamigas.surveyplatform.model.dao.impl;
 
-import com.mysql.cj.MysqlType;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
 import epam.zlatamigas.surveyplatform.model.dao.BaseDao;
+import epam.zlatamigas.surveyplatform.model.dao.DbOrderType;
 import epam.zlatamigas.surveyplatform.model.dao.SurveyDao;
 import epam.zlatamigas.surveyplatform.model.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mysql.cj.MysqlType.DATETIME;
 import static epam.zlatamigas.surveyplatform.model.dao.DbTableInfo.*;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
@@ -106,6 +104,23 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             WHERE question_id = ?
             """;
 
+    private static final String FIND_PARTICIPANT_SURVEYS_COMMON_INFO_BASE_STATEMENT = """
+            SELECT id_survey, survey_name, survey_description, theme_id, theme_name, theme_status 
+            FROM surveys 
+            INNER JOIN themes 
+            ON theme_id = id_theme 
+            WHERE survey_status = 'STARTED'
+            """;
+    private static final String WHERE_THEME_ID_STATEMENT = """
+            AND theme_id = ?
+            """;
+    private static final String WHERE_NAME_CONTAINS_STATEMENT = """
+            AND INSTR(LOWER(survey_name), LOWER(?)) > 0
+            """;
+    private static final String ORDER_BY_SURVEY_NAME_STATEMENT = """
+            ORDER BY survey_name 
+            """;
+
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     //SurveyDaoImpl instance
@@ -122,6 +137,58 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
         return instance;
     }
 
+
+    @Override
+    public List<Survey> findParticipantSurveysCommonInfoSearch(int filterThemeId, String[] searchWords, DbOrderType orderType) throws DaoException {
+        List<Survey> surveys = new ArrayList<>();
+        Survey survey = null;
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();) {
+
+            StringBuilder query = new StringBuilder(FIND_PARTICIPANT_SURVEYS_COMMON_INFO_BASE_STATEMENT);
+            if(filterThemeId > 0){
+                query.append(WHERE_THEME_ID_STATEMENT);
+            }
+            query.append(WHERE_NAME_CONTAINS_STATEMENT.repeat(searchWords.length));
+            query.append(ORDER_BY_SURVEY_NAME_STATEMENT).append(orderType.name());
+
+            PreparedStatement psFindSurvey = connection.prepareStatement(query.toString());
+
+            int parameterIndex = 1;
+            if(filterThemeId > 0){
+                psFindSurvey.setInt(parameterIndex++, filterThemeId);
+            }
+            for(int i = 0; i < searchWords.length; i++, parameterIndex++){
+                psFindSurvey.setString(parameterIndex, searchWords[i]);
+            }
+
+            ResultSet rsSurvey = psFindSurvey.executeQuery();
+
+            while (rsSurvey.next()) {
+
+                Theme theme = new Theme.ThemeBuilder()
+                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
+                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
+                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
+                        .getTheme();
+
+                survey = new Survey.SurveyBuilder()
+                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
+                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setTheme(theme)
+                        .getSurvey();
+
+                surveys.add(survey);
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e.getMessage(), e);
+        }
+
+        return surveys;
+    }
 
     @Override
     public List<Survey> findParticipantSurveysCommonInfo() throws DaoException {

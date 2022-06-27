@@ -36,7 +36,7 @@
             </div>
             <div class="col">
                 <a class="nav-link"
-                   href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_SURVEYS}">
+                   href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_SURVEYS}">
 <%--                    <fmt:message key=""/>--%>
                     Participate now
                 </a>

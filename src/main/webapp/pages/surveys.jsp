@@ -27,9 +27,10 @@
 
     <div>
         <form action="controller" method="get">
+            <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_SURVEYS}">
             <div class="form-row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Search.." name="search">
+                    <input type="text" class="form-control" placeholder="Search.." name="${DataHolder.PARAMETER_SEARCH_WORDS}">
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
@@ -42,22 +43,24 @@
                 <div class="col-md-6">
                     <div class="input-group">
                 <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
+                    <div class="input-group-text"><i class="fas fa-filter"></i></div>
                 </div>
-                <select id="theme" class="form-control">
-                    <option value="0" selected>All</option>
-                    <option>theme</option>
+                <select id="theme" class="form-control" name="${DataHolder.PARAMETER_FILTER_THEME_ID}">
+                    <option value="0" selected><fmt:message key="surveys.themes.all"/></option>
+                    <c:forEach items="${sessionScope.themes}" var="theme">
+                        <option value="${theme.themeId}">${theme.themeName}</option>
+                    </c:forEach>
                 </select>
             </div>
                 </div>
                 <div class="col-md-3">
                     <div class="input-group">
                 <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-filter"></i></div>
+                    <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                 </div>
-                <select id="sort" class="form-control">
-                    <option selected>A-Z</option>
-                    <option>Z-A</option>
+                <select id="order" class="form-control" name="${DataHolder.PARAMETER_ORDER_TYPE}">
+                    <option value="ASC" selected><fmt:message key="surveys.order.az"/></option>
+                    <option value="DESC"><fmt:message key="surveys.order.za"/></option>
                 </select>
             </div>
                 </div>
@@ -69,7 +72,7 @@
     <div class="accordion" id="allSurveys">
 
 
-        <c:forEach items="${sessionScope.surveys}" var="survey">
+        <c:forEach items="${sessionScope.surveys_page}" var="survey">
 
             <div class="card">
                 <div class="card-header" id="heading${survey.surveyId}">
@@ -108,7 +111,6 @@
         </c:forEach>
 
     </div>
-
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">

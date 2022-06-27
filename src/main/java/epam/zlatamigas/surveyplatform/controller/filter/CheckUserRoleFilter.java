@@ -41,7 +41,6 @@ public class CheckUserRoleFilter implements Filter {
                         CHANGE_LOCALISATION,
                         LOGOUT,
                         LIST_USERS,
-                        LIST_SURVEYS,
                         LIST_USER_CREATED_SURVEYS,
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
@@ -53,7 +52,6 @@ public class CheckUserRoleFilter implements Filter {
                         HOME,
                         CHANGE_LOCALISATION,
                         LOGOUT,
-                        LIST_SURVEYS,
                         LIST_USER_CREATED_SURVEYS,
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
@@ -65,8 +63,7 @@ public class CheckUserRoleFilter implements Filter {
                         HOME,
                         CHANGE_LOCALISATION,
                         FINISH_SIGN_IN,
-                        START_SIGN_IN,
-                        LIST_SURVEYS
+                        START_SIGN_IN
                 )
         );
     }

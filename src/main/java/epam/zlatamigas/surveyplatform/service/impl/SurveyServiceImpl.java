@@ -2,26 +2,48 @@ package epam.zlatamigas.surveyplatform.service.impl;
 
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
+import epam.zlatamigas.surveyplatform.model.dao.DbOrderType;
 import epam.zlatamigas.surveyplatform.model.dao.SurveyDao;
 import epam.zlatamigas.surveyplatform.model.dao.impl.SurveyDaoImpl;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyUserAttempt;
+import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SurveyServiceImpl implements SurveyService {
 
+    private static final String SEARCH_WORDS_DELIMITER = " ";
+
     private static SurveyServiceImpl instance = new SurveyServiceImpl();
 
-    private SurveyServiceImpl(){
+    private SurveyServiceImpl() {
     }
 
     public static SurveyServiceImpl getInstance() {
         return instance;
     }
 
+
+    @Override
+    public List<Survey> findParticipantSurveysCommonInfoSearch(int filterThemeId, String searchWordsStr, String orderTypeName) throws ServiceException {
+        SurveyDao surveyDao = SurveyDaoImpl.getInstance();
+
+        String[] searchWords = Arrays.stream(searchWordsStr
+                .split(SEARCH_WORDS_DELIMITER))
+                .filter(s -> !s.isBlank())
+                .toArray(String[]::new);
+        DbOrderType orderType = DbOrderType.valueOf(orderTypeName);
+
+        try {
+            return surveyDao.findParticipantSurveysCommonInfoSearch(filterThemeId, searchWords, orderType);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 
     @Override
     public List<Survey> findParticipantSurveysCommonInfo() throws ServiceException {
