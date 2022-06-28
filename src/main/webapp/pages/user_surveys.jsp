@@ -42,13 +42,9 @@
                 <button type="submit" class="btn btn-primary"><fmt:message key="usersurvey.createsurvey"/></button>
             </form>
             <div class="accordion" id="userSurveys">
-
-
                 <c:forEach items="${sessionScope.user_surveys}" var="survey">
-
                     <div class="card">
                         <div class="card-header" id="heading${survey.surveyId}">
-
                             <div class="row justify-content-between">
                                 <div class="col">
                                     <h5 class="card-title">${survey.name}</h5>
@@ -68,11 +64,8 @@
                             <div class="card-body">
                                 <h6 class="card-subtitle mb-2 text-muted">${survey.theme.themeName}</h6>
                                 <p class="card-subtitle mb-2 text-muted">${survey.status}</p>
-
                                 <p class="card-text">${survey.description}</p>
-
                                 <div class="btn-toolbar justify-content-end" role="toolbar">
-
                                     <form id="startEditSurveyForm${survey.surveyId}" action="controller" method="post">
                                         <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
                                         <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}"

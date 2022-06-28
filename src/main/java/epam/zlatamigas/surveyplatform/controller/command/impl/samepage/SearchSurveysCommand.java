@@ -67,6 +67,8 @@ public class SearchSurveysCommand implements Command {
             throw new CommandException(e);
         }
 
+        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+
         return new Router(page, FORWARD);
     }
 }

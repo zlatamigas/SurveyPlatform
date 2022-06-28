@@ -35,9 +35,6 @@
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-warning" onclick=""><i class="fas fa-trash-alt"></i></button>
-                </div>
             </div>
             <div class="form-row justify-content-md-end">
                 <div class="col-md-6">
@@ -119,7 +116,6 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">
             <li class="page-item <c:if test="${forbidPrevious}">disabled</c:if>">
-
                 <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${requestSearchPartForPagination}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page - 1}"
                 <c:if test="${forbidPrevious}">
                    tabindex="-1" aria-disabled="true"
@@ -127,7 +123,6 @@
                 >Previous</a>
             </li>
             <li class="page-item  <c:if test="${forbidNext}">disabled</c:if>">
-
                 <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${requestSearchPartForPagination}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page + 1}"
                 <c:if test="${forbidNext}">
                     tabindex="-1" aria-disabled="true"

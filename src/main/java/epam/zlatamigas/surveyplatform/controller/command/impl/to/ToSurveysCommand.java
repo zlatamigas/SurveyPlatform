@@ -52,6 +52,8 @@ public class ToSurveysCommand implements Command {
             throw new CommandException(e);
         }
 
+        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+
         return new Router(page, FORWARD);
     }
 }
