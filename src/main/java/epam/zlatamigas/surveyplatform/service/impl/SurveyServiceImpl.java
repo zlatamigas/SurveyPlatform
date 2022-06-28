@@ -46,18 +46,6 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public List<Survey> findParticipantSurveysCommonInfo() throws ServiceException {
-
-        SurveyDao surveyDao = SurveyDaoImpl.getInstance();
-
-        try {
-            return surveyDao.findParticipantSurveysCommonInfo();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public List<Survey> findCreatorSurveysCommonInfo(int userId) throws ServiceException {
         SurveyDao surveyDao = SurveyDaoImpl.getInstance();
 

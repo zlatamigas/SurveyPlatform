@@ -6,7 +6,10 @@ import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import java.util.List;
 
 public interface ThemeService {
-    List<Theme> findAll() throws ServiceException;
-
     List<Theme> findAllConfirmed() throws ServiceException;
+    List<Theme> findAllWaiting() throws ServiceException;
+    boolean confirmTheme(int themeId) throws ServiceException;
+    boolean insertConfirmedTheme(Theme theme) throws ServiceException;
+    boolean insertWaitingTheme(Theme theme) throws ServiceException;
+    boolean delete(int themeId) throws ServiceException;
 }

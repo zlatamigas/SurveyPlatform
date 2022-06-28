@@ -63,7 +63,10 @@ public enum CommandType {
     FINISH_SURVEY_ATTEMPT(new FinishSurveyAttemptCommand()),
     CANCEL_SURVEY_ATTEMPT(new CancelSurveyAttemptCommand()),
 
-    VIEW_SURVEY_RESULT(new ViewSurveyResultCommand())
+    VIEW_SURVEY_RESULT(new ViewSurveyResultCommand()),
+
+    TO_THEMES_CONFIRMED(new ToThemesConfirmedCommand()),
+    TO_THEMES_WAITING(new ToThemesWaitingCommand()),
     ;
 
     private Command command;

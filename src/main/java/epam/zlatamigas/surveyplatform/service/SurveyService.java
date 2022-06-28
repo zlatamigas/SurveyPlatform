@@ -22,15 +22,6 @@ public interface SurveyService {
      */
     List<Survey> findParticipantSurveysCommonInfoSearch(int filterThemeId, String searchWordsStr, String orderTypeName) throws ServiceException;
 
-
-    /**
-     * Find preview info (name, description) about all started surveys.
-     *
-     * @return List of surveys with common info without question and answer data.
-     * @throws ServiceException
-     */
-    List<Survey> findParticipantSurveysCommonInfo() throws ServiceException;
-
     /**
      * Find preview info (name, description, status) about all surveys created by user.
      *

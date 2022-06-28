@@ -2,7 +2,7 @@ package epam.zlatamigas.surveyplatform.controller.navigation;
 
 public final class DataHolder {
 
-    public static final int SURVEYS_PER_PAGE = 4;
+    public static final int PAGINATION_ITEMS_PER_PAGE = 4;
 
     // Request parameters
 
@@ -40,6 +40,8 @@ public final class DataHolder {
 
     public static final String PARAMETER_PAGINATION_PAGE_OFFSET = "pagination_page_offset";
 
+    public static final String PARAMETER_THEME_ID = "theme_id";
+
     // Session attributes
 
     // Shared
@@ -68,6 +70,7 @@ public final class DataHolder {
     public static final String ATTRIBUTE_CHANGE_PASSWORD_KEY = "change_password_key";
     public static final String ATTRIBUTE_CHANGE_PASSWORD_EMAIL = "change_password_email";
 
+    public static final String ATTRIBUTE_REQUESTED_THEMES = "requested_themes";
 
     // Button groups
 

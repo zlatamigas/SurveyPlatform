@@ -18,16 +18,6 @@ public interface SurveyDao {
      */
     List<Survey> findParticipantSurveysCommonInfoSearch(int filterThemeId, String[] searchWords, DbOrderType orderType) throws DaoException;
 
-
-
-    /**
-     * Find preview info (name, description) about all started surveys.
-     *
-     * @return List of surveys with common info without question and answer data.
-     * @throws DaoException
-     */
-    List<Survey> findParticipantSurveysCommonInfo() throws DaoException;
-
     /**
      * Find preview info (name, description, status) about all surveys created by user.
      *

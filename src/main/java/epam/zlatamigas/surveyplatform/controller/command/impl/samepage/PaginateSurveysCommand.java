@@ -98,14 +98,14 @@ public class PaginateSurveysCommand implements Command {
         String requestedPageStr = request.getParameter(PARAMETER_PAGINATION_PAGE_OFFSET);
         int requestedPage = !(requestedPageStr == null || requestedPageStr.isBlank()) ? Integer.parseInt(requestedPageStr) : 0;
 
-        int firstElementPos = requestedPage * SURVEYS_PER_PAGE;
+        int firstElementPos = requestedPage * PAGINATION_ITEMS_PER_PAGE;
         if(firstElementPos >= surveys.size()){
             firstElementPos = 0;
             requestedPage = 0;
         }
 
         List<Survey> surveysPerPage =
-                    surveys.subList(firstElementPos, firstElementPos +  Math.min(SURVEYS_PER_PAGE, surveys.size() - firstElementPos));
+                    surveys.subList(firstElementPos, firstElementPos +  Math.min(PAGINATION_ITEMS_PER_PAGE, surveys.size() - firstElementPos));
         session.setAttribute(ATTRIBUTE_SURVEYS_PAGE, surveysPerPage);
         session.setAttribute(ATTRIBUTE_PAGINATION_CURRENT_PAGE, requestedPage);
 

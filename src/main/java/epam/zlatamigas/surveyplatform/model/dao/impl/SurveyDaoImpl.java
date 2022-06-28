@@ -189,43 +189,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
         return surveys;
     }
-
-    @Override
-    public List<Survey> findParticipantSurveysCommonInfo() throws DaoException {
-        List<Survey> surveys = new ArrayList<>();
-        Survey survey = null;
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection();) {
-
-            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT);
-            ResultSet rsSurvey = psFindSurvey.executeQuery();
-
-            while (rsSurvey.next()) {
-
-                Theme theme = new Theme.ThemeBuilder()
-                        .setThemeId(rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN))
-                        .setThemeName(rsSurvey.getString(THEMES_TABLE_NAME_COLUMN))
-                        .setThemeStatus(ThemeStatus.valueOf(rsSurvey.getString(THEMES_TABLE_STATUS_COLUMN)))
-                        .getTheme();
-
-                survey = new Survey.SurveyBuilder()
-                        .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
-                        .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
-                        .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
-                        .setTheme(theme)
-                        .getSurvey();
-
-                surveys.add(survey);
-            }
-
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage(), e);
-        }
-
-        return surveys;
-    }
-
+    
     @Override
     public List<Survey> findCreatorSurveysCommonInfo(int userId) throws DaoException {
         List<Survey> surveys = new ArrayList<>();

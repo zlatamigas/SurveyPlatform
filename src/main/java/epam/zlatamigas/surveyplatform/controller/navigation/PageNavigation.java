@@ -22,9 +22,8 @@ public final class PageNavigation {
     public static final String SURVEY_ATTEMPT = "/pages/survey_attempt.jsp";
     public static final String SURVEY_RESULT = "/pages/survey_result.jsp";
 
-    public static final String ERROR_404 = "/pages/error_404.jsp";
-    public static final String ERROR_500 = "/pages/error_500.jsp";
-
+    public static final String THEMES_CONFIRMED = "/pages/themes_confirmed.jsp";
+    public static final String THEMES_WAITING = "/pages/themes_waiting.jsp";
 
     private PageNavigation(){}
 }

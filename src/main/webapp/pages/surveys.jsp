@@ -110,7 +110,7 @@
     </div>
 
     <c:set var="forbidPrevious" value="${sessionScope.pagination_current_page <= 0}"/>
-    <c:set var="forbidNext" value="${(sessionScope.pagination_current_page + 1) * DataHolder.SURVEYS_PER_PAGE >= sessionScope.surveys.size()}"/>
+    <c:set var="forbidNext" value="${(sessionScope.pagination_current_page + 1) * DataHolder.PAGINATION_ITEMS_PER_PAGE >= sessionScope.surveys.size()}"/>
     <c:set var="requestSearchPartForPagination" value="${DataHolder.PARAMETER_ATTRIBUTE_SEARCH_WORDS}=${sessionScope.search_words}&${DataHolder.PARAMETER_ATTRIBUTE_FILTER_THEME_ID}=${sessionScope.filter_theme_id}&${DataHolder.PARAMETER_ATTRIBUTE_ORDER_TYPE}=${sessionScope.order_type}"/>
 
     <nav aria-label="Page navigation example">

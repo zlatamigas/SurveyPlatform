@@ -16,8 +16,25 @@
 </head>
 <body>
 <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
-    <a id="navLinkUserSurveys" class="nav-link" role="tab" aria-selected="false" href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USER_CREATED_SURVEYS}">My surveys</a>
-    <a id="navThemes" class="nav-link" role="tab" aria-selected="false">Themes</a>
+
+    <a id="navLinkUserSurveys" class="nav-link" role="tab" aria-selected="false"
+       href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USER_CREATED_SURVEYS}">
+        My surveys</a>
+
+
+    <button id="navThemes"
+            class="btn btn-link btn-block text-left nav-link"
+            type="button" data-toggle="collapse"
+            data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme">
+        Themes
+    </button>
+    <div id="collapseTheme" class="collapse">
+        <div>
+            <a id="navThemesConfirmed" class="nav-link" role="tab" aria-selected="false" href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_THEMES_CONFIRMED}">Confirmed</a>
+            <a id="navThemesWaiting" class="nav-link" role="tab" aria-selected="false" href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_THEMES_WAITING}">Waiting</a>
+        </div>
+    </div>
+
     <a id="navUsers" class="nav-link" role="tab" aria-selected="false">Users</a>
     <a id="navEditAccount" class="nav-link" role="tab" aria-selected="false">Account</a>
 </div>
