@@ -17,14 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static epam.zlatamigas.surveyplatform.controller.command.SearchDefaultParameters.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
 public class ToSurveysCommand implements Command {
 
-    private static final String DEFAULT_ORDER = "ASC";
-    private static final String DEFAULT_SEARCH_WORDS = "";
-    private static final int DEFAULT_THEMES_ALL = 0;
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

@@ -21,7 +21,7 @@
 
 <body>
 
-<jsp:include page="header.jsp"/>
+<jsp:include page="/pages/fragment/header.jsp"/>
 
 <div class="container">
 
@@ -114,12 +114,13 @@
 
     <c:set var="forbidPrevious" value="${sessionScope.pagination_current_page <= 0}"/>
     <c:set var="forbidNext" value="${(sessionScope.pagination_current_page + 1) * DataHolder.SURVEYS_PER_PAGE >= sessionScope.surveys.size()}"/>
+    <c:set var="requestSearchPartForPagination" value="${DataHolder.PARAMETER_ATTRIBUTE_SEARCH_WORDS}=${sessionScope.search_words}&${DataHolder.PARAMETER_ATTRIBUTE_FILTER_THEME_ID}=${sessionScope.filter_theme_id}&${DataHolder.PARAMETER_ATTRIBUTE_ORDER_TYPE}=${sessionScope.order_type}"/>
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">
             <li class="page-item <c:if test="${forbidPrevious}">disabled</c:if>">
 
-                <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page - 1}"
+                <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${requestSearchPartForPagination}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page - 1}"
                 <c:if test="${forbidPrevious}">
                    tabindex="-1" aria-disabled="true"
                 </c:if>
@@ -127,7 +128,7 @@
             </li>
             <li class="page-item  <c:if test="${forbidNext}">disabled</c:if>">
 
-                <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page + 1}"
+                <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${requestSearchPartForPagination}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page + 1}"
                 <c:if test="${forbidNext}">
                     tabindex="-1" aria-disabled="true"
                 </c:if>
