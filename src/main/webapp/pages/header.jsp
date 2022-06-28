@@ -17,6 +17,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
             crossorigin="anonymous"></script>
+
+    <%-- Fontawesome Icons --%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/lib/fontawesome-free-5.15.4-web/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script defer src="${pageContext.request.contextPath}/static/lib/fontawesome-free-5.15.4-web/js/all.js"></script>
 </head>
 
 <header>
@@ -51,18 +55,6 @@
                         <fmt:message key="header.navbar.surveys"/>
                     </a>
                 </li>
-                <c:if test="${sessionScope.user != null}">
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USER_CREATED_SURVEYS}">
-                            <fmt:message key="header.navbar.createdsurveys"/>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=">
-                            <fmt:message key="header.navbar.finishedsurveys"/>
-                        </a>
-                    </li>
-                </c:if>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -85,8 +77,18 @@
                         <input type="hidden" name="command" value="${CommandType.LOGOUT}">
                         <label class="mr-sm-2">
                             <c:choose>
-                                <c:when test="${sessionScope.user.role == UserRole.ADMIN}"><fmt:message key="header.navbar.userroe.admin"/></c:when>
-                                <c:when test="${sessionScope.user.role == UserRole.USER}"><fmt:message key="header.navbar.userroe.user"/></c:when>
+                                <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
+                                    <a href="${pageContext.request.contextPath}/pages/account.jsp">
+                                        <i class="fas fa-user-tie"></i>
+                                    </a>
+                                    <fmt:message key="header.navbar.userroe.admin"/>
+                                </c:when>
+                                <c:when test="${sessionScope.user.role == UserRole.USER}">
+                                    <a href="${pageContext.request.contextPath}/pages/account.jsp">
+                                        <i class="fas fa-user"></i>
+                                    </a>
+                                    <fmt:message key="header.navbar.userroe.user"/>
+                                </c:when>
                             </c:choose>
                                 ${sessionScope.user.email}</label>
                         <button type="submit" class="btn btn-sm btn-outline-warning my-2 my-sm-0">
