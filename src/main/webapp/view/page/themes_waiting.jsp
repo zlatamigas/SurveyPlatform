@@ -47,9 +47,9 @@
                             </div>
                             <div class="col col-auto">
                                 <form action="controller" method="post">
-                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.DELETE_THEME}">
+                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.REJECT_THEME}">
                                     <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                    <button class="btn" type="submit">Delete</button>
+                                    <button class="btn" type="submit">Reject</button>
                                 </form>
                             </div>
                         </div>
