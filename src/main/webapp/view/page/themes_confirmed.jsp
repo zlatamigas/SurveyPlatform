@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.themeswaiting"/></title>
+    <title><fmt:message key="title.themesconfirmed"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -23,49 +23,40 @@
 
 <body>
 
-<jsp:include page="/pages/fragment/header.jsp"/>
+<jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container-fluid">
 
     <div class="row">
         <div class="col-3">
-            <jsp:include page="fragment/account_left_navbar.jsp"/>
+            <jsp:include page="/view/fragment/account_left_navbar.jsp"/>
             <script>
                 document.getElementById("collapseTheme").classList.add("show");
-                document.getElementById("navThemesWaiting").classList.add("active");
+                document.getElementById("navThemesConfirmed").classList.add("active");
                 document.getElementById("navThemes").setAttribute("disabled", "disabled");
             </script>
         </div>
         <div class="col-9">
-            <c:forEach items="${sessionScope.requested_themes}" var="theme">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <h5>${theme.themeName}</h5>
-                            </div>
-                            <div class="col col-auto">
-                                <form action="controller" method="post">
-                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
-                                    <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                    <button class="btn" type="submit">Confirm</button>
-                                </form>
-                            </div>
-                            <div class="col col-auto">
-                                <form action="controller" method="post">
-                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
-                                    <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                    <button class="btn" type="submit">Delete</button>
-                                </form>
+                <c:forEach items="${sessionScope.requested_themes}" var="theme">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row justify-content-between">
+                                <div class="col">
+                                    <h5>${theme.themeName}</h5>
+                                </div>
+                                <div class="col col-auto">
+                                    <form action="controller" method="post">
+                                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
+                                        <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
         </div>
     </div>
-
-
 </div>
 
 </body>

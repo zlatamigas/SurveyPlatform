@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
 
-@WebServlet(name = "AppController",urlPatterns = { "/controller", "/pages/controller"})
+@WebServlet(name = "AppController",urlPatterns = { "/controller", "/view/page/controller"})
 public class Controller extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger();

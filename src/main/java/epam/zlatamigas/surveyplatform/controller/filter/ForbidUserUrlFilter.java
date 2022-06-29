@@ -15,7 +15,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PA
 
 //@WebFilter(filterName = "ForbidUserUrlFilter",
 //        dispatcherTypes = {DispatcherType.REQUEST},
-//        urlPatterns = {"/pages/*"})
+//        urlPatterns = {"/view/page/*"})
 public class ForbidUserUrlFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();

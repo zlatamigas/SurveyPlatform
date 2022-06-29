@@ -24,7 +24,7 @@ import static epam.zlatamigas.surveyplatform.model.entity.UserRole.*;
 //@WebFilter(
 //        filterName = "CheckUserRoleFilter",
 //        dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
-//        urlPatterns = {"/controller", "/pages/controller"})
+//        urlPatterns = {"/controller", "/view/page/controller"})
 public class CheckUserRoleFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();

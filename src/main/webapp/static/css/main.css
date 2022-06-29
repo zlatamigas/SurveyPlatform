@@ -1,0 +1,26 @@
+.account-icon-container{
+    border: 2px solid aqua;
+    border-radius: 50%;
+    margin: 6px;
+    width: 2em;
+    height: 2em;
+    overflow: hidden;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.account-icon-link {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: inline-block;
+}
+
+.account-icon {
+    color: aqua;
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    font-size: 2em;
+    overflow: hidden;
+}

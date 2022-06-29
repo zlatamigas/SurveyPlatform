@@ -16,7 +16,7 @@
 
 <body>
 
-<jsp:include page="/pages/fragment/header.jsp"/>
+<jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container">
 

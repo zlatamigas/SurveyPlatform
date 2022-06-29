@@ -23,13 +23,13 @@
 
 <body>
 
-<jsp:include page="/pages/fragment/header.jsp"/>
+<jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container-fluid">
 
     <div class="row">
         <div class="col-3">
-            <jsp:include page="fragment/account_left_navbar.jsp"/>
+            <jsp:include page="/view/fragment/account_left_navbar.jsp"/>
             <script>
                 let activeLink = document.getElementById("navLinkUserSurveys");
                 activeLink.classList.add("active");

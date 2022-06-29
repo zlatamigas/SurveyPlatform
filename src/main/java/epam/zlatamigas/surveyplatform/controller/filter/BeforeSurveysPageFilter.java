@@ -15,16 +15,13 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
+import static epam.zlatamigas.surveyplatform.controller.command.SearchDefaultParameters.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 
-//@WebFilter(filterName = "BeforeSurveysPageFilter", dispatcherTypes = {DispatcherType.FORWARD}, urlPatterns = "/pages/surveys.jsp")
+//@WebFilter(filterName = "BeforeSurveysPageFilter", dispatcherTypes = {DispatcherType.FORWARD}, urlPatterns = "/view/page/surveys.jsp")
 public class BeforeSurveysPageFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();
-
-    private static final String DEFAULT_ORDER = "ASC";
-    private static final String DEFAULT_SEARCH_WORDS = "";
-    private static final int DEFAULT_THEMES_ALL = 0;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

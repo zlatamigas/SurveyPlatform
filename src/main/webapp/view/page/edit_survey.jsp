@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<jsp:include page="/pages/fragment/header.jsp"/>
+<jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container">
 
@@ -41,15 +41,14 @@
         <div class="form-group">
             <label for="surveyTheme"><fmt:message key="editsurvey.label.surveytheme"/></label>
             <select name="${DataHolder.PARAMETER_SURVEY_THEME_ID}" id="surveyTheme" class="form-control">
+
+                <option <c:if test="${sessionScope.edited_survey.theme.themeId == -1}">selected</c:if>
+                        value="-1">
+                    <fmt:message key="editsurvey.theme.none"/>
+                </option>
                 <c:forEach items="${sessionScope.themes}" var="theme">
-                    <c:choose>
-                        <c:when test="${theme.themeId != sessionScope.edited_survey.theme.themeId}">
-                            <option value="${theme.themeId}">${theme.themeName}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option selected value="${theme.themeId}">${theme.themeName}</option>
-                        </c:otherwise>
-                    </c:choose>
+                    <option <c:if test="${theme.themeId == sessionScope.edited_survey.theme.themeId}">selected</c:if>
+                            value="${theme.themeId}">${theme.themeName}</option>
                 </c:forEach>
             </select>
         </div>

@@ -10,7 +10,7 @@ public interface SurveyDao {
     /**
      * Find preview info (name, description) about started surveys according to parameters.
      *
-     * @param filterThemeId If > 0 use as theme_id, otherwise search through all themes.
+     * @param filterThemeId If > 0 use as theme_id, 0 - all themes, -1 - column theme_id contains null.
      * @param searchWords Words contained in survey_name. Case insensitive. If array size is 0, then all survey names are acceptable.
      * @param orderType Order type: ASC - ascending, DESC - descending.
      * @return List of surveys with common info without question and answer data.

@@ -19,8 +19,12 @@
             crossorigin="anonymous"></script>
 
     <%-- Fontawesome Icons --%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/lib/fontawesome-free-5.15.4-web/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/lib/fontawesome-free-5.15.4-web/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <script defer src="${pageContext.request.contextPath}/static/lib/fontawesome-free-5.15.4-web/js/all.js"></script>
+
+    <%-- Custom css --%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css">
 </head>
 
 <header>
@@ -37,7 +41,8 @@
 
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=${CommandType.HOME}">
+                    <a class="nav-link"
+                       href="${pageContext.request.contextPath}/controller?command=${CommandType.HOME}">
                         <fmt:message key="header.navbar.homepage"/>
                     </a>
                 </li>
@@ -76,21 +81,25 @@
                     <form class="form-inline my-2 my-lg-0" action="controller">
                         <input type="hidden" name="command" value="${CommandType.LOGOUT}">
                         <label class="mr-sm-2">
-                            <c:choose>
-                                <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
-                                    <a href="${pageContext.request.contextPath}/pages/account.jsp">
-                                        <i class="fas fa-user-tie"></i>
-                                    </a>
-                                    <fmt:message key="header.navbar.userroe.admin"/>
-                                </c:when>
-                                <c:when test="${sessionScope.user.role == UserRole.USER}">
-                                    <a href="${pageContext.request.contextPath}/pages/account.jsp">
-                                        <i class="fas fa-user"></i>
-                                    </a>
-                                    <fmt:message key="header.navbar.userroe.user"/>
-                                </c:when>
-                            </c:choose>
-                                ${sessionScope.user.email}</label>
+                                <c:choose>
+                                    <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
+                                        <fmt:message key="header.navbar.userroe.admin"/>
+                                    <div class="account-icon-container">
+                                        <a href="${pageContext.request.contextPath}/view/page/account.jsp" class="account-icon-link">
+                                            <i class="fas fa-user-tie account-icon"></i>
+                                        </a>
+                                    </div>
+                                    </c:when>
+                                    <c:when test="${sessionScope.user.role == UserRole.USER}">
+                                        <fmt:message key="header.navbar.userroe.user"/>
+                                    <div class="account-icon-container">
+                                        <a href="${pageContext.request.contextPath}/view/page/account.jsp" class="account-icon-link">
+                                            <i class="fas fa-user account-icon" ></i>
+                                        </a>
+                                    </div>
+                                    </c:when>
+                                </c:choose>
+                                </label>
                         <button type="submit" class="btn btn-sm btn-outline-warning my-2 my-sm-0">
                             <fmt:message key="header.navbar.logout"/>
                         </button>

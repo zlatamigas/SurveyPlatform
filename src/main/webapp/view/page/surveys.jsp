@@ -21,7 +21,7 @@
 
 <body>
 
-<jsp:include page="/pages/fragment/header.jsp"/>
+<jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container">
 
@@ -44,6 +44,7 @@
                 </div>
                 <select id="theme" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_FILTER_THEME_ID}">
                     <option value="0" <c:if test="${sessionScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="surveys.themes.all"/></option>
+                    <option value="-1" <c:if test="${sessionScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="surveys.themes.none"/></option>
                     <c:forEach items="${sessionScope.themes}" var="theme">
                         <option value="${theme.themeId}" <c:if test="${sessionScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
                     </c:forEach>

@@ -145,10 +145,11 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
 
             Theme theme;
             while (resultSet.next()) {
-                theme = new Theme();
-                theme.setThemeId(resultSet.getInt(THEMES_TABLE_PK_COLUMN));
-                theme.setThemeName(resultSet.getString(THEMES_TABLE_NAME_COLUMN));
-                theme.setThemeStatus(ThemeStatus.valueOf(resultSet.getString(THEMES_TABLE_STATUS_COLUMN)));
+                theme = new Theme.ThemeBuilder()
+                        .setThemeId(resultSet.getInt(THEMES_TABLE_PK_COLUMN))
+                        .setThemeName(resultSet.getString(THEMES_TABLE_NAME_COLUMN))
+                        .setThemeStatus(ThemeStatus.valueOf(resultSet.getString(THEMES_TABLE_STATUS_COLUMN)))
+                        .getTheme();
                 themes.add(theme);
             }
 
@@ -170,10 +171,11 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
             try(ResultSet resultSet = ps.executeQuery()) {
                 Theme theme;
                 while (resultSet.next()) {
-                    theme = new Theme();
-                    theme.setThemeId(resultSet.getInt(THEMES_TABLE_PK_COLUMN));
-                    theme.setThemeName(resultSet.getString(THEMES_TABLE_NAME_COLUMN));
-                    theme.setThemeStatus(ThemeStatus.CONFIRMED);
+                    theme = new Theme.ThemeBuilder()
+                            .setThemeId(resultSet.getInt(THEMES_TABLE_PK_COLUMN))
+                            .setThemeName(resultSet.getString(THEMES_TABLE_NAME_COLUMN))
+                            .setThemeStatus(themeStatus)
+                            .getTheme();
                     themes.add(theme);
                 }
             }
@@ -186,17 +188,17 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
     }
 
     @Override
-    public boolean updateThemeStatus(int th, ThemeStatus themeStatus) throws DaoException {
+    public boolean updateThemeStatus(int themeId, ThemeStatus themeStatus) throws DaoException {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(UPDATE_THEME_STATUS_STATEMENT)) {
 
             ps.setString(1, themeStatus.name());
-            ps.setInt(2, th);
+            ps.setInt(2, themeId);
             return ps.executeUpdate() == 1;
 
         } catch (SQLException e) {
-            logger.error("Error while update theme with ID = " + th + ": " + e.getMessage());
-            throw new DaoException("Error while while update theme with ID = " + th + ": " + e.getMessage(), e);
+            logger.error("Error while update theme with ID = " + themeId + ": " + e.getMessage());
+            throw new DaoException("Error while while update theme with ID = " + themeId + ": " + e.getMessage(), e);
         }
     }
 }
