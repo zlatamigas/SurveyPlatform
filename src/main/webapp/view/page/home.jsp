@@ -15,18 +15,17 @@
 </head>
 
 <body>
-
 <jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container">
 
-    <div class="card text-center" >
+    <div class="card text-center">
         <div class="card-body">
             <h5 class="card-title">SurveyPlatform</h5>
         </div>
     </div>
 
-    <div class="card text-center" >
+    <div class="card text-center">
         <div class="card-body">
             <h5 class="card-title">Participate in surveys</h5>
             <p class="card-text"></p>
@@ -44,20 +43,19 @@
             <p class="card-text"></p>
             <a class="btn btn-primary"
                href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_IN}">
-            <%--                    <fmt:message key=""/>--%>
-            Sign in
-        </a>
+                <%--                    <fmt:message key=""/>--%>
+                Sign in
+            </a>
         </div>
     </div>
 
 
-<%--    <c:choose>--%>
-<%--        <c:when test="${sessionScope.user.role == UserRole.ADMIN}"></c:when>--%>
-<%--        <c:when test="${sessionScope.user.role == UserRole.USER}"></c:when>--%>
-<%--        <c:otherwise></c:otherwise>--%>
-<%--    </c:choose>--%>
+    <%--    <c:choose>--%>
+    <%--        <c:when test="${sessionScope.user.role == UserRole.ADMIN}"></c:when>--%>
+    <%--        <c:when test="${sessionScope.user.role == UserRole.USER}"></c:when>--%>
+    <%--        <c:otherwise></c:otherwise>--%>
+    <%--    </c:choose>--%>
 
 </div>
-
 </body>
 </html>

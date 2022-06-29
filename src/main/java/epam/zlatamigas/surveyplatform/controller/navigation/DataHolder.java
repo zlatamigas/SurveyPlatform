@@ -41,6 +41,7 @@ public final class DataHolder {
     public static final String PARAMETER_PAGINATION_PAGE_OFFSET = "pagination_page_offset";
 
     public static final String PARAMETER_THEME_ID = "theme_id";
+    public static final String PARAMETER_THEME_NAME = "theme_name";
 
     // Session attributes
 

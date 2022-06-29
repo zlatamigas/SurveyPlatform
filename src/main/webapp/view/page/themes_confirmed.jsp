@@ -15,10 +15,6 @@
     <title><fmt:message key="title.themesconfirmed"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 
 <body>
@@ -37,6 +33,8 @@
             </script>
         </div>
         <div class="col-9">
+            <div id="themesContainer" class="hide-on-popup">
+                <button id="showAddTheme" class="btn btn-primary">Add new theme</button>
                 <c:forEach items="${sessionScope.requested_themes}" var="theme">
                     <div class="card">
                         <div class="card-header">
@@ -55,6 +53,37 @@
                         </div>
                     </div>
                 </c:forEach>
+            </div>
+            <div id="addThemePopup" class="popup">
+                <div class="close-btn"><i class="fas fa-times"></i></div>
+                <form action="controller" method="post">
+                    <h2>New theme</h2>
+                    <div class="form-row">
+                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
+                        <div class="col">
+                            <input type="text" name="${DataHolder.PARAMETER_THEME_NAME}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-end">
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-warning">Cancel</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-confirm">Ok</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <script>
+                document.querySelector("#showAddTheme").addEventListener("click", function (){
+                    document.querySelector("#addThemePopup").classList.add("active");
+                    document.querySelector("#themesContainer").classList.add("active");
+                });
+                document.querySelector("#addThemePopup .close-btn").addEventListener("click", function (){
+                    document.querySelector("#addThemePopup").classList.remove("active");
+                    document.querySelector("#themesContainer").classList.remove("active");
+                });
+            </script>
         </div>
     </div>
 </div>

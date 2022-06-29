@@ -6,8 +6,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion" %>
 <%@ page import="epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey" %>
-<%@ page
-        import="static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_MULTIPLE" %>
+<%@ page import="static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_MULTIPLE" %>
 <%@ page import="static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*" %>
 <%@ page import="static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_SINGLE" %>
 
