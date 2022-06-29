@@ -67,6 +67,10 @@ public enum CommandType {
 
     TO_THEMES_CONFIRMED(new ToThemesConfirmedCommand()),
     TO_THEMES_WAITING(new ToThemesWaitingCommand()),
+
+    CONFIRM_THEME(new ConfirmThemeCommand()),
+    REJECT_THEME(new RejectThemeCommand()),
+    DELETE_THEME(new DeleteThemeCommand())
     ;
 
     private Command command;

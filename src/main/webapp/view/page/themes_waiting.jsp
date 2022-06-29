@@ -46,14 +46,14 @@
                             </div>
                             <div class="col col-auto">
                                 <form action="controller" method="post">
-                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
+                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CONFIRM_THEME}">
                                     <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
                                     <button class="btn" type="submit">Confirm</button>
                                 </form>
                             </div>
                             <div class="col col-auto">
                                 <form action="controller" method="post">
-                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
+                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.DELETE_THEME}">
                                     <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
                                     <button class="btn" type="submit">Delete</button>
                                 </form>
