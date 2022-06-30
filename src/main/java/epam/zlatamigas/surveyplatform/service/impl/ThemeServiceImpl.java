@@ -52,15 +52,18 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public boolean insertConfirmedTheme(Theme theme) throws ServiceException {
+    public boolean insertConfirmedTheme(String themeName) throws ServiceException {
 
-        if(theme == null){
+        if(themeName == null){
             return false;
         }
 
         // TODO: validate theme
 
-        theme.setThemeStatus(CONFIRMED);
+        Theme theme = new Theme.ThemeBuilder()
+                .setThemeName(themeName)
+                .setThemeStatus(CONFIRMED)
+                .getTheme();
         try {
             return themeDao.insert(theme);
         } catch (DaoException e) {
@@ -69,15 +72,18 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public boolean insertWaitingTheme(Theme theme) throws ServiceException {
+    public boolean insertWaitingTheme(String themeName) throws ServiceException {
 
-        if(theme == null){
+        if(themeName == null){
             return false;
         }
 
         // TODO: validate theme
 
-        theme.setThemeStatus(WAITING);
+        Theme theme = new Theme.ThemeBuilder()
+                .setThemeName(themeName)
+                .setThemeStatus(WAITING)
+                .getTheme();
         try {
             return themeDao.insert(theme);
         } catch (DaoException e) {

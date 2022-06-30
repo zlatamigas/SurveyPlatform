@@ -46,7 +46,7 @@
                                     <form action="controller" method="post">
                                         <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.DELETE_THEME}">
                                         <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                        <button class="btn" type="submit">Delete</button>
+                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -59,29 +59,44 @@
                 <form action="controller" method="post">
                     <h2>New theme</h2>
                     <div class="form-row">
-                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
+                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.ADD_THEME}">
                         <div class="col">
-                            <input type="text" name="${DataHolder.PARAMETER_THEME_NAME}" class="form-control">
+                            <div id="themeValidationFeedback" class="text-danger">
+                                <p>
+                                    <c:if test="${requestScope.form_invalid.theme_name != null}">
+                                        <fmt:message key="${requestScope.form_invalid.theme_name}"/>
+                                    </c:if>
+                                    <c:if test="${requestScope.theme_exists != null}">
+                                        <fmt:message key="${requestScope.theme_exists}"/>
+                                    </c:if>
+                                </p>
+                            </div>
+                            <input id="inputThemeName" type="text" name="${DataHolder.PARAMETER_THEME_NAME}" class="form-control">
                         </div>
                     </div>
                     <div class="form-row justify-content-end">
                         <div class="col-auto">
-                            <button type="button" class="btn btn-warning">Cancel</button>
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-confirm">Ok</button>
+                            <button type="submit" class="btn btn-success">Ok</button>
                         </div>
                     </div>
                 </form>
             </div>
             <script>
+                <c:if test="${(requestScope.form_invalid.theme_name != null) || (requestScope.theme_exists != null)}">
+                document.querySelector("#addThemePopup").classList.add("active");
+                document.querySelector("#themesContainer").classList.add("active");
+                </c:if>
+
                 document.querySelector("#showAddTheme").addEventListener("click", function (){
                     document.querySelector("#addThemePopup").classList.add("active");
                     document.querySelector("#themesContainer").classList.add("active");
+                    $("#inputThemeName").val("");
+                    $("#themeValidationFeedback").hide();
                 });
                 document.querySelector("#addThemePopup .close-btn").addEventListener("click", function (){
                     document.querySelector("#addThemePopup").classList.remove("active");
                     document.querySelector("#themesContainer").classList.remove("active");
+                    $("#inputThemeName").val("");
                 });
             </script>
         </div>

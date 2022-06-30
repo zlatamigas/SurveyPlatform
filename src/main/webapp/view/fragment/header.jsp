@@ -41,14 +41,7 @@
                         <fmt:message key="header.navbar.homepage"/>
                     </a>
                 </li>
-                <c:if test="${sessionScope.user.role == UserRole.ADMIN}">
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USERS}">
-                            <fmt:message key="header.navbar.users"/>
-                        </a>
-                    </li>
-                </c:if>
+
                 <li class="nav-item">
                     <a class="nav-link"
                        href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_SURVEYS}">

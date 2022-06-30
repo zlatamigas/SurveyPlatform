@@ -2,6 +2,7 @@ package epam.zlatamigas.surveyplatform.service.impl;
 
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
+import epam.zlatamigas.surveyplatform.model.dao.DbOrderType;
 import epam.zlatamigas.surveyplatform.model.dao.impl.UserDaoImpl;
 import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.model.entity.UserRole;
@@ -14,16 +15,23 @@ import epam.zlatamigas.surveyplatform.util.mail.MailSender;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
+
+    private static final String SEARCH_WORDS_DELIMITER = " ";
 
     private static final String MESSAGE_REQUEST_CHANGE_PASSWORD_SUBJECT = "Change password";
     private static final String MESSAGE_REQUEST_CHANGE_PASSWORD_TEXT = "Your key: %d";
 
     private static UserServiceImpl instance = new UserServiceImpl();
 
-    private UserServiceImpl(){
+    private static UserDaoImpl userDao;
+
+    private UserServiceImpl() {
+        userDao = UserDaoImpl.getInstance();
     }
 
     public static UserServiceImpl getInstance() {
@@ -33,7 +41,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> authenticate(String email, String password) throws ServiceException {
         // TODO: validate email, password, encryption password (e.c. md5)
-        UserDaoImpl userDao = UserDaoImpl.getInstance();
         Optional<User> user = Optional.empty();
         try {
             PasswordEncoder encoder = new PasswordEncoder();
@@ -48,7 +55,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean changePassword(String email, String password) throws ServiceException {
 
-        UserDaoImpl userDao = UserDaoImpl.getInstance();
         try {
             Optional<User> dbUser = userDao.findByEmail(email);
 
@@ -57,10 +63,8 @@ public class UserServiceImpl implements UserService {
                 String encodedPassword = encoder.encode(password);
 
                 User user = dbUser.get();
-                user.setPassword(encodedPassword);
 
-                userDao.update(user);
-                return true;
+                return userDao.updatePassword(user.getUserId(), encodedPassword);
             }
         } catch (DaoException | NoSuchAlgorithmException e) {
             throw new ServiceException(e);
@@ -72,7 +76,6 @@ public class UserServiceImpl implements UserService {
     public boolean insertNewUser(String email, String password) throws ServiceException {
         // TODO: validate login, password, encryption password (e.c. md5)
 
-        UserDaoImpl userDao = UserDaoImpl.getInstance();
         try {
 
             PasswordEncoder encoder = new PasswordEncoder();
@@ -87,6 +90,21 @@ public class UserServiceImpl implements UserService {
                     .getUser();
             return userDao.insert(user);
         } catch (DaoException | NoSuchAlgorithmException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<User> findUsersBySearch(int filterRoleId, int filterStatusId, String searchWordsStr, String orderTypeName) throws ServiceException {
+        String[] searchWords = Arrays.stream(searchWordsStr
+                .split(SEARCH_WORDS_DELIMITER))
+                .filter(s -> !s.isBlank())
+                .toArray(String[]::new);
+        DbOrderType orderType = DbOrderType.valueOf(orderTypeName);
+
+        try {
+            return userDao.findUsersBySearch(filterRoleId, filterStatusId, searchWords, orderType);
+        } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }

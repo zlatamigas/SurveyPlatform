@@ -11,10 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static epam.zlatamigas.surveyplatform.model.dao.DbTableInfo.*;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
@@ -118,6 +115,9 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             ORDER BY survey_name 
             """;
 
+    public static final int FILTER_THEMES_ALL = 0;
+    public static final int FILTER_THEMES_NONE = -1;
+
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     //SurveyDaoImpl instance
@@ -173,10 +173,12 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
         try (Connection connection = ConnectionPool.getInstance().getConnection();) {
 
             StringBuilder query = new StringBuilder(FIND_PARTICIPANT_SURVEYS_COMMON_INFO_BASE_STATEMENT);
-            if (filterThemeId > 0) {
+            if (filterThemeId > FILTER_THEMES_ALL) {
                 query.append(WHERE_THEME_ID_EQUALS_STATEMENT);
-            } else if (filterThemeId == -1) {
+            } else if (filterThemeId == FILTER_THEMES_NONE) {
                 query.append(WHERE_THEME_ID_IS_NULL_STATEMENT);
+            } else if (filterThemeId != FILTER_THEMES_ALL){
+                throw new DaoException("Passed unknown theme: filterThemeId = " + filterThemeId);
             }
             query.append(WHERE_NAME_CONTAINS_STATEMENT.repeat(searchWords.length));
             query.append(ORDER_BY_SURVEY_NAME_STATEMENT).append(orderType.name());
@@ -184,7 +186,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             PreparedStatement psFindSurvey = connection.prepareStatement(query.toString());
 
             int parameterIndex = 1;
-            if (filterThemeId > 0) {
+            if (filterThemeId > FILTER_THEMES_ALL) {
                 psFindSurvey.setInt(parameterIndex++, filterThemeId);
             }
             for (int i = 0; i < searchWords.length; i++, parameterIndex++) {
@@ -255,8 +257,9 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     }
 
     @Override
-    public Survey findParticipantSurveyInfo(int surveyId) throws DaoException {
-        Survey survey = null;
+    public Optional<Survey> findParticipantSurveyInfo(int surveyId) throws DaoException {
+
+        Optional<Survey> surveyOptional = Optional.empty();
 
         Map<Integer, Theme> themes = findThemes();
 
@@ -275,7 +278,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                 int themeId = rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN);
                 Theme theme = themes.containsKey(themeId) ? themes.get(themeId) : new Theme.ThemeBuilder().setThemeId(-1).getTheme();
 
-                survey = new Survey.SurveyBuilder()
+                Survey survey = new Survey.SurveyBuilder()
                         .setSurveyId(surveyId)
                         .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
                         .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
@@ -317,6 +320,8 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
                     survey.addQuestion(question);
                 }
+
+                surveyOptional = Optional.of(survey);
             }
 
         } catch (SQLException e) {
@@ -328,12 +333,12 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             }
         }
 
-        return survey;
+        return surveyOptional;
     }
 
     @Override
-    public Survey findCreatorSurveyInfo(int surveyId) throws DaoException {
-        Survey survey = null;
+    public Optional<Survey> findCreatorSurveyInfo(int surveyId) throws DaoException {
+        Optional<Survey> surveyOptional = Optional.empty();
 
         Map<Integer, Theme> themes = findThemes();
 
@@ -352,7 +357,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                 int themeId = rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN);
                 Theme theme = themes.containsKey(themeId) ? themes.get(themeId) : new Theme.ThemeBuilder().setThemeId(-1).getTheme();
 
-                survey = new Survey.SurveyBuilder()
+                Survey survey = new Survey.SurveyBuilder()
                         .setSurveyId(surveyId)
                         .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
                         .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
@@ -395,6 +400,8 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
                     survey.addQuestion(question);
                 }
+
+                surveyOptional = Optional.of(survey);
             }
 
         } catch (SQLException e) {
@@ -406,7 +413,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             }
         }
 
-        return survey;
+        return surveyOptional;
     }
 
     @Override
@@ -506,9 +513,14 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     }
 
     @Override
-    public Survey update(Survey survey) throws DaoException {
+    public Optional<Survey> update(Survey survey) throws DaoException {
 
-        Survey oldSurvey = findCreatorSurveyInfo(survey.getSurveyId());
+        Optional<Survey> oldSurveyOptional = findCreatorSurveyInfo(survey.getSurveyId());
+        if(oldSurveyOptional.isEmpty()){
+            return oldSurveyOptional;
+        }
+
+        Survey oldSurvey = oldSurveyOptional.get();
         int surveyId = oldSurvey.getSurveyId();
 
         Connection connection = null;
@@ -657,7 +669,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             }
         }
 
-        return oldSurvey;
+        return oldSurveyOptional;
     }
 
     @Override
@@ -742,7 +754,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
 
     @Override
-    public Survey findById(int id) throws DaoException {
+    public Optional<Survey> findById(int id) throws DaoException {
         return null;
     }
 

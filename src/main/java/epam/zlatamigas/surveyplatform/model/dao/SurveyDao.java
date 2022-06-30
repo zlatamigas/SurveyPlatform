@@ -4,6 +4,7 @@ import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.entity.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SurveyDao {
 
@@ -34,7 +35,7 @@ public interface SurveyDao {
      * @return Surveys with common info with question and answer data without statistics.
      * @throws DaoException
      */
-    Survey findParticipantSurveyInfo(int surveyId) throws DaoException;
+    Optional<Survey> findParticipantSurveyInfo(int surveyId) throws DaoException;
 
     /**
      * Find info about specified survey: question info with statistics info.
@@ -43,7 +44,7 @@ public interface SurveyDao {
      * @return Surveys with common info with question and answer data with statistics.
      * @throws DaoException
      */
-    Survey findCreatorSurveyInfo(int surveyId) throws DaoException;
+    Optional<Survey> findCreatorSurveyInfo(int surveyId) throws DaoException;
 
     boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws DaoException;
 

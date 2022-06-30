@@ -8,6 +8,7 @@ import epam.zlatamigas.surveyplatform.model.entity.SurveyUserAttempt;
 import epam.zlatamigas.surveyplatform.model.entity.Theme;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SurveyService {
 
@@ -38,7 +39,7 @@ public interface SurveyService {
      * @return Surveys with common info with question and answer data without statistics.
      * @throws ServiceException
      */
-    Survey findParticipantSurveyInfo(int surveyId) throws ServiceException;
+    Optional<Survey> findParticipantSurveyInfo(int surveyId) throws ServiceException;
 
     /**
      * Find info about specified survey: question info with statistics info.
@@ -47,7 +48,7 @@ public interface SurveyService {
      * @return Surveys with common info with question and answer data with statistics.
      * @throws ServiceException
      */
-    Survey findCreatorSurveyInfo(int surveyId) throws ServiceException;
+    Optional<Survey> findCreatorSurveyInfo(int surveyId) throws ServiceException;
 
 
     boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws ServiceException;
@@ -59,5 +60,5 @@ public interface SurveyService {
 
     boolean delete(int id) throws ServiceException;
 
-    Survey update(Survey survey) throws ServiceException;
+    Optional<Survey> update(Survey survey) throws ServiceException;
 }

@@ -17,6 +17,8 @@ public final class LocalisedMessageKey {
     public static final String MESSAGE_REQUIRE_SELECT_MULTIPLE = "message.require.select.multiple";
     public static final String MESSAGE_REQUIRE_SELECT_SINGLE = "message.require.select.single";
 
+    public static final String MESSAGE_THEME_NAME_WRONG = "message.theme.name.wrong";
+    public static final String MESSAGE_THEME_EXISTS = "message.theme.exists";
 
     private LocalisedMessageKey(){};
 }

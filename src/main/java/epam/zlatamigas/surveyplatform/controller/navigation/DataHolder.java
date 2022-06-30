@@ -43,6 +43,12 @@ public final class DataHolder {
     public static final String PARAMETER_THEME_ID = "theme_id";
     public static final String PARAMETER_THEME_NAME = "theme_name";
 
+    public static final String PARAMETER_USER_ID = "user_id";
+    public static final String PARAMETER_USER_EMAIL = "user_email";
+    public static final String PARAMETER_USER_PASSWORD = "user_password";
+    public static final String PARAMETER_USER_ROLE = "user_role";
+    public static final String PARAMETER_USER_STATUS = "user_status";
+
     // Session attributes
 
     // Shared
@@ -73,6 +79,9 @@ public final class DataHolder {
 
     public static final String ATTRIBUTE_REQUESTED_THEMES = "requested_themes";
 
+
+    public static final String ATTRIBUTE_USERS = "users";
+
     // Button groups
 
     public static final String BUTTONGROUP_NAME_CHECKBOX_ANSWERS = "check_question";
@@ -81,6 +90,7 @@ public final class DataHolder {
     // Request
 
     public static final String REQUEST_ATTRIBUTE_USER_EXISTS = "user_exists";
+    public static final String REQUEST_ATTRIBUTE_THEME_EXISTS = "theme_exists";
     public static final String REQUEST_ATTRIBUTE_USER_INVALID = "user_invalid";
     public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";
 

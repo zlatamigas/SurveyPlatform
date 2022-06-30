@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.command.SearchDefaultParameters.*;
+import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 
 //@WebFilter(filterName = "BeforeSurveysPageFilter", dispatcherTypes = {DispatcherType.FORWARD}, urlPatterns = "/view/page/surveys.jsp")
@@ -31,7 +31,7 @@ public class BeforeSurveysPageFilter implements Filter {
         try {
             SurveyService service = SurveyServiceImpl.getInstance();
             List<Survey> surveys =
-                    service.findParticipantSurveysCommonInfoSearch(DEFAULT_THEMES_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
+                    service.findParticipantSurveysCommonInfoSearch(DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
             session.setAttribute(DataHolder.ATTRIBUTE_SURVEYS, surveys);
             session.setAttribute(ATTRIBUTE_SURVEYS_PAGE, surveys.subList(0, Math.min(PAGINATION_ITEMS_PER_PAGE, surveys.size())));
             session.setAttribute(ATTRIBUTE_PAGINATION_CURRENT_PAGE, 0);

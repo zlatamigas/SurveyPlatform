@@ -19,7 +19,46 @@
 
 <jsp:include page="/view/fragment/header.jsp"/>
 
-<div class="container">
+<div class="container-fluid">
+
+
+    <div class="row">
+        <div class="col-3">
+            <jsp:include page="/view/fragment/account_left_navbar.jsp"/>
+            <script>
+                let activeLink = document.getElementById("navUsers");
+                activeLink.classList.add("active");
+            </script>
+        </div>
+        <div class="col-9">
+            <form action="controller" method="post">
+                <input type="hidden" name="command" value="">
+                <button type="submit" class="btn btn-primary">Create new user</button>
+            </form>
+            <div class="accordion" id="users">
+                <div id="usersContainer" class="hide-on-popup">
+                    <c:forEach items="${sessionScope.users}" var="user">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row justify-content-between">
+                                    <div class="col">
+                                        <h5>${user.email}</h5>
+                                    </div>
+                                    <div class="col col-auto">
+                                        <form action="controller" method="post">
+                                            <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
+                                            <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}" value="${user.userId}">
+                                            <button class="btn btn-info" type="submit"><i class="fas fa-user-edit"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </div>

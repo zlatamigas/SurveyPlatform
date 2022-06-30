@@ -21,20 +21,15 @@
 
 <div class="container-fluid">
 
-    <c:choose>
-        <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
 
-                <div class="row">
-                    <div class="col-3">
-                        <jsp:include page="/view/fragment/account_left_navbar.jsp"/>
-                    </div>
-                    <div class="col-9">
-                    </div>
-                </div>
-            </c:when>
-            <c:when test="${sessionScope.user.role == UserRole.USER}"></c:when>
-            <c:otherwise></c:otherwise>
-        </c:choose>
+    <div class="row">
+        <div class="col-3">
+            <jsp:include page="/view/fragment/account_left_navbar.jsp"/>
+        </div>
+        <div class="col-9">
+        </div>
+    </div>
+
 
 </div>
 

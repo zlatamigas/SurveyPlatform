@@ -32,7 +32,7 @@ public class StartSurveyAttemptCommand implements Command {
         int surveyId = Integer.parseInt(request.getParameter(PARAMETER_SURVEY_ID));
         try {
             SurveyService service = SurveyServiceImpl.getInstance();
-            Survey survey = service.findParticipantSurveyInfo(surveyId);
+            Survey survey = service.findParticipantSurveyInfo(surveyId).orElse(new Survey());
             session.setAttribute(ATTRIBUTE_SURVEY_ATTEMPT, survey);
         } catch (ServiceException e) {
             logger.error(e);

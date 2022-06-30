@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.command.SearchDefaultParameters.*;
+import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
@@ -30,13 +30,13 @@ public class ToSurveysCommand implements Command {
         String page = PageNavigation.SURVEYS;
 
         session.setAttribute(PARAMETER_ATTRIBUTE_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
-        session.setAttribute(PARAMETER_ATTRIBUTE_FILTER_THEME_ID, DEFAULT_THEMES_ALL);
+        session.setAttribute(PARAMETER_ATTRIBUTE_FILTER_THEME_ID, DEFAULT_FILTER_ALL);
         session.setAttribute(PARAMETER_ATTRIBUTE_ORDER_TYPE, DEFAULT_ORDER);
 
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
             List<Survey> surveys =
-                    service.findParticipantSurveysCommonInfoSearch(DEFAULT_THEMES_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
+                    service.findParticipantSurveysCommonInfoSearch(DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
             session.setAttribute(DataHolder.ATTRIBUTE_SURVEYS, surveys);
             session.setAttribute(ATTRIBUTE_SURVEYS_PAGE, surveys.subList(0, Math.min(PAGINATION_ITEMS_PER_PAGE, surveys.size())));
             session.setAttribute(ATTRIBUTE_PAGINATION_CURRENT_PAGE, 0);

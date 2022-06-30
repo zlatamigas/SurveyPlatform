@@ -87,7 +87,17 @@
                 </div>
                 <div class="card-body">
                     <p class="card-subtitle mb-2 text-muted"><fmt:message
-                            key="editsurvey.question.selectmultiple"/> ${question.selectMultiple}</p>
+                            key="editsurvey.question.selectmultiple"/>
+                            <c:choose>
+                                <c:when test="${question.selectMultiple}">
+                                    <i class="fas fa-check-circle text-success"></i>
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fas fa-times-circle text-danger"></i>
+                                </c:otherwise>
+                            </c:choose>
+
+                    </p>
                     <ul class="list-group list-group-flush">
                         <c:forEach items="${question.answers}" var="answer">
                             <li class="card-text list-group-item">${answer.answer}</li>

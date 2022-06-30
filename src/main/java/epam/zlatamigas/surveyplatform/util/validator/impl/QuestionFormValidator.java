@@ -1,23 +1,25 @@
 package epam.zlatamigas.surveyplatform.util.validator.impl;
 
 import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
+import epam.zlatamigas.surveyplatform.util.validator.PatternValidator;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.*;
-import static epam.zlatamigas.surveyplatform.util.validator.ValidatorPatternHolder.NAME_PATTERN;
-import static epam.zlatamigas.surveyplatform.util.validator.ValidatorPatternHolder.UNLIMITED_TEXT_PATTERN;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_QUESTION_FORMULATION;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_QUESTION_FORMULATION_WRONG;
 
 public class QuestionFormValidator implements FormValidator {
 
     private static FormValidator instance;
+    private static PatternValidator validator;
 
-    private QuestionFormValidator(){}
+    private QuestionFormValidator() {
+        validator = PatternValidator.getInstance();
+    }
 
     public static FormValidator getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new QuestionFormValidator();
         }
         return instance;
@@ -27,7 +29,7 @@ public class QuestionFormValidator implements FormValidator {
     public Map<String, String> validateForm(Map<String, String[]> data) {
         Map<String, String> validationResult = new HashMap<>();
 
-        if(!data.get(PARAMETER_QUESTION_FORMULATION)[0].matches(NAME_PATTERN)){
+        if (!validator.validName(data.get(PARAMETER_QUESTION_FORMULATION)[0])) {
             validationResult.put(PARAMETER_QUESTION_FORMULATION, MESSAGE_QUESTION_FORMULATION_WRONG);
         }
 

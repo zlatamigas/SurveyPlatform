@@ -26,7 +26,7 @@
         <div class="col-3">
             <jsp:include page="/view/fragment/account_left_navbar.jsp"/>
             <script>
-                let activeLink = document.getElementById("navLinkUserSurveys");
+                let activeLink = document.getElementById("navUserSurveys");
                 activeLink.classList.add("active");
             </script>
         </div>
@@ -99,28 +99,34 @@
                                         <c:choose>
                                             <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
                                                 <button form="startSurveyForm${survey.surveyId}" type="submit"
-                                                        class="btn btn-success"><fmt:message
-                                                        key="usersurvey.startsurvey"/></button>
+                                                        class="btn btn-success">
+                                                    <i class="fas fa-play"></i>
+<%--                                                    <fmt:message key="usersurvey.startsurvey"/>--%>
+                                                </button>
                                                 <button form="startEditSurveyForm${survey.surveyId}" type="submit"
-                                                        class="btn btn-primary"><fmt:message
-                                                        key="usersurvey.editsurvey"/></button>
+                                                        class="btn btn-primary">
+                                                    <fmt:message key="usersurvey.editsurvey"/>
+                                                </button>
                                             </c:when>
                                             <c:when test="${survey.status == SurveyStatus.STARTED}">
                                                 <button form="stopSurveyForm${survey.surveyId}" type="submit"
-                                                        class="btn btn-primary"><fmt:message
-                                                        key="usersurvey.stopsurvey"/></button>
+                                                        class="btn btn-primary">
+                                                    <fmt:message key="usersurvey.stopsurvey"/>
+                                                </button>
                                             </c:when>
                                             <c:when test="${survey.status == SurveyStatus.CLOSED}">
                                                 <button form="viewResultSurveyForm${survey.surveyId}" type="submit"
-                                                        class="btn btn-primary"><fmt:message
-                                                        key="usersurvey.viewresultsurvey"/></button>
+                                                        class="btn btn-primary">
+                                                    <fmt:message key="usersurvey.viewresultsurvey"/>
+                                                </button>
                                             </c:when>
                                         </c:choose>
 
                                         <c:if test="${survey.status != SurveyStatus.STARTED}">
                                             <button form="deleteSurveyForm${survey.surveyId}" type="submit"
-                                                    class="btn btn-warning"><fmt:message
-                                                    key="usersurvey.deletesurvey"/></button>
+                                                    class="btn btn-warning">
+                                                <fmt:message key="usersurvey.deletesurvey"/>
+                                            </button>
                                         </c:if>
 
                                     </div>
@@ -136,7 +142,6 @@
             </div>
         </div>
     </div>
-
 
 </div>
 

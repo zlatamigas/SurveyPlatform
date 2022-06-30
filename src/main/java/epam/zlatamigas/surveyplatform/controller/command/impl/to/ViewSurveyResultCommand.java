@@ -25,7 +25,7 @@ public class ViewSurveyResultCommand implements Command {
         int surveyId = Integer.parseInt(request.getParameter(PARAMETER_SURVEY_ID));
         SurveyService surveyService = SurveyServiceImpl.getInstance();
         try {
-            Survey survey = surveyService.findCreatorSurveyInfo(surveyId);
+            Survey survey = surveyService.findCreatorSurveyInfo(surveyId).orElse(new Survey());
             session.setAttribute(ATTRIBUTE_SURVEY_RESULT, survey);
         } catch (ServiceException e) {
             throw new CommandException(e);

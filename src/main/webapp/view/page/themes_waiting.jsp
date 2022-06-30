@@ -42,14 +42,14 @@
                                 <form action="controller" method="post">
                                     <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CONFIRM_THEME}">
                                     <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                    <button class="btn" type="submit">Confirm</button>
+                                    <button class="btn btn-success" type="submit"><i class="fas fa-check"></i></button>
                                 </form>
                             </div>
                             <div class="col col-auto">
                                 <form action="controller" method="post">
                                     <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.REJECT_THEME}">
                                     <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                    <button class="btn" type="submit">Reject</button>
+                                    <button class="btn btn-danger" type="submit"><i class="fas fa-times"></i></button>
                                 </form>
                             </div>
                         </div>

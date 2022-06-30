@@ -13,6 +13,7 @@ import epam.zlatamigas.surveyplatform.service.SurveyService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SurveyServiceImpl implements SurveyService {
 
@@ -20,7 +21,10 @@ public class SurveyServiceImpl implements SurveyService {
 
     private static SurveyServiceImpl instance = new SurveyServiceImpl();
 
+    private static SurveyDaoImpl surveyDao;
+
     private SurveyServiceImpl() {
+        surveyDao = SurveyDaoImpl.getInstance();
     }
 
     public static SurveyServiceImpl getInstance() {
@@ -30,7 +34,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public List<Survey> findParticipantSurveysCommonInfoSearch(int filterThemeId, String searchWordsStr, String orderTypeName) throws ServiceException {
-        SurveyDao surveyDao = SurveyDaoImpl.getInstance();
 
         String[] searchWords = Arrays.stream(searchWordsStr
                 .split(SEARCH_WORDS_DELIMITER))
@@ -47,7 +50,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public List<Survey> findCreatorSurveysCommonInfo(int userId) throws ServiceException {
-        SurveyDao surveyDao = SurveyDaoImpl.getInstance();
 
         try {
             return surveyDao.findCreatorSurveysCommonInfo(userId);
@@ -57,8 +59,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Survey findParticipantSurveyInfo(int surveyId) throws ServiceException {
-        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+    public Optional<Survey> findParticipantSurveyInfo(int surveyId) throws ServiceException {
 
         try {
             return surveyDao.findParticipantSurveyInfo(surveyId);
@@ -68,8 +69,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Survey findCreatorSurveyInfo(int surveyId) throws ServiceException {
-        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
+    public Optional<Survey> findCreatorSurveyInfo(int surveyId) throws ServiceException {
 
         try {
             return surveyDao.findCreatorSurveyInfo(surveyId);
@@ -80,7 +80,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws ServiceException {
-        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
 
         try {
             return surveyDao.updateParticipantSurveyResult(surveyAttempt);
@@ -91,7 +90,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws ServiceException {
-        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
 
         try {
             return surveyDao.updateSurveyStatus(surveyId, status);
@@ -102,7 +100,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public boolean insert(Survey survey) throws ServiceException {
-        SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
 
         try {
             return surveyDao.insert(survey);
@@ -123,7 +120,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Survey update(Survey survey) throws ServiceException {
+    public Optional<Survey> update(Survey survey) throws ServiceException {
         SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
 
         try {

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.command.SearchDefaultParameters.*;
+import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
@@ -40,7 +40,7 @@ public class PaginateSurveysCommand implements Command {
         try {
             filterThemeIdNew = Integer.parseInt(request.getParameter(PARAMETER_ATTRIBUTE_FILTER_THEME_ID));
         } catch (NumberFormatException e){
-            filterThemeIdNew = DEFAULT_THEMES_ALL;
+            filterThemeIdNew = DEFAULT_FILTER_ALL;
         }
         String orderTypeNameNew = request.getParameter(PARAMETER_ATTRIBUTE_ORDER_TYPE);
         if(orderTypeNameNew == null){
@@ -55,7 +55,7 @@ public class PaginateSurveysCommand implements Command {
             requireLoadNewData = true;
         }
         Integer themeIdParameter = (Integer) session.getAttribute(PARAMETER_ATTRIBUTE_FILTER_THEME_ID);
-        int filterThemeIdOld = DEFAULT_THEMES_ALL;
+        int filterThemeIdOld = DEFAULT_FILTER_ALL;
         if (themeIdParameter != null){
             filterThemeIdOld = themeIdParameter;
         } else {

@@ -33,6 +33,9 @@ public enum CommandType {
     SEARCH_SURVEYS(new SearchSurveysCommand()),
     PAGINATE_SURVEYS(new PaginateSurveysCommand()),
     LIST_USERS(new ListUsersCommand()),
+//    ADD_USER(new AddUserCommand()),
+//    UPDATE_USER(new UpdateUserCommand()),
+//    DELETE_USER(new DeleteUserCommand()),
     LIST_USER_CREATED_SURVEYS(new ListUserCreatedSurveysCommand()),
     // TODO
     // LIST_USER_FINISHED_SURVEYS(new ListUserFinishedSurveysCommand()),
@@ -70,7 +73,8 @@ public enum CommandType {
 
     CONFIRM_THEME(new ConfirmThemeCommand()),
     REJECT_THEME(new RejectThemeCommand()),
-    DELETE_THEME(new DeleteThemeCommand())
+    DELETE_THEME(new DeleteThemeCommand()),
+    ADD_THEME(new AddThemeCommand())
     ;
 
     private Command command;
