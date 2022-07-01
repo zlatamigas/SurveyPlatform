@@ -2,6 +2,8 @@ package epam.zlatamigas.surveyplatform.service;
 
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.User;
+import epam.zlatamigas.surveyplatform.model.entity.UserRole;
+import epam.zlatamigas.surveyplatform.model.entity.UserStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +47,14 @@ public interface UserService {
      * @return True, if user was added to DB, otherwise - false.
      * @throws ServiceException
      */
-    boolean insertNewUser(String email, String password) throws ServiceException;
+    boolean signUpUser(String email, String password) throws ServiceException;
+
+
+    boolean insertUser(String email, String password, String roleName, String statusName) throws ServiceException;
 
     List<User> findUsersBySearch(int filterRoleId, int filterStatusId, String searchWordsStr, String orderTypeName) throws ServiceException;
+
+    Optional<User> findById(int userId) throws ServiceException;
+
+    boolean updateRoleStatus(int userId, String roleName, String statusName) throws ServiceException;
 }

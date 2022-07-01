@@ -73,7 +73,7 @@
                                     <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
                                         <fmt:message key="header.navbar.userroe.admin"/>
                                     <div class="account-icon-container">
-                                        <a href="${pageContext.request.contextPath}/view/page/account.jsp" class="account-icon-link">
+                                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_USER_ACCOUNT}" class="account-icon-link">
                                             <i class="fas fa-user-tie account-icon"></i>
                                         </a>
                                     </div>
@@ -81,7 +81,7 @@
                                     <c:when test="${sessionScope.user.role == UserRole.USER}">
                                         <fmt:message key="header.navbar.userroe.user"/>
                                     <div class="account-icon-container">
-                                        <a href="${pageContext.request.contextPath}/view/page/account.jsp" class="account-icon-link">
+                                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_USER_ACCOUNT}" class="account-icon-link">
                                             <i class="fas fa-user account-icon" ></i>
                                         </a>
                                     </div>

@@ -2,9 +2,7 @@ package epam.zlatamigas.surveyplatform.controller.command;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
-import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelEditQuestionCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelEditSurveyCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.CancelSurveyAttemptCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.finish.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.to.*;
@@ -74,7 +72,17 @@ public enum CommandType {
     CONFIRM_THEME(new ConfirmThemeCommand()),
     REJECT_THEME(new RejectThemeCommand()),
     DELETE_THEME(new DeleteThemeCommand()),
-    ADD_THEME(new AddThemeCommand())
+    ADD_THEME(new AddThemeCommand()),
+
+    TO_USER_ACCOUNT(new ToUserAccountCommand()),
+
+    START_EDIT_USER(new StartEditUserCommand()),
+    FINISH_EDIT_USER(new FinishEditUserCommand()),
+    CANCEL_EDIT_USER(new CancelEditUserCommand()),
+
+    START_CREATE_USER(new StartCreateUserCommand()),
+    FINISH_CREATE_USER(new FinishCreateUserCommand()),
+    CANCEL_CREATE_USER(new CancelCreateUserCommand())
     ;
 
     private Command command;

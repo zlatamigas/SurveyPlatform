@@ -11,7 +11,6 @@ public final class PageNavigation {
     public static final String FORGOT_PASSWORD_RECEIVE_KEY = "/view/page/forgot_password_receive_key.jsp";
     public static final String FORGOT_PASSWORD_CHANGE_PASSWORD = "/view/page/forgot_password_change_password.jsp";
 
-
     public static final String SURVEYS = "/view/page/surveys.jsp";
     public static final String USER_SURVEYS = "/view/page/user_surveys.jsp";
     public static final String USERS = "/view/page/users.jsp";
@@ -24,6 +23,11 @@ public final class PageNavigation {
 
     public static final String THEMES_CONFIRMED = "/view/page/themes_confirmed.jsp";
     public static final String THEMES_WAITING = "/view/page/themes_waiting.jsp";
+
+    public static final String ACCOUNT = "/view/page/account.jsp";
+
+    public static final String EDIT_USER = "/view/page/edit_user.jsp";
+    public static final String CREATE_USER = "/view/page/create_user.jsp";
 
     private PageNavigation(){}
 }

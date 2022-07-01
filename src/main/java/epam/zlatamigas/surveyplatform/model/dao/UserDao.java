@@ -2,6 +2,8 @@ package epam.zlatamigas.surveyplatform.model.dao;
 
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.entity.User;
+import epam.zlatamigas.surveyplatform.model.entity.UserRole;
+import epam.zlatamigas.surveyplatform.model.entity.UserStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +16,7 @@ public interface UserDao {
     boolean insert(User user) throws DaoException;
     boolean delete(int id) throws DaoException;
 
-    Optional<User> updateWithoutPassword(User user) throws DaoException;
+    boolean updateRoleStatus(int userId, UserRole role, UserStatus status) throws DaoException;
     boolean updatePassword(int userId, String password) throws DaoException;
 
     Optional<User> findByIdWithoutPassword(int id) throws DaoException;

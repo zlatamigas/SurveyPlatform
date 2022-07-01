@@ -24,8 +24,8 @@ public class UserDaoImpl implements UserDao {
 
     private static final String INSERT_STATEMENT
             = "INSERT INTO users(email, password, registration_date, user_role, user_status)VALUES(?,?,?,?,?)";
-    private static final String UPDATE_WITHOUT_PASSWORD_STATEMENT
-            = "UPDATE users SET email = ?, registration_date = ?, user_role = ?, user_status = ? WHERE id_user = ?";
+    private static final String UPDATE_ROLE_STATUS_STATEMENT
+            = "UPDATE users SET user_role = ?, user_status = ? WHERE id_user = ?";
     private static final String UPDATE_PASSWORD_STATEMENT
             = "UPDATE users SET password = ? WHERE id_user = ?";
     private static final String DELETE_STATEMENT
@@ -239,32 +239,29 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> updateWithoutPassword(User user) throws DaoException {
+    public boolean updateRoleStatus(int userId, UserRole role, UserStatus status) throws DaoException {
 
-        int id = user.getUserId();
-
-        Optional<User> oldUser = findByIdWithoutPassword(id);
+        Optional<User> oldUser = findByIdWithoutPassword(userId);
         if (oldUser.isEmpty()) {
-            throw new DaoException("User does not exist: id_user = " + id);
+            throw new DaoException("User does not exist: id_user = " + userId);
+        }
+
+        if(role == UserRole.GUEST){
+            throw new DaoException("Invalid user role for database: user_role = " + role.name());
         }
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(UPDATE_WITHOUT_PASSWORD_STATEMENT)) {
+             PreparedStatement ps = connection.prepareStatement(UPDATE_ROLE_STATUS_STATEMENT)) {
 
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPassword());
-            ps.setDate(3, Date.valueOf(user.getRegistrationDate()));
-            ps.setString(4, user.getRole().name());
-            ps.setString(5, user.getStatus().name());
-            ps.setInt(6, id);
-            ps.executeUpdate();
+            ps.setString(1, role.name());
+            ps.setString(2, status.name());
+            ps.setInt(3, userId);
+            return ps.executeUpdate() == 1;
 
         } catch (SQLException e) {
-            logger.error("Error while update user with ID = " + id + ": " + e.getMessage());
-            throw new DaoException("Error while while update user with ID = " + id + ": " + e.getMessage(), e);
+            logger.error("Error while update user with ID = " + userId + ": " + e.getMessage());
+            throw new DaoException("Error while while update user with ID = " + userId + ": " + e.getMessage(), e);
         }
-
-        return oldUser;
     }
 
     @Override

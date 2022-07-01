@@ -31,8 +31,8 @@
             </script>
         </div>
         <div class="col-9">
-            <form action="controller" method="post">
-                <input type="hidden" name="command" value="">
+            <form action="controller" method="get">
+                <input type="hidden" name="command" value="${CommandType.START_CREATE_USER}">
                 <button type="submit" class="btn btn-primary">Create new user</button>
             </form>
             <div class="accordion" id="users">
@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="col col-auto">
                                         <form action="controller" method="post">
-                                            <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="">
+                                            <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.START_EDIT_USER}">
                                             <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}" value="${user.userId}">
                                             <button class="btn btn-info" type="submit"><i class="fas fa-user-edit"></i></button>
                                         </form>

@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean insertNewUser(String email, String password) throws ServiceException {
+    public boolean signUpUser(String email, String password) throws ServiceException {
         // TODO: validate login, password, encryption password (e.c. md5)
 
         try {
@@ -95,6 +95,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean insertUser(String email, String password, String roleName, String statusName) throws ServiceException {
+        // TODO: validate login, password, encryption password (e.c. md5)
+        UserRole role = UserRole.valueOf(roleName);
+        UserStatus status = UserStatus.valueOf(statusName);
+
+        try {
+
+            PasswordEncoder encoder = new PasswordEncoder();
+            String encodedPassword = encoder.encode(password);
+
+            User user = new User.UserBuilder()
+                    .setEmail(email)
+                    .setPassword(encodedPassword)
+                    .setRegistrationDate(LocalDate.now())
+                    .setRole(role)
+                    .setStatus(status)
+                    .getUser();
+
+            return userDao.insert(user);
+        } catch (DaoException | NoSuchAlgorithmException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<User> findUsersBySearch(int filterRoleId, int filterStatusId, String searchWordsStr, String orderTypeName) throws ServiceException {
         String[] searchWords = Arrays.stream(searchWordsStr
                 .split(SEARCH_WORDS_DELIMITER))
@@ -105,6 +130,27 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findUsersBySearch(filterRoleId, filterStatusId, searchWords, orderType);
         } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<User> findById(int userId) throws ServiceException {
+        try {
+            return userDao.findByIdWithoutPassword(userId);
+        } catch (DaoException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateRoleStatus(int userId, String roleName, String statusName) throws ServiceException {
+        try {
+            UserRole role = UserRole.valueOf(roleName);
+            UserStatus status = UserStatus.valueOf(statusName);
+
+            return userDao.updateRoleStatus(userId, role, status);
+        } catch (DaoException e){
             throw new ServiceException(e);
         }
     }
