@@ -25,12 +25,14 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEY_ATTEMPT;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class FinishSurveyAttemptCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        String page = SURVEYS;
+        String page = SURVEY_ATTEMPT;
+        Router.PageChangeType pageChangeType = FORWARD;
 
         Survey survey = (Survey) session.getAttribute(ATTRIBUTE_SURVEY_ATTEMPT);
         List<SurveyQuestion> questions = survey.getQuestions();
@@ -76,8 +78,10 @@ public class FinishSurveyAttemptCommand implements Command {
                     surveyAttempt.setUser(user);
                 }
                 surveyAttempt.setFinishedDate(LocalDateTime.now());
-
                 surveyService.updateParticipantSurveyResult(surveyAttempt);
+
+                page = SURVEYS;
+                pageChangeType = REDIRECT;
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }
@@ -85,10 +89,9 @@ public class FinishSurveyAttemptCommand implements Command {
             session.removeAttribute(ATTRIBUTE_SURVEY_ATTEMPT);
             session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
         } else {
-            page = SURVEY_ATTEMPT;
             request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }
 
-        return new Router(page, FORWARD);
+        return new Router(page, pageChangeType);
     }
 }

@@ -9,7 +9,6 @@ import epam.zlatamigas.surveyplatform.service.ThemeService;
 import epam.zlatamigas.surveyplatform.service.impl.ThemeServiceImpl;
 import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
 import epam.zlatamigas.surveyplatform.util.validator.impl.AddThemeFormValidator;
-import epam.zlatamigas.surveyplatform.util.validator.impl.SignInFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -38,6 +38,7 @@
             <div class="accordion" id="users">
                 <div id="usersContainer" class="hide-on-popup">
                     <c:forEach items="${sessionScope.users}" var="user">
+                        <c:if test="${sessionScope.user.userId != user.userId}">
                         <div class="card">
                             <div class="card-header">
                                 <div class="row justify-content-between">
@@ -54,6 +55,7 @@
                                 </div>
                             </div>
                         </div>
+                        </c:if>
                     </c:forEach>
                 </div>
             </div>

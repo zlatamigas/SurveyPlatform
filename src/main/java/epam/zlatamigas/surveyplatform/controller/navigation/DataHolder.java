@@ -92,6 +92,7 @@ public final class DataHolder {
     public static final String REQUEST_ATTRIBUTE_USER_EXISTS = "user_exists";
     public static final String REQUEST_ATTRIBUTE_THEME_EXISTS = "theme_exists";
     public static final String REQUEST_ATTRIBUTE_USER_INVALID = "user_invalid";
+    public static final String REQUEST_ATTRIBUTE_USER_BANNED = "user_banned";
     public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";
 
     public static final String ATTRIBUTE_PAGINATION_CURRENT_PAGE = "pagination_current_page";

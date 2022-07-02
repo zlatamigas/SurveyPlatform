@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.EDIT_SURVEY;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.EDIT_USER;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 

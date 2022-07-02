@@ -65,7 +65,7 @@
             </ul>
 
             <c:choose>
-                <c:when test="${sessionScope.user != null}">
+                <c:when test="${sessionScope.user != null && sessionScope.user.role != UserRole.GUEST}">
                     <form class="form-inline my-2 my-lg-0" action="controller">
                         <input type="hidden" name="command" value="${CommandType.LOGOUT}">
                         <label class="mr-sm-2">

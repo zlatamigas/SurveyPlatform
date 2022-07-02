@@ -6,6 +6,7 @@ public final class LocalisedMessageKey {
 
     public static final String MESSAGE_USER_EXISTS = "message.user.exists";
     public static final String MESSAGE_USER_INVALID = "message.user.invalid";
+    public static final String MESSAGE_USER_BANNED = "message.user.banned";
     public static final String MESSAGE_EMAIL_WRONG = "message.email.wrong";
     public static final String MESSAGE_PASSWORD_WRONG = "message.password.wrong";
     public static final String MESSAGE_PASSWORD_REPEAT_WRONG = "message.passwordrepeat.wrong";

@@ -8,13 +8,9 @@ import epam.zlatamigas.surveyplatform.service.UserService;
 import epam.zlatamigas.surveyplatform.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.util.Random;
-
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.FORGOT_PASSWORD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.FORGOT_PASSWORD_RECEIVE_KEY;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 

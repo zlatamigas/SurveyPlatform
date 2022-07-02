@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,14 +18,13 @@ import java.util.EnumSet;
 import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_USER;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.model.entity.UserRole.*;
 
-//@WebFilter(
-//        filterName = "CheckUserRoleFilter",
-//        dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
-//        urlPatterns = {"/controller", "/view/page/controller"})
+@WebFilter(
+        filterName = "CheckUserRoleFilter",
+        dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
+        urlPatterns = {"/controller", "/view/page/controller"})
 public class CheckUserRoleFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();
@@ -40,30 +40,103 @@ public class CheckUserRoleFilter implements Filter {
                         HOME,
                         CHANGE_LOCALISATION,
                         LOGOUT,
+                        TO_FORGOT_PASSWORD,
+                        SEND_FORGOTTEN_PASSWORD_KEY,
+                        CONFIRM_CHANGE_PASSWORD_KEY,
+                        CHANGE_PASSWORD,
+                        // List data
+                        TO_SURVEYS,
+                        SEARCH_SURVEYS,
+                        PAGINATE_SURVEYS,
                         LIST_USERS,
                         LIST_USER_CREATED_SURVEYS,
+                        // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
                         START_EDIT_QUESTION,
-                        CHANGE_SURVEY_STATUS_CLOSED
+                        FINISH_EDIT_QUESTION,
+                        REMOVE_QUESTION,
+                        ADD_ANSWER,
+                        REMOVE_ANSWER,
+                        CANCEL_EDIT_SURVEY,
+                        CANCEL_EDIT_QUESTION,
+                        DELETE_SURVEY,
+                        CHANGE_SURVEY_STATUS_CLOSED,
+                        CHANGE_SURVEY_STATUS_STARTED,
+                        // Participate in survey
+                        START_SURVEY_ATTEMPT,
+                        FINISH_SURVEY_ATTEMPT,
+                        CANCEL_SURVEY_ATTEMPT,
+                        VIEW_SURVEY_RESULT,
+                        TO_THEMES_CONFIRMED,
+                        TO_THEMES_WAITING,
+                        CONFIRM_THEME,
+                        REJECT_THEME,
+                        DELETE_THEME,
+                        ADD_THEME,
+                        TO_USER_ACCOUNT,
+                        START_EDIT_USER,
+                        FINISH_EDIT_USER,
+                        CANCEL_EDIT_USER,
+                        START_CREATE_USER,
+                        FINISH_CREATE_USER,
+                        CANCEL_CREATE_USER
                 ),
                 USER, EnumSet.of(
                         DEFAULT,
                         HOME,
                         CHANGE_LOCALISATION,
                         LOGOUT,
+                        TO_FORGOT_PASSWORD,
+                        SEND_FORGOTTEN_PASSWORD_KEY,
+                        CONFIRM_CHANGE_PASSWORD_KEY,
+                        CHANGE_PASSWORD,
+                        // List data
+                        TO_SURVEYS,
+                        SEARCH_SURVEYS,
+                        PAGINATE_SURVEYS,
                         LIST_USER_CREATED_SURVEYS,
+                        // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
                         START_EDIT_QUESTION,
-                        CHANGE_SURVEY_STATUS_CLOSED
+                        FINISH_EDIT_QUESTION,
+                        REMOVE_QUESTION,
+                        ADD_ANSWER,
+                        REMOVE_ANSWER,
+                        CANCEL_EDIT_SURVEY,
+                        CANCEL_EDIT_QUESTION,
+                        DELETE_SURVEY,
+                        CHANGE_SURVEY_STATUS_CLOSED,
+                        CHANGE_SURVEY_STATUS_STARTED,
+                        // Participate in survey
+                        START_SURVEY_ATTEMPT,
+                        FINISH_SURVEY_ATTEMPT,
+                        CANCEL_SURVEY_ATTEMPT,
+                        VIEW_SURVEY_RESULT,
+                        TO_USER_ACCOUNT
                 ),
                 GUEST, EnumSet.of(
                         DEFAULT,
                         HOME,
                         CHANGE_LOCALISATION,
+                        // User authentication
+                        START_SIGN_IN,
                         FINISH_SIGN_IN,
-                        START_SIGN_IN
+                        START_SIGN_UP,
+                        FINISH_SIGN_UP,
+                        TO_FORGOT_PASSWORD,
+                        SEND_FORGOTTEN_PASSWORD_KEY,
+                        CONFIRM_CHANGE_PASSWORD_KEY,
+                        CHANGE_PASSWORD,
+                        // List data
+                        TO_SURVEYS,
+                        SEARCH_SURVEYS,
+                        PAGINATE_SURVEYS,
+                        // Participate in survey
+                        START_SURVEY_ATTEMPT,
+                        FINISH_SURVEY_ATTEMPT,
+                        CANCEL_SURVEY_ATTEMPT
                 )
         );
     }
@@ -82,14 +155,10 @@ public class CheckUserRoleFilter implements Filter {
         EnumSet<CommandType> allowedCommands = userCommands.get(userRole);
         CommandType command = CommandType.defineCommandType(commandStr);
 
-//        String previousPage = (String) session.getAttribute(ATTRIBUTE_CURRENT_PAGE);
-//        session.setAttribute(ATTRIBUTE_PREVIOUS_PAGE, previousPage);
-
         if (!allowedCommands.contains(command)) {
-//            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, PageNavigation.DEFAULT);
+            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, PageNavigation.DEFAULT);
             response.sendRedirect(request.getContextPath() + PageNavigation.DEFAULT);
         } else {
-//        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, request.getServletPath());
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

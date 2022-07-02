@@ -3,17 +3,9 @@ package epam.zlatamigas.surveyplatform.controller.command.impl.cancel;
 import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
-import epam.zlatamigas.surveyplatform.exception.ServiceException;
-import epam.zlatamigas.surveyplatform.model.entity.Survey;
-import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
-import epam.zlatamigas.surveyplatform.model.entity.Theme;
-import epam.zlatamigas.surveyplatform.model.entity.User;
-import epam.zlatamigas.surveyplatform.service.SurveyService;
-import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;

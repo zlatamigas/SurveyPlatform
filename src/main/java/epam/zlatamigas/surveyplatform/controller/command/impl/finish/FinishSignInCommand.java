@@ -6,6 +6,7 @@ import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.model.entity.User;
+import epam.zlatamigas.surveyplatform.model.entity.UserStatus;
 import epam.zlatamigas.surveyplatform.service.UserService;
 import epam.zlatamigas.surveyplatform.service.impl.UserServiceImpl;
 import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
@@ -21,6 +22,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_USER_BANNED;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_USER_INVALID;
 
 public class FinishSignInCommand implements Command {
@@ -46,9 +48,15 @@ public class FinishSignInCommand implements Command {
 
                 if (userFromDb.isPresent()) {
                     User user = userFromDb.get();
-                    session.setAttribute(ATTRIBUTE_USER, user);
-                    page = HOME;
-                    pageChangeType = REDIRECT;
+
+                    if(user.getStatus() == UserStatus.ACTIVE){
+                        session.setAttribute(ATTRIBUTE_USER, user);
+                        page = HOME;
+                        pageChangeType = REDIRECT;
+                    } else {
+
+                    }
+                    request.setAttribute(REQUEST_ATTRIBUTE_USER_BANNED, MESSAGE_USER_BANNED);
                 } else {
                     request.setAttribute(REQUEST_ATTRIBUTE_USER_INVALID, MESSAGE_USER_INVALID);
                 }

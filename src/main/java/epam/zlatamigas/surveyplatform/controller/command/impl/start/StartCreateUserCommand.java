@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.CREATE_USER;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SIGN_UP;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
 public class StartCreateUserCommand implements Command {

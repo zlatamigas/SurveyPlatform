@@ -31,12 +31,7 @@ public enum CommandType {
     SEARCH_SURVEYS(new SearchSurveysCommand()),
     PAGINATE_SURVEYS(new PaginateSurveysCommand()),
     LIST_USERS(new ListUsersCommand()),
-//    ADD_USER(new AddUserCommand()),
-//    UPDATE_USER(new UpdateUserCommand()),
-//    DELETE_USER(new DeleteUserCommand()),
     LIST_USER_CREATED_SURVEYS(new ListUserCreatedSurveysCommand()),
-    // TODO
-    // LIST_USER_FINISHED_SURVEYS(new ListUserFinishedSurveysCommand()),
 
     // CRUD survey and its parts
     START_EDIT_SURVEY(new StartEditSurveyCommand()),
@@ -49,13 +44,6 @@ public enum CommandType {
     CANCEL_EDIT_SURVEY(new CancelEditSurveyCommand()),
     CANCEL_EDIT_QUESTION(new CancelEditQuestionCommand()),
     DELETE_SURVEY(new DeleteSurveyCommand()),
-    // TODO
-    // SHOW_DELETE_SURVEY(new ShowDeleteSurveyCommand()),
-    // SHOW_DELETE_QUESTION(new ShowDeleteQuestionCommand()),
-    // SHOW_DELETE_ANSWER(new ShowDeleteAnswerCommand()),
-    // CONFIRM_DELETE_SURVEY(new ConfirmDeleteSurveyCommand()),
-    // CONFIRM_DELETE_QUESTION(new ConfirmDeleteQuestionCommand()),
-    // CONFIRM_DELETE_ANSWER(new ConfirmDeleteAnswerCommand()),
     CHANGE_SURVEY_STATUS_CLOSED(new ChangeSurveyStatusClosedCommand()),
     CHANGE_SURVEY_STATUS_STARTED(new ChangeSurveyStatusStartedCommand()),
 

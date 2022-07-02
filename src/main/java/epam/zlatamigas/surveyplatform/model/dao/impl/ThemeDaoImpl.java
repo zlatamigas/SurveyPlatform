@@ -32,9 +32,9 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
     private static final String DELETE_STATEMENT
             = "DELETE FROM themes WHERE id_theme = ?";
     private static final String FIND_ALL_STATEMENT
-            = "SELECT id_theme, theme_name, theme_status FROM themes";
+            = "SELECT id_theme, theme_name, theme_status FROM themes ORDER BY theme_name";
     private static final String FIND_WITH_STATUS_STATEMENT
-            = "SELECT id_theme, theme_name FROM themes where theme_status=?";
+            = "SELECT id_theme, theme_name FROM themes where theme_status=? ORDER BY theme_name";
     private static final String FIND_BY_ID_STATEMENT
             = "SELECT theme_name, theme_status FROM themes WHERE id_theme = ?";
     private static final String FIND_BY_NAME_STATEMENT

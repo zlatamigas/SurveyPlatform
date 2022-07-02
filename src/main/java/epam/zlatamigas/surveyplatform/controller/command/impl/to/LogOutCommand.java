@@ -26,6 +26,6 @@ public class LogOutCommand implements Command {
         session.setAttribute(ATTRIBUTE_LOCALISATION, localisation);
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, FORWARD);
+        return new Router(page, REDIRECT);
     }
 }
