@@ -33,7 +33,7 @@
         <div class="col-9">
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="${CommandType.START_CREATE_USER}">
-                <button type="submit" class="btn btn-primary">Create new user</button>
+                <button type="submit" class="btn btn-primary"><fmt:message key="button.create"/></button>
             </form>
             <div class="accordion" id="users">
                 <div id="usersContainer" class="hide-on-popup">

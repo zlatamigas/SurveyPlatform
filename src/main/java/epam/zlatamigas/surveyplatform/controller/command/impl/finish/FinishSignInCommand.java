@@ -22,8 +22,8 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_USER_BANNED;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_USER_INVALID;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_EXISTS_BANNED;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_EXISTS_LOGIN;
 
 public class FinishSignInCommand implements Command {
 
@@ -56,9 +56,9 @@ public class FinishSignInCommand implements Command {
                     } else {
 
                     }
-                    request.setAttribute(REQUEST_ATTRIBUTE_USER_BANNED, MESSAGE_USER_BANNED);
+                    request.setAttribute(REQUEST_ATTRIBUTE_USER_BANNED, MESSAGE_INVALID_USER_EXISTS_BANNED);
                 } else {
-                    request.setAttribute(REQUEST_ATTRIBUTE_USER_INVALID, MESSAGE_USER_INVALID);
+                    request.setAttribute(REQUEST_ATTRIBUTE_USER_INVALID, MESSAGE_INVALID_USER_EXISTS_LOGIN);
                 }
 
                 session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);

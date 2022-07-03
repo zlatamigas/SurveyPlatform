@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.edituser"/></title>
+    <title><fmt:message key="title.user.edit"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -29,7 +29,7 @@
         <div class="card-body">
             <div class="row align-items-center form-group">
                 <div class="col-3">
-                    <p class="card-text">Email</p>
+                    <p class="card-text"><fmt:message key="label.email"/></p>
                 </div>
                 <div class="col">
                     <p class="form-control">${sessionScope.edited_user.email}</p>
@@ -37,7 +37,7 @@
             </div>
             <div class="row align-items-center form-group">
                 <div class="col-3">
-                    <p class="card-text">Role</p>
+                    <p class="card-text"><fmt:message key="label.user.role"/></p>
                 </div>
                 <div class="col">
                         <select name="${DataHolder.PARAMETER_USER_ROLE}" class="form-control">
@@ -52,15 +52,15 @@
             </div>
             <div class="row align-items-center form-group">
                 <div class="col-3">
-                    <p class="card-text">Status</p>
+                    <p class="card-text"><fmt:message key="label.user.status"/></p>
                 </div>
                 <div class="col">
                     <select name="${DataHolder.PARAMETER_USER_STATUS}" class="form-control">
                         <option value="${UserStatus.ACTIVE}" <c:if test="${sessionScope.edited_user.status == UserStatus.ACTIVE}">selected</c:if>>
-                            <fmt:message key="status.active"/>
+                            <fmt:message key="status.user.active"/>
                         </option>
                         <option value="${UserStatus.BANNED}" <c:if test="${sessionScope.edited_user.status == UserStatus.BANNED}">selected</c:if>>
-                            <fmt:message key="status.banned"/>
+                            <fmt:message key="status.user.banned"/>
                         </option>
                     </select>
                 </div>
@@ -74,8 +74,8 @@
     <hr>
 
     <div class="btn-group" role="group">
-        <button form="finishEditUserForm" type="submit" class="btn btn-success"><fmt:message key="edituser.savechanges"/></button>
-        <button form="cancelEditUserForm" type="submit" class="btn btn-warning"><fmt:message key="edituser.cancel"/></button>
+        <button form="finishEditUserForm" type="submit" class="btn btn-success"><fmt:message key="button.save"/></button>
+        <button form="cancelEditUserForm" type="submit" class="btn btn-warning"><fmt:message key="button.cancel"/></button>
     </div>
 </div>
 

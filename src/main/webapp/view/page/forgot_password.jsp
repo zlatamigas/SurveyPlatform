@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.forgotpassword"/></title>
+    <title><fmt:message key="title.changepassword.forgotpassword"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -30,9 +30,9 @@
     <form action="controller" method="post">
         <input type="hidden" name="command" value="${CommandType.SEND_FORGOTTEN_PASSWORD_KEY}">
         <div class="form-group">
-            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="forgotpassword.email.placeholder"/>">
+            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
         </div>
-        <button type="submit" class="btn btn-primary" ><fmt:message key="forgotpassword.credentials.submit"/></button>
+        <button type="submit" class="btn btn-primary" ><fmt:message key="button.password.key.send"/></button>
     </form>
 
 </div>

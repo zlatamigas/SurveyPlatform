@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.surveys"/></title>
+    <title><fmt:message key="title.surveys.all"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -26,7 +26,7 @@
             <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_SURVEYS}">
             <div class="form-row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Search.." name="${DataHolder.PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${sessionScope.search_words}">
+                    <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${sessionScope.search_words}">
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
@@ -39,8 +39,8 @@
                     <div class="input-group-text"><i class="fas fa-filter"></i></div>
                 </div>
                 <select id="theme" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_FILTER_THEME_ID}">
-                    <option value="0" <c:if test="${sessionScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="surveys.themes.all"/></option>
-                    <option value="-1" <c:if test="${sessionScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="surveys.themes.none"/></option>
+                    <option value="0" <c:if test="${sessionScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="filter.all"/></option>
+                    <option value="-1" <c:if test="${sessionScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="filter.none"/></option>
                     <c:forEach items="${sessionScope.themes}" var="theme">
                         <option value="${theme.themeId}" <c:if test="${sessionScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
                     </c:forEach>
@@ -53,8 +53,8 @@
                     <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                 </div>
                 <select id="order" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_ORDER_TYPE}">
-                    <option value="ASC" <c:if test="${sessionScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="surveys.order.az"/></option>
-                    <option value="DESC" <c:if test="${sessionScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="surveys.order.za"/></option>
+                    <option value="ASC" <c:if test="${sessionScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
+                    <option value="DESC" <c:if test="${sessionScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
                 </select>
             </div>
                 </div>
@@ -95,7 +95,7 @@
                             <input type="hidden" name="command" value="${CommandType.START_SURVEY_ATTEMPT}">
                             <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                             <button form="startAttemptSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary">
-                                <fmt:message key="surveyattempt.startattempt"/></button>
+                                <fmt:message key="button.survey.attempt.start"/></button>
                         </form>
                     </div>
                 </div>
@@ -117,14 +117,14 @@
                 <c:if test="${forbidPrevious}">
                    tabindex="-1" aria-disabled="true"
                 </c:if>
-                >Previous</a>
+                ><fmt:message key="button.pagination.previous"/></a>
             </li>
             <li class="page-item  <c:if test="${forbidNext}">disabled</c:if>">
                 <a class="page-link" href="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.PAGINATE_SURVEYS}&${requestSearchPartForPagination}&${DataHolder.PARAMETER_PAGINATION_PAGE_OFFSET}=${sessionScope.pagination_current_page + 1}"
                 <c:if test="${forbidNext}">
                     tabindex="-1" aria-disabled="true"
                 </c:if>
-                >Next</a>
+                ><fmt:message key="button.pagination.next"/></a>
             </li>
         </ul>
     </nav>

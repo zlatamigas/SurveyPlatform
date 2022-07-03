@@ -4,22 +4,23 @@ public final class LocalisedMessageKey {
 
     public static final String LOCALE_BUNDLE_FILE_PATH = "localisation/localisedtext";
 
-    public static final String MESSAGE_USER_EXISTS = "message.user.exists";
-    public static final String MESSAGE_USER_INVALID = "message.user.invalid";
-    public static final String MESSAGE_USER_BANNED = "message.user.banned";
-    public static final String MESSAGE_EMAIL_WRONG = "message.email.wrong";
-    public static final String MESSAGE_PASSWORD_WRONG = "message.password.wrong";
-    public static final String MESSAGE_PASSWORD_REPEAT_WRONG = "message.passwordrepeat.wrong";
-    public static final String MESSAGE_SURVEY_NAME_WRONG = "message.survey.name.wrong";
-    public static final String MESSAGE_SURVEY_DESCRIPTION_WRONG = "message.survey.description.wrong";
-    public static final String MESSAGE_QUESTION_FORMULATION_WRONG = "message.question.formulation.wrong";
-    public static final String MESSAGE_ANSWER_WRONG = "message.answer.wrong";
+    public static final String MESSAGE_INVALID_USER_EXISTS_LOGUP = "message.invalid.user.exists.logup";
+    public static final String MESSAGE_INVALID_USER_EXISTS_LOGIN = "message.invalid.user.exists.login";
+    public static final String MESSAGE_INVALID_USER_EXISTS_BANNED = "message.invalid.user.exists.banned";
+    public static final String MESSAGE_INVALID_USER_EMAIL = "message.invalid.user.email";
+    public static final String MESSAGE_INVALID_USER_PASSWORD = "message.invalid.user.password";
+    public static final String MESSAGE_INVALID_USER_PASSWORD_REPEAT = "message.invalid.user.password.repeat";
 
-    public static final String MESSAGE_REQUIRE_SELECT_MULTIPLE = "message.require.select.multiple";
-    public static final String MESSAGE_REQUIRE_SELECT_SINGLE = "message.require.select.single";
+    public static final String MESSAGE_INVALID_SURVEY_NAME = "message.invalid.survey.name";
+    public static final String MESSAGE_INVALID_SURVEY_DESCRIPTION = "message.invalid.survey.description";
+    public static final String MESSAGE_INVALID_QUESTION_FORMULATION = "message.invalid.question.formulation";
+    public static final String MESSAGE_INVALID_ANSWER_TEXT = "message.invalid.answer.text";
 
-    public static final String MESSAGE_THEME_NAME_WRONG = "message.theme.name.wrong";
-    public static final String MESSAGE_THEME_EXISTS = "message.theme.exists";
+    public static final String MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE = "message.invalid.answer.require.select.multiple";
+    public static final String MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE = "message.invalid.answer.require.select.single";
+
+    public static final String MESSAGE_INVALID_THEME_NAME = "message.invalid.theme.name";
+    public static final String MESSAGE_INVALID_THEME_EXISTS = "message.invalid.theme.exists";
 
     private LocalisedMessageKey(){};
 }

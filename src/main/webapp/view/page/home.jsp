@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.homepage"/></title>
+    <title><fmt:message key="title.home"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -19,35 +19,35 @@
 
 <div class="container">
 
-    <div class="card text-center">
-        <div class="card-body">
-            <h5 class="card-title">SurveyPlatform</h5>
-        </div>
-    </div>
+<%--    <div class="card text-center">--%>
+<%--        <div class="card-body">--%>
+<%--            <h5 class="card-title">SurveyPlatform</h5>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-    <div class="card text-center">
-        <div class="card-body">
-            <h5 class="card-title">Participate in surveys</h5>
-            <p class="card-text"></p>
-            <a class="btn btn-primary"
-               href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_SURVEYS}">
-                <%--                    <fmt:message key=""/>--%>
-                Participate now
-            </a>
-        </div>
-    </div>
+<%--    <div class="card text-center">--%>
+<%--        <div class="card-body">--%>
+<%--            <h5 class="card-title">Participate in surveys</h5>--%>
+<%--            <p class="card-text"></p>--%>
+<%--            <a class="btn btn-primary"--%>
+<%--               href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_SURVEYS}">--%>
+<%--                &lt;%&ndash;                    <fmt:message key=""/>&ndash;%&gt;--%>
+<%--                Participate now--%>
+<%--            </a>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-    <div class="card text-center">
-        <div class="card-body">
-            <h5 class="card-title">Create your own surveys</h5>
-            <p class="card-text"></p>
-            <a class="btn btn-primary"
-               href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_IN}">
-                <%--                    <fmt:message key=""/>--%>
-                Sign in
-            </a>
-        </div>
-    </div>
+<%--    <div class="card text-center">--%>
+<%--        <div class="card-body">--%>
+<%--            <h5 class="card-title">Create your own surveys</h5>--%>
+<%--            <p class="card-text"></p>--%>
+<%--            <a class="btn btn-primary"--%>
+<%--               href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_IN}">--%>
+<%--                &lt;%&ndash;                    <fmt:message key=""/>&ndash;%&gt;--%>
+<%--                Sign in--%>
+<%--            </a>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 
     <%--    <c:choose>--%>

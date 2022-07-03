@@ -6,19 +6,19 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion" %>
 <%@ page import="epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey" %>
-<%@ page import="static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_MULTIPLE" %>
+<%@ page import="static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE" %>
 <%@ page import="static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*" %>
-<%@ page import="static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_SINGLE" %>
+<%@ page import="static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
-<fmt:message key="${LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_MULTIPLE}" var="questionCheckboxInvalid" />
-<fmt:message key="${LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_SINGLE}" var="questionRadiobuttonInvalid" />
+<fmt:message key="${LocalisedMessageKey.MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE}" var="questionCheckboxInvalid" />
+<fmt:message key="${LocalisedMessageKey.MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE}" var="questionRadiobuttonInvalid" />
 
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.surveyattempt"/></title>
+    <title><fmt:message key="title.survey.attempt"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -55,11 +55,11 @@
                             if(validationFeedback != null) {
                                 String fmtMessage = validationFeedback.get(PARAMETER_QUESTION_ID + question.getQuestionId());
                                 if (fmtMessage != null) {
-                                    if(fmtMessage.equals(MESSAGE_REQUIRE_SELECT_MULTIPLE)){
+                                    if(fmtMessage.equals(MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE)){
                                         String questionCheckboxInvalid =
                                                 (String) pageContext.getAttribute("questionCheckboxInvalid");
                                         out.write(questionCheckboxInvalid);
-                                    } else if (fmtMessage.equals(MESSAGE_REQUIRE_SELECT_SINGLE)) {
+                                    } else if (fmtMessage.equals(MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE)) {
                                         String questionRadiobuttonInvalid =
                                                 (String) pageContext.getAttribute("questionRadiobuttonInvalid");
                                         out.write(questionRadiobuttonInvalid);
@@ -107,10 +107,10 @@
     <hr>
 
     <div class="btn-group" role="group">
-        <button form="finishSurveyAttemptForm" type="submit" class="btn btn-success"><fmt:message
-                key="surveyattempt.finish"/></button>
-        <button form="cancelSurveyAttemptForm" type="submit" class="btn btn-warning"><fmt:message
-                key="surveyattempt.cancel"/></button>
+        <button form="finishSurveyAttemptForm" type="submit" class="btn btn-success">
+            <fmt:message key="button.survey.attempt.finish"/></button>
+        <button form="cancelSurveyAttemptForm" type="submit" class="btn btn-warning">
+            <fmt:message key="button.cancel"/></button>
     </div>
 </div>
 

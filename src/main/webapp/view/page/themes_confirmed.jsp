@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.themesconfirmed"/></title>
+    <title><fmt:message key="title.themes.confirmed"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-9">
             <div id="themesContainer" class="hide-on-popup">
-                <button id="showAddTheme" class="btn btn-primary">Add new theme</button>
+                <button id="showAddTheme" class="btn btn-primary"><fmt:message key="button.create"/></button>
                 <c:forEach items="${sessionScope.requested_themes}" var="theme">
                     <div class="card">
                         <div class="card-header">
@@ -57,7 +57,7 @@
             <div id="addThemePopup" class="popup">
                 <div class="close-btn"><i class="fas fa-times"></i></div>
                 <form action="controller" method="post">
-                    <h2>New theme</h2>
+                    <h2><fmt:message key="label.survey.theme"/> </h2>
                     <div class="form-row">
                         <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.ADD_THEME}">
                         <div class="col">
@@ -76,7 +76,7 @@
                     </div>
                     <div class="form-row justify-content-end">
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-success">Ok</button>
+                            <button type="submit" class="btn btn-success"><fmt:message key="button.add"/></button>
                         </div>
                     </div>
                 </form>

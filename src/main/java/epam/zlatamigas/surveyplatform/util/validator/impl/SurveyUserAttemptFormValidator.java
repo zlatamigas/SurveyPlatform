@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_MULTIPLE;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_REQUIRE_SELECT_SINGLE;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE;
 
 public class SurveyUserAttemptFormValidator implements FormValidator {
 
@@ -35,13 +35,13 @@ public class SurveyUserAttemptFormValidator implements FormValidator {
                     // Can select multiple: checkboxes
                     String[] checkboxes = data.get(BUTTONGROUP_NAME_CHECKBOX_ANSWERS + questionId);
                     if (checkboxes == null || checkboxes.length == 0) {
-                        validationResult.put(PARAMETER_QUESTION_ID + questionId, MESSAGE_REQUIRE_SELECT_MULTIPLE);
+                        validationResult.put(PARAMETER_QUESTION_ID + questionId, MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE);
                     }
                 } else {
                     // Can select single: radio button
                     String[] radiobuttons = data.get(BUTTONGROUP_NAME_RADIO_ANSWERS + questionId);
                     if (radiobuttons == null || radiobuttons.length != 1) {
-                        validationResult.put(PARAMETER_QUESTION_ID + questionId, MESSAGE_REQUIRE_SELECT_SINGLE);
+                        validationResult.put(PARAMETER_QUESTION_ID + questionId, MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE);
                     }
                 }
             }

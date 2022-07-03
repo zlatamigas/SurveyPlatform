@@ -25,7 +25,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-        <span class="navbar-brand"><fmt:message key="header.navbar.brandname"/> </span>
+        <span class="navbar-brand"><fmt:message key="header.navbar.brand"/> </span>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,7 @@
                         <label class="mr-sm-2">
                                 <c:choose>
                                     <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
-                                        <fmt:message key="header.navbar.userroe.admin"/>
+                                        <fmt:message key="header.navbar.welcome.admin"/>
                                     <div class="account-icon-container">
                                         <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_USER_ACCOUNT}" class="account-icon-link">
                                             <i class="fas fa-user-tie account-icon"></i>
@@ -79,7 +79,7 @@
                                     </div>
                                     </c:when>
                                     <c:when test="${sessionScope.user.role == UserRole.USER}">
-                                        <fmt:message key="header.navbar.userroe.user"/>
+                                        <fmt:message key="header.navbar.welcome.user"/>
                                     <div class="account-icon-container">
                                         <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_USER_ACCOUNT}" class="account-icon-link">
                                             <i class="fas fa-user account-icon" ></i>

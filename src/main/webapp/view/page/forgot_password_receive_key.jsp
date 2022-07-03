@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.forgotpasswordreceivekey"/></title>
+    <title><fmt:message key="title.changepassword.receivekey"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -24,15 +24,15 @@
 
 <div class="container">
 
-    <h1 class="display-4"><fmt:message key="forgotpasswordreceivekey.header"/></h1>
+    <h1 class="display-4"><fmt:message key="forgotpassword.receivekey.header"/></h1>
     <hr class="my-4">
 
     <form action="controller" method="post">
         <input type="hidden" name="command" value="${CommandType.CONFIRM_CHANGE_PASSWORD_KEY}">
         <div class="form-group">
-            <input type="text" class="form-control" name="${DataHolder.PARAMETER_FORGOT_PASSWORD_CHANGE_KEY}" placeholder="<fmt:message key="forgotpasswordreceivekey.key"/>">
+            <input type="text" class="form-control" name="${DataHolder.PARAMETER_FORGOT_PASSWORD_CHANGE_KEY}" placeholder="<fmt:message key="placeholder.receivedkey"/>">
         </div>
-        <button type="submit" class="btn btn-primary" ><fmt:message key="forgotpasswordreceivekey.credentials.submit"/></button>
+        <button type="submit" class="btn btn-primary" ><fmt:message key="button.password.key.confirm"/></button>
     </form>
 
 </div>

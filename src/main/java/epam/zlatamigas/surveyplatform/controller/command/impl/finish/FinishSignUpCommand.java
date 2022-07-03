@@ -19,7 +19,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigatio
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SIGN_UP;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_USER_EXISTS;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_EXISTS_LOGUP;
 
 public class FinishSignUpCommand implements Command {
     @Override
@@ -43,7 +43,7 @@ public class FinishSignUpCommand implements Command {
                     page = SIGN_IN;
                     pageChangeType = REDIRECT;
                 } else {
-                    request.setAttribute(REQUEST_ATTRIBUTE_USER_EXISTS, MESSAGE_USER_EXISTS);
+                    request.setAttribute(REQUEST_ATTRIBUTE_USER_EXISTS, MESSAGE_INVALID_USER_EXISTS_LOGUP);
                 }
 
             } catch (ServiceException e) {

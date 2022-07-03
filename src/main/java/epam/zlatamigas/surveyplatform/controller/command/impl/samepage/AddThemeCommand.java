@@ -18,7 +18,7 @@ import java.util.Map;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_THEME_EXISTS;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_THEME_EXISTS;
 
 public class AddThemeCommand implements Command {
     @Override
@@ -42,7 +42,7 @@ public class AddThemeCommand implements Command {
                     List<Theme> themes = themeService.findAllConfirmed();
                     session.setAttribute(ATTRIBUTE_REQUESTED_THEMES, themes);
                 } else {
-                    request.setAttribute(REQUEST_ATTRIBUTE_THEME_EXISTS, MESSAGE_THEME_EXISTS);
+                    request.setAttribute(REQUEST_ATTRIBUTE_THEME_EXISTS, MESSAGE_INVALID_THEME_EXISTS);
                 }
             } catch (ServiceException e) {
                 throw new CommandException(e);

@@ -10,7 +10,9 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.addquestion"/></title>
+    <title>
+        <fmt:message key="title.question.crud"/>
+    </title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -19,7 +21,6 @@
 <jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container">
-
 
     <form id="cancelEditQuestionForm" action="controller" method="post">
         <input type="hidden" name="command" value="${CommandType.CANCEL_EDIT_QUESTION}">
@@ -33,7 +34,7 @@
                     <fmt:message key="${requestScope.form_invalid.question_formulation}"/>
                 </c:if>
             </div>
-            <label for="questionFormulation"><fmt:message key="editquestion.label.questionformulation"/></label>
+            <label for="questionFormulation"><fmt:message key="label.question.formulation"/></label>
             <input type="text" name="${DataHolder.PARAMETER_QUESTION_FORMULATION}" class="form-control"
                    id="questionFormulation" minlength="1"
                    value="${sessionScope.edited_question.formulation}">
@@ -42,7 +43,7 @@
             <input type="checkbox" name="${DataHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}" class="form-check-input"
                    id="questionSelectMultiple" value="${DataHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}"
                    <c:if test="${sessionScope.edited_question.selectMultiple == true}">checked="checked"</c:if>/>
-            <label for="questionSelectMultiple"><fmt:message key="editquestion.label.questionselectmultiple"/> </label>
+            <label for="questionSelectMultiple"><fmt:message key="label.question.selectmultiple"/></label>
         </div>
 
         <c:set var="i" value="0"/>
@@ -56,7 +57,8 @@
                     <div class="col-auto">
                         <button type="submit" formmethod="post"
                                 formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_ANSWER}&${DataHolder.PARAMETER_ANSWER_POSITION}=${i}"
-                                class="btn btn-primary mb-3">Delete
+                                class="btn btn-primary mb-3">
+                            <fmt:message key="button.delete"/>
                         </button>
                     </div>
                     <c:set var="i" value="${i+1}"/>
@@ -65,7 +67,8 @@
         </div>
 
         <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.ADD_ANSWER}"
-                class="btn btn-primary">Add
+                class="btn btn-primary">
+            <fmt:message key="button.add"/>
         </button>
 
         <hr>
@@ -73,9 +76,9 @@
         <div class="btn-group" role="group">
             <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_QUESTION}"
                     class="btn btn-primary"><fmt:message
-                    key="editquestion.savequestion"/></button>
+                    key="button.save"/></button>
             <button form="cancelEditQuestionForm" type="submit" class="btn btn-warning">
-                <fmt:message key="editquestion.cancel"/></button>
+                <fmt:message key="button.cancel"/></button>
         </div>
     </form>
 </div>

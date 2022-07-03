@@ -10,7 +10,12 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.addsurvey"/></title>
+    <title>
+        <c:choose>
+            <c:when test="${sessionScope.edited_survey.surveyId > 0}"><fmt:message key="title.survey.edit"/></c:when>
+            <c:otherwise><fmt:message key="title.survey.add"/></c:otherwise>
+        </c:choose>
+    </title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -31,18 +36,18 @@
                     <fmt:message key="${requestScope.form_invalid.survey_name}"/>
                 </c:if>
             </div>
-            <label for="surveyName"><fmt:message key="editsurvey.label.surveyname"/></label>
+            <label for="surveyName"><fmt:message key="label.survey.name"/></label>
             <input name="${DataHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName"
                    minlength="1" maxlength="200"
                    value="${sessionScope.edited_survey.name}">
         </div>
         <div class="form-group">
-            <label for="surveyTheme"><fmt:message key="editsurvey.label.surveytheme"/></label>
+            <label for="surveyTheme"><fmt:message key="label.survey.theme"/></label>
             <select name="${DataHolder.PARAMETER_SURVEY_THEME_ID}" id="surveyTheme" class="form-control">
 
                 <option <c:if test="${sessionScope.edited_survey.theme.themeId == -1}">selected</c:if>
                         value="-1">
-                    <fmt:message key="editsurvey.theme.none"/>
+                    <fmt:message key="filter.none"/>
                 </option>
                 <c:forEach items="${sessionScope.themes}" var="theme">
                     <option <c:if test="${theme.themeId == sessionScope.edited_survey.theme.themeId}">selected</c:if>
@@ -56,7 +61,7 @@
                     <fmt:message key="${requestScope.form_invalid.survey_description}"/>
                 </c:if>
             </div>
-            <label for="surveyDescription"><fmt:message key="editsurvey.label.surveydescription"/> </label>
+            <label for="surveyDescription"><fmt:message key="label.survey.description"/> </label>
             <textarea name="${DataHolder.PARAMETER_SURVEY_DESCRIPTION}" class="form-control" id="surveyDescription"
                       rows="3">${sessionScope.edited_survey.description}</textarea>
         </div>
@@ -75,10 +80,10 @@
                             <div class="btn-group" role="group">
                                 <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
                                         type="submit" class="btn btn-primary" formmethod="post"><fmt:message
-                                        key="editsurvey.editquestion"/></button>
+                                        key="button.edit"/></button>
                                 <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_QUESTION}&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
                                         type="submit" class="btn btn-primary" formmethod="post"><fmt:message
-                                        key="editsurvey.deletequestion"/></button>
+                                        key="button.delete"/></button>
                             </div>
                             <c:set var="i" value="${i+1}"/>
                         </div>
@@ -87,7 +92,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-subtitle mb-2 text-muted"><fmt:message
-                            key="editsurvey.question.selectmultiple"/>
+                            key="label.question.selectmultiple"/>
                             <c:choose>
                                 <c:when test="${question.selectMultiple}">
                                     <i class="fas fa-check-circle text-success"></i>
@@ -109,17 +114,21 @@
 
         <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
                 formmethod="post" type="submit" class="btn btn-primary"><fmt:message
-                key="editsurvey.addquestion"/></button>
-
+                key="button.add"/></button>
         <hr>
 
 
         <div class="btn-group" role="group">
             <button formmethod="post"
                     formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_SURVEY}"
-                    type="submit" class="btn btn-success"><fmt:message key="editsurvey.savesurvey"/></button>
+                    type="submit" class="btn btn-success">
+                <c:choose>
+                <c:when test="${sessionScope.edited_survey.surveyId > 0}"><fmt:message key="button.save"/></c:when>
+                <c:otherwise><fmt:message key="button.create"/></c:otherwise>
+                </c:choose>
+            </button>
             <button form="cancelEditSurveyForm" type="submit" class="btn btn-warning">
-                <fmt:message key="editsurvey.cancel"/></button>
+                <fmt:message key="button.cancel"/></button>
         </div>
     </form>
 

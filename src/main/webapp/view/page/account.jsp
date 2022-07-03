@@ -36,12 +36,12 @@
         <div class="col-9">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title"><i class="fas fa-bars"></i> Personal information</h4>
+                    <h4 class="card-title"><i class="fas fa-bars"></i><fmt:message key="account.personalinfo"/> </h4>
                 </div>
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-3">
-                            <p class="card-text">Email</p>
+                            <p class="card-text"><fmt:message key="label.email"/></p>
                         </div>
                         <div class="col">
                             <p class="card-text">${sessionScope.user.email}</p>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="row align-items-center">
                         <div class="col-3">
-                            <p class="card-text">Role</p>
+                            <p class="card-text"><fmt:message key="label.user.role"/></p>
                         </div>
                         <div class="col">
                             <p class="card-text">
@@ -64,14 +64,14 @@
                     </div>
                     <div class="row align-items-center">
                         <div class="col-3">
-                            <p class="card-text">Status</p>
+                            <p class="card-text"><fmt:message key="label.user.status"/></p>
                         </div>
                         <div class="col">
                             <c:if test="${sessionScope.user.status == UserStatus.ACTIVE}">
-                                <p class="card-text text-success"><fmt:message key="status.active"/></p>
+                                <p class="card-text text-success"><fmt:message key="status.user.active"/></p>
                             </c:if>
                             <c:if test="${sessionScope.user.status == UserStatus.BANNED}">
-                                <p class="card-text text-danger"><fmt:message key="status.banned"/></p>
+                                <p class="card-text text-danger"><fmt:message key="status.user.banned"/></p>
                             </c:if>
                         </div>
                     </div>
@@ -79,12 +79,12 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title"><i class="fas fa-user-cog"></i> Account Management</h4>
+                    <h4 class="card-title"><i class="fas fa-user-cog"></i><fmt:message key="account.management"/></h4>
                 </div>
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col">
-                            <p class="card-text">Change password</p>
+                            <p class="card-text"><fmt:message key="account.changepassword"/></p>
                         </div>
                         <div class="col-auto">
                             <form action="controller" method="post">

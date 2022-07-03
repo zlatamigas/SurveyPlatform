@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.createuser"/></title>
+    <title><fmt:message key="title.user.add"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -40,7 +40,7 @@
                 </c:if>
             </div>
             <label><fmt:message key="label.email"/></label>
-            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="signup.email.placeholder"/>">
+            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
         </div>
         <div class="form-group">
             <div class="text-danger">
@@ -49,7 +49,7 @@
                 </c:if>
             </div>
             <label><fmt:message key="label.password"/></label>
-            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="signup.password.placeholder"/>">
+            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.email"/>">
         </div>
         <div class="form-group">
             <div class="text-danger">
@@ -57,8 +57,8 @@
                     <fmt:message key="${requestScope.form_invalid.password_repeat}"/>
                 </c:if>
             </div>
-            <label><fmt:message key="label.repeatpassword"/></label>
-            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="signup.password.placeholder"/>">
+            <label><fmt:message key="label.password.repeat"/></label>
+            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
         </div>
         <div class="form-row">
             <div class="col form-group">
@@ -76,10 +76,10 @@
                 <label><fmt:message key="label.user.status"/> </label>
                 <select name="${DataHolder.PARAMETER_USER_STATUS}" class="form-control">
                     <option value="${UserStatus.ACTIVE}" selected>
-                        <fmt:message key="status.active"/>
+                        <fmt:message key="status.user.active"/>
                     </option>
                     <option value="${UserStatus.BANNED}">
-                        <fmt:message key="status.banned"/>
+                        <fmt:message key="status.user.banned"/>
                     </option>
                 </select>
             </div>
@@ -91,8 +91,8 @@
     <hr>
 
     <div class="btn-group" role="group">
-        <button form="finishCreateUserForm" type="submit" class="btn btn-success"><fmt:message key="edituser.create"/></button>
-        <button form="cancelCreateUserForm" type="submit" class="btn btn-warning"><fmt:message key="edituser.cancel"/></button>
+        <button form="finishCreateUserForm" type="submit" class="btn btn-success"><fmt:message key="button.create"/></button>
+        <button form="cancelCreateUserForm" type="submit" class="btn btn-warning"><fmt:message key="button.cancel"/></button>
     </div>
 
 </div>

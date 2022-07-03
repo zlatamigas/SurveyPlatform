@@ -13,15 +13,23 @@
     <title><fmt:message key="title.error404"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Zlata Migas">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <%-- Bootstrap and jQuery --%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/css/bootstrap.min.css">
+    <script src="${pageContext.request.contextPath}/static/lib/jquery-3.5.1/jquery-3.5.1.slim.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/js/bootstrap.bundle.min.js"></script>
+
+    <%-- Fontawesome Icons --%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/lib/fontawesome-free-5.15.4-web/css/all.css">
+    <script defer src="${pageContext.request.contextPath}/static/lib/fontawesome-free-5.15.4-web/js/all.js"></script>
+
+    <%-- Custom style --%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css">
 </head>
 <body>
 <div class="container-fluid" style="height: 100%; position: absolute; margin: 0;">
 
-        <div class="row align-items-center" style="height: 100%">
+        <div class="row" style="height: 100%">
             <div class="col">
                 <h3 class="display-4"><fmt:message key="error404.title"/></h3>
                 <hr class="my-4">
@@ -32,8 +40,8 @@
                     <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">&#8962;</button>
                 </form>
             </div>
-            <div class="col">
-                <img src="${pageContext.request.contextPath}/static/pict/error_404.png" alt="<fmt:message key="error404.pictalttext"/>">
+            <div class="col" style="text-align: center">
+                <img src="${pageContext.request.contextPath}/static/pict/error_404.png" alt="<fmt:message key="error404.picture.alttext"/>">
             </div>
         </div>
 

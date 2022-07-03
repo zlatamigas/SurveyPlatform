@@ -41,8 +41,8 @@
                     <fmt:message key="${requestScope.form_invalid.email}"/>
                 </c:if>
             </div>
-            <label><fmt:message key="signup.email"/></label>
-            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="signup.email.placeholder"/>">
+            <label><fmt:message key="label.email"/></label>
+            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
         </div>
         <div class="form-group">
             <div class="text-danger">
@@ -50,8 +50,8 @@
                     <fmt:message key="${requestScope.form_invalid.password}"/>
                 </c:if>
             </div>
-            <label><fmt:message key="signup.password"/></label>
-            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="signup.password.placeholder"/>">
+            <label><fmt:message key="label.password"/></label>
+            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.password"/>">
         </div>
         <div class="form-group">
             <div class="text-danger">
@@ -59,10 +59,10 @@
                     <fmt:message key="${requestScope.form_invalid.password_repeat}"/>
                 </c:if>
             </div>
-            <label><fmt:message key="signup.repeatpassword"/></label>
-            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="signup.password.placeholder"/>">
+            <label><fmt:message key="label.password.repeat"/></label>
+            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
         </div>
-        <button type="submit" class="btn btn-primary" ><fmt:message key="signup.credentials.submit"/></button>
+        <button type="submit" class="btn btn-primary" ><fmt:message key="button.signup"/></button>
     </form>
 
 

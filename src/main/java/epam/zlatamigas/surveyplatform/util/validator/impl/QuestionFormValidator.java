@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_QUESTION_FORMULATION;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_QUESTION_FORMULATION_WRONG;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_QUESTION_FORMULATION;
 
 public class QuestionFormValidator implements FormValidator {
 
@@ -30,7 +30,7 @@ public class QuestionFormValidator implements FormValidator {
         Map<String, String> validationResult = new HashMap<>();
 
         if (!validator.validName(data.get(PARAMETER_QUESTION_FORMULATION)[0])) {
-            validationResult.put(PARAMETER_QUESTION_FORMULATION, MESSAGE_QUESTION_FORMULATION_WRONG);
+            validationResult.put(PARAMETER_QUESTION_FORMULATION, MESSAGE_INVALID_QUESTION_FORMULATION);
         }
 
 //        String[] answer;

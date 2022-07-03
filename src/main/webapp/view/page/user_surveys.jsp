@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.usersurveys"/></title>
+    <title><fmt:message key="title.surveys.user"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -34,7 +34,7 @@
             <form action="controller" method="post">
                 <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
                 <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}" value="true">
-                <button type="submit" class="btn btn-primary"><fmt:message key="usersurvey.createsurvey"/></button>
+                <button type="submit" class="btn btn-primary"><fmt:message key="button.create"/></button>
             </form>
             <div class="accordion" id="userSurveys">
                 <c:forEach items="${sessionScope.user_surveys}" var="survey">
@@ -58,7 +58,19 @@
                              data-parent="#userSurveys">
                             <div class="card-body">
                                 <h6 class="card-subtitle mb-2 text-muted">${survey.theme.themeName}</h6>
-                                <p class="card-subtitle mb-2 text-muted">${survey.status}</p>
+                                <p class="card-subtitle mb-2 text-muted">
+                                    <c:choose>
+                                        <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
+                                            <fmt:message key="status.survey.notstarted"/>
+                                        </c:when>
+                                        <c:when test="${survey.status == SurveyStatus.STARTED}">
+                                            <fmt:message key="status.survey.started"/>
+                                        </c:when>
+                                        <c:when test="${survey.status == SurveyStatus.CLOSED}">
+                                            <fmt:message key="status.survey.closed"/>
+                                        </c:when>
+                                    </c:choose>
+                                </p>
                                 <p class="card-text">${survey.description}</p>
                                 <div class="btn-toolbar justify-content-end" role="toolbar">
                                     <form id="startEditSurveyForm${survey.surveyId}" action="controller" method="post">
@@ -105,19 +117,19 @@
                                                 </button>
                                                 <button form="startEditSurveyForm${survey.surveyId}" type="submit"
                                                         class="btn btn-primary">
-                                                    <fmt:message key="usersurvey.editsurvey"/>
+                                                    <fmt:message key="button.edit"/>
                                                 </button>
                                             </c:when>
                                             <c:when test="${survey.status == SurveyStatus.STARTED}">
                                                 <button form="stopSurveyForm${survey.surveyId}" type="submit"
                                                         class="btn btn-primary">
-                                                    <fmt:message key="usersurvey.stopsurvey"/>
+                                                    <fmt:message key="button.survey.stop"/>
                                                 </button>
                                             </c:when>
                                             <c:when test="${survey.status == SurveyStatus.CLOSED}">
                                                 <button form="viewResultSurveyForm${survey.surveyId}" type="submit"
                                                         class="btn btn-primary">
-                                                    <fmt:message key="usersurvey.viewresultsurvey"/>
+                                                    <fmt:message key="button.survey.view.results"/>
                                                 </button>
                                             </c:when>
                                         </c:choose>
@@ -125,7 +137,7 @@
                                         <c:if test="${survey.status != SurveyStatus.STARTED}">
                                             <button form="deleteSurveyForm${survey.surveyId}" type="submit"
                                                     class="btn btn-warning">
-                                                <fmt:message key="usersurvey.deletesurvey"/>
+                                                <fmt:message key="button.delete"/>
                                             </button>
                                         </c:if>
 

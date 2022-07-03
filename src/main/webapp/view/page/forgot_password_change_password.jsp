@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
-    <title><fmt:message key="title.forgotpasswordchangepassword"/></title>
+    <title><fmt:message key="title.changepassword.change"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -24,16 +24,16 @@
 
 <div class="container">
 
-    <h1 class="display-4"><fmt:message key="forgotpasswordchangepassword.header"/></h1>
+    <h1 class="display-4"><fmt:message key="forgotpassword.changepassword.header"/></h1>
     <hr class="my-4">
 
     <form action="controller" method="post">
         <input type="hidden" name="command" value="${CommandType.CHANGE_PASSWORD}">
         <div class="form-group">
-            <input type="text" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="forgotpasswordchangepassword.password"/>">
-            <input type="text" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="forgotpasswordchangepassword.passwordrepeat"/>">
+            <input type="text" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.password"/>">
+            <input type="text" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
         </div>
-        <button type="submit" class="btn btn-primary" ><fmt:message key="forgotpasswordchangepassword.credentials.submit"/></button>
+        <button type="submit" class="btn btn-primary" ><fmt:message key="button.password.change"/></button>
     </form>
 
 </div>

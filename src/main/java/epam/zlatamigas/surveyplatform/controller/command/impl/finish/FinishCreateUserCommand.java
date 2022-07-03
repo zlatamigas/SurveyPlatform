@@ -21,7 +21,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_USER_EXISTS;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_EXISTS_LOGUP;
 
 public class FinishCreateUserCommand implements Command {
     @Override
@@ -51,7 +51,7 @@ public class FinishCreateUserCommand implements Command {
                     List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ALL, DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
                     session.setAttribute(ATTRIBUTE_USERS, users);
                 } else {
-                    request.setAttribute(REQUEST_ATTRIBUTE_USER_EXISTS, MESSAGE_USER_EXISTS);
+                    request.setAttribute(REQUEST_ATTRIBUTE_USER_EXISTS, MESSAGE_INVALID_USER_EXISTS_LOGUP);
                 }
 
             } catch (ServiceException e) {

@@ -27,11 +27,17 @@
     <h1 class="display-4"><fmt:message key="signin.header"/></h1>
     <hr class="my-4">
 
+    <c:if test="${requestScope.user_invalid!=null}">
     <div class="text-danger">
-        <c:if test="${requestScope.user_invalid!=null}">
             <fmt:message key="${requestScope.user_invalid}"/>
-        </c:if>
     </div>
+    </c:if>
+
+    <c:if test="${requestScope.user_banned!=null}">
+        <div class="text-danger">
+            <fmt:message key="${requestScope.user_banned}"/>
+        </div>
+    </c:if>
 
     <form action="controller" method="post">
         <input type="hidden" name="command" value="${CommandType.FINISH_SIGN_IN}">
@@ -41,9 +47,9 @@
                     <fmt:message key="${requestScope.form_invalid.email}"/>
                 </c:if>
             </div>
-            <label><fmt:message key="signin.email"/></label>
+            <label><fmt:message key="label.email"/></label>
             <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}"
-                   placeholder="<fmt:message key="signin.email.placeholder"/>">
+                   placeholder="<fmt:message key="placeholder.email"/>">
         </div>
         <div class="form-group">
             <div class="text-danger">
@@ -51,20 +57,20 @@
                     <fmt:message key="${requestScope.form_invalid.password}"/>
                 </c:if>
             </div>
-            <label><fmt:message key="signin.password"/></label>
+            <label><fmt:message key="label.password"/></label>
             <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}"
-                   placeholder="<fmt:message key="signin.password.placeholder"/>">
+                   placeholder="<fmt:message key="placeholder.password"/>">
             <div style=" text-align: end;">
-                <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_FORGOT_PASSWORD}"><fmt:message
-                        key="signin.forgotpassword"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_FORGOT_PASSWORD}">
+                    <fmt:message key="signin.forgotpassword"/></a>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary"><fmt:message key="signin.credentials.submit"/></button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="button.signin"/></button>
     </form>
 
     <p><fmt:message key="signin.registernow"/>
-        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_UP}"><fmt:message
-                key="signin.tosignup"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_UP}">
+            <fmt:message key="button.registernow"/></a>
     </p>
 </div>
 </body>

@@ -8,8 +8,8 @@ import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_EMAIL;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_PASSWORD;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_EMAIL_WRONG;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_PASSWORD_WRONG;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_EMAIL;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_PASSWORD;
 
 public class SignInFormValidator implements FormValidator {
 
@@ -33,10 +33,10 @@ public class SignInFormValidator implements FormValidator {
         Map<String, String> validationResult = new HashMap<>();
 
         if (!validator.validEmail(data.get(PARAMETER_EMAIL)[0])) {
-            validationResult.put(PARAMETER_EMAIL, MESSAGE_EMAIL_WRONG);
+            validationResult.put(PARAMETER_EMAIL, MESSAGE_INVALID_USER_EMAIL);
         }
         if (!validator.validPassword(data.get(PARAMETER_PASSWORD)[0])) {
-            validationResult.put(PARAMETER_PASSWORD, MESSAGE_PASSWORD_WRONG);
+            validationResult.put(PARAMETER_PASSWORD, MESSAGE_INVALID_USER_PASSWORD);
         }
 
         return validationResult;
