@@ -49,10 +49,16 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public List<Survey> findCreatorSurveysCommonInfo(int userId) throws ServiceException {
+    public List<Survey> findCreatorSurveysCommonInfoSearch(int filterThemeId, String searchWordsStr, String orderTypeName, int userId) throws ServiceException {
+
+        String[] searchWords = Arrays.stream(searchWordsStr
+                .split(SEARCH_WORDS_DELIMITER))
+                .filter(s -> !s.isBlank())
+                .toArray(String[]::new);
+        DbOrderType orderType = DbOrderType.valueOf(orderTypeName);
 
         try {
-            return surveyDao.findCreatorSurveysCommonInfo(userId);
+            return surveyDao.findCreatorSurveysCommonInfoSearch(filterThemeId, searchWords, orderType, userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

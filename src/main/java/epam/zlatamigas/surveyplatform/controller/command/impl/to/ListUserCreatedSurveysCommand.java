@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import java.util.List;
 
+import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
@@ -28,8 +29,10 @@ public class ListUserCreatedSurveysCommand implements Command {
         try {
 
             int creatorId = ((User)session.getAttribute(ATTRIBUTE_USER)).getUserId();
-            List<Survey> surveys = service.findCreatorSurveysCommonInfo(creatorId);
-            session.setAttribute(ATTRIBUTE_USER_SURVEYS, surveys);
+            List<Survey> surveys = service.findCreatorSurveysCommonInfoSearch(DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER, creatorId);
+
+            request.setAttribute(REQUEST_ATTRIBUTE_USER_SURVEYS, surveys);
+
             session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e);

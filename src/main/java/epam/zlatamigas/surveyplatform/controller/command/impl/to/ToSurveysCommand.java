@@ -1,7 +1,6 @@
 package epam.zlatamigas.surveyplatform.controller.command.impl.to;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
-import epam.zlatamigas.surveyplatform.controller.navigation.DataHolder;
 import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
@@ -37,9 +36,7 @@ public class ToSurveysCommand implements Command {
         try {
             List<Survey> surveys =
                     service.findParticipantSurveysCommonInfoSearch(DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
-            session.setAttribute(DataHolder.ATTRIBUTE_SURVEYS, surveys);
-            session.setAttribute(ATTRIBUTE_SURVEYS_PAGE, surveys.subList(0, Math.min(PAGINATION_ITEMS_PER_PAGE, surveys.size())));
-            session.setAttribute(ATTRIBUTE_PAGINATION_CURRENT_PAGE, 0);
+            request.setAttribute(REQUEST_ATTRIBUTE_SURVEYS, surveys);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

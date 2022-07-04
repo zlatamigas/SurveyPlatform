@@ -52,9 +52,7 @@ public class SearchSurveysCommand implements Command {
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
             List<Survey> surveys = service.findParticipantSurveysCommonInfoSearch(filterThemeId, searchWordsStr, orderTypeName);
-            session.setAttribute(DataHolder.ATTRIBUTE_SURVEYS, surveys);
-            session.setAttribute(ATTRIBUTE_SURVEYS_PAGE, surveys.subList(0, Math.min(PAGINATION_ITEMS_PER_PAGE, surveys.size())));
-            session.setAttribute(ATTRIBUTE_PAGINATION_CURRENT_PAGE, 0);
+            request.setAttribute(DataHolder.REQUEST_ATTRIBUTE_SURVEYS, surveys);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

@@ -7,7 +7,6 @@ public final class DataHolder {
     // Shared
     public static final String PARAMETER_LOCALISATION = "localisation";
     public static final String PARAMETER_COMMAND = "command";
-    public static final String PARAMETER_PAGINATION_PAGE_OFFSET = "pagination_page_offset";
 
     // User
     public static final String PARAMETER_USER_ID = "user_id";
@@ -48,13 +47,9 @@ public final class DataHolder {
     public static final String ATTRIBUTE_LOCALISATION = "localisation";
     public static final String ATTRIBUTE_CURRENT_PAGE = "current_page";
     public static final String ATTRIBUTE_PREVIOUS_PAGE = "previous_page";
-    public static final String ATTRIBUTE_PAGINATION_CURRENT_PAGE = "pagination_current_page";
 
     // Listed data
     public static final String ATTRIBUTE_THEMES = "themes";
-    public static final String ATTRIBUTE_SURVEYS = "surveys";
-    public static final String ATTRIBUTE_SURVEYS_PAGE = "surveys_page";
-    public static final String ATTRIBUTE_USER_SURVEYS = "user_surveys";
     public static final String ATTRIBUTE_USERS = "users";
     public static final String ATTRIBUTE_REQUESTED_THEMES = "requested_themes";
 
@@ -73,6 +68,10 @@ public final class DataHolder {
 
 
     // Request
+
+    // Listed data
+    public static final String REQUEST_ATTRIBUTE_SURVEYS = "surveys";
+    public static final String REQUEST_ATTRIBUTE_USER_SURVEYS = "user_surveys";
 
     // Validation feedback
     public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";

@@ -47,7 +47,6 @@ public class CheckUserRoleFilter implements Filter {
                         // List data
                         TO_SURVEYS,
                         SEARCH_SURVEYS,
-                        PAGINATE_SURVEYS,
                         LIST_USERS,
                         LIST_USER_CREATED_SURVEYS,
                         // CRUD survey and its parts
@@ -94,7 +93,6 @@ public class CheckUserRoleFilter implements Filter {
                         // List data
                         TO_SURVEYS,
                         SEARCH_SURVEYS,
-                        PAGINATE_SURVEYS,
                         LIST_USER_CREATED_SURVEYS,
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
@@ -132,7 +130,6 @@ public class CheckUserRoleFilter implements Filter {
                         // List data
                         TO_SURVEYS,
                         SEARCH_SURVEYS,
-                        PAGINATE_SURVEYS,
                         // Participate in survey
                         START_SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,

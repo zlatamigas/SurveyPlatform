@@ -18,6 +18,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USER_SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class ChangeSurveyStatusStartedCommand implements Command {
     @Override
@@ -32,15 +33,12 @@ public class ChangeSurveyStatusStartedCommand implements Command {
         SurveyService surveyService = SurveyServiceImpl.getInstance();
         try {
             surveyService.updateSurveyStatus(surveyId, SurveyStatus.STARTED);
-
-            List<Survey> surveys = surveyService.findCreatorSurveysCommonInfo(creatorId);
-            session.setAttribute(ATTRIBUTE_USER_SURVEYS, surveys);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, FORWARD);
+        return new Router(page, REDIRECT);
     }
 }

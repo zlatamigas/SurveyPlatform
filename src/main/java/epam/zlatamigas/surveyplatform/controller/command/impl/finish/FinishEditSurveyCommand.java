@@ -22,7 +22,7 @@ import java.util.Map;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.EDIT_SURVEY;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USER_SURVEYS;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class FinishEditSurveyCommand implements Command {
 
@@ -57,10 +57,6 @@ public class FinishEditSurveyCommand implements Command {
                 } else {
                     surveyService.update(survey);
                 }
-
-                List<Survey> surveys = surveyService.findCreatorSurveysCommonInfo(creator.getUserId());
-                session.setAttribute(ATTRIBUTE_USER_SURVEYS, surveys);
-
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }
@@ -73,6 +69,6 @@ public class FinishEditSurveyCommand implements Command {
             request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }
 
-        return new Router(page, FORWARD);
+        return new Router(page, REDIRECT);
     }
 }

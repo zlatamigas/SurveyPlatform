@@ -11,6 +11,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USER_SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class CancelEditSurveyCommand implements Command {
     @Override
@@ -22,6 +23,6 @@ public class CancelEditSurveyCommand implements Command {
         session.removeAttribute(ATTRIBUTE_THEMES);
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, FORWARD);
+        return new Router(page, REDIRECT);
     }
 }

@@ -26,11 +26,14 @@ public interface SurveyService {
     /**
      * Find preview info (name, description, status) about all surveys created by user.
      *
+     * @param filterThemeId  If theme id > 0 use as theme_id, 0 - all themes, -1 - column theme_id contains null.
+     * @param searchWordsStr Words contained in survey_name. Case insensitive. If array size is 0, then all survey names are acceptable.
+     * @param orderTypeName  Order type: ASC - ascending, DESC - descending.
      * @param userId User id to use for search.
      * @return List of surveys with common info without question and answer data.
      * @throws ServiceException
      */
-    List<Survey> findCreatorSurveysCommonInfo(int userId) throws ServiceException;
+    List<Survey> findCreatorSurveysCommonInfoSearch(int filterThemeId, String searchWordsStr, String orderTypeName, int userId) throws ServiceException;
 
     /**
      * Find info about specified survey: question info without statistics info.

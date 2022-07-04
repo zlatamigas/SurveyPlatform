@@ -66,16 +66,6 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
 
 
     // Get survey info
-    private static final String FIND_CREATOR_SURVEYS_COMMON_INFO_STATEMENT = """
-            SELECT id_survey, survey_name, survey_description, theme_id, survey_status 
-            FROM surveys 
-            WHERE creator_id = ?
-            """;
-//    private static final String FIND_PARTICIPANT_SURVEYS_COMMON_INFO_STATEMENT = """
-//            SELECT id_survey, survey_name, survey_description, theme_id
-//            FROM surveys
-//            WHERE survey_status = 'STARTED'
-//            """;
     private static final String FIND_PARTICIPANT_SURVEY_BY_ID_STATEMENT = """
             SELECT survey_name, survey_description, theme_id 
             FROM surveys 
@@ -97,10 +87,15 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             WHERE question_id = ?
             """;
 
+    private static final String FIND_CREATOR_SURVEYS_COMMON_INFO_BASE_STATEMENT = """
+            SELECT id_survey, survey_name, survey_description, theme_id 
+            FROM surveys 
+            WHERE creator_id = ? 
+            """;
     private static final String FIND_PARTICIPANT_SURVEYS_COMMON_INFO_BASE_STATEMENT = """
             SELECT id_survey, survey_name, survey_description, theme_id 
             FROM surveys 
-            WHERE survey_status = 'STARTED'
+            WHERE survey_status = 'STARTED' 
             """;
     private static final String WHERE_THEME_ID_EQUALS_STATEMENT = """
             AND theme_id = ?
@@ -219,16 +214,36 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     }
 
     @Override
-    public List<Survey> findCreatorSurveysCommonInfo(int userId) throws DaoException {
+    public List<Survey> findCreatorSurveysCommonInfoSearch(int filterThemeId, String[] searchWords, DbOrderType orderType, int userId) throws DaoException {
         List<Survey> surveys = new ArrayList<>();
         Survey survey = null;
 
         Map<Integer, Theme> themes = findThemes();
 
-        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+        try (Connection connection = ConnectionPool.getInstance().getConnection();) {
 
-            PreparedStatement psFindSurvey = connection.prepareStatement(FIND_CREATOR_SURVEYS_COMMON_INFO_STATEMENT);
-            psFindSurvey.setInt(1, userId);
+            StringBuilder query = new StringBuilder(FIND_CREATOR_SURVEYS_COMMON_INFO_BASE_STATEMENT);
+            if (filterThemeId > FILTER_THEMES_ALL) {
+                query.append(WHERE_THEME_ID_EQUALS_STATEMENT);
+            } else if (filterThemeId == FILTER_THEMES_NONE) {
+                query.append(WHERE_THEME_ID_IS_NULL_STATEMENT);
+            } else if (filterThemeId != FILTER_THEMES_ALL){
+                throw new DaoException("Passed unknown theme: filterThemeId = " + filterThemeId);
+            }
+            query.append(WHERE_NAME_CONTAINS_STATEMENT.repeat(searchWords.length));
+            query.append(ORDER_BY_SURVEY_NAME_STATEMENT).append(orderType.name());
+
+            PreparedStatement psFindSurvey = connection.prepareStatement(query.toString());
+
+            int parameterIndex = 1;
+            psFindSurvey.setInt(parameterIndex++, userId);
+            if (filterThemeId > FILTER_THEMES_ALL) {
+                psFindSurvey.setInt(parameterIndex++, filterThemeId);
+            }
+            for (int i = 0; i < searchWords.length; i++, parameterIndex++) {
+                psFindSurvey.setString(parameterIndex, searchWords[i]);
+            }
+
             ResultSet rsSurvey = psFindSurvey.executeQuery();
 
             while (rsSurvey.next()) {
@@ -240,9 +255,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                         .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
                         .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
                         .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
-                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
                         .setTheme(theme)
-                        .setCreator(new User.UserBuilder().setUserId(userId).getUser())
                         .getSurvey();
 
                 surveys.add(survey);
