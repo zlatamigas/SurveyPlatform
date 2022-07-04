@@ -29,7 +29,7 @@ public class ListUserCreatedSurveysCommand implements Command {
         try {
 
             int creatorId = ((User)session.getAttribute(ATTRIBUTE_USER)).getUserId();
-            List<Survey> surveys = service.findCreatorSurveysCommonInfoSearch(DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER, creatorId);
+            List<Survey> surveys = service.findCreatorSurveysCommonInfoSearch(DEFAULT_FILTER_ID_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER, DEFAULT_FILTER_STR_ALL, creatorId);
 
             request.setAttribute(REQUEST_ATTRIBUTE_USER_SURVEYS, surveys);
 

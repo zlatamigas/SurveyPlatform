@@ -34,7 +34,7 @@ public class FinishEditUserCommand implements Command {
             service.updateRoleStatus(userId, roleName, statusName);
             session.removeAttribute(ATTRIBUTE_EDITED_USER);
 
-            List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ALL, DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
+            List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ID_ALL, DEFAULT_FILTER_ID_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
             session.setAttribute(ATTRIBUTE_USERS, users);
         } catch (ServiceException e) {
             throw new CommandException(e);

@@ -44,7 +44,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link"
-                       href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_SURVEYS}">
+                       href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_SURVEYS}">
                         <fmt:message key="header.navbar.surveys"/>
                     </a>
                 </li>
@@ -73,7 +73,7 @@
                                     <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
                                         <fmt:message key="header.navbar.welcome.admin"/>
                                     <div class="account-icon-container">
-                                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_USER_ACCOUNT}" class="account-icon-link">
+                                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USER_ACCOUNT}" class="account-icon-link">
                                             <i class="fas fa-user-tie account-icon"></i>
                                         </a>
                                     </div>
@@ -81,7 +81,7 @@
                                     <c:when test="${sessionScope.user.role == UserRole.USER}">
                                         <fmt:message key="header.navbar.welcome.user"/>
                                     <div class="account-icon-container">
-                                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_USER_ACCOUNT}" class="account-icon-link">
+                                        <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USER_ACCOUNT}" class="account-icon-link">
                                             <i class="fas fa-user account-icon" ></i>
                                         </a>
                                     </div>

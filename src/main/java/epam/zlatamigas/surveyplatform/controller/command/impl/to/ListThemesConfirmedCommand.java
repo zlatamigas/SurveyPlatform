@@ -17,7 +17,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
-public class ToThemesConfirmedCommand implements Command {
+public class ListThemesConfirmedCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 

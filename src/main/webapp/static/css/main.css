@@ -25,6 +25,7 @@
 }
 /*Popup form*/
 .popup{
+    display: none;
     background: white;
     position: absolute;
     top:50%;
@@ -40,6 +41,7 @@
                 transform 200ms ease-in-out 0ms;
 }
 .popup.active {
+    display: block;
     top:50%;
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;

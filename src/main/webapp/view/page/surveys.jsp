@@ -132,12 +132,9 @@
     </div>
 
     <script>
-        // selecting required element
         const element = document.querySelector(".pagination ul");
         let totalPages = Math.max(Math.ceil(${requestScope.surveys.size() / DataHolder.PAGINATION_ITEMS_PER_PAGE}), 1);
         let page = 1;
-        console.log(totalPages, page);
-        //calling function with passing parameters and adding inside element which is ul tag
         element.innerHTML = createPagination(totalPages, page);
     </script>
 

@@ -48,7 +48,7 @@ public class FinishCreateUserCommand implements Command {
                     page = USERS;
                     pageChangeType = REDIRECT;
 
-                    List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ALL, DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
+                    List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ID_ALL, DEFAULT_FILTER_ID_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
                     session.setAttribute(ATTRIBUTE_USERS, users);
                 } else {
                     request.setAttribute(REQUEST_ATTRIBUTE_USER_EXISTS, MESSAGE_INVALID_USER_EXISTS_LOGUP);

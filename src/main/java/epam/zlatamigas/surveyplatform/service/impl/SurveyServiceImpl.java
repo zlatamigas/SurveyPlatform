@@ -3,21 +3,20 @@ package epam.zlatamigas.surveyplatform.service.impl;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.dao.DbOrderType;
-import epam.zlatamigas.surveyplatform.model.dao.SurveyDao;
 import epam.zlatamigas.surveyplatform.model.dao.impl.SurveyDaoImpl;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyUserAttempt;
-import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class SurveyServiceImpl implements SurveyService {
+import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.DEFAULT_FILTER_STR_ALL;
+import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.SEARCH_WORDS_DELIMITER;
 
-    private static final String SEARCH_WORDS_DELIMITER = " ";
+public class SurveyServiceImpl implements SurveyService {
 
     private static SurveyServiceImpl instance = new SurveyServiceImpl();
 
@@ -49,16 +48,22 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public List<Survey> findCreatorSurveysCommonInfoSearch(int filterThemeId, String searchWordsStr, String orderTypeName, int userId) throws ServiceException {
+    public List<Survey> findCreatorSurveysCommonInfoSearch(int filterThemeId, String searchWordsStr, String orderTypeName, String surveyStatusName, int userId) throws ServiceException {
 
         String[] searchWords = Arrays.stream(searchWordsStr
                 .split(SEARCH_WORDS_DELIMITER))
                 .filter(s -> !s.isBlank())
                 .toArray(String[]::new);
         DbOrderType orderType = DbOrderType.valueOf(orderTypeName);
+        Optional<SurveyStatus> surveyStatus;
+        if (surveyStatusName.equals(DEFAULT_FILTER_STR_ALL)) {
+            surveyStatus = Optional.empty();
+        } else {
+            surveyStatus = Optional.of(SurveyStatus.valueOf(surveyStatusName));
+        }
 
         try {
-            return surveyDao.findCreatorSurveysCommonInfoSearch(filterThemeId, searchWords, orderType, userId);
+            return surveyDao.findCreatorSurveysCommonInfoSearch(filterThemeId, searchWords, orderType, surveyStatus, userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

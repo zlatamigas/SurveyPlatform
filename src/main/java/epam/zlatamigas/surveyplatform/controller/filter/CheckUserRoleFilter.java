@@ -45,10 +45,11 @@ public class CheckUserRoleFilter implements Filter {
                         CONFIRM_CHANGE_PASSWORD_KEY,
                         CHANGE_PASSWORD,
                         // List data
-                        TO_SURVEYS,
+                        LIST_SURVEYS,
                         SEARCH_SURVEYS,
                         LIST_USERS,
                         LIST_USER_CREATED_SURVEYS,
+                        SEARCH_USER_CREATED_SURVEYS,
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
@@ -67,13 +68,13 @@ public class CheckUserRoleFilter implements Filter {
                         FINISH_SURVEY_ATTEMPT,
                         CANCEL_SURVEY_ATTEMPT,
                         VIEW_SURVEY_RESULT,
-                        TO_THEMES_CONFIRMED,
-                        TO_THEMES_WAITING,
+                        LIST_THEMES_CONFIRMED,
+                        LIST_THEMES_WAITING,
                         CONFIRM_THEME,
                         REJECT_THEME,
                         DELETE_THEME,
                         ADD_THEME,
-                        TO_USER_ACCOUNT,
+                        USER_ACCOUNT,
                         START_EDIT_USER,
                         FINISH_EDIT_USER,
                         CANCEL_EDIT_USER,
@@ -91,9 +92,10 @@ public class CheckUserRoleFilter implements Filter {
                         CONFIRM_CHANGE_PASSWORD_KEY,
                         CHANGE_PASSWORD,
                         // List data
-                        TO_SURVEYS,
+                        LIST_SURVEYS,
                         SEARCH_SURVEYS,
                         LIST_USER_CREATED_SURVEYS,
+                        SEARCH_USER_CREATED_SURVEYS,
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
@@ -112,7 +114,7 @@ public class CheckUserRoleFilter implements Filter {
                         FINISH_SURVEY_ATTEMPT,
                         CANCEL_SURVEY_ATTEMPT,
                         VIEW_SURVEY_RESULT,
-                        TO_USER_ACCOUNT
+                        USER_ACCOUNT
                 ),
                 GUEST, EnumSet.of(
                         DEFAULT,
@@ -128,7 +130,7 @@ public class CheckUserRoleFilter implements Filter {
                         CONFIRM_CHANGE_PASSWORD_KEY,
                         CHANGE_PASSWORD,
                         // List data
-                        TO_SURVEYS,
+                        LIST_SURVEYS,
                         SEARCH_SURVEYS,
                         // Participate in survey
                         START_SURVEY_ATTEMPT,

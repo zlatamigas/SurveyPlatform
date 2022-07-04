@@ -38,7 +38,7 @@ public class SearchSurveysCommand implements Command {
         try {
            filterThemeId = Integer.parseInt(request.getParameter(PARAMETER_ATTRIBUTE_FILTER_THEME_ID));
         } catch (NumberFormatException e){
-            filterThemeId = DEFAULT_FILTER_ALL;
+            filterThemeId = DEFAULT_FILTER_ID_ALL;
         }
         String orderTypeName = request.getParameter(PARAMETER_ATTRIBUTE_ORDER_TYPE);
         if(orderTypeName == null){

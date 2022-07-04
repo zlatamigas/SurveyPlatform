@@ -88,7 +88,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             """;
 
     private static final String FIND_CREATOR_SURVEYS_COMMON_INFO_BASE_STATEMENT = """
-            SELECT id_survey, survey_name, survey_description, theme_id 
+            SELECT id_survey, survey_name, survey_description, theme_id, survey_status 
             FROM surveys 
             WHERE creator_id = ? 
             """;
@@ -102,6 +102,9 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             """;
     private static final String WHERE_THEME_ID_IS_NULL_STATEMENT = """
             AND theme_id IS NULL
+            """;
+    private static final String WHERE_SURVEY_STATUS_EQUALS_STATEMENT = """
+            AND survey_status = ?
             """;
     private static final String WHERE_NAME_CONTAINS_STATEMENT = """
             AND INSTR(LOWER(survey_name), LOWER(?)) > 0
@@ -214,7 +217,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
     }
 
     @Override
-    public List<Survey> findCreatorSurveysCommonInfoSearch(int filterThemeId, String[] searchWords, DbOrderType orderType, int userId) throws DaoException {
+    public List<Survey> findCreatorSurveysCommonInfoSearch(int filterThemeId, String[] searchWords, DbOrderType orderType, Optional<SurveyStatus> surveyStatus, int userId) throws DaoException {
         List<Survey> surveys = new ArrayList<>();
         Survey survey = null;
 
@@ -231,6 +234,9 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                 throw new DaoException("Passed unknown theme: filterThemeId = " + filterThemeId);
             }
             query.append(WHERE_NAME_CONTAINS_STATEMENT.repeat(searchWords.length));
+            if(surveyStatus.isPresent()){
+                query.append(WHERE_SURVEY_STATUS_EQUALS_STATEMENT);
+            }
             query.append(ORDER_BY_SURVEY_NAME_STATEMENT).append(orderType.name());
 
             PreparedStatement psFindSurvey = connection.prepareStatement(query.toString());
@@ -243,7 +249,9 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             for (int i = 0; i < searchWords.length; i++, parameterIndex++) {
                 psFindSurvey.setString(parameterIndex, searchWords[i]);
             }
-
+            if(surveyStatus.isPresent()) {
+                psFindSurvey.setString(parameterIndex, surveyStatus.get().name());
+            }
             ResultSet rsSurvey = psFindSurvey.executeQuery();
 
             while (rsSurvey.next()) {
@@ -255,6 +263,7 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
                         .setSurveyId(rsSurvey.getInt(SURVEYS_TABLE_PK_COLUMN))
                         .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
                         .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                        .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
                         .setTheme(theme)
                         .getSurvey();
 

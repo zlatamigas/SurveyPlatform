@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.command.SearchParameter" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyStatus" %>
 
@@ -39,6 +40,62 @@
                 <button type="submit" class="btn btn-primary"><fmt:message key="button.create"/></button>
             </form>
 
+            <hr/>
+
+            <div>
+                <form action="controller" method="get">
+                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_USER_CREATED_SURVEYS}">
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${sessionScope.search_words}">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-md-end">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-filter"></i></div>
+                                </div>
+                                <select id="theme" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_FILTER_THEME_ID}">
+                                    <option value="0" <c:if test="${sessionScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="filter.all"/></option>
+                                    <option value="-1" <c:if test="${sessionScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="filter.none"/></option>
+                                    <c:forEach items="${sessionScope.themes}" var="theme">
+                                        <option value="${theme.themeId}" <c:if test="${sessionScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-tasks"></i></div>
+                                </div>
+                                <select id="filter_survey_status" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_FILTER_SURVEY_STATUS}">
+                                    <option value="${SearchParameter.DEFAULT_FILTER_STR_ALL}" <c:if test="${sessionScope.filter_survey_status == SearchParameter.DEFAULT_FILTER_STR_ALL}">selected</c:if>><fmt:message key="filter.all"/></option>
+                                    <option value="${SurveyStatus.NOT_STARTED}" <c:if test="${sessionScope.filter_survey_status == SurveyStatus.NOT_STARTED.name()}">selected</c:if>><fmt:message key="status.survey.notstarted"/></option>
+                                    <option value="${SurveyStatus.STARTED}" <c:if test="${sessionScope.filter_survey_status == SurveyStatus.STARTED.name()}">selected</c:if>><fmt:message key="status.survey.started"/></option>
+                                    <option value="${SurveyStatus.CLOSED}" <c:if test="${sessionScope.filter_survey_status == SurveyStatus.CLOSED.name()}">selected</c:if>><fmt:message key="status.survey.closed"/></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
+                                </div>
+                                <select id="order" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_ORDER_TYPE}">
+                                    <option value="ASC" <c:if test="${sessionScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
+                                    <option value="DESC" <c:if test="${sessionScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <div class="accordion" id="userSurveys">
 
                 <div id="pagination-page-container">
@@ -49,9 +106,9 @@
                         <c:forEach var="surveyIndex" begin="0" end="${requestScope.user_surveys.size() - 1}">
                         <c:set var="survey" value="${requestScope.user_surveys.get(surveyIndex)}" scope="page"/>
                         <c:if test="${surveyIndex / DataHolder.PAGINATION_ITEMS_PER_PAGE >= surveyPage}">
-                    </div>
-                    <c:set var="surveyPage" value="${surveyPage + 1}"/>
-                    <div id="pagination-page-${surveyPage}" style="display: none">
+                            </div>
+                            <c:set var="surveyPage" value="${surveyPage + 1}"/>
+                            <div id="pagination-page-${surveyPage}" style="display: none">
                         </c:if>
                         <div class="card">
                                 <div class="card-header" id="heading${survey.surveyId}">
@@ -155,7 +212,6 @@
                                                         <fmt:message key="button.delete"/>
                                                     </button>
                                                 </c:if>
-
                                             </div>
 
                                         </div>
@@ -179,12 +235,9 @@
             </div>
 
             <script>
-                // selecting required element
                 const element = document.querySelector(".pagination ul");
                 let totalPages = Math.max(Math.ceil(${requestScope.user_surveys.size() / DataHolder.PAGINATION_ITEMS_PER_PAGE}), 1);
                 let page = 1;
-                console.log(totalPages, page);
-                //calling function with passing parameters and adding inside element which is ul tag
                 element.innerHTML = createPagination(totalPages, page);
             </script>
 

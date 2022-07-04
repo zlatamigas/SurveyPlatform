@@ -30,10 +30,11 @@ public final class DataHolder {
     public static final String PARAMETER_ANSWER_TEXT = "answer_text";
     public static final String PARAMETER_ANSWER_POSITION = "answer_position";
 
-    // Search
+    // Search parameter-attribute
     public static final String PARAMETER_ATTRIBUTE_SEARCH_WORDS = "search_words";
     public static final String PARAMETER_ATTRIBUTE_FILTER_THEME_ID = "filter_theme_id";
     public static final String PARAMETER_ATTRIBUTE_ORDER_TYPE = "order_type";
+    public static final String PARAMETER_ATTRIBUTE_FILTER_SURVEY_STATUS = "filter_survey_status";
 
     // Theme
     public static final String PARAMETER_THEME_ID = "theme_id";

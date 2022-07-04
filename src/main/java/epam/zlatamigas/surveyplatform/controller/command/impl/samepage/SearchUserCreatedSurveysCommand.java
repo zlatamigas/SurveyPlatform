@@ -1,12 +1,14 @@
-package epam.zlatamigas.surveyplatform.controller.command.impl.to;
+package epam.zlatamigas.surveyplatform.controller.command.impl.samepage;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
+import epam.zlatamigas.surveyplatform.controller.navigation.DataHolder;
 import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
 import epam.zlatamigas.surveyplatform.model.entity.Theme;
+import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 import epam.zlatamigas.surveyplatform.service.ThemeService;
 import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
@@ -20,23 +22,44 @@ import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
-public class ToSurveysCommand implements Command {
-
+public class SearchUserCreatedSurveysCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        String page = PageNavigation.SURVEYS;
+        String page = PageNavigation.USER_SURVEYS;
 
-        session.setAttribute(PARAMETER_ATTRIBUTE_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
-        session.setAttribute(PARAMETER_ATTRIBUTE_FILTER_THEME_ID, DEFAULT_FILTER_ALL);
-        session.setAttribute(PARAMETER_ATTRIBUTE_ORDER_TYPE, DEFAULT_ORDER);
+        String searchWordsStr = request.getParameter(PARAMETER_ATTRIBUTE_SEARCH_WORDS);
+        if(searchWordsStr == null){
+            searchWordsStr = DEFAULT_SEARCH_WORDS;
+        }
+
+        int filterThemeId;
+        try {
+           filterThemeId = Integer.parseInt(request.getParameter(PARAMETER_ATTRIBUTE_FILTER_THEME_ID));
+        } catch (NumberFormatException e){
+            filterThemeId = DEFAULT_FILTER_ID_ALL;
+        }
+        String surveyStatusName = request.getParameter(PARAMETER_ATTRIBUTE_FILTER_SURVEY_STATUS);
+        if(surveyStatusName == null){
+            surveyStatusName = DEFAULT_FILTER_STR_ALL;
+        }
+        String orderTypeName = request.getParameter(PARAMETER_ATTRIBUTE_ORDER_TYPE);
+        if(orderTypeName == null){
+            orderTypeName = DEFAULT_ORDER;
+        }
+
+        User user = (User) session.getAttribute(ATTRIBUTE_USER);
+
+        session.setAttribute(PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
+        session.setAttribute(PARAMETER_ATTRIBUTE_FILTER_THEME_ID, filterThemeId);
+        session.setAttribute(PARAMETER_ATTRIBUTE_FILTER_SURVEY_STATUS, surveyStatusName);
+        session.setAttribute(PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
 
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
-            List<Survey> surveys =
-                    service.findParticipantSurveysCommonInfoSearch(DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
-            request.setAttribute(REQUEST_ATTRIBUTE_SURVEYS, surveys);
+            List<Survey> surveys = service.findCreatorSurveysCommonInfoSearch(filterThemeId, searchWordsStr, orderTypeName, surveyStatusName, user.getUserId());
+            request.setAttribute(DataHolder.REQUEST_ATTRIBUTE_USER_SURVEYS, surveys);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

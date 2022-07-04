@@ -30,7 +30,7 @@ public class ListUsersCommand implements Command {
         UserService service = UserServiceImpl.getInstance();
 
         try{
-            List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ALL, DEFAULT_FILTER_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
+            List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ID_ALL, DEFAULT_FILTER_ID_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
             session.setAttribute(ATTRIBUTE_USERS, users);
         } catch (ServiceException e){
             throw new CommandException(e);

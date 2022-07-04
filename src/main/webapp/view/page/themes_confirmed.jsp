@@ -15,6 +15,8 @@
     <title><fmt:message key="title.themes.confirmed"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="${pageContext.request.contextPath}/static/js/pagination.js"></script>
 </head>
 
 <body>
@@ -35,25 +37,55 @@
         <div class="col-9">
             <div id="themesContainer" class="hide-on-popup">
                 <button id="showAddTheme" class="btn btn-primary"><fmt:message key="button.create"/></button>
-                <c:forEach items="${sessionScope.requested_themes}" var="theme">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="row justify-content-between">
-                                <div class="col">
-                                    <h5>${theme.themeName}</h5>
+
+                <hr/>
+
+                <div id="pagination-page-container">
+
+                    <c:set var="themePage" value="1" scope="page"/>
+                    <div id="pagination-page-${themePage}" style="display: none">
+                    <c:if test="${sessionScope.requested_themes != null && sessionScope.requested_themes.size() > 0}">
+                        <c:forEach var="themeIndex" begin="0" end="${sessionScope.requested_themes.size() - 1}">
+                            <c:set var="theme" value="${sessionScope.requested_themes.get(themeIndex)}" scope="page"/>
+                            <c:if test="${themeIndex / DataHolder.PAGINATION_ITEMS_PER_PAGE >= themePage}">
                                 </div>
-                                <div class="col col-auto">
-                                    <form action="controller" method="post">
-                                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.DELETE_THEME}">
-                                        <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
-                                    </form>
+                                <c:set var="themePage" value="${themePage + 1}"/>
+                                <div id="pagination-page-${themePage}" style="display: none">
+                            </c:if>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="row justify-content-between">
+                                            <div class="col">
+                                                <h5>${theme.themeName}</h5>
+                                            </div>
+                                            <div class="col col-auto">
+                                                <form action="controller" method="post">
+                                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.DELETE_THEME}">
+                                                    <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
+                                                    <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            <c:remove var="theme" scope="page"/>
+                            </c:forEach>
+                            </c:if>
                             </div>
-                        </div>
+                    <c:remove var="themePage" scope="page"/>
                     </div>
-                </c:forEach>
+                <div class="pagination">
+                    <ul></ul>
+                </div>
+                <script>
+                    const element = document.querySelector(".pagination ul");
+                    let totalPages = Math.max(Math.ceil(${sessionScope.requested_themes.size() / DataHolder.PAGINATION_ITEMS_PER_PAGE}), 1);
+                    let page = 1;
+                    element.innerHTML = createPagination(totalPages, page);
+                </script>
+
             </div>
+
             <div id="addThemePopup" class="popup">
                 <div class="close-btn"><i class="fas fa-times"></i></div>
                 <form action="controller" method="post">
@@ -99,7 +131,6 @@
                     $("#inputThemeName").val("");
                 });
             </script>
-        </div>
     </div>
 </div>
 
