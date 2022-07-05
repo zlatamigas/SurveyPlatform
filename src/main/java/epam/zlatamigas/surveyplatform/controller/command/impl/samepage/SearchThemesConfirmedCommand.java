@@ -7,22 +7,18 @@ import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.service.ThemeService;
 import epam.zlatamigas.surveyplatform.service.impl.ThemeServiceImpl;
-import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
-import epam.zlatamigas.surveyplatform.util.validator.impl.AddThemeFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_THEME_EXISTS;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 
-public class AddThemeCommand implements Command {
+public class SearchThemesConfirmedCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
@@ -30,32 +26,20 @@ public class AddThemeCommand implements Command {
         String page = THEMES_CONFIRMED;
 
         String searchWordsStr = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS);
-        if (searchWordsStr == null) {
+        if(searchWordsStr == null){
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
         String orderTypeName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE);
-        if (orderTypeName == null) {
+        if(orderTypeName == null){
             orderTypeName = DEFAULT_ORDER;
         }
 
         request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
         request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
 
-        String themeName = request.getParameter(PARAMETER_THEME_NAME);
-
-        FormValidator validator = AddThemeFormValidator.getInstance();
-        Map<String, String[]> requestParameters = request.getParameterMap();
-        Map<String, String> validationFeedback = validator.validateForm(requestParameters);
 
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
-            if (validationFeedback.isEmpty()) {
-                if (!themeService.insertConfirmedTheme(themeName)) {
-                    request.setAttribute(REQUEST_ATTRIBUTE_THEME_EXISTS, MESSAGE_INVALID_THEME_EXISTS);
-                }
-            } else {
-                request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
-            }
             List<Theme> themes = themeService.findConfirmedSearch(searchWordsStr, orderTypeName);
             request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
         } catch (ServiceException e) {

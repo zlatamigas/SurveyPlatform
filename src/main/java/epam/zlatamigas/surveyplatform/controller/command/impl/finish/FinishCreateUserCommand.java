@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.*;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
@@ -47,9 +47,6 @@ public class FinishCreateUserCommand implements Command {
                 if (service.insertUser(email, password, roleName, statusName)) {
                     page = USERS;
                     pageChangeType = REDIRECT;
-
-                    List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ID_ALL, DEFAULT_FILTER_ID_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
-                    session.setAttribute(ATTRIBUTE_USERS, users);
                 } else {
                     request.setAttribute(REQUEST_ATTRIBUTE_USER_EXISTS, MESSAGE_INVALID_USER_EXISTS_LOGUP);
                 }

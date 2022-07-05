@@ -41,19 +41,11 @@ public class UserDaoImpl implements UserDao {
 
 
     private static final String FIND_USERS_BY_SEARCH_BASE_STATEMENT
-            = "SELECT id_user, email, registration_date, user_role, user_status FROM users ";
-    private static final String WHERE_ROLE_EQUALS_STATEMENT = """
-            AND user_role = ? 
-            """;
-    private static final String WHERE_STATUS_EQUALS_STATEMENT = """
-            AND user_status = ? 
-            """;
-    private static final String WHERE_EMAIL_CONTAINS_STATEMENT = """
-            AND INSTR(LOWER(email), LOWER(?)) > 0 
-            """;
-    private static final String ORDER_BY_EMAIL_STATEMENT = """
-            ORDER BY email 
-            """;
+            = "SELECT id_user, email, registration_date, user_role, user_status FROM users WHERE id_user = id_user ";
+    private static final String WHERE_ROLE_EQUALS_STATEMENT = "AND user_role = ? ";
+    private static final String WHERE_STATUS_EQUALS_STATEMENT = "AND user_status = ? ";
+    private static final String WHERE_EMAIL_CONTAINS_STATEMENT = "AND INSTR(LOWER(email), LOWER(?)) ";
+    private static final String ORDER_BY_EMAIL_STATEMENT = "ORDER BY email ";
 
     public static final int FILTER_ROLE_ALL = 0;
     public static final int FILTER_ROLE_ADMIN = 1;
@@ -187,8 +179,7 @@ public class UserDaoImpl implements UserDao {
                     }
                 }
             }
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             logger.error("Error while execute query: " + e.getMessage());
             throw new DaoException("Error while while execute query: " + e.getMessage(), e);
         }

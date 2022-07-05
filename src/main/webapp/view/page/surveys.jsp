@@ -7,6 +7,8 @@
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
 
+<c:set var="itemsPerPage" value="10" scope="page"/>
+
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
@@ -19,11 +21,6 @@
 
 <body>
 
-
-
-
-<%----%>
-
 <jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container">
@@ -33,7 +30,7 @@
             <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_SURVEYS}">
             <div class="form-row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${sessionScope.search_words}">
+                    <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${requestScope.search_words}">
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
@@ -45,11 +42,11 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fas fa-filter"></i></div>
                 </div>
-                <select id="theme" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_FILTER_THEME_ID}">
-                    <option value="0" <c:if test="${sessionScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="filter.all"/></option>
-                    <option value="-1" <c:if test="${sessionScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="filter.none"/></option>
+                <select id="theme" class="form-control" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID}">
+                    <option value="0" <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="filter.all"/></option>
+                    <option value="-1" <c:if test="${requestScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="filter.none"/></option>
                     <c:forEach items="${sessionScope.themes}" var="theme">
-                        <option value="${theme.themeId}" <c:if test="${sessionScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
+                        <option value="${theme.themeId}" <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -59,9 +56,9 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                 </div>
-                <select id="order" class="form-control" name="${DataHolder.PARAMETER_ATTRIBUTE_ORDER_TYPE}">
-                    <option value="ASC" <c:if test="${sessionScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
-                    <option value="DESC" <c:if test="${sessionScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
+                <select id="order" class="form-control" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE}">
+                    <option value="ASC" <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
+                    <option value="DESC" <c:if test="${requestScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
                 </select>
             </div>
                 </div>
@@ -79,7 +76,7 @@
             <c:if test="${requestScope.surveys != null && requestScope.surveys.size() > 0}">
             <c:forEach var="surveyIndex" begin="0" end="${requestScope.surveys.size() - 1}">
                 <c:set var="survey" value="${requestScope.surveys.get(surveyIndex)}" scope="page"/>
-                <c:if test="${surveyIndex / DataHolder.PAGINATION_ITEMS_PER_PAGE >= surveyPage}">
+                <c:if test="${surveyIndex / itemsPerPage >= surveyPage}">
                     </div>
                     <c:set var="surveyPage" value="${surveyPage + 1}"/>
                     <div id="pagination-page-${surveyPage}" style="display: none">
@@ -133,7 +130,7 @@
 
     <script>
         const element = document.querySelector(".pagination ul");
-        let totalPages = Math.max(Math.ceil(${requestScope.surveys.size() / DataHolder.PAGINATION_ITEMS_PER_PAGE}), 1);
+        let totalPages = Math.max(Math.ceil(${requestScope.surveys.size() / itemsPerPage}), 1);
         let page = 1;
         element.innerHTML = createPagination(totalPages, page);
     </script>

@@ -97,21 +97,11 @@ public class SurveyDaoImpl implements BaseDao<Survey>, SurveyDao {
             FROM surveys 
             WHERE survey_status = 'STARTED' 
             """;
-    private static final String WHERE_THEME_ID_EQUALS_STATEMENT = """
-            AND theme_id = ?
-            """;
-    private static final String WHERE_THEME_ID_IS_NULL_STATEMENT = """
-            AND theme_id IS NULL
-            """;
-    private static final String WHERE_SURVEY_STATUS_EQUALS_STATEMENT = """
-            AND survey_status = ?
-            """;
-    private static final String WHERE_NAME_CONTAINS_STATEMENT = """
-            AND INSTR(LOWER(survey_name), LOWER(?)) > 0
-            """;
-    private static final String ORDER_BY_SURVEY_NAME_STATEMENT = """
-            ORDER BY survey_name 
-            """;
+    private static final String WHERE_THEME_ID_EQUALS_STATEMENT = "AND theme_id = ? ";
+    private static final String WHERE_THEME_ID_IS_NULL_STATEMENT = "AND theme_id IS NULL ";
+    private static final String WHERE_SURVEY_STATUS_EQUALS_STATEMENT = "AND survey_status = ? ";
+    private static final String WHERE_NAME_CONTAINS_STATEMENT = "AND INSTR(LOWER(survey_name), LOWER(?)) > 0 ";
+    private static final String ORDER_BY_SURVEY_NAME_STATEMENT = "ORDER BY survey_name ";
 
     public static final int FILTER_THEMES_ALL = 0;
     public static final int FILTER_THEMES_NONE = -1;

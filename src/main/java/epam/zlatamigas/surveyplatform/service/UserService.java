@@ -52,7 +52,7 @@ public interface UserService {
 
     boolean insertUser(String email, String password, String roleName, String statusName) throws ServiceException;
 
-    List<User> findUsersBySearch(int filterRoleId, int filterStatusId, String searchWordsStr, String orderTypeName) throws ServiceException;
+    List<User> findUsersBySearch(String filterRoleName, String filterStatusName, String searchWordsStr, String orderTypeName) throws ServiceException;
 
     Optional<User> findById(int userId) throws ServiceException;
 

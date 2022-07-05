@@ -7,6 +7,8 @@
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
 
+<c:set var="itemsPerPage" value="10" scope="page"/>
+
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
 <head>
@@ -38,10 +40,10 @@
 
                 <c:set var="themePage" value="1" scope="page"/>
                 <div id="pagination-page-${themePage}" style="display: none">
-                    <c:if test="${sessionScope.requested_themes != null && sessionScope.requested_themes.size() > 0}">
-                    <c:forEach var="themeIndex" begin="0" end="${sessionScope.requested_themes.size() - 1}">
-                        <c:set var="theme" value="${sessionScope.requested_themes.get(themeIndex)}" scope="page"/>
-                        <c:if test="${themeIndex / DataHolder.PAGINATION_ITEMS_PER_PAGE >= themePage}">
+                    <c:if test="${requestScope.requested_themes != null && requestScope.requested_themes.size() > 0}">
+                    <c:forEach var="themeIndex" begin="0" end="${requestScope.requested_themes.size() - 1}">
+                        <c:set var="theme" value="${requestScope.requested_themes.get(themeIndex)}" scope="page"/>
+                        <c:if test="${themeIndex / itemsPerPage >= themePage}">
                             </div>
                             <c:set var="themePage" value="${themePage + 1}"/>
                             <div id="pagination-page-${themePage}" style="display: none">
@@ -80,7 +82,7 @@
             </div>
             <script>
                 const element = document.querySelector(".pagination ul");
-                let totalPages = Math.max(Math.ceil(${sessionScope.requested_themes.size() / DataHolder.PAGINATION_ITEMS_PER_PAGE}), 1);
+                let totalPages = Math.max(Math.ceil(${requestScope.requested_themes.size() / itemsPerPage}), 1);
                 let page = 1;
                 element.innerHTML = createPagination(totalPages, page);
             </script>

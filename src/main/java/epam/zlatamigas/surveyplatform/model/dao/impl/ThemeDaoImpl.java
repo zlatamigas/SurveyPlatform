@@ -3,6 +3,7 @@ package epam.zlatamigas.surveyplatform.model.dao.impl;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
 import epam.zlatamigas.surveyplatform.model.dao.BaseDao;
+import epam.zlatamigas.surveyplatform.model.dao.DbOrderType;
 import epam.zlatamigas.surveyplatform.model.dao.ThemeDao;
 import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.model.entity.ThemeStatus;
@@ -40,6 +41,16 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
     private static final String FIND_BY_NAME_STATEMENT
             = "SELECT id_theme, theme_name, theme_status FROM themes WHERE theme_name = ?";
 
+    private static final String FIND_WITH_STATUS_SEARCH_BASE_STATEMENT
+            = "SELECT id_theme, theme_name, theme_status FROM themes WHERE id_theme = id_theme ";
+    private static final String WHERE_STATUS_EQUALS_STATEMENT = "AND theme_status = ? ";
+    private static final String WHERE_NAME_CONTAINS_STATEMENT = "AND INSTR(LOWER(theme_name), LOWER(?)) > 0 ";
+    private static final String ORDER_BY_SURVEY_NAME_STATEMENT = "ORDER BY theme_name ";
+
+    public static final int FILTER_THEMES_ALL = 0;
+    public static final int FILTER_THEMES_CONFIRMED = 1;
+    public static final int FILTER_THEMES_WAITING = 2;
+
     private static ThemeDaoImpl instance;
 
     private ThemeDaoImpl() {
@@ -55,7 +66,7 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
     @Override
     public boolean insert(Theme theme) throws DaoException {
 
-        if(findByName(theme.getThemeName()).isPresent()){
+        if (findByName(theme.getThemeName()).isPresent()) {
             return false;
         }
 
@@ -213,6 +224,53 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
                             .setThemeStatus(themeStatus)
                             .getTheme();
                     themes.add(theme);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error while execute query: " + e.getMessage());
+            throw new DaoException("Error while while execute query: " + e.getMessage(), e);
+        }
+
+        return themes;
+    }
+
+
+    @Override
+    public List<Theme> findWithThemeStatusSearch(int themeStatusId, String[] searchWords, DbOrderType orderType) throws DaoException {
+        List<Theme> themes = new ArrayList<>();
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+
+            StringBuilder query = new StringBuilder(FIND_WITH_STATUS_SEARCH_BASE_STATEMENT);
+            if (themeStatusId == FILTER_THEMES_CONFIRMED || themeStatusId == FILTER_THEMES_WAITING) {
+                query.append(WHERE_STATUS_EQUALS_STATEMENT);
+            } else if (themeStatusId != FILTER_THEMES_ALL) {
+                throw new DaoException("Passed unknown theme status: themeStatusId = " + themeStatusId);
+            }
+            query.append(WHERE_NAME_CONTAINS_STATEMENT.repeat(searchWords.length));
+            query.append(ORDER_BY_SURVEY_NAME_STATEMENT).append(orderType.name());
+
+            try (PreparedStatement ps = connection.prepareStatement(query.toString())) {
+
+                int parameterIndex = 1;
+                switch (themeStatusId) {
+                    case FILTER_THEMES_CONFIRMED -> ps.setString(parameterIndex++, ThemeStatus.CONFIRMED.name());
+                    case FILTER_THEMES_WAITING -> ps.setString(parameterIndex++, ThemeStatus.WAITING.name());
+                }
+                for (int i = 0; i < searchWords.length; i++, parameterIndex++) {
+                    ps.setString(parameterIndex, searchWords[i]);
+                }
+
+                try (ResultSet resultSet = ps.executeQuery()) {
+                    Theme theme;
+                    while (resultSet.next()) {
+                        theme = new Theme.ThemeBuilder()
+                                .setThemeId(resultSet.getInt(THEMES_TABLE_PK_COLUMN))
+                                .setThemeName(resultSet.getString(THEMES_TABLE_NAME_COLUMN))
+                                .setThemeStatus(ThemeStatus.valueOf(resultSet.getString(THEMES_TABLE_STATUS_COLUMN)))
+                                .getTheme();
+                        themes.add(theme);
+                    }
                 }
             }
         } catch (SQLException e) {

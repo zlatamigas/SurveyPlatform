@@ -22,13 +22,12 @@ public class ListThemesWaitingCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-
         String page = THEMES_WAITING;
 
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
             List<Theme> themes = themeService.findAllWaiting();
-            session.setAttribute(ATTRIBUTE_REQUESTED_THEMES, themes);
+            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

@@ -2,10 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="epam.zlatamigas.surveyplatform.util.search.SearchParameter" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserStatus" %>
+<%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
+
+<c:set var="itemsPerPage" value="4" scope="page"/>
 
 <!DOCTYPE html>
 <html lang="${sessionScope.localisation}">
@@ -13,6 +18,8 @@
     <title><fmt:message key="title.users"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="${pageContext.request.contextPath}/static/js/pagination.js"></script>
 </head>
 
 <body>
@@ -35,10 +42,74 @@
                 <input type="hidden" name="command" value="${CommandType.START_CREATE_USER}">
                 <button type="submit" class="btn btn-primary"><fmt:message key="button.create"/></button>
             </form>
+
+
+            <hr/>
+
+            <div>
+                <form action="controller" method="get">
+                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_USERS}">
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${requestScope.search_words}">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-md-end">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-user-alt"></i></div>
+                                </div>
+                                <select id="filter_user_role" class="form-control" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_ROLE}">
+                                    <option value="${SearchParameter.DEFAULT_FILTER_STR_ALL}" <c:if test="${requestScope.filter_survey_status == SearchParameter.DEFAULT_FILTER_STR_ALL}">selected</c:if>><fmt:message key="filter.all"/></option>
+                                    <option value="${UserRole.ADMIN}" <c:if test="${requestScope.filter_user_role == UserRole.ADMIN.name()}">selected</c:if>><fmt:message key="role.admin"/></option>
+                                    <option value="${UserRole.USER}" <c:if test="${requestScope.filter_user_role == UserRole.USER.name()}">selected</c:if>><fmt:message key="role.user"/></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-wrench"></i></div>
+                                </div>
+                                <select id="filter_user_status" class="form-control" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_STATUS}">
+                                    <option value="${SearchParameter.DEFAULT_FILTER_STR_ALL}" <c:if test="${requestScope.filter_survey_status == SearchParameter.DEFAULT_FILTER_STR_ALL}">selected</c:if>><fmt:message key="filter.all"/></option>
+                                    <option value="${UserStatus.ACTIVE}" <c:if test="${requestScope.filter_user_status == UserStatus.ACTIVE.name()}">selected</c:if>><fmt:message key="status.user.active"/></option>
+                                    <option value="${UserStatus.BANNED}" <c:if test="${requestScope.filter_user_status == UserStatus.BANNED.name()}">selected</c:if>><fmt:message key="status.user.banned"/></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
+                                </div>
+                                <select id="order" class="form-control" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE}">
+                                    <option value="ASC" <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
+                                    <option value="DESC" <c:if test="${requestScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
             <div class="accordion" id="users">
-                <div id="usersContainer" class="hide-on-popup">
-                    <c:forEach items="${sessionScope.users}" var="user">
-                        <c:if test="${sessionScope.user.userId != user.userId}">
+                <div id="pagination-page-container">
+                    <c:set var="userPage" value="1" scope="page"/>
+                    <div id="pagination-page-${userPage}" style="display: none">
+                        <c:if test="${requestScope.users != null && requestScope.users.size() > 0}">
+                        <c:forEach var="userPageIndex" begin="0" end="${requestScope.users.size() - 1}">
+                        <c:set var="user" value="${requestScope.users.get(userPageIndex)}" scope="page"/>
+                        <c:if test="${userPageIndex / itemsPerPage >= userPage}">
+                    </div>
+                    <c:set var="userPage" value="${userPage + 1}"/>
+                    <div id="pagination-page-${userPage}" style="display: none">
+                        </c:if>
                         <div class="card">
                             <div class="card-header">
                                 <div class="row justify-content-between">
@@ -55,10 +126,23 @@
                                 </div>
                             </div>
                         </div>
+                        <c:remove var="user" scope="page"/>
+                        </c:forEach>
                         </c:if>
-                    </c:forEach>
+                    </div>
+                    <c:remove var="userPage" scope="page"/>
                 </div>
             </div>
+
+                <div class="pagination">
+                    <ul></ul>
+                </div>
+                <script>
+                    const element = document.querySelector(".pagination ul");
+                    let totalPages = Math.max(Math.ceil(${requestScope.users.size() / itemsPerPage}), 1);
+                    let page = 1;
+                    element.innerHTML = createPagination(totalPages, page);
+                </script>
         </div>
     </div>
 

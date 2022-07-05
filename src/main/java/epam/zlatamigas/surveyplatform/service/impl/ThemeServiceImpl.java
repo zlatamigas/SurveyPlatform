@@ -2,19 +2,23 @@ package epam.zlatamigas.surveyplatform.service.impl;
 
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
+import epam.zlatamigas.surveyplatform.model.dao.DbOrderType;
 import epam.zlatamigas.surveyplatform.model.dao.impl.ThemeDaoImpl;
 import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.model.entity.ThemeStatus;
 import epam.zlatamigas.surveyplatform.service.ThemeService;
 
+import java.util.Arrays;
 import java.util.List;
 
+import static epam.zlatamigas.surveyplatform.model.dao.impl.ThemeDaoImpl.FILTER_THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.model.entity.ThemeStatus.*;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.SEARCH_WORDS_DELIMITER;
 
 public class ThemeServiceImpl implements ThemeService {
 
     private static ThemeServiceImpl instance = new ThemeServiceImpl();
-    private static ThemeDaoImpl themeDao;
+    private ThemeDaoImpl themeDao;
 
     private ThemeServiceImpl(){
         themeDao = ThemeDaoImpl.getInstance();
@@ -22,6 +26,22 @@ public class ThemeServiceImpl implements ThemeService {
 
     public static ThemeServiceImpl getInstance() {
         return instance;
+    }
+
+    @Override
+    public List<Theme> findConfirmedSearch(String searchWordsStr, String orderTypeName) throws ServiceException {
+
+        String[] searchWords = Arrays.stream(searchWordsStr
+                .split(SEARCH_WORDS_DELIMITER))
+                .filter(s -> !s.isBlank())
+                .toArray(String[]::new);
+        DbOrderType orderType = DbOrderType.valueOf(orderTypeName);
+
+        try {
+            return themeDao.findWithThemeStatusSearch(FILTER_THEMES_CONFIRMED, searchWords, orderType);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override

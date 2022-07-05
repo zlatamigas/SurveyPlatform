@@ -6,6 +6,7 @@ import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import java.util.List;
 
 public interface ThemeService {
+    List<Theme> findConfirmedSearch(String searchWordsStr, String orderTypeName) throws ServiceException;
     List<Theme> findAllConfirmed() throws ServiceException;
     List<Theme> findAllWaiting() throws ServiceException;
     boolean confirmTheme(int themeId) throws ServiceException;

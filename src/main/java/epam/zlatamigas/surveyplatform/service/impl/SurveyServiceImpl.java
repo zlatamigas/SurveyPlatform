@@ -13,14 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.DEFAULT_FILTER_STR_ALL;
-import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.SEARCH_WORDS_DELIMITER;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_FILTER_STR_ALL;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.SEARCH_WORDS_DELIMITER;
 
 public class SurveyServiceImpl implements SurveyService {
 
     private static SurveyServiceImpl instance = new SurveyServiceImpl();
 
-    private static SurveyDaoImpl surveyDao;
+    private SurveyDaoImpl surveyDao;
 
     private SurveyServiceImpl() {
         surveyDao = SurveyDaoImpl.getInstance();

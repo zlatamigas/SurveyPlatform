@@ -15,6 +15,7 @@ import java.util.List;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_WAITING;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class ConfirmThemeCommand implements Command {
     @Override
@@ -33,14 +34,12 @@ public class ConfirmThemeCommand implements Command {
             } catch (NumberFormatException e) {
                 // TODO: request parameter feedback
             }
-            List<Theme> themes = themeService.findAllWaiting();
-            session.setAttribute(ATTRIBUTE_REQUESTED_THEMES, themes);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, FORWARD);
+        return new Router(page, REDIRECT);
     }
 }

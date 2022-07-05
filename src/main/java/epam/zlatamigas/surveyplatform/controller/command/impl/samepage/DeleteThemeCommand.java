@@ -15,6 +15,9 @@ import java.util.List;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
 
 public class DeleteThemeCommand implements Command {
     @Override
@@ -23,17 +26,27 @@ public class DeleteThemeCommand implements Command {
         HttpSession session = request.getSession();
         String page = THEMES_CONFIRMED;
 
+        String searchWordsStr = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS);
+        if(searchWordsStr == null){
+            searchWordsStr = DEFAULT_SEARCH_WORDS;
+        }
+        String orderTypeName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE);
+        if(orderTypeName == null){
+            orderTypeName = DEFAULT_ORDER;
+        }
+
+        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
+        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
+
+        String themeIdParameter = request.getParameter(PARAMETER_THEME_ID);
+        int themeId = Integer.parseInt(themeIdParameter);
+
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
-            String themeIdParameter = request.getParameter(PARAMETER_THEME_ID);
-            try {
-                int themeId = Integer.parseInt(themeIdParameter);
-                themeService.delete(themeId);
-            } catch (NumberFormatException e) {
-                // TODO: request parameter feedback
-            }
-            List<Theme> themes = themeService.findAllConfirmed();
-            session.setAttribute(ATTRIBUTE_REQUESTED_THEMES, themes);
+            themeService.delete(themeId);
+
+            List<Theme> themes = themeService.findConfirmedSearch(searchWordsStr, orderTypeName);
+            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

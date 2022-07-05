@@ -48,6 +48,7 @@ public class CheckUserRoleFilter implements Filter {
                         LIST_SURVEYS,
                         SEARCH_SURVEYS,
                         LIST_USERS,
+                        SEARCH_USERS,
                         LIST_USER_CREATED_SURVEYS,
                         SEARCH_USER_CREATED_SURVEYS,
                         // CRUD survey and its parts
@@ -69,6 +70,7 @@ public class CheckUserRoleFilter implements Filter {
                         CANCEL_SURVEY_ATTEMPT,
                         VIEW_SURVEY_RESULT,
                         LIST_THEMES_CONFIRMED,
+                        SEARCH_THEMES_CONFIRMED,
                         LIST_THEMES_WAITING,
                         CONFIRM_THEME,
                         REJECT_THEME,

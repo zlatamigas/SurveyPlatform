@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.*;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USERS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
@@ -26,15 +26,6 @@ public class CancelCreateUserCommand implements Command {
         String page = USERS;
 
         session.removeAttribute(ATTRIBUTE_EDITED_USER);
-
-        UserService service = UserServiceImpl.getInstance();
-        try {
-            List<User> users = service.findUsersBySearch(DEFAULT_FILTER_ID_ALL, DEFAULT_FILTER_ID_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER);
-            session.setAttribute(ATTRIBUTE_USERS, users);
-        } catch (ServiceException e) {
-            throw new CommandException(e);
-        }
-
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, REDIRECT);

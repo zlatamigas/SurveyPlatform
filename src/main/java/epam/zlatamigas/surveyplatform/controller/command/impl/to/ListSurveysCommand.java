@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.*;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
@@ -28,9 +28,9 @@ public class ListSurveysCommand implements Command {
         HttpSession session = request.getSession();
         String page = PageNavigation.SURVEYS;
 
-        session.setAttribute(PARAMETER_ATTRIBUTE_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
-        session.setAttribute(PARAMETER_ATTRIBUTE_FILTER_THEME_ID, DEFAULT_FILTER_ID_ALL);
-        session.setAttribute(PARAMETER_ATTRIBUTE_ORDER_TYPE, DEFAULT_ORDER);
+        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
+        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID, DEFAULT_FILTER_ID_ALL);
+        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, DEFAULT_ORDER);
 
         SurveyService service = SurveyServiceImpl.getInstance();
         try {

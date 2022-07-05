@@ -38,7 +38,9 @@ public enum CommandType {
 
     // List users and themes data (admin)
     LIST_USERS(new ListUsersCommand()),
+    SEARCH_USERS(new SearchUsersCommand()),
     LIST_THEMES_CONFIRMED(new ListThemesConfirmedCommand()),
+    SEARCH_THEMES_CONFIRMED(new SearchThemesConfirmedCommand()),
     LIST_THEMES_WAITING(new ListThemesWaitingCommand()),
 
     // CRUD survey and its parts (for survey creator)

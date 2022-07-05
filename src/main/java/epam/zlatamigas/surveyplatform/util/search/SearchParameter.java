@@ -1,6 +1,6 @@
-package epam.zlatamigas.surveyplatform.controller.command;
+package epam.zlatamigas.surveyplatform.util.search;
 
-public class SearchParameter {
+public final class SearchParameter {
 
     public static final String DEFAULT_ORDER = "ASC";
 

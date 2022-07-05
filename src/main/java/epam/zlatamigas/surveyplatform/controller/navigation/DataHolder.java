@@ -30,12 +30,6 @@ public final class DataHolder {
     public static final String PARAMETER_ANSWER_TEXT = "answer_text";
     public static final String PARAMETER_ANSWER_POSITION = "answer_position";
 
-    // Search parameter-attribute
-    public static final String PARAMETER_ATTRIBUTE_SEARCH_WORDS = "search_words";
-    public static final String PARAMETER_ATTRIBUTE_FILTER_THEME_ID = "filter_theme_id";
-    public static final String PARAMETER_ATTRIBUTE_ORDER_TYPE = "order_type";
-    public static final String PARAMETER_ATTRIBUTE_FILTER_SURVEY_STATUS = "filter_survey_status";
-
     // Theme
     public static final String PARAMETER_THEME_ID = "theme_id";
     public static final String PARAMETER_THEME_NAME = "theme_name";
@@ -51,8 +45,6 @@ public final class DataHolder {
 
     // Listed data
     public static final String ATTRIBUTE_THEMES = "themes";
-    public static final String ATTRIBUTE_USERS = "users";
-    public static final String ATTRIBUTE_REQUESTED_THEMES = "requested_themes";
 
     // Edited data
     public static final String ATTRIBUTE_EDITED_SURVEY = "edited_survey";
@@ -70,9 +62,19 @@ public final class DataHolder {
 
     // Request
 
+    // Search parameter-attribute
+    public static final String REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS = "search_words";
+    public static final String REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID = "filter_theme_id";
+    public static final String REQUEST_PARAMETER_ATTRIBUTE_FILTER_SURVEY_STATUS = "filter_survey_status";
+    public static final String REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE = "order_type";
+    public static final String REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_ROLE = "filter_user_role";
+    public static final String REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_STATUS = "filter_user_status";
+
     // Listed data
     public static final String REQUEST_ATTRIBUTE_SURVEYS = "surveys";
     public static final String REQUEST_ATTRIBUTE_USER_SURVEYS = "user_surveys";
+    public static final String REQUEST_ATTRIBUTE_USERS = "users";
+    public static final String REQUEST_ATTRIBUTE_REQUESTED_THEMES = "requested_themes";
 
     // Validation feedback
     public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";
@@ -86,11 +88,6 @@ public final class DataHolder {
     // Survey attempt
     public static final String BUTTONGROUP_NAME_CHECKBOX_ANSWERS = "check_question";
     public static final String BUTTONGROUP_NAME_RADIO_ANSWERS = "radio_question";
-
-    // Shared constants
-
-    // Pagination: items per each page while paginate
-    public static final int PAGINATION_ITEMS_PER_PAGE = 4;
 
     private DataHolder() {};
 

@@ -1,5 +1,6 @@
 package epam.zlatamigas.surveyplatform.service.impl;
 
+import epam.zlatamigas.surveyplatform.util.search.SearchParameter;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.dao.DbOrderType;
@@ -19,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static epam.zlatamigas.surveyplatform.model.dao.impl.UserDaoImpl.*;
+
 public class UserServiceImpl implements UserService {
 
     private static final String SEARCH_WORDS_DELIMITER = " ";
@@ -28,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     private static UserServiceImpl instance = new UserServiceImpl();
 
-    private static UserDaoImpl userDao;
+    private UserDaoImpl userDao;
 
     private UserServiceImpl() {
         userDao = UserDaoImpl.getInstance();
@@ -120,15 +123,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUsersBySearch(int filterRoleId, int filterStatusId, String searchWordsStr, String orderTypeName) throws ServiceException {
+    public List<User> findUsersBySearch(String filterRoleName, String filterStatusName, String searchWordsStr, String orderTypeName) throws ServiceException {
         String[] searchWords = Arrays.stream(searchWordsStr
                 .split(SEARCH_WORDS_DELIMITER))
                 .filter(s -> !s.isBlank())
                 .toArray(String[]::new);
         DbOrderType orderType = DbOrderType.valueOf(orderTypeName);
 
+        int roleId;
+        if(filterRoleName.equals(SearchParameter.DEFAULT_FILTER_STR_ALL)){
+            roleId = FILTER_ROLE_ALL;
+        } else {
+            UserRole role = UserRole.valueOf(filterRoleName);
+            roleId = switch (role) {
+                case ADMIN -> FILTER_ROLE_ADMIN;
+                case USER -> FILTER_ROLE_USER;
+                default -> throw new ServiceException("Unacceptable UserRole = " + filterRoleName);
+            };
+        }
+        int statusId;
+        if(filterStatusName.equals(SearchParameter.DEFAULT_FILTER_STR_ALL)){
+            statusId = FILTER_STATUS_ALL;
+        } else {
+            UserStatus status = UserStatus.valueOf(filterStatusName);
+            statusId = switch (status) {
+                case ACTIVE -> FILTER_STATUS_ACTIVE;
+                case BANNED -> FILTER_STATUS_BANNED;
+                default -> throw new ServiceException("Unacceptable UserStatus = " + filterStatusName);
+            };
+        }
         try {
-            return userDao.findUsersBySearch(filterRoleId, filterStatusId, searchWords, orderType);
+            return userDao.findUsersBySearch(roleId, statusId, searchWords, orderType);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

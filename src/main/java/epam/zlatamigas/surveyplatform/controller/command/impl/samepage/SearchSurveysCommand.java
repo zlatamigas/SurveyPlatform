@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.command.SearchParameter.*;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
@@ -29,25 +29,25 @@ public class SearchSurveysCommand implements Command {
         HttpSession session = request.getSession();
         String page = PageNavigation.SURVEYS;
 
-        String searchWordsStr = request.getParameter(PARAMETER_ATTRIBUTE_SEARCH_WORDS);
+        String searchWordsStr = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS);
         if(searchWordsStr == null){
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
 
         int filterThemeId;
         try {
-           filterThemeId = Integer.parseInt(request.getParameter(PARAMETER_ATTRIBUTE_FILTER_THEME_ID));
+           filterThemeId = Integer.parseInt(request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID));
         } catch (NumberFormatException e){
             filterThemeId = DEFAULT_FILTER_ID_ALL;
         }
-        String orderTypeName = request.getParameter(PARAMETER_ATTRIBUTE_ORDER_TYPE);
+        String orderTypeName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE);
         if(orderTypeName == null){
             orderTypeName = DEFAULT_ORDER;
         }
 
-        session.setAttribute(PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
-        session.setAttribute(PARAMETER_ATTRIBUTE_FILTER_THEME_ID, filterThemeId);
-        session.setAttribute(PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
+        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
+        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID, filterThemeId);
+        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
 
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
