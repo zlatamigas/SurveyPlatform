@@ -36,57 +36,60 @@
         </div>
         <div class="col-9">
 
-            <div id="pagination-page-container">
+            <div class="content-container">
 
-                <c:set var="themePage" value="1" scope="page"/>
-                <div id="pagination-page-${themePage}" style="display: none">
-                    <c:if test="${requestScope.requested_themes != null && requestScope.requested_themes.size() > 0}">
-                    <c:forEach var="themeIndex" begin="0" end="${requestScope.requested_themes.size() - 1}">
-                        <c:set var="theme" value="${requestScope.requested_themes.get(themeIndex)}" scope="page"/>
-                        <c:if test="${themeIndex / itemsPerPage >= themePage}">
-                            </div>
-                            <c:set var="themePage" value="${themePage + 1}"/>
-                            <div id="pagination-page-${themePage}" style="display: none">
-                        </c:if>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row justify-content-between">
-                                    <div class="col">
-                                        <h5>${theme.themeName}</h5>
+                <div class="pagination-page-container">
+                    <div id="pagination-page-container">
+                        <c:set var="themePage" value="1" scope="page"/>
+                        <div id="pagination-page-${themePage}" style="display: none">
+                            <c:if test="${requestScope.requested_themes != null && requestScope.requested_themes.size() > 0}">
+                            <c:forEach var="themeIndex" begin="0" end="${requestScope.requested_themes.size() - 1}">
+                                <c:set var="theme" value="${requestScope.requested_themes.get(themeIndex)}" scope="page"/>
+                                <c:if test="${themeIndex / itemsPerPage >= themePage}">
                                     </div>
-                                    <div class="col col-auto">
-                                        <form action="controller" method="post">
-                                            <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CONFIRM_THEME}">
-                                            <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                            <button class="btn btn-success" type="submit"><i class="fas fa-check"></i></button>
-                                        </form>
-                                    </div>
-                                    <div class="col col-auto">
-                                        <form action="controller" method="post">
-                                            <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.REJECT_THEME}">
-                                            <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                            <button class="btn btn-danger" type="submit"><i class="fas fa-times"></i></button>
-                                        </form>
+                                    <c:set var="themePage" value="${themePage + 1}"/>
+                                    <div id="pagination-page-${themePage}" style="display: none">
+                                </c:if>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="row justify-content-between">
+                                            <div class="col">
+                                                <h5>${theme.themeName}</h5>
+                                            </div>
+                                            <div class="col col-auto">
+                                                <form action="controller" method="post">
+                                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CONFIRM_THEME}">
+                                                    <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
+                                                    <button class="btn btn-success" type="submit"><i class="fas fa-check"></i></button>
+                                                </form>
+                                            </div>
+                                            <div class="col col-auto">
+                                                <form action="controller" method="post">
+                                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.REJECT_THEME}">
+                                                    <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
+                                                    <button class="btn btn-danger" type="submit"><i class="fas fa-times"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <c:remove var="theme" scope="page"/>
+                            </c:forEach>
+                            </c:if>
                         </div>
-                        <c:remove var="theme" scope="page"/>
-                    </c:forEach>
-                    </c:if>
+                        <c:remove var="themePage" scope="page"/>
+                    </div>
                 </div>
-                <c:remove var="themePage" scope="page"/>
+                <div class="pagination">
+                    <ul></ul>
+                </div>
+                <script>
+                    const element = document.querySelector(".pagination ul");
+                    let totalPages = Math.max(Math.ceil(${requestScope.requested_themes.size() / itemsPerPage}), 1);
+                    let page = 1;
+                    element.innerHTML = createPagination(totalPages, page);
+                </script>
             </div>
-            <div class="pagination">
-                <ul></ul>
-            </div>
-            <script>
-                const element = document.querySelector(".pagination ul");
-                let totalPages = Math.max(Math.ceil(${requestScope.requested_themes.size() / itemsPerPage}), 1);
-                let page = 1;
-                element.innerHTML = createPagination(totalPages, page);
-            </script>
-
         </div>
     </div>
 

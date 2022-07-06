@@ -24,7 +24,6 @@
 
 <div class="container-fluid">
 
-
     <div class="row">
         <div class="col-3">
             <jsp:include page="/view/fragment/account_left_navbar.jsp"/>
@@ -34,9 +33,9 @@
             </script>
         </div>
         <div class="col-9">
-            <div class="card">
+            <div class="card account-card">
                 <div class="card-header">
-                    <h4 class="card-title"><i class="fas fa-bars"></i><fmt:message key="account.personalinfo"/> </h4>
+                    <h4 class="card-title"><i class="fas fa-bars"></i> <fmt:message key="account.personalinfo"/> </h4>
                 </div>
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -77,9 +76,9 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card account-card">
                 <div class="card-header">
-                    <h4 class="card-title"><i class="fas fa-user-cog"></i><fmt:message key="account.management"/></h4>
+                    <h4 class="card-title"><i class="fas fa-user-cog"></i> <fmt:message key="account.management"/></h4>
                 </div>
                 <div class="card-body">
                     <div class="row align-items-center">

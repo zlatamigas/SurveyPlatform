@@ -16,6 +16,10 @@
 
 <body>
 <jsp:include page="/view/fragment/header.jsp"/>
+<script>
+    let activeLink = document.getElementById("navHome");
+    activeLink.classList.add("active");
+</script>
 
 <div class="container">
 

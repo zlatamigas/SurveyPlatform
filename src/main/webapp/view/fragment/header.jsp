@@ -23,7 +23,7 @@
 </head>
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom" >
 
         <span class="navbar-brand"><fmt:message key="header.navbar.brand"/> </span>
 
@@ -35,14 +35,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li id="navHome" class="nav-item">
                     <a class="nav-link"
                        href="${pageContext.request.contextPath}/controller?command=${CommandType.HOME}">
                         <fmt:message key="header.navbar.homepage"/>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li id="navSurveys" class="nav-item">
                     <a class="nav-link"
                        href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_SURVEYS}">
                         <fmt:message key="header.navbar.surveys"/>
@@ -50,16 +50,17 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+
+                    <a class="nav-link" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-expanded="false">
-                        ${sessionScope.localisation}
+                        <i class="fas fa-globe"></i>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.PARAMETER_LOCALISATION}=en">en</a>
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.PARAMETER_LOCALISATION}=en">English</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.PARAMETER_LOCALISATION}=ru">ru</a>
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.PARAMETER_LOCALISATION}=ru">Русский</a>
                     </div>
                 </li>
             </ul>
@@ -68,10 +69,10 @@
                 <c:when test="${sessionScope.user != null && sessionScope.user.role != UserRole.GUEST}">
                     <form class="form-inline my-2 my-lg-0" action="controller">
                         <input type="hidden" name="command" value="${CommandType.LOGOUT}">
-                        <label class="mr-sm-2">
+                        <label class="mr-sm-2 header-label-role">
                                 <c:choose>
                                     <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
-                                        <fmt:message key="header.navbar.welcome.admin"/>
+                                        <fmt:message key="role.admin"/>
                                     <div class="account-icon-container">
                                         <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USER_ACCOUNT}" class="account-icon-link">
                                             <i class="fas fa-user-tie account-icon"></i>
@@ -79,7 +80,7 @@
                                     </div>
                                     </c:when>
                                     <c:when test="${sessionScope.user.role == UserRole.USER}">
-                                        <fmt:message key="header.navbar.welcome.user"/>
+                                        <fmt:message key="role.user"/>
                                     <div class="account-icon-container">
                                         <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USER_ACCOUNT}" class="account-icon-link">
                                             <i class="fas fa-user account-icon" ></i>
@@ -96,7 +97,7 @@
                 <c:otherwise>
                     <form class="form-inline mt-2 mt-lg-0" action="controller">
                         <input type="hidden" name="command" value="${CommandType.START_SIGN_IN}">
-                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                        <button type="submit" class="btn btn-sm btn-outline-light">
                             <fmt:message key="header.navbar.login"/>
                         </button>
                     </form>
