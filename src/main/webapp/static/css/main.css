@@ -1,16 +1,40 @@
 /*Colors*/
 :root{
-    --dark-first-color: #0d8d86;
-    --first-color: #20B2AA;
-    --second-color: #7ad4cd;
-    --third-color: #d2fff4;
     --white-color: white;
     --light-gray-color: #f6f6f6;
     --middle-gray-color: #727272;
     --dark-gray-color: #2d2d2d;
+
+    --white-first-color: #d2fff4;
+    --light-first-color: #7ad4cd;
+    --first-color: #20B2AA;
+    --dark-first-color: #0d8d86;
+
+    --light-second-color: #47ff98;
+    --second-color: #0ece64;
+    --dark-second-color: #058e44;
 }
 .main-custom-container{
     margin: 20px;
+}
+
+/*Input fields*/
+*::selection{
+    color: var(--white-color);
+    background-color: var(--second-color);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+    -webkit-text-fill-color: var(--dark-gray-color);
+    -webkit-box-shadow: 0 0 0px 1000px var(--white-color) inset;
+}
+.form-control:focus{
+    /*color: #495057;*/
+    /*background-color: #fff;*/
+    border-color: var(--first-color);
+    outline: 0;
+    box-shadow: 0 0 0 0.0rem;
 }
 
 /*Authorisation*/
@@ -28,7 +52,7 @@
     line-height: 1.2;
 }
 .authorisation-container a{
-    color: var(--second-color);
+    color: var(--light-first-color);
 }
 .authorisation-container a:hover{
     color: var(--first-color);
@@ -54,8 +78,8 @@
 }
 .authorisation-container .btn-outline-custom:hover{
     color: var(--white-color);
-    background-color: var(--second-color);
-    border-color: var(--second-color);
+    background-color: var(--light-first-color);
+    border-color: var(--light-first-color);
 }
 
 /*Content container*/
@@ -85,7 +109,7 @@
     margin-bottom: 10px;
 }
 .content-container .search-container .row-filter .input-group-prepend>.input-group-text{
-    background-color: var(--second-color);
+    background-color: var(--light-first-color);
     color: var(--white-color);
     border: 0px;
 }
@@ -110,6 +134,78 @@
     border-bottom-left-radius: 0;
     height: 100%;
 }
+.content-container .edit-survey{
+
+}
+.content-container .edit-question-list{
+
+}
+.content-container .edit-question-list .card{
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
+    margin: 10px 10px 10px 0px;
+    border: transparent;
+}
+.content-container .edit-question-list .card>.card-header{
+    background-color: var(--light-first-color);
+    border: transparent;
+}
+.content-container .edit-question-list .card>.card-header .btn-group{
+    background-color: var(--white-color);
+    border-radius: 5px;
+    border: 2px solid var(--white-first-color);
+}
+.content-container .edit-question-list .card>.card-header .btn-group>.btn{
+    border-color: var(--light-first-color);
+    border: 0px;
+}
+.content-container .edit-question-list .card>.card-body{
+
+}
+.content-container .edit-question-list .card>.card-body>.card-select-multiple{
+    text-align: center;
+}
+.content-container .edit-question-list .card>.card-body>.card-select-multiple>p{
+    display: inline-block;
+    border: 2px solid var(--light-first-color);
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+.row-question{
+    margin: 20px 0;
+}
+.row-question textarea.form-control.textarea-answer{
+    /*overflow: hidden;*/
+    display: block;
+    min-height: 40px;
+    line-height: 20px;
+    padding:10px;
+    /*box-sizing: border-box;*/
+}
+button.btn.btn-outline-danger.btn-delete-answer{
+    height: 100%;
+}
+
+
+.bottom-actions-container{
+    display: block;
+    text-align: end;
+}
+.btn-group-custom {
+    display: inline-block;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
+    margin: 10px 10px 10px 0px;
+    padding: 10px;
+    text-align: end;
+}
+.btn-group-custom>.btn {
+    margin-left: 5px;
+    padding: 10px 15px;
+    border-radius: 30px;
+}
 
 /*Profile card*/
 .account-card{
@@ -120,7 +216,7 @@
     border: transparent;
 }
 .account-card .card-header{
-    background-color: var(--second-color);
+    background-color: var(--light-first-color);
     border: transparent;
 }
 .account-card .card-body{
@@ -132,7 +228,10 @@ nav.bg-custom{
     background-color: var(--first-color);
 }
 nav .dropdown-item:hover{
-    background-color: var(--second-color);
+    background-color: var(--light-first-color);
+}
+.header-label-role{
+    color: var(--white-color);
 }
 
 /*Left navbar*/
@@ -144,13 +243,13 @@ nav .dropdown-item:hover{
     padding: 8px;
 }
 .left-navbar .nav-link {
-    color: var(--second-color);
+    color: var(--light-first-color);
 }
 .left-navbar .nav-link.active{
     background-color: var(--first-color);
 }
 .left-navbar .left-nav-collapse{
-    background-color: var(--second-color);
+    background-color: var(--light-first-color);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -159,12 +258,6 @@ nav .dropdown-item:hover{
     border-radius: 0;
 }
 
-/**::selection{*/
-/*    color: var(--selection-text);*/
-/*}*/
-.header-label-role{
-    color: var(--white-color);
-}
 
 /*Account button icon*/
 .account-icon-container{
@@ -244,10 +337,10 @@ nav .dropdown-item:hover{
 .pagination-page-container .card{
     border-radius: 0px;
     border: 0px;
-    border-bottom: 2px solid var(--second-color);
+    border-bottom: 2px solid var(--light-first-color);
 }
 .pagination-page-container .card .card-header{
-    background-color: var(--third-color);
+    background-color: var(--white-first-color);
     color: var(--dark-gray-color);
     border: transparent;
     /*border-bottom: 1px solid var(--middle-gray-color);*/

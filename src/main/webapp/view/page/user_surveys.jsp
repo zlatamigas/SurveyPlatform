@@ -223,36 +223,35 @@
                                                         <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
                                                             <button form="startSurveyForm${survey.surveyId}"
                                                                     type="submit"
-                                                                    class="btn btn-success">
+                                                                    class="btn btn-outline-success">
                                                                 <i class="fas fa-play"></i>
-                                                                    <%--                                                    <fmt:message key="usersurvey.startsurvey"/>--%>
                                                             </button>
                                                             <button form="startEditSurveyForm${survey.surveyId}"
                                                                     type="submit"
-                                                                    class="btn btn-primary">
-                                                                <fmt:message key="button.edit"/>
+                                                                    class="btn btn-outline-primary">
+                                                                <i class="fas fa-pencil-alt"></i>
                                                             </button>
                                                         </c:when>
                                                         <c:when test="${survey.status == SurveyStatus.STARTED}">
                                                             <button form="stopSurveyForm${survey.surveyId}"
                                                                     type="submit"
-                                                                    class="btn btn-primary">
-                                                                <fmt:message key="button.survey.stop"/>
+                                                                    class="btn btn-outline-warning">
+                                                                <i class="fas fa-stop"></i>
                                                             </button>
                                                         </c:when>
                                                         <c:when test="${survey.status == SurveyStatus.CLOSED}">
                                                             <button form="viewResultSurveyForm${survey.surveyId}"
                                                                     type="submit"
-                                                                    class="btn btn-primary">
-                                                                <fmt:message key="button.survey.view.results"/>
+                                                                    class="btn btn-outline-primary">
+                                                                <i class="fas fa-poll"></i>
                                                             </button>
                                                         </c:when>
                                                     </c:choose>
 
                                                     <c:if test="${survey.status != SurveyStatus.STARTED}">
                                                         <button form="deleteSurveyForm${survey.surveyId}" type="submit"
-                                                                class="btn btn-warning">
-                                                            <fmt:message key="button.delete"/>
+                                                                class="btn btn-outline-danger">
+                                                            <i class="fas fa-trash"></i>
                                                         </button>
                                                     </c:if>
                                                 </div>
