@@ -30,87 +30,94 @@
 
 <div class="container">
 
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title">${sessionScope.survey_attempt.name}</h3>
-            <hr>
-            <h5 class="card-subtitle">${sessionScope.survey_attempt.theme.themeName}</h5>
-            <div class="cart-text">${sessionScope.survey_attempt.description}</div>
-        </div>
+    <div class="content-container">
+        <div class="padding-container">
+            <h1 class="header-text">${sessionScope.survey_attempt.name}</h1>
+            <h5 class="subheader-text">${sessionScope.survey_attempt.theme.themeName}</h5>
 
+            <c:if test="${sessionScope.survey_attempt.description != ''}">
+                <div class="description-text">${sessionScope.survey_attempt.description}</div>
+            </c:if>
+        </div>
     </div>
 
-    <form id="finishSurveyAttemptForm" action="controller" method="post">
-        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_SURVEY_ATTEMPT}">
+    <div class="content-container">
+        <div class="edit-question-list">
+            <form id="finishSurveyAttemptForm" action="controller" method="post">
+                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_SURVEY_ATTEMPT}">
 
-        <c:forEach var="question" items="${sessionScope.survey_attempt.questions}">
-            <div class="card">
-                <div class="card-body">
-
-                    <div class="text-danger">
-                        <%
-                            SurveyQuestion question = (SurveyQuestion) pageContext.getAttribute("question");
-                            Map<String, String> validationFeedback =
-                                    (Map<String, String>)request.getAttribute(REQUEST_ATTRIBUTE_FORM_INVALID);
-                            if(validationFeedback != null) {
-                                String fmtMessage = validationFeedback.get(PARAMETER_QUESTION_ID + question.getQuestionId());
-                                if (fmtMessage != null) {
-                                    if(fmtMessage.equals(MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE)){
-                                        String questionCheckboxInvalid =
-                                                (String) pageContext.getAttribute("questionCheckboxInvalid");
-                                        out.write(questionCheckboxInvalid);
-                                    } else if (fmtMessage.equals(MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE)) {
-                                        String questionRadiobuttonInvalid =
-                                                (String) pageContext.getAttribute("questionRadiobuttonInvalid");
-                                        out.write(questionRadiobuttonInvalid);
-                                    }
-                                }
-                            }
-                        %>
-                    </div>
-
-                    <p class="card-title">${question.formulation}</p>
-                    <input type="hidden" name="${DataHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}${question.questionId}"
-                           value="${question.selectMultiple}">
-
-                    <c:forEach items="${question.answers}" var="answer">
-                        <div class="form-check">
-                            <c:choose>
-                                <c:when test="${question.selectMultiple == true}">
-                                    <input type="checkbox" class="form-check-input"
-                                           id="question${question.questionId}Answer${answer.questionAnswerId}"
-                                           name="${DataHolder.BUTTONGROUP_NAME_CHECKBOX_ANSWERS}${question.questionId}"
-                                           value="${answer.questionAnswerId}"
-                                           <c:if test="${answer.selectedCount == 1}">checked</c:if>>
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="radio" class="form-check-input"
-                                           id="question${question.questionId}Answer${answer.questionAnswerId}"
-                                           name="${DataHolder.BUTTONGROUP_NAME_RADIO_ANSWERS}${question.questionId}"
-                                           value="${answer.questionAnswerId}"
-                                           <c:if test="${answer.selectedCount == 1}">checked</c:if>>
-                                </c:otherwise>
-                            </c:choose>
-                            <label class="form-check-label"
-                                   for="question${question.questionId}Answer${answer.questionAnswerId}">${answer.answer}</label>
+                <c:forEach var="question" items="${sessionScope.survey_attempt.questions}">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">${question.formulation}</h5>
                         </div>
-                    </c:forEach>
-                </div>
-            </div>
-        </c:forEach>
-    </form>
+                        <div class="card-body">
+
+                            <div class="text-danger">
+                                <%
+                                    SurveyQuestion question = (SurveyQuestion) pageContext.getAttribute("question");
+                                    Map<String, String> validationFeedback =
+                                            (Map<String, String>)request.getAttribute(REQUEST_ATTRIBUTE_FORM_INVALID);
+                                    if(validationFeedback != null) {
+                                        String fmtMessage = validationFeedback.get(PARAMETER_QUESTION_ID + question.getQuestionId());
+                                        if (fmtMessage != null) {
+                                            if(fmtMessage.equals(MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE)){
+                                                String questionCheckboxInvalid =
+                                                        (String) pageContext.getAttribute("questionCheckboxInvalid");
+                                                out.write(questionCheckboxInvalid);
+                                            } else if (fmtMessage.equals(MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE)) {
+                                                String questionRadiobuttonInvalid =
+                                                        (String) pageContext.getAttribute("questionRadiobuttonInvalid");
+                                                out.write(questionRadiobuttonInvalid);
+                                            }
+                                        }
+                                    }
+                                %>
+                            </div>
+
+                            <input type="hidden" name="${DataHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}${question.questionId}"
+                                   value="${question.selectMultiple}">
+
+                            <c:forEach items="${question.answers}" var="answer">
+                                <div class="form-check">
+                                    <c:choose>
+                                        <c:when test="${question.selectMultiple == true}">
+                                            <input type="checkbox" class="form-check-input"
+                                                   id="question${question.questionId}Answer${answer.questionAnswerId}"
+                                                   name="${DataHolder.BUTTONGROUP_NAME_CHECKBOX_ANSWERS}${question.questionId}"
+                                                   value="${answer.questionAnswerId}"
+                                                   <c:if test="${answer.selectedCount == 1}">checked</c:if>>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="radio" class="form-check-input"
+                                                   id="question${question.questionId}Answer${answer.questionAnswerId}"
+                                                   name="${DataHolder.BUTTONGROUP_NAME_RADIO_ANSWERS}${question.questionId}"
+                                                   value="${answer.questionAnswerId}"
+                                                   <c:if test="${answer.selectedCount == 1}">checked</c:if>>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <label class="form-check-label"
+                                           for="question${question.questionId}Answer${answer.questionAnswerId}">${answer.answer}</label>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:forEach>
+            </form>
+        </div>
+    </div>
 
     <form id="cancelSurveyAttemptForm" action="controller" method="post">
         <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CANCEL_SURVEY_ATTEMPT}">
     </form>
 
-    <hr>
-
-    <div class="btn-group" role="group">
-        <button form="finishSurveyAttemptForm" type="submit" class="btn btn-success">
-            <fmt:message key="button.survey.attempt.finish"/></button>
-        <button form="cancelSurveyAttemptForm" type="submit" class="btn btn-warning">
-            <fmt:message key="button.cancel"/></button>
+    <div class="bottom-actions-container">
+        <div class="btn-group-custom">
+            <button form="finishSurveyAttemptForm" type="submit" class="btn btn-success">
+                <fmt:message key="button.survey.attempt.finish"/></button>
+            <button form="cancelSurveyAttemptForm" type="submit" class="btn btn-warning">
+                <fmt:message key="button.cancel"/></button>
+        </div>
     </div>
 </div>
 

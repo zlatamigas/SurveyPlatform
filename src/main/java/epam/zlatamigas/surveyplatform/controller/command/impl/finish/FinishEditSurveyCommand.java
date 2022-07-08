@@ -22,6 +22,7 @@ import java.util.Map;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.EDIT_SURVEY;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USER_SURVEYS;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class FinishEditSurveyCommand implements Command {
@@ -32,7 +33,8 @@ public class FinishEditSurveyCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page = USER_SURVEYS;
+        String page = EDIT_SURVEY;
+        Router.PageChangeType changeType = FORWARD;
 
         FormValidator validator = SurveyEditFormValidator.getInstance();
         Map<String, String[]> requestParameters = request.getParameterMap();
@@ -57,18 +59,21 @@ public class FinishEditSurveyCommand implements Command {
                 } else {
                     surveyService.update(survey);
                 }
+
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }
+
+            page = USER_SURVEYS;
+            changeType = REDIRECT;
 
             session.removeAttribute(ATTRIBUTE_EDITED_SURVEY);
             session.removeAttribute(ATTRIBUTE_THEMES);
             session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
         } else {
-            page = EDIT_SURVEY;
             request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }
 
-        return new Router(page, REDIRECT);
+        return new Router(page, changeType);
     }
 }

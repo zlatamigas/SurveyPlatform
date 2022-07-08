@@ -11,6 +11,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.AT
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_SURVEY_ATTEMPT;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class CancelSurveyAttemptCommand implements Command {
     @Override
@@ -21,6 +22,6 @@ public class CancelSurveyAttemptCommand implements Command {
         session.removeAttribute(ATTRIBUTE_SURVEY_ATTEMPT);
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, FORWARD);
+        return new Router(page, REDIRECT);
     }
 }

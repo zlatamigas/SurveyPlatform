@@ -29,7 +29,7 @@
 
     <div class="authorisation-container">
 
-        <h1 class="authorisation-header-text"><fmt:message key="signup.header"/></h1>
+        <h1 class="header-text"><fmt:message key="signup.header"/></h1>
         <hr class="my-4">
 
         <div class="text-danger">

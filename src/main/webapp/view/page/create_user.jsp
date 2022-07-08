@@ -22,79 +22,86 @@
 
 <div class="container">
 
-    <h1 class="display-4"><fmt:message key="createuser.header"/></h1>
-    <hr class="my-4">
 
-    <div class="text-danger">
-        <c:if test="${requestScope.user_exists!=null}">
-            <fmt:message key="${requestScope.user_exists}"/>
-        </c:if>
+    <div class="content-container">
+        <div class="padding-container">
+
+            <h1 class="header-text"><fmt:message key="createuser.header"/></h1>
+            <hr class="my-4">
+
+            <div class="text-danger">
+                <c:if test="${requestScope.user_exists!=null}">
+                    <fmt:message key="${requestScope.user_exists}"/>
+                </c:if>
+            </div>
+
+            <form id="finishCreateUserForm" action="controller" method="post">
+                <input type="hidden" name="command" value="${CommandType.FINISH_CREATE_USER}">
+                <div class="form-group">
+                    <div class="text-danger">
+                        <c:if test="${requestScope.form_invalid.email!=null}">
+                            <fmt:message key="${requestScope.form_invalid.email}"/>
+                        </c:if>
+                    </div>
+                    <label><fmt:message key="label.email"/></label>
+                    <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
+                </div>
+                <div class="form-group">
+                    <div class="text-danger">
+                        <c:if test="${requestScope.form_invalid.password!=null}">
+                            <fmt:message key="${requestScope.form_invalid.password}"/>
+                        </c:if>
+                    </div>
+                    <label><fmt:message key="label.password"/></label>
+                    <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.email"/>">
+                </div>
+                <div class="form-group">
+                    <div class="text-danger">
+                        <c:if test="${requestScope.form_invalid.password_repeat!=null}">
+                            <fmt:message key="${requestScope.form_invalid.password_repeat}"/>
+                        </c:if>
+                    </div>
+                    <label><fmt:message key="label.password.repeat"/></label>
+                    <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
+                </div>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label><fmt:message key="label.user.role"/> </label>
+                        <select name="${DataHolder.PARAMETER_USER_ROLE}" class="form-control">
+                            <option value="${UserRole.ADMIN}" >
+                                <fmt:message key="role.admin"/>
+                            </option>
+                            <option value="${UserRole.USER}" selected>
+                                <fmt:message key="role.user"/>
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col form-group">
+                        <label><fmt:message key="label.user.status"/> </label>
+                        <select name="${DataHolder.PARAMETER_USER_STATUS}" class="form-control">
+                            <option value="${UserStatus.ACTIVE}" selected>
+                                <fmt:message key="status.user.active"/>
+                            </option>
+                            <option value="${UserStatus.BANNED}">
+                                <fmt:message key="status.user.banned"/>
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <form id="cancelCreateUserForm" action="controller" method="post">
+                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CANCEL_CREATE_USER}">
+            </form>
+        </div>
     </div>
 
-    <form id="finishCreateUserForm" action="controller" method="post">
-        <input type="hidden" name="command" value="${CommandType.FINISH_CREATE_USER}">
-        <div class="form-group">
-            <div class="text-danger">
-                <c:if test="${requestScope.form_invalid.email!=null}">
-                    <fmt:message key="${requestScope.form_invalid.email}"/>
-                </c:if>
-            </div>
-            <label><fmt:message key="label.email"/></label>
-            <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
+    <div class="bottom-actions-container">
+        <div class="btn-group-custom">
+            <button form="finishCreateUserForm" type="submit" class="btn btn-success"><fmt:message key="button.create"/></button>
+            <button form="cancelCreateUserForm" type="submit" class="btn btn-warning"><fmt:message key="button.cancel"/></button>
         </div>
-        <div class="form-group">
-            <div class="text-danger">
-                <c:if test="${requestScope.form_invalid.password!=null}">
-                    <fmt:message key="${requestScope.form_invalid.password}"/>
-                </c:if>
-            </div>
-            <label><fmt:message key="label.password"/></label>
-            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.email"/>">
-        </div>
-        <div class="form-group">
-            <div class="text-danger">
-                <c:if test="${requestScope.form_invalid.password_repeat!=null}">
-                    <fmt:message key="${requestScope.form_invalid.password_repeat}"/>
-                </c:if>
-            </div>
-            <label><fmt:message key="label.password.repeat"/></label>
-            <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
-        </div>
-        <div class="form-row">
-            <div class="col form-group">
-                <label><fmt:message key="label.user.role"/> </label>
-                <select name="${DataHolder.PARAMETER_USER_ROLE}" class="form-control">
-                    <option value="${UserRole.ADMIN}" >
-                        <fmt:message key="role.admin"/>
-                    </option>
-                    <option value="${UserRole.USER}" selected>
-                        <fmt:message key="role.user"/>
-                    </option>
-                </select>
-            </div>
-            <div class="col form-group">
-                <label><fmt:message key="label.user.status"/> </label>
-                <select name="${DataHolder.PARAMETER_USER_STATUS}" class="form-control">
-                    <option value="${UserStatus.ACTIVE}" selected>
-                        <fmt:message key="status.user.active"/>
-                    </option>
-                    <option value="${UserStatus.BANNED}">
-                        <fmt:message key="status.user.banned"/>
-                    </option>
-                </select>
-            </div>
-        </div>
-    </form>
-    <form id="cancelCreateUserForm" action="controller" method="post">
-        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CANCEL_CREATE_USER}">
-    </form>
-    <hr>
-
-    <div class="btn-group" role="group">
-        <button form="finishCreateUserForm" type="submit" class="btn btn-success"><fmt:message key="button.create"/></button>
-        <button form="cancelCreateUserForm" type="submit" class="btn btn-warning"><fmt:message key="button.cancel"/></button>
     </div>
-
 </div>
 
 </body>

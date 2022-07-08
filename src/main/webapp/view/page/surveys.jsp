@@ -108,14 +108,14 @@
                                         <h6 class="card-subtitle mb-2 text-muted">${survey.theme.themeName}</h6>
                                         <p class="card-text">${survey.description}</p>
 
-                                        <form ></form>
-
+                                        <div class="btn-toolbar justify-content-end" role="toolbar">
                                         <form id="startAttemptSurveyForm${survey.surveyId}" action="controller" method="post">
                                             <input type="hidden" name="command" value="${CommandType.START_SURVEY_ATTEMPT}">
                                             <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
-                                            <button form="startAttemptSurveyForm${survey.surveyId}" type="submit" class="btn btn-primary">
-                                                <fmt:message key="button.survey.attempt.start"/></button>
+                                            <button form="startAttemptSurveyForm${survey.surveyId}" type="submit" class="btn btn-outline-success">
+                                                <i class="fas fa-play"></i></button>
                                         </form>
+                                        </div>
                                     </div>
                                 </div>
 

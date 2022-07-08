@@ -33,6 +33,14 @@
 
         <div class="content-container">
             <div class="edit-survey">
+                <h1 class="header-text">
+                    <c:choose>
+                        <c:when test="${sessionScope.edited_survey.surveyId > 0}"><fmt:message key="editsurvey.header"/></c:when>
+                        <c:otherwise><fmt:message key="createsurvey.header"/></c:otherwise>
+                    </c:choose>
+                </h1>
+                <hr class="my-4">
+
                 <div class="form-group">
                     <div class="text-danger">
                         <c:if test="${requestScope.form_invalid.survey_name!=null}">
@@ -95,7 +103,6 @@
                                     <c:set var="i" value="${i+1}"/>
                                 </div>
                             </div>
-
                         </div>
                         <div class="card-body">
                             <div class="card-select-multiple">
@@ -135,7 +142,7 @@
                     <c:otherwise><fmt:message key="button.create"/></c:otherwise>
                     </c:choose>
                 </button>
-                <button form="cancelEditSurveyForm" type="submit" class="btn btn-warning text-light">
+                <button form="cancelEditSurveyForm" type="submit" class="btn btn-warning">
                     <fmt:message key="button.cancel"/></button>
             </div>
         </div>
