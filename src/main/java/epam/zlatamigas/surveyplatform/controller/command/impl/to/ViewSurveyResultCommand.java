@@ -26,6 +26,7 @@ public class ViewSurveyResultCommand implements Command {
         SurveyService surveyService = SurveyServiceImpl.getInstance();
         try {
             Survey survey = surveyService.findCreatorSurveyInfo(surveyId).orElse(new Survey());
+            survey.getQuestions().forEach(surveyQuestion -> surveyQuestion.getAnswers().sort( (a1, a2) -> a2.getSelectedCount() - a1.getSelectedCount()));
             session.setAttribute(ATTRIBUTE_SURVEY_RESULT, survey);
         } catch (ServiceException e) {
             throw new CommandException(e);
