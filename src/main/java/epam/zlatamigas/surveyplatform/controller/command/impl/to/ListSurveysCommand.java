@@ -28,9 +28,9 @@ public class ListSurveysCommand implements Command {
         HttpSession session = request.getSession();
         String page = PageNavigation.SURVEYS;
 
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID, DEFAULT_FILTER_ID_ALL);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, DEFAULT_ORDER);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID, DEFAULT_FILTER_ID_ALL);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, DEFAULT_ORDER);
 
         SurveyService service = SurveyServiceImpl.getInstance();
         try {

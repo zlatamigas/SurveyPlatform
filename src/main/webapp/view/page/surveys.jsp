@@ -36,7 +36,7 @@
                 <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_SURVEYS}">
                 <div class="form-row row-search">
                     <div class="col">
-                        <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${requestScope.search_words}">
+                        <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -48,7 +48,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fas fa-filter"></i></div>
                     </div>
-                    <select id="theme" class="form-control" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID}">
+                    <select id="theme" class="form-control" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID}">
                         <option value="0" <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="filter.all"/></option>
                         <option value="-1" <c:if test="${requestScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="filter.none"/></option>
                         <c:forEach items="${sessionScope.themes}" var="theme">
@@ -62,7 +62,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                     </div>
-                    <select id="order" class="form-control" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE}">
+                    <select id="order" class="form-control" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
                         <option value="ASC" <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
                         <option value="DESC" <c:if test="${requestScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
                     </select>

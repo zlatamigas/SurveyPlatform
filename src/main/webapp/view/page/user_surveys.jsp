@@ -53,7 +53,7 @@
                             <div class="col">
                                 <input type="text" class="form-control input-search"
                                        placeholder="<fmt:message key="placeholder.search"/>"
-                                       name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS}"
+                                       name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}"
                                        value="${requestScope.search_words}">
                             </div>
                             <div class="col-auto">
@@ -67,7 +67,7 @@
                                         <div class="input-group-text"><i class="fas fa-filter"></i></div>
                                     </div>
                                     <select id="theme" class="form-control"
-                                            name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID}">
+                                            name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID}">
                                         <option value="0"
                                                 <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>>
                                             <fmt:message key="filter.all"/></option>
@@ -87,7 +87,7 @@
                                         <div class="input-group-text"><i class="fas fa-tasks"></i></div>
                                     </div>
                                     <select id="filter_survey_status" class="form-control"
-                                            name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_FILTER_SURVEY_STATUS}">
+                                            name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS}">
                                         <option value="${SearchParameter.DEFAULT_FILTER_STR_ALL}"
                                                 <c:if test="${requestScope.filter_survey_status == SearchParameter.DEFAULT_FILTER_STR_ALL}">selected</c:if>>
                                             <fmt:message key="filter.all"/></option>
@@ -109,7 +109,7 @@
                                         <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                                     </div>
                                     <select id="order" class="form-control"
-                                            name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE}">
+                                            name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
                                         <option value="ASC"
                                                 <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>>
                                             <fmt:message key="order.asc"/></option>

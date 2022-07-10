@@ -26,10 +26,10 @@ public class ListUsersCommand implements Command {
         HttpSession session = request.getSession();
         String page = USERS;
 
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_ROLE, DEFAULT_FILTER_STR_ALL);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_STATUS, DEFAULT_FILTER_STR_ALL);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, DEFAULT_ORDER);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_ROLE, DEFAULT_FILTER_STR_ALL);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS, DEFAULT_FILTER_STR_ALL);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, DEFAULT_ORDER);
 
         User creator = (User) session.getAttribute(ATTRIBUTE_USER);
 

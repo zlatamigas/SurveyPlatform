@@ -15,7 +15,6 @@ import java.util.List;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
 
@@ -26,17 +25,17 @@ public class DeleteThemeCommand implements Command {
         HttpSession session = request.getSession();
         String page = THEMES_CONFIRMED;
 
-        String searchWordsStr = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS);
+        String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
         if(searchWordsStr == null){
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
-        String orderTypeName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE);
+        String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
         if(orderTypeName == null){
             orderTypeName = DEFAULT_ORDER;
         }
 
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, searchWordsStr);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
 
         String themeIdParameter = request.getParameter(PARAMETER_THEME_ID);
         int themeId = Integer.parseInt(themeIdParameter);

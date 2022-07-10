@@ -57,10 +57,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.PARAMETER_LOCALISATION}=en">English</a>
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=en">English</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.PARAMETER_LOCALISATION}=ru">Русский</a>
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=ru">Русский</a>
                     </div>
                 </li>
             </ul>

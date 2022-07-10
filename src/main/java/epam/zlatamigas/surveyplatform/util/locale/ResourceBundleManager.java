@@ -4,6 +4,8 @@ package epam.zlatamigas.surveyplatform.util.locale;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.LOCALE_BUNDLE_FILE_PATH;
@@ -30,7 +32,7 @@ public class ResourceBundleManager {
         if(locale != null){
             try {
                 resourceBundle = ResourceBundle.getBundle(LOCALE_BUNDLE_FILE_PATH + LOCALE_DELIMITER + locale);
-            } catch (IllegalArgumentException e){
+            } catch (MissingResourceException e){
                 logger.warn("Locale \'{}\' is not found", locale);
                 resourceBundle = ResourceBundle.getBundle(LOCALE_BUNDLE_FILE_PATH);
             }

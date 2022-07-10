@@ -6,6 +6,8 @@
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.Survey" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyQuestionAnswer" %>
+<%@ taglib uri="/WEB-INF/tld/resulttabletag .tld" prefix="sa"%>
+
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -75,44 +77,47 @@
 
                                 <div class="table-custom">
 
-                                    <table class="table">
-                                        <c:if test="${question.selectMultiple == false}">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Answer</th>
-                                                <th scope="col">100%</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
+                                    <sa:survey-question-result question="${question}">
+                                    </sa:survey-question-result>
 
-                                            <c:set var="selectedSum" value="${question.answers.stream().map(answer -> answer.selectedCount).sum()}" scope="page"/>
+<%--                                    <table class="table">--%>
+<%--                                        <c:if test="${question.selectMultiple == false}">--%>
+<%--                                            <thead>--%>
+<%--                                            <tr>--%>
+<%--                                                <th scope="col">Answer</th>--%>
+<%--                                                <th scope="col">100%</th>--%>
+<%--                                            </tr>--%>
+<%--                                            </thead>--%>
+<%--                                            <tbody>--%>
 
-                                            <c:forEach var="answer" items="${question.answers}">
-                                            <tr>
-                                                <td style="width: 80%">${answer.answer}</td>
-                                                <td style="width: 20%"><fmt:formatNumber type = "percent" maxFractionDigits="2" value = "${answer.selectedCount / selectedSum}"/></td>
-                                            </tr>
-                                            </c:forEach>
-                                            </tbody>
-                                        </c:if>
-                                        <c:if test="${question.selectMultiple == true}">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Answer</th>
-                                                <th scope="col">Selection count</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
+<%--                                            <c:set var="selectedSum" value="${question.answers.stream().map(answer -> answer.selectedCount).sum()}" scope="page"/>--%>
 
-                                            <c:forEach var="answer" items="${question.answers}">
-                                                <tr>
-                                                    <td style="width: 80%">${answer.answer}</td>
-                                                    <td style="width: 20%">${answer.selectedCount}</td>
-                                                </tr>
-                                            </c:forEach>
-                                            </tbody>
-                                        </c:if>
-                                    </table>
+<%--                                            <c:forEach var="answer" items="${question.answers}">--%>
+<%--                                            <tr>--%>
+<%--                                                <td style="width: 80%">${answer.answer}</td>--%>
+<%--                                                <td style="width: 20%"><fmt:formatNumber type = "percent" maxFractionDigits="2" value = "${answer.selectedCount / selectedSum}"/></td>--%>
+<%--                                            </tr>--%>
+<%--                                            </c:forEach>--%>
+<%--                                            </tbody>--%>
+<%--                                        </c:if>--%>
+<%--                                        <c:if test="${question.selectMultiple == true}">--%>
+<%--                                            <thead>--%>
+<%--                                            <tr>--%>
+<%--                                                <th scope="col">Answer</th>--%>
+<%--                                                <th scope="col">Selection count</th>--%>
+<%--                                            </tr>--%>
+<%--                                            </thead>--%>
+<%--                                            <tbody>--%>
+
+<%--                                            <c:forEach var="answer" items="${question.answers}">--%>
+<%--                                                <tr>--%>
+<%--                                                    <td style="width: 80%">${answer.answer}</td>--%>
+<%--                                                    <td style="width: 20%">${answer.selectedCount}</td>--%>
+<%--                                                </tr>--%>
+<%--                                            </c:forEach>--%>
+<%--                                            </tbody>--%>
+<%--                                        </c:if>--%>
+<%--                                    </table>--%>
                                 </div>
 
                             </div>

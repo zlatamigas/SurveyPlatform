@@ -48,7 +48,7 @@
                             <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_THEMES_CONFIRMED}">
                             <div class="form-row row-search">
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                    <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
                                 </div>
                                 <div class="col-auto">
                                     <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -61,7 +61,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                                         </div>
-                                        <select id="order" class="form-control" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE}">
+                                        <select id="order" class="form-control" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
                                             <option value="ASC" <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
                                             <option value="DESC" <c:if test="${requestScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
                                         </select>
@@ -93,8 +93,8 @@
                                                         <form action="controller" method="post">
                                                             <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.DELETE_THEME}">
                                                             <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                                            <input type="hidden" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${requestScope.search_words}">
-                                                            <input type="hidden" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE}" value="${requestScope.order_type}">
+                                                            <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                                            <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}" value="${requestScope.order_type}">
                                                             <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
                                                         </form>
                                                     </div>
@@ -139,8 +139,8 @@
                                         </c:if>
                                     </p>
                                 </div>
-                                <input type="hidden" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS}" value="${requestScope.search_words}">
-                                <input type="hidden" name="${DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE}" value="${requestScope.order_type}">
+                                <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}" value="${requestScope.order_type}">
                                 <input id="inputThemeName" type="text" name="${DataHolder.PARAMETER_THEME_NAME}" class="form-control">
                             </div>
                         </div>

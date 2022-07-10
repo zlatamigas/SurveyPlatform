@@ -25,29 +25,29 @@ public class SearchUsersCommand implements Command {
         HttpSession session = request.getSession();
         String page = USERS;
 
-        String searchWordsStr = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS);
+        String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
         if(searchWordsStr == null){
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
 
-        String userRoleName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_ROLE);
+        String userRoleName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_ROLE);
         if(userRoleName == null){
             userRoleName = DEFAULT_FILTER_STR_ALL;
         }
-        String userStatusName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_STATUS);
+        String userStatusName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS);
         if(userStatusName == null){
             userStatusName = DEFAULT_FILTER_STR_ALL;
         }
 
-        String orderTypeName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE);
+        String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
         if(orderTypeName == null){
             orderTypeName = DEFAULT_ORDER;
         }
 
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_ROLE, userRoleName);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_STATUS, userStatusName);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, searchWordsStr);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_ROLE, userRoleName);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS, userStatusName);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
 
 
         User creator = (User) session.getAttribute(ATTRIBUTE_USER);

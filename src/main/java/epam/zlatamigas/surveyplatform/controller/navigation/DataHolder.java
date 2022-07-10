@@ -5,7 +5,6 @@ public final class DataHolder {
     // Request parameters
 
     // Shared
-    public static final String PARAMETER_LOCALISATION = "localisation";
     public static final String PARAMETER_COMMAND = "command";
 
     // User
@@ -38,8 +37,8 @@ public final class DataHolder {
     // Session attributes
 
     // Shared
+    public static final String SESSION_ATTRIBUTE_PARAMETER_LOCALISATION = "localisation";
     public static final String ATTRIBUTE_USER = "user";
-    public static final String ATTRIBUTE_LOCALISATION = "localisation";
     public static final String ATTRIBUTE_CURRENT_PAGE = "current_page";
     public static final String ATTRIBUTE_PREVIOUS_PAGE = "previous_page";
 
@@ -63,12 +62,12 @@ public final class DataHolder {
     // Request
 
     // Search parameter-attribute
-    public static final String REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS = "search_words";
-    public static final String REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID = "filter_theme_id";
-    public static final String REQUEST_PARAMETER_ATTRIBUTE_FILTER_SURVEY_STATUS = "filter_survey_status";
-    public static final String REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE = "order_type";
-    public static final String REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_ROLE = "filter_user_role";
-    public static final String REQUEST_PARAMETER_ATTRIBUTE_FILTER_USER_STATUS = "filter_user_status";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS = "search_words";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID = "filter_theme_id";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS = "filter_survey_status";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE = "order_type";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_ROLE = "filter_user_role";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS = "filter_user_status";
 
     // Listed data
     public static final String REQUEST_ATTRIBUTE_SURVEYS = "surveys";

@@ -29,25 +29,25 @@ public class SearchSurveysCommand implements Command {
         HttpSession session = request.getSession();
         String page = PageNavigation.SURVEYS;
 
-        String searchWordsStr = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS);
+        String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
         if(searchWordsStr == null){
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
 
         int filterThemeId;
         try {
-           filterThemeId = Integer.parseInt(request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID));
+           filterThemeId = Integer.parseInt(request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID));
         } catch (NumberFormatException e){
             filterThemeId = DEFAULT_FILTER_ID_ALL;
         }
-        String orderTypeName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE);
+        String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
         if(orderTypeName == null){
             orderTypeName = DEFAULT_ORDER;
         }
 
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_FILTER_THEME_ID, filterThemeId);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, searchWordsStr);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID, filterThemeId);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
 
         SurveyService service = SurveyServiceImpl.getInstance();
         try {

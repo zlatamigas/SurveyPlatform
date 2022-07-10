@@ -15,8 +15,8 @@ public class ChangeLocalisationCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
 
-        String localisation = request.getParameter(DataHolder.PARAMETER_LOCALISATION);
-        session.setAttribute(DataHolder.ATTRIBUTE_LOCALISATION, localisation);
+        String localisation = request.getParameter(DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION);
+        session.setAttribute(DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION, localisation);
         String page = (String) session.getAttribute(ATTRIBUTE_CURRENT_PAGE);
 
         return new Router(page, FORWARD);

@@ -14,13 +14,16 @@ public final class LocalisedMessageKey {
     public static final String MESSAGE_INVALID_SURVEY_NAME = "message.invalid.survey.name";
     public static final String MESSAGE_INVALID_SURVEY_DESCRIPTION = "message.invalid.survey.description";
     public static final String MESSAGE_INVALID_QUESTION_FORMULATION = "message.invalid.question.formulation";
-    public static final String MESSAGE_INVALID_ANSWER_TEXT = "message.invalid.answer.text";
 
     public static final String MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE = "message.invalid.answer.require.select.multiple";
     public static final String MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE = "message.invalid.answer.require.select.single";
 
     public static final String MESSAGE_INVALID_THEME_NAME = "message.invalid.theme.name";
     public static final String MESSAGE_INVALID_THEME_EXISTS = "message.invalid.theme.exists";
+
+    public static final String TABLE_TH_ANSWER = "table.result.th.answer";
+    public static final String TABLE_TH_SINGLE = "table.result.th.single";
+    public static final String TABLE_TH_MULTIPLE = "table.result.th.multiple";
 
     private LocalisedMessageKey(){};
 }

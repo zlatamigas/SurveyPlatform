@@ -6,7 +6,7 @@ import epam.zlatamigas.surveyplatform.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_LOCALISATION;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
@@ -18,12 +18,12 @@ public class LogOutCommand implements Command {
         HttpSession session = request.getSession();
 
         String page = DEFAULT;
-        String localisation = (String) session.getAttribute(ATTRIBUTE_LOCALISATION);
+        String localisation = (String) session.getAttribute(SESSION_ATTRIBUTE_PARAMETER_LOCALISATION);
 
         session.invalidate();
         session = request.getSession();
 
-        session.setAttribute(ATTRIBUTE_LOCALISATION, localisation);
+        session.setAttribute(SESSION_ATTRIBUTE_PARAMETER_LOCALISATION, localisation);
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, REDIRECT);

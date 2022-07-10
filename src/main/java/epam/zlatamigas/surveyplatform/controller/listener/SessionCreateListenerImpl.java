@@ -10,7 +10,7 @@ import epam.zlatamigas.surveyplatform.model.entity.UserRole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_LOCALISATION;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_USER;
 
 @WebListener
@@ -24,7 +24,7 @@ public class SessionCreateListenerImpl implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se) {
 
         HttpSession session = se.getSession();
-        session.setAttribute(ATTRIBUTE_LOCALISATION, DEFAULT_LOCALISATION);
+        session.setAttribute(SESSION_ATTRIBUTE_PARAMETER_LOCALISATION, DEFAULT_LOCALISATION);
         session.setAttribute(ATTRIBUTE_USER, new User.UserBuilder().setRole(UserRole.GUEST).getUser());
 
         /* Session is created. */

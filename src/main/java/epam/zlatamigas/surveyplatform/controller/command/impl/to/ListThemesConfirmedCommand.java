@@ -25,8 +25,8 @@ public class ListThemesConfirmedCommand implements Command {
         HttpSession session = request.getSession();
         String page = THEMES_CONFIRMED;
 
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, DEFAULT_ORDER);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, DEFAULT_SEARCH_WORDS);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, DEFAULT_ORDER);
 
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {

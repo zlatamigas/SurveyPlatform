@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
@@ -25,17 +25,17 @@ public class SearchThemesConfirmedCommand implements Command {
         HttpSession session = request.getSession();
         String page = THEMES_CONFIRMED;
 
-        String searchWordsStr = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS);
+        String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
         if(searchWordsStr == null){
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
-        String orderTypeName = request.getParameter(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE);
+        String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
         if(orderTypeName == null){
             orderTypeName = DEFAULT_ORDER;
         }
 
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_SEARCH_WORDS, searchWordsStr);
-        request.setAttribute(REQUEST_PARAMETER_ATTRIBUTE_ORDER_TYPE, orderTypeName);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, searchWordsStr);
+        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
 
 
         ThemeService themeService = ThemeServiceImpl.getInstance();
