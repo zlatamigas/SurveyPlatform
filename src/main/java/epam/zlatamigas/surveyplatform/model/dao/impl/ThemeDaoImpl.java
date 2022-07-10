@@ -47,10 +47,6 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
     private static final String WHERE_NAME_CONTAINS_STATEMENT = "AND INSTR(LOWER(theme_name), LOWER(?)) > 0 ";
     private static final String ORDER_BY_SURVEY_NAME_STATEMENT = "ORDER BY theme_name ";
 
-    public static final int FILTER_THEMES_ALL = 0;
-    public static final int FILTER_THEMES_CONFIRMED = 1;
-    public static final int FILTER_THEMES_WAITING = 2;
-
     private static ThemeDaoImpl instance;
 
     private ThemeDaoImpl() {
@@ -67,6 +63,7 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
     public boolean insert(Theme theme) throws DaoException {
 
         if (findByName(theme.getThemeName()).isPresent()) {
+            logger.error("Already exists theme with theme_name = {}", theme.getThemeName() );
             return false;
         }
 
@@ -75,14 +72,12 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
 
             ps.setString(1, theme.getThemeName());
             ps.setString(2, theme.getThemeStatus().toString());
-            ps.executeUpdate();
+            return ps.executeUpdate() == 1;
 
         } catch (SQLException e) {
-            logger.error("Error while insert: " + e.getMessage());
-            throw new DaoException("Error while while insert: " + e.getMessage(), e);
+            logger.error("Failed to insert new theme: {}", e.getMessage());
+            throw new DaoException("Failed to insert new theme", e);
         }
-
-        return true;
     }
 
     @Override
@@ -91,40 +86,12 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
              PreparedStatement ps = connection.prepareStatement(DELETE_STATEMENT)) {
 
             ps.setInt(1, id);
-            ps.executeUpdate();
+            return ps.executeUpdate() == 1;
 
         } catch (SQLException e) {
-            logger.error("Error while delete theme with ID = " + id + ": " + e.getMessage());
-            throw new DaoException("Error while while delete theme with ID = " + id + ": " + e.getMessage(), e);
+            logger.error("Failed to delete theme with id_theme = {} : {}", id, e.getMessage());
+            throw new DaoException("Failed to delete theme with id_theme = " + id , e);
         }
-
-        return true;
-    }
-
-    @Override
-    public Optional<Theme> update(Theme theme) throws DaoException {
-
-        int id = theme.getThemeId();
-
-        Optional<Theme> oldTheme = findById(id);
-        if (oldTheme.isEmpty()) {
-            throw new DaoException("Theme does not exist: id_theme = " + id);
-        }
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(UPDATE_STATEMENT)) {
-
-            ps.setString(1, theme.getThemeName());
-            ps.setString(2, theme.getThemeStatus().name());
-            ps.setInt(3, id);
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            logger.error("Error while update theme with ID = " + id + ": " + e.getMessage());
-            throw new DaoException("Error while while update theme with ID = " + id + ": " + e.getMessage(), e);
-        }
-
-        return oldTheme;
     }
 
     @Override
@@ -147,8 +114,8 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error while execute query: " + e.getMessage());
-            throw new DaoException("Error while while execute query: " + e.getMessage(), e);
+            logger.error("Failed to find theme by id_theme = {} : {}", id,  e.getMessage());
+            throw new DaoException("Failed to find theme by id_theme = " + id, e);
         }
 
         return theme;
@@ -174,38 +141,11 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error while execute query: " + e.getMessage());
-            throw new DaoException("Error while while execute query: " + e.getMessage(), e);
+            logger.error("Failed to find theme by theme_name = {} : {}", themeName,  e.getMessage());
+            throw new DaoException("Failed to find theme by theme_name = " + themeName, e);
         }
 
         return theme;
-    }
-
-    @Override
-    public List<Theme> findAll() throws DaoException {
-
-        List<Theme> themes = new ArrayList<>();
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(FIND_ALL_STATEMENT);
-             ResultSet resultSet = ps.executeQuery()) {
-
-            Theme theme;
-            while (resultSet.next()) {
-                theme = new Theme.ThemeBuilder()
-                        .setThemeId(resultSet.getInt(THEMES_TABLE_PK_COLUMN))
-                        .setThemeName(resultSet.getString(THEMES_TABLE_NAME_COLUMN))
-                        .setThemeStatus(ThemeStatus.valueOf(resultSet.getString(THEMES_TABLE_STATUS_COLUMN)))
-                        .getTheme();
-                themes.add(theme);
-            }
-
-        } catch (SQLException e) {
-            logger.error("Error while execute query: " + e.getMessage());
-            throw new DaoException("Error while while execute query: " + e.getMessage(), e);
-        }
-
-        return themes;
     }
 
     @Override
@@ -214,7 +154,9 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(FIND_WITH_STATUS_STATEMENT);) {
+
             ps.setString(1, themeStatus.name());
+
             try (ResultSet resultSet = ps.executeQuery()) {
                 Theme theme;
                 while (resultSet.next()) {
@@ -227,13 +169,12 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error while execute query: " + e.getMessage());
-            throw new DaoException("Error while while execute query: " + e.getMessage(), e);
+            logger.error("Failed to find theme by theme_status = {} : {}", themeStatus.name(),  e.getMessage());
+            throw new DaoException("Failed to find theme by theme_status = " + themeStatus.name(), e);
         }
 
         return themes;
     }
-
 
     @Override
     public List<Theme> findWithThemeStatusSearch(int themeStatusId, String[] searchWords, DbOrderType orderType) throws DaoException {
@@ -274,8 +215,8 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error while execute query: " + e.getMessage());
-            throw new DaoException("Error while while execute query: " + e.getMessage(), e);
+            logger.error("Failed to find themes by search: {}", e.getMessage());
+            throw new DaoException("Failed to find themes by search", e);
         }
 
         return themes;
@@ -291,8 +232,34 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
             return ps.executeUpdate() == 1;
 
         } catch (SQLException e) {
-            logger.error("Error while update theme with ID = " + themeId + ": " + e.getMessage());
-            throw new DaoException("Error while while update theme with ID = " + themeId + ": " + e.getMessage(), e);
+            logger.error("Failed to update theme with id_theme = {}: {}", themeId, e.getMessage());
+            throw new DaoException("Failed to update theme with id_theme = " + themeId, e);
         }
+    }
+
+    @Override
+    public Optional<Theme> update(Theme theme) throws DaoException {
+
+        int id = theme.getThemeId();
+
+        Optional<Theme> oldTheme = findById(id);
+        if (oldTheme.isEmpty()) {
+            throw new DaoException("Theme does not exist: id_theme = " + id);
+        }
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(UPDATE_STATEMENT)) {
+
+            ps.setString(1, theme.getThemeName());
+            ps.setString(2, theme.getThemeStatus().name());
+            ps.setInt(3, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            logger.error("Failed to update theme with id_theme = {}: {}", theme.getThemeId(), e.getMessage());
+            throw new DaoException("Failed to update theme with id_theme = " + theme.getThemeId(), e);
+        }
+
+        return oldTheme;
     }
 }

@@ -1,6 +1,7 @@
 package epam.zlatamigas.surveyplatform.model.entity;
 
 public class Theme extends AbstractEntity implements Cloneable{
+
     private int themeId;
     private String themeName;
     private ThemeStatus themeStatus;

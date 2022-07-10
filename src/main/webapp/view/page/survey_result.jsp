@@ -30,18 +30,18 @@
 
     <div class="content-container">
         <div class="padding-container">
-            <h1 class="header-text">${sessionScope.survey_result.name}</h1>
-            <h5 class="subheader-text">${sessionScope.survey_result.theme.themeName}</h5>
+            <h1 class="header-text">${requestScope.survey_result.name}</h1>
+            <h5 class="subheader-text">${requestScope.survey_result.theme.themeName}</h5>
 
-            <c:if test="${sessionScope.survey_result.description != ''}">
-                <div class="description-text">${sessionScope.survey_result.description}</div>
+            <c:if test="${requestScope.survey_result.description != ''}">
+                <div class="description-text">${requestScope.survey_result.description}</div>
             </c:if>
         </div>
     </div>
 
     <div class="content-container">
         <div class="edit-question-list">
-            <c:forEach var="question" items="${sessionScope.survey_result.questions}">
+            <c:forEach var="question" items="${requestScope.survey_result.questions}">
                 <div class="card">
                     <div class="card-header">
                         <div class="row justify-content-between">
@@ -76,48 +76,8 @@
                             <div class="tab-pane fade" id="pills-question${question.questionId}-text" role="tabpanel" aria-labelledby="pills-question${question.questionId}-text-tab">
 
                                 <div class="table-custom">
-
                                     <sa:survey-question-result question="${question}">
                                     </sa:survey-question-result>
-
-<%--                                    <table class="table">--%>
-<%--                                        <c:if test="${question.selectMultiple == false}">--%>
-<%--                                            <thead>--%>
-<%--                                            <tr>--%>
-<%--                                                <th scope="col">Answer</th>--%>
-<%--                                                <th scope="col">100%</th>--%>
-<%--                                            </tr>--%>
-<%--                                            </thead>--%>
-<%--                                            <tbody>--%>
-
-<%--                                            <c:set var="selectedSum" value="${question.answers.stream().map(answer -> answer.selectedCount).sum()}" scope="page"/>--%>
-
-<%--                                            <c:forEach var="answer" items="${question.answers}">--%>
-<%--                                            <tr>--%>
-<%--                                                <td style="width: 80%">${answer.answer}</td>--%>
-<%--                                                <td style="width: 20%"><fmt:formatNumber type = "percent" maxFractionDigits="2" value = "${answer.selectedCount / selectedSum}"/></td>--%>
-<%--                                            </tr>--%>
-<%--                                            </c:forEach>--%>
-<%--                                            </tbody>--%>
-<%--                                        </c:if>--%>
-<%--                                        <c:if test="${question.selectMultiple == true}">--%>
-<%--                                            <thead>--%>
-<%--                                            <tr>--%>
-<%--                                                <th scope="col">Answer</th>--%>
-<%--                                                <th scope="col">Selection count</th>--%>
-<%--                                            </tr>--%>
-<%--                                            </thead>--%>
-<%--                                            <tbody>--%>
-
-<%--                                            <c:forEach var="answer" items="${question.answers}">--%>
-<%--                                                <tr>--%>
-<%--                                                    <td style="width: 80%">${answer.answer}</td>--%>
-<%--                                                    <td style="width: 20%">${answer.selectedCount}</td>--%>
-<%--                                                </tr>--%>
-<%--                                            </c:forEach>--%>
-<%--                                            </tbody>--%>
-<%--                                        </c:if>--%>
-<%--                                    </table>--%>
                                 </div>
 
                             </div>
@@ -136,7 +96,7 @@
                     let answers, data, options, chart;
                     let titles, values;
 
-                    <c:forEach var="question" items="${sessionScope.survey_result.questions}">
+                    <c:forEach var="question" items="${requestScope.survey_result.questions}">
                     <c:choose>
                     <c:when test="${question.selectMultiple == true}">
                     titles = [''];

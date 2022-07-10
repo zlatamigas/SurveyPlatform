@@ -2,6 +2,59 @@ package epam.zlatamigas.surveyplatform.controller.navigation;
 
 public final class DataHolder {
 
+    // Session attributes
+
+    // Shared
+    public static final String SESSION_ATTRIBUTE_PARAMETER_LOCALISATION = "localisation";
+    public static final String ATTRIBUTE_USER = "user";
+    public static final String ATTRIBUTE_CURRENT_PAGE = "current_page";
+    public static final String ATTRIBUTE_PREVIOUS_PAGE = "previous_page";
+
+    // Listed data
+    public static final String ATTRIBUTE_THEMES = "themes";
+
+    // Edited data
+    public static final String ATTRIBUTE_EDITED_SURVEY = "edited_survey";
+    public static final String ATTRIBUTE_EDITED_QUESTION = "edited_question";
+    public static final String ATTRIBUTE_EDITED_USER = "edited_user";
+    public static final String ATTRIBUTE_SURVEY_ATTEMPT = "survey_attempt";
+
+    // Change password
+    public static final String ATTRIBUTE_CHANGE_PASSWORD_KEY = "change_password_key";
+    public static final String ATTRIBUTE_CHANGE_PASSWORD_EMAIL = "change_password_email";
+
+
+    // Request
+
+    // Search parameter-attribute
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS = "search_words";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID = "filter_theme_id";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS = "filter_survey_status";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE = "order_type";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_ROLE = "filter_user_role";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS = "filter_user_status";
+
+    // Listed data
+    public static final String REQUEST_ATTRIBUTE_SURVEYS = "surveys";
+    public static final String REQUEST_ATTRIBUTE_USER_SURVEYS = "user_surveys";
+    public static final String REQUEST_ATTRIBUTE_USERS = "users";
+    public static final String REQUEST_ATTRIBUTE_REQUESTED_THEMES = "requested_themes";
+    public static final String REQUEST_ATTRIBUTE_SURVEY_RESULT = "survey_result";
+
+    // Validation feedback
+    public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";
+    public static final String REQUEST_ATTRIBUTE_USER_INVALID = "user_invalid";
+    public static final String REQUEST_ATTRIBUTE_USER_EXISTS = "user_exists";
+    public static final String REQUEST_ATTRIBUTE_USER_BANNED = "user_banned";
+    public static final String REQUEST_ATTRIBUTE_THEME_EXISTS = "theme_exists";
+
+    // Button groups
+
+    // Survey attempt
+    public static final String BUTTONGROUP_NAME_CHECKBOX_ANSWERS = "check_question";
+    public static final String BUTTONGROUP_NAME_RADIO_ANSWERS = "radio_question";
+
+
     // Request parameters
 
     // Shared
@@ -33,60 +86,6 @@ public final class DataHolder {
     public static final String PARAMETER_THEME_ID = "theme_id";
     public static final String PARAMETER_THEME_NAME = "theme_name";
 
-
-    // Session attributes
-
-    // Shared
-    public static final String SESSION_ATTRIBUTE_PARAMETER_LOCALISATION = "localisation";
-    public static final String ATTRIBUTE_USER = "user";
-    public static final String ATTRIBUTE_CURRENT_PAGE = "current_page";
-    public static final String ATTRIBUTE_PREVIOUS_PAGE = "previous_page";
-
-    // Listed data
-    public static final String ATTRIBUTE_THEMES = "themes";
-
-    // Edited data
-    public static final String ATTRIBUTE_EDITED_SURVEY = "edited_survey";
-    public static final String ATTRIBUTE_EDITED_QUESTION = "edited_question";
-    public static final String ATTRIBUTE_EDITED_USER = "edited_user";
-    public static final String ATTRIBUTE_SURVEY_ATTEMPT = "survey_attempt";
-
-    // Only viewed
-    public static final String ATTRIBUTE_SURVEY_RESULT = "survey_result";
-
-    // Change password
-    public static final String ATTRIBUTE_CHANGE_PASSWORD_KEY = "change_password_key";
-    public static final String ATTRIBUTE_CHANGE_PASSWORD_EMAIL = "change_password_email";
-
-
-    // Request
-
-    // Search parameter-attribute
-    public static final String REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS = "search_words";
-    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID = "filter_theme_id";
-    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS = "filter_survey_status";
-    public static final String REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE = "order_type";
-    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_ROLE = "filter_user_role";
-    public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS = "filter_user_status";
-
-    // Listed data
-    public static final String REQUEST_ATTRIBUTE_SURVEYS = "surveys";
-    public static final String REQUEST_ATTRIBUTE_USER_SURVEYS = "user_surveys";
-    public static final String REQUEST_ATTRIBUTE_USERS = "users";
-    public static final String REQUEST_ATTRIBUTE_REQUESTED_THEMES = "requested_themes";
-
-    // Validation feedback
-    public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";
-    public static final String REQUEST_ATTRIBUTE_USER_INVALID = "user_invalid";
-    public static final String REQUEST_ATTRIBUTE_USER_EXISTS = "user_exists";
-    public static final String REQUEST_ATTRIBUTE_USER_BANNED = "user_banned";
-    public static final String REQUEST_ATTRIBUTE_THEME_EXISTS = "theme_exists";
-
-    // Button groups
-
-    // Survey attempt
-    public static final String BUTTONGROUP_NAME_CHECKBOX_ANSWERS = "check_question";
-    public static final String BUTTONGROUP_NAME_RADIO_ANSWERS = "radio_question";
 
     private DataHolder() {};
 

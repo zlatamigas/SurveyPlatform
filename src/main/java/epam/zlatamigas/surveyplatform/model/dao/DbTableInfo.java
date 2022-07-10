@@ -1,5 +1,8 @@
 package epam.zlatamigas.surveyplatform.model.dao;
 
+/**
+ * Database info: table, column names.
+ */
 public final class DbTableInfo {
 
     //Table: surveys
@@ -48,5 +51,8 @@ public final class DbTableInfo {
     public static final String USERS_TABLE_STATUS_COLUMN = "user_status";
 
 
-    private DbTableInfo(){};
+    private DbTableInfo() {
+    }
+
+    ;
 }

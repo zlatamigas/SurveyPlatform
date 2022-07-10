@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findById(int userId) throws ServiceException {
         try {
-            return userDao.findByIdWithoutPassword(userId);
+            return userDao.findById(userId);
         } catch (DaoException e){
             throw new ServiceException(e);
         }
