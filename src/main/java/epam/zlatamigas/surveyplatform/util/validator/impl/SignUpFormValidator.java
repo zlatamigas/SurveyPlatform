@@ -10,10 +10,13 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.*;
 import static epam.zlatamigas.surveyplatform.util.validator.PatternValidator.EMAIL_PATTERN;
 
+/**
+ * Sign up form validator. Checks email and password validity and equation of password and repeat password.
+ */
 public class SignUpFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private PatternValidator validator;
+    private final PatternValidator validator;
 
     private SignUpFormValidator() {
         validator = PatternValidator.getInstance();

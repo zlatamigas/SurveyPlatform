@@ -15,6 +15,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Mail sender. Used to send emails to one/many recipients.
+ */
 public class MailSender {
 
     private static final Logger logger = LogManager.getLogger();
@@ -22,7 +25,6 @@ public class MailSender {
     private static final String MAIL_PROPERTIES_FILE = "properties/mail.properties";
 
     private static MailSessionFactory factory;
-
     private static MailSender instance;
 
     static {
@@ -31,7 +33,7 @@ public class MailSender {
             sessionProperties.load(mailSessionPropertiesInputStream);
             factory = new MailSessionFactory(sessionProperties);
         } catch (IOException e) {
-            logger.error("Failed to read mail properties file: " + MAIL_PROPERTIES_FILE);
+            logger.error("Failed to read mail properties file: {}", MAIL_PROPERTIES_FILE);
         }
     }
 
@@ -53,13 +55,13 @@ public class MailSender {
             message.setSubject(subject);
             message.setText(text);
             Transport.send(message);
-            logger.info("Message sent to " + recipient);
+            logger.info("Message sent to {}", recipient);
             return true;
         } catch (AddressException e) {
-            logger.error(String.format("Invalid recipient address: %s. Cause: %s", recipient, e.getMessage()));
+            logger.error("Invalid recipient address: {}. Cause: {}", recipient, e.getMessage());
             return false;
         } catch (MessagingException e) {
-            logger.error("Messaging exception: " + e.getMessage());
+            logger.error("Messaging exception: {}", e.getMessage());
             return false;
         }
     }
@@ -72,18 +74,18 @@ public class MailSender {
                 try {
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
                 } catch (AddressException e) {
-                    logger.error(String.format("Invalid recipient address: %s. Cause: %s", recipient, e.getMessage()));
+                    logger.error("Invalid recipient address: {}. Cause: {}", recipient, e.getMessage());
                 } catch (MessagingException e) {
-                    logger.error("Messaging exception: " + e.getMessage());
+                    logger.error("Messaging exception: {}", e.getMessage());
                 }
             });
             message.setSubject(subject);
             message.setText(text);
             Transport.send(message);
-            logger.info("Messages sent to " + recipients.toString());
+            logger.info("Messages sent to {}", recipients.toString());
             return true;
         } catch (MessagingException e) {
-            logger.error("Messaging exception: " + e.getMessage());
+            logger.error("Messaging exception: {}", e.getMessage());
             return false;
         }
     }

@@ -11,50 +11,90 @@ import java.util.Optional;
 public interface UserService {
 
     /**
+     * Insert new user.
+     *
+     * @param email User email.
+     * @param password Not encrypted password.
+     * @param roleName User role: ADMIN or USER.
+     * @param statusName User status: ACTIVE or BANNED.
+     * @return True, if user was added, otherwise false.
+     * @throws ServiceException If a database access error occurs.
+     */
+    boolean insertUser(String email, String password, String roleName, String statusName) throws ServiceException;
+
+    /**
+     * Insert new user with default role of USER.
+     *
+     * @param email    User email.
+     * @param password Not encrypted password.
+     * @return True, if user was added, otherwise false.
+     * @throws ServiceException If a database access error occurs.
+     */
+    boolean signUpUser(String email, String password) throws ServiceException;
+
+    /**
      * Authenticate user.
      *
-     * @param email    Email.
+     * @param email    User email.
      * @param password Not encrypted password.
-     * @return User, if exists in db, otherwise Optional.empty().
-     * @throws ServiceException
+     * @return User without password, if exists, otherwise Optional.empty().
+     * @throws ServiceException If a database access error occurs.
      */
     Optional<User> authenticate(String email, String password) throws ServiceException;
 
     /**
-     * Change password for user in DB with requested email.
+     * Find user by id.
+     *
+     * @param userId User id.
+     * @return User without password, if exists, otherwise Optional.empty().
+     * @throws ServiceException If a database access error occurs.
+     */
+    Optional<User> findById(int userId) throws ServiceException;
+
+
+    /**
+     * Find users according to requested filter and search parameters.
+     *
+     * @param filterRoleName User role: ADMIN or USER.
+     * @param filterStatusName User status: ACTIVE or BANNED.
+     * @param searchWordsStr Words contained in user email. Case insensitive.
+     *                       If array size is 0, then all survey names are acceptable.
+     * @param orderTypeName  Order type: ASC - ascending, DESC - descending.
+     * @return List of users without passwords.
+     * @throws ServiceException If a database access error occurs or if invalid filter parameters are passed.
+     */
+    List<User> findUsersBySearch(String filterRoleName,
+                                 String filterStatusName,
+                                 String searchWordsStr,
+                                 String orderTypeName) throws ServiceException;
+
+    /**
+     * Change password for user with requested email.
      *
      * @param email    User email.
      * @param password New password. Not encrypted.
-     * @return True, if user exists in DB and password was changed, otherwise false.
-     * @throws ServiceException
+     * @return True, if user exists and password was changed, otherwise false.
+     * @throws ServiceException If a database access error occurs.
      */
     boolean changePassword(String email, String password) throws ServiceException;
+
+    /**
+     * Update user role and status.
+     *
+     * @param userId User id.
+     * @param roleName User role: ADMIN or USER.
+     * @param statusName User status: ACTIVE or BANNED.
+     * @return True, if user exists and was updated, otherwise false.
+     * @throws ServiceException
+     */
+    boolean updateRoleStatus(int userId, String roleName, String statusName) throws ServiceException;
 
     /**
      * Send key for changing password to email.
      *
      * @param email Email to send key to.
-     * @return Sent email.
+     * @return Sent key.
      * @throws ServiceException Thrown when key was not sent.
      */
     int requestChangePassword(String email) throws ServiceException;
-
-    /**
-     * Insert new user into DB with default role of USER.
-     *
-     * @param email    User email.
-     * @param password Not encrypted password.
-     * @return True, if user was added to DB, otherwise false.
-     * @throws ServiceException
-     */
-    boolean signUpUser(String email, String password) throws ServiceException;
-
-
-    boolean insertUser(String email, String password, String roleName, String statusName) throws ServiceException;
-
-    List<User> findUsersBySearch(String filterRoleName, String filterStatusName, String searchWordsStr, String orderTypeName) throws ServiceException;
-
-    Optional<User> findById(int userId) throws ServiceException;
-
-    boolean updateRoleStatus(int userId, String roleName, String statusName) throws ServiceException;
 }

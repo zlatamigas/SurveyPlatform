@@ -9,10 +9,13 @@ import java.util.Map;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_QUESTION_FORMULATION;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_QUESTION_FORMULATION;
 
+/**
+ * Create/edit question form validator. Check validity of question formulation.
+ */
 public class QuestionFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private PatternValidator validator;
+    private final PatternValidator validator;
 
     private QuestionFormValidator() {
         validator = PatternValidator.getInstance();

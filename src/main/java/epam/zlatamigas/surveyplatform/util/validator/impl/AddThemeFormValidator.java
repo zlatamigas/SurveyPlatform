@@ -9,10 +9,13 @@ import java.util.Map;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_THEME_NAME;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_THEME_NAME;
 
+/**
+ * Create theme form validator. Checks validity of theme name.
+ */
 public class AddThemeFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private PatternValidator validator;
+    private final PatternValidator validator;
 
     private AddThemeFormValidator() {
         validator = PatternValidator.getInstance();

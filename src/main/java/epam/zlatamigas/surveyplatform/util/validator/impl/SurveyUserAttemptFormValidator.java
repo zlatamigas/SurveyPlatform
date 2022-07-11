@@ -9,6 +9,9 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_MULTIPLE;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_ANSWER_REQUIRE_SELECT_SINGLE;
 
+/**
+ * Survey attempt form validator. Checks radiobutton and checkbox groups for required at least single selection.
+ */
 public class SurveyUserAttemptFormValidator implements FormValidator {
 
     private static FormValidator instance;

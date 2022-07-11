@@ -1,5 +1,8 @@
 package epam.zlatamigas.surveyplatform.util.locale;
 
+/**
+ * Stores keys, used in localisation properties file.
+ */
 public final class LocalisedMessageKey {
 
     public static final String LOCALE_BUNDLE_FILE_PATH = "localisation/localisedtext";

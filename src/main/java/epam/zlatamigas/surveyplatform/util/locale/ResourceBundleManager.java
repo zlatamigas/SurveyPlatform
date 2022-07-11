@@ -10,6 +10,11 @@ import java.util.ResourceBundle;
 
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.LOCALE_BUNDLE_FILE_PATH;
 
+/**
+ * resource bundle manager. According to passed locale returns {@link ResourceBundle}
+ * with requested locale if found, otherwise returns {@link ResourceBundle} with
+ * default system locale.
+ */
 public class ResourceBundleManager {
 
     private static final Logger logger = LogManager.getLogger();

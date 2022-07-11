@@ -549,7 +549,7 @@ public class SurveyDaoImpl implements SurveyDao {
             User user = surveyAttempt.getUser();
             Survey survey = surveyAttempt.getSurvey();
 
-            if (user.getUserId() != 0) {
+            if (user.getUserId() > 0) {
                 try (PreparedStatement psInsertUserAttempt = connection.prepareStatement(INSERT_SURVEY_USER_ATTEMPT)) {
                     psInsertUserAttempt.setString(1, dateTime);
                     psInsertUserAttempt.setInt(2, survey.getSurveyId());

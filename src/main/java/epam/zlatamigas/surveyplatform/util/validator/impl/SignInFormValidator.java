@@ -11,10 +11,13 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PA
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_EMAIL;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_PASSWORD;
 
+/**
+ * Sign in form validator. Checks email and password validity.
+ */
 public class SignInFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private PatternValidator validator;
+    private final PatternValidator validator;
 
     private SignInFormValidator() {
         validator = PatternValidator.getInstance();

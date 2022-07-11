@@ -5,6 +5,9 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import java.util.Properties;
 
+/**
+ * Mail session factory. Used for creating mail session according to properties in properties initializer file.
+ */
 class MailSessionFactory {
 
     private static final String NAME_PROPERTY = "mail.smtp.user";

@@ -11,10 +11,13 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PA
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_SURVEY_DESCRIPTION;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_SURVEY_NAME;
 
+/**
+ * Create/edit survey common info form validator. Checks survey name and description.
+ */
 public class SurveyEditFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private PatternValidator validator;
+    private final PatternValidator validator;
 
     private SurveyEditFormValidator() {
         validator = PatternValidator.getInstance();

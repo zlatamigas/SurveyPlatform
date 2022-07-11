@@ -1,6 +1,5 @@
 package epam.zlatamigas.surveyplatform.util.tag;
 
-
 import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestionAnswer;
 import epam.zlatamigas.surveyplatform.util.locale.ResourceBundleManager;
@@ -14,6 +13,11 @@ import java.util.ResourceBundle;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.*;
 
+/**
+ * <p>Custom tag with body. Used for visualisation question result in form of a table according to selection mode (single or multiple).</p>
+ * <p>Usage at JSP page:</p>
+ * <p>&lt;sa:survey-question-result question="${question}"&gt;&lt;/sa:survey-question-result&gt;, where attribute question - {@link SurveyQuestion} object.</p>
+ */
 public class ResultTableTag extends BodyTagSupport {
 
     private static final String TABLE_START_FORMAT = """
