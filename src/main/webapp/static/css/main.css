@@ -60,6 +60,35 @@ input[type=checkbox], input[type=radio] {
     accent-color: var(--dark-first-color);
 }
 
+/*Custom buttom*/
+.btn-outline-custom{
+    color: var(--first-color);
+    border-color: var(--first-color);
+}
+.btn-outline-custom:hover{
+    color: var(--white-color);
+    background-color: var(--light-first-color);
+    border-color: var(--light-first-color);
+}
+
+/*Home*/
+.home-container{
+    padding: 15px;
+}
+.home-container .card{
+    /*background: #fff;*/
+    /*border-radius: 10px;*/
+    /*box-shadow: 0px 10px 15px rgba(0,0,0,0.1);*/
+    /*margin: 20px;*/
+    /*padding: 20px;*/
+    /*border: 0px;*/
+    background: var(--white-color);
+    padding: 30px 20px;
+    box-shadow: 2px 2px 5px 5px var(--light-first-color);
+    border-radius: 10px;
+}
+
+
 /*Authorisation*/
 .authorisation-container{
     background: #fff;
@@ -174,11 +203,6 @@ input[type=checkbox], input[type=radio] {
     margin: 0px;
     border: 0px;
 }
-/*.content-container .edit-question-list .card>.card-header .btn-group .btn{*/
-/*    border: 0px;*/
-/*    border-radius: 0;*/
-/*}*/
-
 .content-container .edit-question-list .card>.card-body{
 
 }

@@ -54,6 +54,8 @@
                         <div class="card-body">
 
                             <div class="text-danger">
+
+
                                 <%
                                     SurveyQuestion question = (SurveyQuestion) pageContext.getAttribute("question");
                                     Map<String, String> validationFeedback =

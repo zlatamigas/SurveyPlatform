@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -21,44 +22,59 @@
     activeLink.classList.add("active");
 </script>
 
-<div class="container">
+<div class="home-container">
 
-<%--    <div class="card text-center">--%>
-<%--        <div class="card-body">--%>
-<%--            <h5 class="card-title">SurveyPlatform</h5>--%>
-<%--        </div>--%>
-<%--    </div>--%>
+    <div class="row align-items-center">
+        <div class="col col-md-3 offset-md-2">
+            <img src="${pageContext.request.contextPath}/static/pict/survey.jpg" style="width: 100%">
+        </div>
+        <div class="col col-md-4 offset-md-1">
+            <h5 class="header-text"><fmt:message key="header.navbar.brand"/></h5>
+        </div>
+    </div>
 
-<%--    <div class="card text-center">--%>
-<%--        <div class="card-body">--%>
-<%--            <h5 class="card-title">Participate in surveys</h5>--%>
-<%--            <p class="card-text"></p>--%>
-<%--            <a class="btn btn-primary"--%>
-<%--               href="${pageContext.request.contextPath}/controller?command=${CommandType.TO_SURVEYS}">--%>
-<%--                &lt;%&ndash;                    <fmt:message key=""/>&ndash;%&gt;--%>
-<%--                Participate now--%>
-<%--            </a>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
-<%--    <div class="card text-center">--%>
-<%--        <div class="card-body">--%>
-<%--            <h5 class="card-title">Create your own surveys</h5>--%>
-<%--            <p class="card-text"></p>--%>
-<%--            <a class="btn btn-primary"--%>
-<%--               href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_IN}">--%>
-<%--                &lt;%&ndash;                    <fmt:message key=""/>&ndash;%&gt;--%>
-<%--                Sign in--%>
-<%--            </a>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
-
-    <%--    <c:choose>--%>
-    <%--        <c:when test="${sessionScope.user.role == UserRole.ADMIN}"></c:when>--%>
-    <%--        <c:when test="${sessionScope.user.role == UserRole.USER}"></c:when>--%>
-    <%--        <c:otherwise></c:otherwise>--%>
-    <%--    </c:choose>--%>
+    <div class="row">
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title"><fmt:message key="home.participate.header"/></h5>
+                    <p class="card-text"></p>
+                    <a class="btn btn-outline-custom"
+                       href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_SURVEYS}">
+                        <fmt:message key="home.participate.button"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <c:choose>
+                <c:when test="${sessionScope.user.role == UserRole.ADMIN || sessionScope.user.role == UserRole.USER}">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title"><fmt:message key="home.account.header"/></h5>
+                            <p class="card-text"></p>
+                            <a class="btn btn-outline-custom"
+                               href="${pageContext.request.contextPath}/controller?command=${CommandType.USER_ACCOUNT}">
+                                <fmt:message key="home.account.button"/>
+                            </a>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title"><fmt:message key="home.signin.header"/></h5>
+                            <p class="card-text"></p>
+                            <a class="btn btn-outline-custom"
+                               href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_IN}">
+                                <fmt:message key="home.signin.button"/>
+                            </a>
+                        </div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
 
 </div>
 </body>
