@@ -12,7 +12,7 @@ import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MES
 public class QuestionFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private static PatternValidator validator;
+    private PatternValidator validator;
 
     private QuestionFormValidator() {
         validator = PatternValidator.getInstance();
@@ -29,25 +29,9 @@ public class QuestionFormValidator implements FormValidator {
     public Map<String, String> validateForm(Map<String, String[]> data) {
         Map<String, String> validationResult = new HashMap<>();
 
-        if (!validator.validName(data.get(PARAMETER_QUESTION_FORMULATION)[0])) {
+        if (!validator.validQuestionFormulation(data.get(PARAMETER_QUESTION_FORMULATION)[0])) {
             validationResult.put(PARAMETER_QUESTION_FORMULATION, MESSAGE_INVALID_QUESTION_FORMULATION);
         }
-
-//        String[] answer;
-//        int i = 0;
-//        while (true) {
-//
-//            answer = data.get(PARAMETER_ANSWER_TEXT);
-//            if(answer==null){
-//                break;
-//            }
-//
-//            if(!answer[0].matches(UNLIMITED_TEXT_PATTERN)){
-//                validationResult.put(PARAMETER_ANSWER_TEXT + i, MESSAGE_ANSWER_WRONG);
-//            }
-//
-//            i++;
-//        }
 
         return validationResult;
     }

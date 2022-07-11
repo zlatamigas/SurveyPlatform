@@ -13,7 +13,7 @@ import static epam.zlatamigas.surveyplatform.util.validator.PatternValidator.EMA
 public class SignUpFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private static PatternValidator validator;
+    private PatternValidator validator;
 
     private SignUpFormValidator() {
         validator = PatternValidator.getInstance();

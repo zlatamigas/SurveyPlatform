@@ -14,7 +14,7 @@ import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MES
 public class SignInFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private static PatternValidator validator;
+    private PatternValidator validator;
 
     private SignInFormValidator() {
         validator = PatternValidator.getInstance();

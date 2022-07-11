@@ -12,7 +12,7 @@ import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MES
 public class AddThemeFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private static PatternValidator validator;
+    private PatternValidator validator;
 
     private AddThemeFormValidator() {
         validator = PatternValidator.getInstance();
@@ -30,7 +30,7 @@ public class AddThemeFormValidator implements FormValidator {
 
         Map<String, String> validationResult = new HashMap<>();
 
-        if (!validator.validName(data.get(PARAMETER_THEME_NAME)[0])) {
+        if (!validator.validThemeName(data.get(PARAMETER_THEME_NAME)[0])) {
             validationResult.put(PARAMETER_THEME_NAME, MESSAGE_INVALID_THEME_NAME);
         }
 

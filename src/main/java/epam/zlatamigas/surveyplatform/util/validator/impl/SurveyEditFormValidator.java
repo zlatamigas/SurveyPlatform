@@ -14,7 +14,7 @@ import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MES
 public class SurveyEditFormValidator implements FormValidator {
 
     private static FormValidator instance;
-    private static PatternValidator validator;
+    private PatternValidator validator;
 
     private SurveyEditFormValidator() {
         validator = PatternValidator.getInstance();
@@ -31,7 +31,7 @@ public class SurveyEditFormValidator implements FormValidator {
     public Map<String, String> validateForm(Map<String, String[]> data) {
         Map<String, String> validationResult = new HashMap<>();
 
-        if (!validator.validName(data.get(PARAMETER_SURVEY_NAME)[0])) {
+        if (!validator.validSurveyName(data.get(PARAMETER_SURVEY_NAME)[0])) {
             validationResult.put(PARAMETER_SURVEY_NAME, MESSAGE_INVALID_SURVEY_NAME);
         }
         if (!validator.validUnlimitedText(data.get(PARAMETER_SURVEY_DESCRIPTION)[0])) {
