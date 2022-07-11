@@ -16,6 +16,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Connection pool. For db initialisation use app.properties file with db extension for properties.
+ * If there are no properties for driver and pool size in properties file, then default values are used.
+ */
 public class ConnectionPool {
 
     private static final Logger logger = LogManager.getLogger();
@@ -66,7 +70,7 @@ public class ConnectionPool {
                 driverProperty = DEFAULT_DRIVER_PROPERTY;
             }
             Class.forName(driverProperty);
-            logger.debug("Registered driver: " + driverProperty);
+            logger.debug("Registered driver: {}", driverProperty);
 
             String poolSizeParameter;
             int poolSize = DEFAULT_CONNECTION_POOL_SIZE;
@@ -74,16 +78,16 @@ public class ConnectionPool {
                 try {
                     poolSize = Integer.parseInt(poolSizeParameter);
                 } catch (NumberFormatException nfe) {
-                    logger.error("Invalid pool size parameter in properties file: " + poolSizeParameter);
+                    logger.error("Invalid pool size parameter in properties file: {}", poolSizeParameter);
                 }
             }
             CONNECTION_POOL_SIZE = poolSize;
             logger.debug("Pool size: " + poolSize);
         } catch (IOException e) {
-            logger.error("Cannot open properties file: " + DB_PROPERTIES_FILE);
+            logger.error("Cannot open properties file: {}", DB_PROPERTIES_FILE);
             throw new ExceptionInInitializerError("Cannot open properties file: " + DB_PROPERTIES_FILE);
         } catch (ClassNotFoundException e) {
-            logger.error("Error loading driver: " + driverProperty);
+            logger.error("Error loading driver: {}", driverProperty);
             throw new ExceptionInInitializerError("Error loading driver: " + driverProperty);
         }
     }
@@ -97,7 +101,7 @@ public class ConnectionPool {
                 connection = new ProxyConnection(DriverManager.getConnection(DB_URL, properties));
                 available.put(connection);
             } catch (SQLException | InterruptedException e) {
-                logger.error("Error while initialising connection pool: " + e.getMessage());
+                logger.error("Error while initialising connection pool: {}", e.getMessage());
                 throw new ExceptionInInitializerError("Error while initialising connection pool: " + e.getMessage());
             }
         }
@@ -128,10 +132,10 @@ public class ConnectionPool {
                 available.put((ProxyConnection) connection);
                 result = true;
             } catch (InterruptedException e) {
-                logger.error("Thread killed while waiting "
-                        + "ID - "+ Thread.currentThread().getId()
-                        + ", name - " + Thread.currentThread().getName()
-                        + ": " + e.getMessage());
+                logger.error("Thread killed while waiting ID - {}, name - {}: {}",
+                        Thread.currentThread().getId(),
+                        Thread.currentThread().getName(),
+                        e.getMessage());
                 Thread.currentThread().interrupt();
             }
         }
@@ -144,10 +148,10 @@ public class ConnectionPool {
             connection = available.take();
             occupied.put(connection);
         } catch (InterruptedException e) {
-            logger.error("Thread killed while waiting "
-                    + "ID - "+ Thread.currentThread().getId()
-                    + ", name - " + Thread.currentThread().getName()
-                    + ": " + e.getMessage());
+            logger.error("Thread killed while waiting ID - {}, name - {}: {}",
+                    Thread.currentThread().getId(),
+                    Thread.currentThread().getName(),
+                    e.getMessage());
             Thread.currentThread().interrupt();
         }
         return connection;
@@ -160,9 +164,10 @@ public class ConnectionPool {
             } catch (SQLException e) {
                 logger.error("Cannot close connection: " + e.getMessage());
             } catch (InterruptedException e) {
-                logger.error("Thread killed while waiting: "
-                        + "ID - "+ Thread.currentThread().getId()
-                        + ", name - " + Thread.currentThread().getName());
+                logger.error("Thread killed while waiting ID - {}, name - {}: {}",
+                        Thread.currentThread().getId(),
+                        Thread.currentThread().getName(),
+                        e.getMessage());
                 Thread.currentThread().interrupt();
             }
         }
@@ -177,7 +182,7 @@ public class ConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error("Cannot deregister driver: " + e.getMessage());
+                logger.error("Cannot deregister driver: {}", e.getMessage());
             }
         }
     }

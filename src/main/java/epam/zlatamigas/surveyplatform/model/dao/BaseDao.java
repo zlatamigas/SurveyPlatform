@@ -12,5 +12,5 @@ public interface BaseDao<T extends AbstractEntity> {
 
     Optional<T> findById(int id) throws DaoException;
 
-    Optional<T> update(T t) throws DaoException;
+    boolean update(T t) throws DaoException;
 }

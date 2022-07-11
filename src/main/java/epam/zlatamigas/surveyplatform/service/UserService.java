@@ -15,7 +15,7 @@ public interface UserService {
      *
      * @param email    Email.
      * @param password Not encrypted password.
-     * @return User, if exists in db, otherwise - Optional.empty().
+     * @return User, if exists in db, otherwise Optional.empty().
      * @throws ServiceException
      */
     Optional<User> authenticate(String email, String password) throws ServiceException;
@@ -25,7 +25,7 @@ public interface UserService {
      *
      * @param email    User email.
      * @param password New password. Not encrypted.
-     * @return True, if user exists in DB and password was changed, otherwise - false.
+     * @return True, if user exists in DB and password was changed, otherwise false.
      * @throws ServiceException
      */
     boolean changePassword(String email, String password) throws ServiceException;
@@ -44,7 +44,7 @@ public interface UserService {
      *
      * @param email    User email.
      * @param password Not encrypted password.
-     * @return True, if user was added to DB, otherwise - false.
+     * @return True, if user was added to DB, otherwise false.
      * @throws ServiceException
      */
     boolean signUpUser(String email, String password) throws ServiceException;

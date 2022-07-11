@@ -64,5 +64,5 @@ public interface SurveyService {
 
     boolean delete(int id) throws ServiceException;
 
-    Optional<Survey> update(Survey survey) throws ServiceException;
+    boolean update(Survey survey) throws ServiceException;
 }

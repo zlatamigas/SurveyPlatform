@@ -131,7 +131,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Optional<Survey> update(Survey survey) throws ServiceException {
+    public boolean update(Survey survey) throws ServiceException {
         SurveyDaoImpl surveyDao = SurveyDaoImpl.getInstance();
 
         try {

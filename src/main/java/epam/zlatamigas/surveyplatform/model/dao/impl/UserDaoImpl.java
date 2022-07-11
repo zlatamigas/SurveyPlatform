@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import static epam.zlatamigas.surveyplatform.model.dao.DbTableInfo.*;
 
-public class UserDaoImpl implements BaseDao<User>, UserDao {
+public class UserDaoImpl implements UserDao {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -95,6 +95,36 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
     }
 
     @Override
+    public Optional<User> findById(int id) throws DaoException {
+
+        Optional<User> user = Optional.empty();
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_ID_WITHOUT_PASSWORD_STATEMENT)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    user = Optional.of(new User.UserBuilder()
+                            .setUserId(id)
+                            .setEmail(resultSet.getString(USERS_TABLE_EMAIL_COLUMN))
+                            .setRegistrationDate(resultSet.getDate(USERS_TABLE_REGISTRATION_DATE_COLUMN).toLocalDate())
+                            .setRole(UserRole.valueOf(resultSet.getString(USERS_TABLE_ROLE_COLUMN)))
+                            .setStatus(UserStatus.valueOf(resultSet.getString(USERS_TABLE_STATUS_COLUMN)))
+                            .getUser());
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error("Failed to find user by id_user = {} : {}", id,  e.getMessage());
+            throw new DaoException("Failed to find user by id_user = " + id, e);
+        }
+
+        return user;
+    }
+
+    @Override
     public Optional<User> authenticate(String email, String password) throws DaoException {
 
         Optional<User> user = Optional.empty();
@@ -155,35 +185,6 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
         return user;
     }
 
-    @Override
-    public Optional<User> findById(int id) throws DaoException {
-
-        Optional<User> user = Optional.empty();
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(FIND_BY_ID_WITHOUT_PASSWORD_STATEMENT)) {
-
-            ps.setInt(1, id);
-
-            try (ResultSet resultSet = ps.executeQuery()) {
-                if (resultSet.next()) {
-                    user = Optional.of(new User.UserBuilder()
-                            .setUserId(id)
-                            .setEmail(resultSet.getString(USERS_TABLE_EMAIL_COLUMN))
-                            .setRegistrationDate(resultSet.getDate(USERS_TABLE_REGISTRATION_DATE_COLUMN).toLocalDate())
-                            .setRole(UserRole.valueOf(resultSet.getString(USERS_TABLE_ROLE_COLUMN)))
-                            .setStatus(UserStatus.valueOf(resultSet.getString(USERS_TABLE_STATUS_COLUMN)))
-                            .getUser());
-                }
-            }
-
-        } catch (SQLException e) {
-            logger.error("Failed to find user by id_user = {} : {}", id,  e.getMessage());
-            throw new DaoException("Failed to find user by id_user = " + id, e);
-        }
-
-        return user;
-    }
 
     @Override
     public List<User> findUsersBySearch(int filterRoleId, int filterStatusId, String[] searchWords, DbOrderType orderType) throws DaoException {
@@ -246,11 +247,6 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
     @Override
     public boolean updateRoleStatus(int userId, UserRole role, UserStatus status) throws DaoException {
 
-        Optional<User> oldUser = findById(userId);
-        if (oldUser.isEmpty()) {
-            throw new DaoException("User does not exist: id_user = " + userId);
-        }
-
         if (role == UserRole.GUEST) {
             throw new DaoException("Invalid user role for database: user_role = " + role.name());
         }
@@ -286,11 +282,7 @@ public class UserDaoImpl implements BaseDao<User>, UserDao {
     }
 
     @Override
-    public Optional<User> update(User user) throws DaoException {
-        throw new DaoException("""
-                Unsupported operation for user. For update use methods: 
-                boolean updateRoleStatus(int userId, UserRole role, UserStatus status) or 
-                boolean updatePassword(int userId, String password)
-                """);
+    public boolean update(User user) {
+        throw new UnsupportedOperationException("Unsupported update operation for user");
     }
 }

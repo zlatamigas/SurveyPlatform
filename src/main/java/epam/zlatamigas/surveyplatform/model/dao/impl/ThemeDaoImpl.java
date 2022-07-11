@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import static epam.zlatamigas.surveyplatform.model.dao.DbTableInfo.*;
 
-public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
+public class ThemeDaoImpl implements ThemeDao {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -238,14 +238,9 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
     }
 
     @Override
-    public Optional<Theme> update(Theme theme) throws DaoException {
+    public boolean update(Theme theme) throws DaoException {
 
         int id = theme.getThemeId();
-
-        Optional<Theme> oldTheme = findById(id);
-        if (oldTheme.isEmpty()) {
-            throw new DaoException("Theme does not exist: id_theme = " + id);
-        }
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(UPDATE_STATEMENT)) {
@@ -253,13 +248,11 @@ public class ThemeDaoImpl implements BaseDao<Theme>, ThemeDao {
             ps.setString(1, theme.getThemeName());
             ps.setString(2, theme.getThemeStatus().name());
             ps.setInt(3, id);
-            ps.executeUpdate();
+            return ps.executeUpdate() == 1;
 
         } catch (SQLException e) {
             logger.error("Failed to update theme with id_theme = {}: {}", theme.getThemeId(), e.getMessage());
             throw new DaoException("Failed to update theme with id_theme = " + theme.getThemeId(), e);
         }
-
-        return oldTheme;
     }
 }

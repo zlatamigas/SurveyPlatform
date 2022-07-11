@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * Proxy connection for db. On close connection is set to auto-commit mode and released into connection pool.
+ * @see ConnectionPool
+ */
 public class ProxyConnection implements Connection {
 
     private final Connection connection;
