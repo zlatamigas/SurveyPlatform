@@ -2,11 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
-<%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion" %>
-<%@ page import="epam.zlatamigas.surveyplatform.model.entity.Survey" %>
-<%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyQuestionAnswer" %>
-<%@ taglib uri="/WEB-INF/tld/resulttabletag .tld" prefix="sa"%>
+<%@ taglib uri="/WEB-INF/tld/customtag.tld" prefix="ct"%>
 
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
@@ -74,12 +70,8 @@
                                 </c:choose>
                             </div>
                             <div class="tab-pane fade" id="pills-question${question.questionId}-text" role="tabpanel" aria-labelledby="pills-question${question.questionId}-text-tab">
-
-                                <div class="table-custom">
-                                    <sa:survey-question-result question="${question}">
-                                    </sa:survey-question-result>
-                                </div>
-
+                                <ct:survey-question-result question="${question}">
+                                </ct:survey-question-result>
                             </div>
                         </div>
 

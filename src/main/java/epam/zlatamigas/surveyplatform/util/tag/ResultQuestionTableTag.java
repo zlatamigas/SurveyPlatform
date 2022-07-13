@@ -16,29 +16,31 @@ import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.*;
 /**
  * <p>Custom tag with body. Used for visualisation question result in form of a table according to selection mode (single or multiple).</p>
  * <p>Usage at JSP page:</p>
- * <p>&lt;sa:survey-question-result question="${question}"&gt;&lt;/sa:survey-question-result&gt;, where attribute question - {@link SurveyQuestion} object.</p>
+ * <p>&lt;ct:survey-question-result question="${question}"&gt;&lt;/ct:survey-question-result&gt;, where attribute question - {@link SurveyQuestion} object.</p>
  */
-public class ResultTableTag extends BodyTagSupport {
+public class ResultQuestionTableTag extends BodyTagSupport {
 
     private static final String TABLE_START_FORMAT = """
-            <table class=\"table\">
-                <thead>
-                    <tr>
-                        <th scope=\"col\">%s</th>
-                        <th scope=\"col\">%s</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="table-custom">
+                <table class=\"table\">
+                    <thead>
+                        <tr>
+                            <th scope=\"col\">%s</th>
+                            <th scope=\"col\">%s</th>
+                        </tr>
+                    </thead>
+                    <tbody>
             """;
     private static final String TABLE_ROW_FORMAT = """
-                    <tr>
-                        <td class=\"col-answer\">%s</td>
-                        <td class=\"col-selected-count\">%s</td>
-                    </tr>
+                        <tr>
+                            <td class=\"col-answer\">%s</td>
+                            <td class=\"col-selected-count\">%s</td>
+                        </tr>
             """;
     private static final String TABLE_END = """
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             """;
     private static final String PERCENT_FORMAT = "%.2f";
     private static final String PERCENTAGE = "%";

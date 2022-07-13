@@ -5,16 +5,22 @@
 
     <tlib-version>1.0</tlib-version>
     <jsp-version>2.0</jsp-version>
-    <short-name>sa</short-name>
-    <uri>/WEB-INF/tld/resulttabletag .tld</uri>
+    <short-name>ct</short-name>
+    <uri>/WEB-INF/tld/customtag.tld</uri>
 
     <tag>
         <name>survey-question-result</name>
-        <tag-class>epam.zlatamigas.surveyplatform.util.tag.ResultTableTag</tag-class>
+        <tag-class>epam.zlatamigas.surveyplatform.util.tag.ResultQuestionTableTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>question</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+    </tag>
+
+    <tag>
+        <name>question-validation-feedback</name>
+        <tag-class>epam.zlatamigas.surveyplatform.util.tag.SurveyAttemptQuestionValidationFeedbackTag</tag-class>
+        <body-content>empty</body-content>
     </tag>
 </taglib>

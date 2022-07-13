@@ -85,7 +85,6 @@
             <version>1.6.2</version>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
         <dependency>
             <groupId>javax.activation</groupId>
