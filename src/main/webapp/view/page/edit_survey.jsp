@@ -80,6 +80,9 @@
         </div>
 
         <div class="content-container">
+            <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
+                    formmethod="post" type="submit" class="btn btn-create">
+                <fmt:message key="button.add"/></button>
             <div class="edit-question-list">
                 <c:set var="i" value="0"/>
                 <c:forEach items="${sessionScope.edited_survey.questions}" var="question">

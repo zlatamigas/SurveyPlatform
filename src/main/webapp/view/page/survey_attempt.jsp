@@ -88,7 +88,11 @@
 
     <div class="bottom-actions-container">
         <div class="btn-group-custom">
-            <button form="finishSurveyAttemptForm" type="submit" class="btn btn-success">
+            <button form="finishSurveyAttemptForm"
+                    formaction="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_SURVEY_ATTEMPT}"
+                    formmethod="post"
+                    type="submit"
+                    class="btn btn-success">
                 <fmt:message key="button.survey.attempt.finish"/></button>
             <button form="cancelSurveyAttemptForm" type="submit" class="btn btn-warning">
                 <fmt:message key="button.cancel"/></button>

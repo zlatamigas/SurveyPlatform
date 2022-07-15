@@ -14,9 +14,9 @@ public final class PatternValidator {
     public static final String SURVEY_NAME_PATTERN =
             "^[\\p{Alnum}\\p{Punct}А-яЁё][\\p{Alnum}\\p{Punct}А-яЁё ]{3,}$";
     public static final String QUESTION_FORMULATION_PATTERN =
-            "^[\\p{Alnum}\\p{Punct}А-яЁё][\\p{Alnum}\\p{Punct}А-яЁё ]{3,}$";
+            "^[\\p{Alnum}\\p{Punct}А-яЁё][\\p{Alnum}\\p{Punct}А-яЁё\\s]{3,}$";
     public static final String UNLIMITED_TEXT_PATTERN =
-            "^[\\p{Alnum}\\p{Punct}А-яЁё ]*$";
+            "^[\\p{Alnum}\\p{Punct}А-яЁё\\s]*$";
 
     private static final PatternValidator instance = new PatternValidator();
 

@@ -70,8 +70,6 @@
                         </div>
                         <div class="col-auto">
                             <button type="button"
-<%--                                    type="submit" formmethod="post"--%>
-<%--                                    formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_ANSWER}&${DataHolder.PARAMETER_ANSWER_POSITION}=${i}"--%>
                                     class="btn btn-outline-danger btn-delete-answer"
                                     onclick="removeQuestion(${i});">
                                 <i class="fas fa-trash"></i>

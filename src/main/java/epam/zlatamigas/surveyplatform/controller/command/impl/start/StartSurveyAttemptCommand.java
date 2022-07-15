@@ -13,9 +13,14 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.Optional;
+
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEY_ATTEMPT;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class StartSurveyAttemptCommand implements Command {
 
@@ -24,19 +29,31 @@ public class StartSurveyAttemptCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        String page = SURVEY_ATTEMPT;
+        String page = SURVEYS;
+        PageChangeType pageChangeType = REDIRECT;
 
-        int surveyId = Integer.parseInt(request.getParameter(PARAMETER_SURVEY_ID));
-        try {
-            SurveyService service = SurveyServiceImpl.getInstance();
-            Survey survey = service.findParticipantSurveyInfo(surveyId).orElse(new Survey());
-            session.setAttribute(ATTRIBUTE_SURVEY_ATTEMPT, survey);
-        } catch (ServiceException e) {
-            logger.error(e);
+        String surveyIdStr = request.getParameter(PARAMETER_SURVEY_ID);
+
+        if(surveyIdStr != null && !surveyIdStr.isBlank()){
+            int surveyId = Integer.parseInt(surveyIdStr);
+            try {
+                SurveyService service = SurveyServiceImpl.getInstance();
+                Optional<Survey> survey = service.findParticipantSurveyInfo(surveyId);
+
+                if(survey.isPresent()){
+                    page = SURVEY_ATTEMPT;
+                    pageChangeType = FORWARD;
+                    session.setAttribute(ATTRIBUTE_SURVEY_ATTEMPT, survey.get());
+                }
+
+            } catch (ServiceException e) {
+                logger.error(e);
+            }
+
         }
 
         session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, FORWARD);
+        return new Router(page, pageChangeType);
     }
 }
