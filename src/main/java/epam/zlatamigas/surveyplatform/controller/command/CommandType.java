@@ -3,6 +3,10 @@ package epam.zlatamigas.surveyplatform.controller.command;
 
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.*;
+import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.ChangePasswordCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.ConfirmPasswordKeyCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.SendForgottenPasswordKeyCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.ToForgotPasswordCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.finish.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.to.*;
@@ -29,19 +33,19 @@ public enum CommandType {
     CHANGE_PASSWORD(new ChangePasswordCommand()),
 
     // List started surveys
-    LIST_SURVEYS(new ListSurveysCommand()),
+    LIST_SURVEYS(new SurveysCommand()),
     SEARCH_SURVEYS(new SearchSurveysCommand()),
 
     // List created surveys of specified user (for survey creator)
-    LIST_USER_CREATED_SURVEYS(new ListUserCreatedSurveysCommand()),
-    SEARCH_USER_CREATED_SURVEYS(new SearchUserCreatedSurveysCommand()),
+    SURVEY_CREATED_BY_USER(new SurveysCreatedByUserCommand()),
+    SEARCH_SURVEY_CREATED_BY_USER(new SearchSurveysCreatedByUserCommand()),
 
     // List users and themes data (admin)
-    LIST_USERS(new ListUsersCommand()),
+    USERS(new UsersCommand()),
     SEARCH_USERS(new SearchUsersCommand()),
-    LIST_THEMES_CONFIRMED(new ListThemesConfirmedCommand()),
+    THEMES_CONFIRMED(new ThemesConfirmedCommand()),
     SEARCH_THEMES_CONFIRMED(new SearchThemesConfirmedCommand()),
-    LIST_THEMES_WAITING(new ListThemesWaitingCommand()),
+    THEMES_WAITING(new ThemesWaitingCommand()),
 
     // CRUD survey and its parts (for survey creator)
     START_EDIT_SURVEY(new StartEditSurveyCommand()),
@@ -61,7 +65,7 @@ public enum CommandType {
     CANCEL_SURVEY_ATTEMPT(new CancelSurveyAttemptCommand()),
 
     // View survey result (for survey creator)
-    VIEW_SURVEY_RESULT(new ViewSurveyResultCommand()),
+    SURVEY_RESULT(new SurveyResultCommand()),
 
     // CRUD themes (for admin)
     CONFIRM_THEME(new ConfirmThemeCommand()),

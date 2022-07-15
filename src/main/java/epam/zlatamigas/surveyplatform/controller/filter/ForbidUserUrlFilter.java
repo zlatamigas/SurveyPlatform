@@ -32,10 +32,10 @@ public class ForbidUserUrlFilter implements Filter {
         redirectUrl.put(SIGN_IN, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SIGN_IN.name()));
         redirectUrl.put(SIGN_UP, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SIGN_UP.name()));
         redirectUrl.put(SURVEYS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.LIST_SURVEYS.name()));
-        redirectUrl.put(USER_SURVEYS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.LIST_USER_CREATED_SURVEYS.name()));
-        redirectUrl.put(USERS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.LIST_USERS.name()));
-        redirectUrl.put(THEMES_CONFIRMED, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.LIST_THEMES_CONFIRMED.name()));
-        redirectUrl.put(THEMES_WAITING, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.LIST_THEMES_WAITING.name()));
+        redirectUrl.put(USER_SURVEYS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SURVEY_CREATED_BY_USER.name()));
+        redirectUrl.put(USERS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.USERS.name()));
+        redirectUrl.put(THEMES_CONFIRMED, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.THEMES_CONFIRMED.name()));
+        redirectUrl.put(THEMES_WAITING, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.THEMES_WAITING.name()));
         redirectUrl.put(ACCOUNT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.USER_ACCOUNT.name()));
         redirectUrl.put(CREATE_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CREATE_USER.name()));
 

@@ -19,7 +19,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
 
-public class ListUserCreatedSurveysCommand implements Command {
+public class SurveysCreatedByUserCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 

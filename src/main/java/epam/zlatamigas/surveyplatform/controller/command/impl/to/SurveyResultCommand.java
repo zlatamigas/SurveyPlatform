@@ -4,30 +4,30 @@ import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
-import epam.zlatamigas.surveyplatform.model.entity.Theme;
-import epam.zlatamigas.surveyplatform.service.ThemeService;
-import epam.zlatamigas.surveyplatform.service.impl.ThemeServiceImpl;
+import epam.zlatamigas.surveyplatform.model.entity.Survey;
+import epam.zlatamigas.surveyplatform.service.SurveyService;
+import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.util.List;
-
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_WAITING;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEY_RESULT;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
-public class ListThemesWaitingCommand implements Command {
+public class SurveyResultCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page = THEMES_WAITING;
+        String page = SURVEY_RESULT;
 
-        ThemeService themeService = ThemeServiceImpl.getInstance();
+        int surveyId = Integer.parseInt(request.getParameter(PARAMETER_SURVEY_ID));
+        SurveyService surveyService = SurveyServiceImpl.getInstance();
         try {
-            List<Theme> themes = themeService.findAllWaiting();
-            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
+            Survey survey = surveyService.findCreatorSurveyInfo(surveyId).orElse(new Survey());
+            survey.getQuestions().forEach(surveyQuestion -> surveyQuestion.getAnswers().sort( (a1, a2) -> a2.getSelectedCount() - a1.getSelectedCount()));
+            request.setAttribute(REQUEST_ATTRIBUTE_SURVEY_RESULT, survey);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

@@ -48,7 +48,7 @@
                 <div class="search-container">
                     <form action="controller" method="get">
                         <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}"
-                               value="${CommandType.SEARCH_USER_CREATED_SURVEYS}">
+                               value="${CommandType.SEARCH_SURVEY_CREATED_BY_USER}">
                         <div class="form-row row-search">
                             <div class="col">
                                 <input type="text" class="form-control input-search"
@@ -213,7 +213,7 @@
                                                 <form id="viewResultSurveyForm${survey.surveyId}" action="controller"
                                                       method="post">
                                                     <input type="hidden" name="command"
-                                                           value="${CommandType.VIEW_SURVEY_RESULT}">
+                                                           value="${CommandType.SURVEY_RESULT}">
                                                     <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
                                                            value="${survey.surveyId}">
                                                 </form>

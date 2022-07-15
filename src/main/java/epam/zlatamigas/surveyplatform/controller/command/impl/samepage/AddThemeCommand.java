@@ -5,6 +5,7 @@ import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.Theme;
+import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.ThemeService;
 import epam.zlatamigas.surveyplatform.service.impl.ThemeServiceImpl;
 import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
@@ -50,8 +51,17 @@ public class AddThemeCommand implements Command {
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
             if (validationFeedback.isEmpty()) {
-                if (!themeService.insertConfirmedTheme(themeName)) {
-                    request.setAttribute(REQUEST_ATTRIBUTE_THEME_EXISTS, MESSAGE_INVALID_THEME_EXISTS);
+
+                User user = (User)session.getAttribute(ATTRIBUTE_USER);
+                if(user != null && user.getRole() != null){
+                    boolean result = switch (user.getRole()){
+                        case ADMIN -> themeService.insertConfirmedTheme(themeName);
+                        case USER -> themeService.insertWaitingTheme(themeName);
+                        default -> false;
+                    };
+                    if (!result) {
+                        request.setAttribute(REQUEST_ATTRIBUTE_THEME_EXISTS, MESSAGE_INVALID_THEME_EXISTS);
+                    }
                 }
             } else {
                 request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);

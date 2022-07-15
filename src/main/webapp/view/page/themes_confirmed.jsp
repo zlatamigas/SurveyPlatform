@@ -83,24 +83,35 @@
                                         <c:set var="themePage" value="${themePage + 1}"/>
                                         <div id="pagination-page-${themePage}" style="display: none">
                                     </c:if>
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="row justify-content-between">
-                                                    <div class="col">
-                                                        <h5>${theme.themeName}</h5>
-                                                    </div>
-                                                    <div class="col col-auto">
-                                                        <form action="controller" method="post">
-                                                            <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.DELETE_THEME}">
-                                                            <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
-                                                            <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
-                                                            <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}" value="${requestScope.order_type}">
-                                                            <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
-                                                        </form>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row justify-content-between">
+                                                            <div class="col">
+                                                                <h5>${theme.themeName}</h5>
+                                                            </div>
+                                                            <div class="col col-auto">
+                                                                <form action="controller" method="post">
+                                                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.DELETE_THEME}">
+                                                                    <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
+                                                                    <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                                                    <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}" value="${requestScope.order_type}">
+                                                                    <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </c:when>
+                                            <c:when test="${sessionScope.user.role == UserRole.USER}">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>${theme.themeName}</h5>
+                                                    </div>
+                                                </div>
+                                            </c:when>
+                                        </c:choose>
                                     <c:remove var="theme" scope="page"/>
                                     </c:forEach>
                                     </c:if>

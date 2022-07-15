@@ -47,10 +47,10 @@ public class CheckUserRoleFilter implements Filter {
                         // List data
                         LIST_SURVEYS,
                         SEARCH_SURVEYS,
-                        LIST_USERS,
+                        USERS,
                         SEARCH_USERS,
-                        LIST_USER_CREATED_SURVEYS,
-                        SEARCH_USER_CREATED_SURVEYS,
+                        SURVEY_CREATED_BY_USER,
+                        SEARCH_SURVEY_CREATED_BY_USER,
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
@@ -66,10 +66,10 @@ public class CheckUserRoleFilter implements Filter {
                         START_SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,
                         CANCEL_SURVEY_ATTEMPT,
-                        VIEW_SURVEY_RESULT,
-                        LIST_THEMES_CONFIRMED,
+                        SURVEY_RESULT,
+                        THEMES_CONFIRMED,
                         SEARCH_THEMES_CONFIRMED,
-                        LIST_THEMES_WAITING,
+                        THEMES_WAITING,
                         CONFIRM_THEME,
                         REJECT_THEME,
                         DELETE_THEME,
@@ -94,8 +94,8 @@ public class CheckUserRoleFilter implements Filter {
                         // List data
                         LIST_SURVEYS,
                         SEARCH_SURVEYS,
-                        LIST_USER_CREATED_SURVEYS,
-                        SEARCH_USER_CREATED_SURVEYS,
+                        SURVEY_CREATED_BY_USER,
+                        SEARCH_SURVEY_CREATED_BY_USER,
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
@@ -111,8 +111,12 @@ public class CheckUserRoleFilter implements Filter {
                         START_SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,
                         CANCEL_SURVEY_ATTEMPT,
-                        VIEW_SURVEY_RESULT,
-                        USER_ACCOUNT
+                        SURVEY_RESULT,
+                        USER_ACCOUNT,
+                        // Themes
+                        THEMES_CONFIRMED,
+                        SEARCH_THEMES_CONFIRMED,
+                        ADD_THEME
                 ),
                 GUEST, EnumSet.of(
                         DEFAULT,

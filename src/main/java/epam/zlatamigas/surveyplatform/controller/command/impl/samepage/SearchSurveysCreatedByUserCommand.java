@@ -22,7 +22,7 @@ import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
-public class SearchUserCreatedSurveysCommand implements Command {
+public class SearchSurveysCreatedByUserCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

@@ -21,31 +21,33 @@
     <div class="dropdown-divider"></div>
 
     <a id="navUserSurveys" class="nav-link" role="tab" aria-selected="false"
-       href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USER_CREATED_SURVEYS}"><fmt:message key="leftnav.navbar.usersurveys"/></a>
+       href="${pageContext.request.contextPath}/controller?command=${CommandType.SURVEY_CREATED_BY_USER}"><fmt:message key="leftnav.navbar.usersurveys"/></a>
 
-    <c:choose>
-        <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
-            <div class="dropdown-divider"></div>
-            <a id="navThemes"
-                    class="nav-link"
-                    type="button" data-toggle="collapse"
-                    data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme"><fmt:message key="leftnav.navbar.themes"/></a>
 
-            <div id="collapseTheme" class="collapse">
-                <div class="left-nav-collapse">
-                    <a id="navThemesConfirmed" class="nav-link" role="tab" aria-selected="false" href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_THEMES_CONFIRMED}"><fmt:message key="leftnav.navbar.themes.confirmed"/></a>
-                    <a id="navThemesWaiting" class="nav-link" role="tab" aria-selected="false" href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_THEMES_WAITING}"><fmt:message key="leftnav.navbar.themes.waiting"/></a>
-                </div>
-            </div>
-            <div class="dropdown-divider"></div>
-            <a id="navUsers" class="nav-link" role="tab" aria-selected="false"
-               href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USERS}">
-                <fmt:message key="leftnav.navbar.users"/></a>
-        </c:when>
-        <c:when test="${sessionScope.user.role == UserRole.USER}">
 
-        </c:when>
-    </c:choose>
+
+    <div class="dropdown-divider"></div>
+    <a id="navThemes"
+       class="nav-link"
+       type="button" data-toggle="collapse"
+       data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme"><fmt:message key="leftnav.navbar.themes"/></a>
+
+    <div id="collapseTheme" class="collapse">
+        <div class="left-nav-collapse">
+            <a id="navThemesConfirmed" class="nav-link" role="tab" aria-selected="false" href="${pageContext.request.contextPath}/controller?command=${CommandType.THEMES_CONFIRMED}"><fmt:message key="leftnav.navbar.themes.confirmed"/></a>
+            <c:if test="${sessionScope.user.role == UserRole.ADMIN}">
+                <a id="navThemesWaiting" class="nav-link" role="tab" aria-selected="false" href="${pageContext.request.contextPath}/controller?command=${CommandType.THEMES_WAITING}"><fmt:message key="leftnav.navbar.themes.waiting"/></a>
+            </c:if>
+        </div>
+    </div>
+    <c:if test="${sessionScope.user.role == UserRole.ADMIN}">
+        <div class="dropdown-divider"></div>
+        <a id="navUsers" class="nav-link" role="tab" aria-selected="false"
+           href="${pageContext.request.contextPath}/controller?command=${CommandType.USERS}">
+            <fmt:message key="leftnav.navbar.users"/></a>
+    </c:if>
+
+
 </div>
 </body>
 </html>
