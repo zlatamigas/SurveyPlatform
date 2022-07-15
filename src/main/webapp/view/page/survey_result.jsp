@@ -69,7 +69,10 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                            <div class="tab-pane fade" id="pills-question${question.questionId}-text" role="tabpanel" aria-labelledby="pills-question${question.questionId}-text-tab">
+                            <div class="tab-pane fade"
+                                 id="pills-question${question.questionId}-text" role="tabpanel"
+                                 aria-labelledby="pills-question${question.questionId}-text-tab">
+
                                 <ct:survey-question-result question="${question}">
                                 </ct:survey-question-result>
                             </div>

@@ -26,18 +26,22 @@ public class FinishEditQuestionCommand implements Command {
         HttpSession session = request.getSession();
         String page = EDIT_SURVEY;
 
-        SurveyQuestion question = (SurveyQuestion) session.getAttribute(DataHolder.ATTRIBUTE_EDITED_QUESTION);
-        String formulation = request.getParameter(DataHolder.PARAMETER_QUESTION_FORMULATION);
+        SurveyQuestion question = (SurveyQuestion) session.getAttribute(ATTRIBUTE_EDITED_QUESTION);
+        String formulation = request.getParameter(PARAMETER_QUESTION_FORMULATION);
 
-        String[] multipleSelect = request.getParameterValues(DataHolder.PARAMETER_QUESTION_SELECT_MULTIPLE);
+        String[] multipleSelect = request.getParameterValues(PARAMETER_QUESTION_SELECT_MULTIPLE);
         boolean selectMultiple = multipleSelect != null && multipleSelect.length == 1;
 
-        int answerNumber = question.getAnswers().size();
+        int answerLastPos = Integer.parseInt(request.getParameter(PARAMETER_LAST_ANSWER_POSITION));
         List<SurveyQuestionAnswer> answers = new LinkedList<>();
         String answer;
-        for (int i = 0; i < answerNumber; i++) {
-            answer = request.getParameter(DataHolder.PARAMETER_ANSWER_TEXT + i);
-            answers.add(new SurveyQuestionAnswer.SurveyQuestionAnswerBuilder().setAnswer(answer).getSurveyQuestionAnswer());
+        for (int i = 0; i <= answerLastPos; i++) {
+            answer = request.getParameter(PARAMETER_ANSWER_TEXT + i);
+            if(answer != null && !answer.isBlank()){
+                answers.add(new SurveyQuestionAnswer.SurveyQuestionAnswerBuilder()
+                        .setAnswer(answer)
+                        .getSurveyQuestionAnswer());
+            }
         }
 
         question.setFormulation(formulation);

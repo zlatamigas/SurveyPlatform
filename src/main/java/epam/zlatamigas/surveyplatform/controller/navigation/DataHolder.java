@@ -80,7 +80,7 @@ public final class DataHolder {
     public static final String PARAMETER_QUESTION_FORMULATION = "question_formulation";
     public static final String PARAMETER_QUESTION_SELECT_MULTIPLE = "question_select_multiple";
     public static final String PARAMETER_ANSWER_TEXT = "answer_text";
-    public static final String PARAMETER_ANSWER_POSITION = "answer_position";
+    public static final String PARAMETER_LAST_ANSWER_POSITION = "last_answer_pos";
 
     // Theme
     public static final String PARAMETER_THEME_ID = "theme_id";

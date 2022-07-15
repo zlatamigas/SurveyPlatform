@@ -661,6 +661,7 @@ public class SurveyDaoImpl implements SurveyDao {
                         }
 
                         if(result) {
+
                             // 2.3 Update answers
                             SurveyQuestion oldQuestion = oldQuestions.stream()
                                     .filter(q -> q.getQuestionId() == question.getQuestionId())

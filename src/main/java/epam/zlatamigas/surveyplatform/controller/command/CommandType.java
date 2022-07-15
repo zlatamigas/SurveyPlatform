@@ -49,8 +49,6 @@ public enum CommandType {
     START_EDIT_QUESTION(new StartEditQuestionCommand()),
     FINISH_EDIT_QUESTION(new FinishEditQuestionCommand()),
     REMOVE_QUESTION(new RemoveQuestionCommand()),
-    ADD_ANSWER(new AddAnswerCommand()),
-    REMOVE_ANSWER(new RemoveAnswerCommand()),
     CANCEL_EDIT_SURVEY(new CancelEditSurveyCommand()),
     CANCEL_EDIT_QUESTION(new CancelEditQuestionCommand()),
     DELETE_SURVEY(new DeleteSurveyCommand()),
