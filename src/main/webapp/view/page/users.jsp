@@ -40,7 +40,7 @@
             <div class="content-container">
                 <form action="controller" method="get">
                     <input type="hidden" name="command" value="${CommandType.START_CREATE_USER}">
-                    <button type="submit" class="btn btn-create"><fmt:message key="button.create"/></button>
+                    <button type="submit" class="btn btn-custom-fill"><fmt:message key="button.create"/></button>
                 </form>
 
                 <div class="search-container">

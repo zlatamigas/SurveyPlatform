@@ -23,9 +23,9 @@
     <a id="navUserSurveys" class="nav-link" role="tab" aria-selected="false"
        href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_USER_CREATED_SURVEYS}"><fmt:message key="leftnav.navbar.usersurveys"/></a>
 
-    <div class="dropdown-divider"></div>
     <c:choose>
         <c:when test="${sessionScope.user.role == UserRole.ADMIN}">
+            <div class="dropdown-divider"></div>
             <a id="navThemes"
                     class="nav-link"
                     type="button" data-toggle="collapse"

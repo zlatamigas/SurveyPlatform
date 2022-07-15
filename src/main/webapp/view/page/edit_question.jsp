@@ -134,7 +134,7 @@
                 }
             </script>
 
-            <button type="button" class="btn btn-create" onclick="addQuestion()">
+            <button type="button" class="btn btn-custom-fill" onclick="addQuestion()">
                 <fmt:message key="button.add"/>
             </button>
 

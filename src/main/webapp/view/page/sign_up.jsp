@@ -67,7 +67,7 @@
                 <label><fmt:message key="label.password.repeat"/></label>
                 <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
             </div>
-            <button type="submit" class="btn btn-authorisation" ><fmt:message key="button.signup"/></button>
+            <button type="submit" class="btn btn-custom-fill" ><fmt:message key="button.signup"/></button>
         </form>
 
     </div>

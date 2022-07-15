@@ -70,6 +70,16 @@ input[type=checkbox], input[type=radio] {
     background-color: var(--light-first-color);
     border-color: var(--light-first-color);
 }
+.btn-custom-fill{
+    width: 100%;
+    margin: 20px 0 20px 0;
+    background-color: var(--first-color);
+    color: var(--white-color);
+}
+.btn-custom-fill:hover{
+    background-color: var(--dark-first-color);
+    color: var(--white-color);
+}
 
 /*Home*/
 .home-container{
@@ -104,16 +114,6 @@ input[type=checkbox], input[type=radio] {
     color: var(--first-color);
     text-decoration-line: none;
 }
-.authorisation-container .btn-authorisation{
-    width: 100%;
-    margin: 20px 0 20px 0;
-    background-color: var(--first-color);
-    color: var(--white-color);
-}
-.authorisation-container .btn-authorisation:hover{
-    background-color: var(--dark-first-color);
-    color: var(--white-color);
-}
 .authorisation-container .offer-register-container{
     text-align: center;
     margin-top: 20px;
@@ -138,16 +138,6 @@ input[type=checkbox], input[type=radio] {
 }
 .content-container .padding-container{
     padding: 15px;
-}
-.content-container .btn-create{
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: transparent;
-    border-radius: 10px;
-    background-color: var(--first-color);
-    /*font-size: 2em;*/
-    color: var(--white-color);
 }
 .content-container .search-container{
     margin: 20px 0px;

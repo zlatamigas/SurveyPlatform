@@ -69,7 +69,7 @@
                         <fmt:message key="signin.forgotpassword"/></a>
                 </div>
             </div>
-            <button type="submit" class="btn btn-authorisation"><fmt:message key="button.signin"/></button>
+            <button type="submit" class="btn btn-custom-fill"><fmt:message key="button.signin"/></button>
         </form>
 
         <div class="offer-register-container">

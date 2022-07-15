@@ -42,7 +42,7 @@
                 <form action="controller" method="post">
                     <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
                     <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}" value="true">
-                    <button type="submit" class="btn btn-create"><fmt:message key="button.create"/></button>
+                    <button type="submit" class="btn btn-custom-fill"><fmt:message key="button.create"/></button>
                 </form>
 
                 <div class="search-container">

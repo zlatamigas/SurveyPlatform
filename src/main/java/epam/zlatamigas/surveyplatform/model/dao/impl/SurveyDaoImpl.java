@@ -71,7 +71,7 @@ public class SurveyDaoImpl implements SurveyDao {
     private static final String FIND_PARTICIPANT_SURVEY_BY_ID_STATEMENT = """
             SELECT survey_name, survey_description, theme_id 
             FROM surveys 
-            WHERE id_survey = ?
+            WHERE id_survey = ? AND survey_status = 'STARTED'
             """;
     private static final String FIND_CREATOR_SURVEY_BY_ID_STATEMENT = """
             SELECT survey_name, survey_status, survey_description, theme_id, creator_id 

@@ -41,7 +41,7 @@
 
                 <div id="themesContainer" class="hide-on-popup">
 
-                    <button id="showAddTheme" class="btn btn-create"><fmt:message key="button.create"/></button>
+                    <button id="showAddTheme" class="btn btn-custom-fill"><fmt:message key="button.create"/></button>
 
                     <div class="search-container">
                         <form action="controller" method="get">

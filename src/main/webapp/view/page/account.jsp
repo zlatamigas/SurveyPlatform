@@ -74,6 +74,14 @@
                             </c:if>
                         </div>
                     </div>
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <p class="card-text"><fmt:message key="label.user.registrationdate"/></p>
+                        </div>
+                        <div class="col">
+                            <p class="card-text">${sessionScope.user.registrationDate}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card account-card">
