@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.DEFAULT;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_CURRENT_PAGE;
 
 public class DefaultCommand implements Command {
     @Override
@@ -16,7 +16,7 @@ public class DefaultCommand implements Command {
 
         HttpSession session = request.getSession();
         String page = DEFAULT;
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

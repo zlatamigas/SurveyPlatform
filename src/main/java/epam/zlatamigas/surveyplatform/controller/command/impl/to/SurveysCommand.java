@@ -44,12 +44,12 @@ public class SurveysCommand implements Command {
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
             List<Theme> themes = themeService.findAllConfirmed();
-            session.setAttribute(ATTRIBUTE_THEMES, themes);
+            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

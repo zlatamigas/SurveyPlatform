@@ -16,8 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEYS;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEY_ATTEMPT;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
@@ -43,16 +42,15 @@ public class StartSurveyAttemptCommand implements Command {
                 if(survey.isPresent()){
                     page = SURVEY_ATTEMPT;
                     pageChangeType = FORWARD;
-                    session.setAttribute(ATTRIBUTE_SURVEY_ATTEMPT, survey.get());
+                    session.setAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT, survey.get());
+                    session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE,
+                            String.format(URL_CONTROLLER_WITH_PARAMETERS_PATTERN, request.getQueryString()));
                 }
 
             } catch (ServiceException e) {
                 logger.error(e);
             }
-
         }
-
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, pageChangeType);
     }

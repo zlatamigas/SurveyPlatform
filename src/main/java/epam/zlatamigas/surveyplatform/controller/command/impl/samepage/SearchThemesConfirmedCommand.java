@@ -15,6 +15,7 @@ import java.util.List;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_CONTROLLER_WITH_PARAMETERS_PATTERN;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 
@@ -46,7 +47,8 @@ public class SearchThemesConfirmedCommand implements Command {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE,
+                String.format(URL_CONTROLLER_WITH_PARAMETERS_PATTERN, request.getQueryString()));
 
         return new Router(page, FORWARD);
     }

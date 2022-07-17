@@ -7,10 +7,9 @@ import epam.zlatamigas.surveyplatform.exception.CommandException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_SURVEY_ATTEMPT;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_CURRENT_PAGE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_SURVEY_ATTEMPT;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SURVEYS;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class CancelSurveyAttemptCommand implements Command {
@@ -19,8 +18,8 @@ public class CancelSurveyAttemptCommand implements Command {
         HttpSession session = request.getSession();
         String page = SURVEYS;
 
-        session.removeAttribute(ATTRIBUTE_SURVEY_ATTEMPT);
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.removeAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, REDIRECT);
     }

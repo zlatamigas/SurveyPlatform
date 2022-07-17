@@ -38,7 +38,7 @@
         <form action="controller" method="post">
             <input type="hidden" name="command" value="${CommandType.CHANGE_PASSWORD}">
             <div class="form-group">
-                <input type="text" disabled  class="form-control" name="${DataHolder.ATTRIBUTE_CHANGE_PASSWORD_EMAIL}">
+                <input type="text" disabled  class="form-control" name="${DataHolder.SESSION_ATTRIBUTE_CHANGE_PASSWORD_EMAIL}">
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.password"/>">

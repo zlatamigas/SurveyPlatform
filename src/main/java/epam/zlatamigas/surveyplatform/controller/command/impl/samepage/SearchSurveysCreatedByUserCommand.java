@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_CONTROLLER_WITH_PARAMETERS_PATTERN;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
@@ -49,7 +50,7 @@ public class SearchSurveysCreatedByUserCommand implements Command {
             orderTypeName = DEFAULT_ORDER;
         }
 
-        User user = (User) session.getAttribute(ATTRIBUTE_USER);
+        User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
 
         request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, searchWordsStr);
         request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID, filterThemeId);
@@ -67,12 +68,13 @@ public class SearchSurveysCreatedByUserCommand implements Command {
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
             List<Theme> themes = themeService.findAllConfirmed();
-            session.setAttribute(ATTRIBUTE_THEMES, themes);
+            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE,
+                String.format(URL_CONTROLLER_WITH_PARAMETERS_PATTERN, request.getQueryString()));
 
         return new Router(page, FORWARD);
     }

@@ -15,6 +15,7 @@ import java.util.List;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
 
@@ -23,7 +24,8 @@ public class DeleteThemeCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page = THEMES_CONFIRMED;
+
+        String page = (String) session.getAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE);
 
         String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
         if(searchWordsStr == null){
@@ -50,8 +52,8 @@ public class DeleteThemeCommand implements Command {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, FORWARD);
+        return new Router(page, REDIRECT);
     }
 }

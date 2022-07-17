@@ -28,13 +28,13 @@ public class SendForgottenPasswordKeyCommand implements Command {
         UserService service = UserServiceImpl.getInstance();
         try {
             int key = service.requestChangePassword(email);
-            session.setAttribute(ATTRIBUTE_CHANGE_PASSWORD_KEY, key);
-            session.setAttribute(ATTRIBUTE_CHANGE_PASSWORD_EMAIL, email);
+            session.setAttribute(SESSION_ATTRIBUTE_CHANGE_PASSWORD_KEY, key);
+            session.setAttribute(SESSION_ATTRIBUTE_CHANGE_PASSWORD_EMAIL, email);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

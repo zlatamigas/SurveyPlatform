@@ -4,19 +4,15 @@ import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
-import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.UserService;
 import epam.zlatamigas.surveyplatform.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USERS;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
 public class FinishEditUserCommand implements Command {
 
@@ -33,12 +29,12 @@ public class FinishEditUserCommand implements Command {
         UserService service = UserServiceImpl.getInstance();
         try {
             service.updateRoleStatus(userId, roleName, statusName);
-            session.removeAttribute(ATTRIBUTE_EDITED_USER);
+            session.removeAttribute(SESSION_ATTRIBUTE_EDITED_USER);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, REDIRECT);
     }

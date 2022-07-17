@@ -17,8 +17,8 @@ public class CancelEditQuestionCommand implements Command {
         HttpSession session = request.getSession();
         String page = EDIT_SURVEY;
 
-        session.removeAttribute(ATTRIBUTE_EDITED_QUESTION);
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.removeAttribute(SESSION_ATTRIBUTE_EDITED_QUESTION);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

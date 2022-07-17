@@ -46,7 +46,7 @@
                 </form>
 
                 <div class="search-container">
-                    <form action="controller" method="get">
+                    <form id="userSurveySearchForm" action="controller" method="get">
                         <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}"
                                value="${CommandType.SEARCH_SURVEY_CREATED_BY_USER}">
                         <div class="form-row row-search">
@@ -74,7 +74,7 @@
                                         <option value="-1"
                                                 <c:if test="${requestScope.filter_theme_id == -1}">selected</c:if>>
                                             <fmt:message key="filter.none"/></option>
-                                        <c:forEach items="${sessionScope.themes}" var="theme">
+                                        <c:forEach items="${requestScope.requested_themes}" var="theme">
                                             <option value="${theme.themeId}"
                                                     <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
                                         </c:forEach>
@@ -175,6 +175,7 @@
                                             </p>
                                             <p class="card-text">${survey.description}</p>
                                             <div class="btn-toolbar justify-content-end" role="toolbar">
+
                                                 <form id="startEditSurveyForm${survey.surveyId}" action="controller"
                                                       method="post">
                                                     <input type="hidden" name="command"
@@ -182,22 +183,6 @@
                                                     <input type="hidden"
                                                            name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}"
                                                            value="false">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
-                                                           value="${survey.surveyId}">
-                                                </form>
-
-                                                <form id="deleteSurveyForm${survey.surveyId}" action="controller"
-                                                      method="post">
-                                                    <input type="hidden" name="command"
-                                                           value="${CommandType.DELETE_SURVEY}">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
-                                                           value="${survey.surveyId}">
-                                                </form>
-
-                                                <form id="stopSurveyForm${survey.surveyId}" action="controller"
-                                                      method="post">
-                                                    <input type="hidden" name="command"
-                                                           value="${CommandType.CHANGE_SURVEY_STATUS_CLOSED}">
                                                     <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
                                                            value="${survey.surveyId}">
                                                 </form>
@@ -221,7 +206,9 @@
                                                 <div class="btn-group" role="group">
                                                     <c:choose>
                                                         <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
-                                                            <button form="startSurveyForm${survey.surveyId}"
+                                                            <button form="userSurveySearchForm"
+                                                                    formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_STARTED}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                    formmethod="post"
                                                                     type="submit"
                                                                     class="btn btn-outline-success">
                                                                 <i class="fas fa-play"></i>
@@ -232,12 +219,16 @@
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </button>
                                                         </c:when>
+
                                                         <c:when test="${survey.status == SurveyStatus.STARTED}">
-                                                            <button form="stopSurveyForm${survey.surveyId}"
+                                                            <button form="userSurveySearchForm"
+                                                                    formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_CLOSED}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                    formmethod="post"
                                                                     type="submit"
                                                                     class="btn btn-outline-warning">
                                                                 <i class="fas fa-stop"></i>
                                                             </button>
+
                                                         </c:when>
                                                         <c:when test="${survey.status == SurveyStatus.CLOSED}">
                                                             <button form="viewResultSurveyForm${survey.surveyId}"
@@ -249,7 +240,10 @@
                                                     </c:choose>
 
                                                     <c:if test="${survey.status != SurveyStatus.STARTED}">
-                                                        <button form="deleteSurveyForm${survey.surveyId}" type="submit"
+                                                        <button form="userSurveySearchForm"
+                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_SURVEY}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                formmethod="post"
+                                                                type="submit"
                                                                 class="btn btn-outline-danger">
                                                             <i class="fas fa-trash"></i>
                                                         </button>

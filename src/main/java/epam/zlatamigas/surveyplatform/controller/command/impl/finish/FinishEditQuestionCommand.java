@@ -1,7 +1,6 @@
 package epam.zlatamigas.surveyplatform.controller.command.impl.finish;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
-import epam.zlatamigas.surveyplatform.controller.navigation.DataHolder;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
@@ -26,7 +25,7 @@ public class FinishEditQuestionCommand implements Command {
         HttpSession session = request.getSession();
         String page = EDIT_SURVEY;
 
-        SurveyQuestion question = (SurveyQuestion) session.getAttribute(ATTRIBUTE_EDITED_QUESTION);
+        SurveyQuestion question = (SurveyQuestion) session.getAttribute(SESSION_ATTRIBUTE_EDITED_QUESTION);
         String formulation = request.getParameter(PARAMETER_QUESTION_FORMULATION);
 
         String[] multipleSelect = request.getParameterValues(PARAMETER_QUESTION_SELECT_MULTIPLE);
@@ -47,14 +46,14 @@ public class FinishEditQuestionCommand implements Command {
         question.setFormulation(formulation);
         question.setSelectMultiple(selectMultiple);
         question.setAnswers(answers);
-        session.setAttribute(ATTRIBUTE_EDITED_QUESTION, question);
+        session.setAttribute(SESSION_ATTRIBUTE_EDITED_QUESTION, question);
 
         FormValidator validator = QuestionFormValidator.getInstance();
         Map<String, String[]> requestParameters = request.getParameterMap();
         Map<String, String> validationFeedback = validator.validateForm(requestParameters);
 
         if(validationFeedback.isEmpty()){
-            Survey survey = (Survey) session.getAttribute(ATTRIBUTE_EDITED_SURVEY);
+            Survey survey = (Survey) session.getAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY);
             if (question.getQuestionId() != 0) {
                 List<SurveyQuestion> questions = survey.getQuestions();
                 int i = 0;
@@ -74,9 +73,9 @@ public class FinishEditQuestionCommand implements Command {
                 survey.addQuestion(question);
             }
 
-            session.removeAttribute(ATTRIBUTE_EDITED_QUESTION);
-            session.setAttribute(ATTRIBUTE_EDITED_SURVEY, survey);
-            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+            session.removeAttribute(SESSION_ATTRIBUTE_EDITED_QUESTION);
+            session.setAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY, survey);
+            session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
         } else {
             page = EDIT_QUESTION;
             request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);

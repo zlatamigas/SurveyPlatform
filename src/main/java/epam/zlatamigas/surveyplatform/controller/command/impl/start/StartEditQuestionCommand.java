@@ -23,7 +23,7 @@ public class StartEditQuestionCommand implements Command {
 
         boolean createNew = Boolean.parseBoolean(request.getParameter(PARAMETER_CREATE_NEW_QUESTION));
 
-        Survey survey = (Survey) session.getAttribute(ATTRIBUTE_EDITED_SURVEY);
+        Survey survey = (Survey) session.getAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY);
         survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
         survey.setTheme(new Theme.ThemeBuilder().setThemeId(Integer.parseInt(request.getParameter(PARAMETER_SURVEY_THEME_ID))).getTheme());
         survey.setDescription(request.getParameter(PARAMETER_SURVEY_DESCRIPTION));
@@ -41,9 +41,9 @@ public class StartEditQuestionCommand implements Command {
 
         String page = EDIT_QUESTION;
 
-        session.setAttribute(ATTRIBUTE_EDITED_SURVEY, survey);
-        session.setAttribute(ATTRIBUTE_EDITED_QUESTION, question);
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY, survey);
+        session.setAttribute(SESSION_ATTRIBUTE_EDITED_QUESTION, question);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

@@ -51,9 +51,9 @@ public class StartEditSurveyCommand implements Command {
         HttpSession session = request.getSession();
         String page = EDIT_SURVEY;
 
-        session.setAttribute(ATTRIBUTE_EDITED_SURVEY, survey);
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
-        session.setAttribute(ATTRIBUTE_THEMES, themes);
+        session.setAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY, survey);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_THEMES, themes);
 
         return new Router(page, FORWARD);
     }

@@ -14,16 +14,10 @@
     <title><fmt:message key="title.signin"/></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <%-- Bootstrap and jQuery --%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/css/bootstrap.min.css">
-    <script src="${pageContext.request.contextPath}/static/lib/jquery-3.5.1/jquery-3.5.1.slim.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/js/bootstrap.bundle.min.js"></script>
-
-    <%-- Custom style --%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css">
 </head>
 <body>
+
+<jsp:include page="/view/fragment/onedit_header.jsp"/>
 
 <div class="container">
 

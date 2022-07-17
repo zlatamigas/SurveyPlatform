@@ -150,14 +150,14 @@ public class CheckUserRoleFilter implements Filter {
 
         String commandStr = request.getParameter(PARAMETER_COMMAND);
 
-        User user = (User) session.getAttribute(ATTRIBUTE_USER);
+        User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
         UserRole userRole = user != null ? user.getRole() : GUEST;
 
         EnumSet<CommandType> allowedCommands = userCommands.get(userRole);
         CommandType command = CommandType.defineCommandType(commandStr);
 
         if (!allowedCommands.contains(command)) {
-            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, PageNavigation.DEFAULT);
+            session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, PageNavigation.DEFAULT);
             response.sendRedirect(request.getContextPath() + PageNavigation.DEFAULT);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);

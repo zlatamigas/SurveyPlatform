@@ -31,7 +31,7 @@ public class UsersCommand implements Command {
         request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS, DEFAULT_FILTER_STR_ALL);
         request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, DEFAULT_ORDER);
 
-        User creator = (User) session.getAttribute(ATTRIBUTE_USER);
+        User creator = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
 
         UserService service = UserServiceImpl.getInstance();
 
@@ -43,7 +43,7 @@ public class UsersCommand implements Command {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

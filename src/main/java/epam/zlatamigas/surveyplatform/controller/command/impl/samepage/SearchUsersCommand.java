@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_CONTROLLER_WITH_PARAMETERS_PATTERN;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USERS;
@@ -50,7 +51,7 @@ public class SearchUsersCommand implements Command {
         request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
 
 
-        User creator = (User) session.getAttribute(ATTRIBUTE_USER);
+        User creator = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
 
         UserService service = UserServiceImpl.getInstance();
 
@@ -62,7 +63,8 @@ public class SearchUsersCommand implements Command {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE,
+                String.format(URL_CONTROLLER_WITH_PARAMETERS_PATTERN, request.getQueryString()));
 
         return new Router(page, FORWARD);
     }

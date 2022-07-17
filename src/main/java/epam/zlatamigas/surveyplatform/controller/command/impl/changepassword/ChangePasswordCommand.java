@@ -20,7 +20,7 @@ public class ChangePasswordCommand implements Command {
         HttpSession session = request.getSession();
         String page;
 
-        String email = (String) session.getAttribute(ATTRIBUTE_CHANGE_PASSWORD_EMAIL);
+        String email = (String) session.getAttribute(SESSION_ATTRIBUTE_CHANGE_PASSWORD_EMAIL);
 
         String password = request.getParameter(PARAMETER_PASSWORD);
         String passwordRepeat = request.getParameter(PARAMETER_PASSWORD_REPEAT);
@@ -29,7 +29,7 @@ public class ChangePasswordCommand implements Command {
 
         try {
             if(service.changePassword(email, password)){
-                session.removeAttribute(ATTRIBUTE_CHANGE_PASSWORD_EMAIL);
+                session.removeAttribute(SESSION_ATTRIBUTE_CHANGE_PASSWORD_EMAIL);
                 page = SIGN_IN;
             } else {
                 page = FORGOT_PASSWORD_CHANGE_PASSWORD;
@@ -38,7 +38,7 @@ public class ChangePasswordCommand implements Command {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

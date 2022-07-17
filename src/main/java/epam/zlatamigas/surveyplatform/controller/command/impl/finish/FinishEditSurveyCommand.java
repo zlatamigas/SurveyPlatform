@@ -16,7 +16,6 @@ import epam.zlatamigas.surveyplatform.util.validator.impl.SurveyEditFormValidato
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.util.List;
 import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
@@ -40,15 +39,15 @@ public class FinishEditSurveyCommand implements Command {
         Map<String, String[]> requestParameters = request.getParameterMap();
         Map<String, String> validationFeedback = validator.validateForm(requestParameters);
 
-        Survey survey = (Survey) session.getAttribute(ATTRIBUTE_EDITED_SURVEY);
+        Survey survey = (Survey) session.getAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY);
         survey.setName(request.getParameter(PARAMETER_SURVEY_NAME));
         survey.setDescription(request.getParameter(PARAMETER_SURVEY_DESCRIPTION));
         survey.setTheme(new Theme.ThemeBuilder().setThemeId(Integer.parseInt(request.getParameter(PARAMETER_SURVEY_THEME_ID))).getTheme());
         survey.setStatus(SurveyStatus.NOT_STARTED);
-        User creator = (User)session.getAttribute(ATTRIBUTE_USER);
+        User creator = (User)session.getAttribute(SESSION_ATTRIBUTE_USER);
         survey.setCreator(creator);
 
-        session.setAttribute(ATTRIBUTE_EDITED_SURVEY, survey);
+        session.setAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY, survey);
 
         if(validationFeedback.isEmpty()){
 
@@ -67,9 +66,9 @@ public class FinishEditSurveyCommand implements Command {
             page = USER_SURVEYS;
             changeType = REDIRECT;
 
-            session.removeAttribute(ATTRIBUTE_EDITED_SURVEY);
-            session.removeAttribute(ATTRIBUTE_THEMES);
-            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+            session.removeAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY);
+            session.removeAttribute(SESSION_ATTRIBUTE_THEMES);
+            session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
         } else {
             request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }

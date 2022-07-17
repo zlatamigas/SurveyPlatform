@@ -29,12 +29,12 @@ public class StartEditUserCommand implements Command {
         UserService surveyService = UserServiceImpl.getInstance();
         try {
             Optional<User> user = surveyService.findById(userId);
-            user.ifPresent(value -> session.setAttribute(ATTRIBUTE_EDITED_USER, value));
+            user.ifPresent(value -> session.setAttribute(SESSION_ATTRIBUTE_EDITED_USER, value));
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

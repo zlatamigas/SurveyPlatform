@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<jsp:include page="/view/fragment/header.jsp"/>
+<jsp:include page="/view/fragment/onedit_header.jsp"/>
 
 <div class="container">
 

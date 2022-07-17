@@ -34,7 +34,7 @@ public class FinishSurveyAttemptCommand implements Command {
         String page = SURVEY_ATTEMPT;
         Router.PageChangeType pageChangeType = FORWARD;
 
-        Survey survey = (Survey) session.getAttribute(ATTRIBUTE_SURVEY_ATTEMPT);
+        Survey survey = (Survey) session.getAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT);
         List<SurveyQuestion> questions = survey.getQuestions();
         for (SurveyQuestion question : questions) {
             if (question.isSelectMultiple()) {
@@ -61,14 +61,14 @@ public class FinishSurveyAttemptCommand implements Command {
             }
         }
 
-        session.setAttribute(ATTRIBUTE_SURVEY_ATTEMPT, survey);
+        session.setAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT, survey);
 
         FormValidator validator = SurveyUserAttemptFormValidator.getInstance();
         Map<String, String[]> requestParameters = request.getParameterMap();
         Map<String, String> validationFeedback = validator.validateForm(requestParameters);
 
         if (validationFeedback.isEmpty()) {
-            User user = (User) session.getAttribute(ATTRIBUTE_USER);
+            User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
 
             SurveyService surveyService = SurveyServiceImpl.getInstance();
             try {
@@ -86,8 +86,8 @@ public class FinishSurveyAttemptCommand implements Command {
                 throw new CommandException(e);
             }
 
-            session.removeAttribute(ATTRIBUTE_SURVEY_ATTEMPT);
-            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+            session.removeAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT);
+            session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
         } else {
             request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }

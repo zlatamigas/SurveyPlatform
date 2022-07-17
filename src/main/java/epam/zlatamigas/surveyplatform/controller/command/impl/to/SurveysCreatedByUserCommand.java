@@ -6,9 +6,13 @@ import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
+import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
+import epam.zlatamigas.surveyplatform.service.ThemeService;
 import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
+import epam.zlatamigas.surveyplatform.service.impl.ThemeServiceImpl;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +21,7 @@ import java.util.List;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_CURRENT_PAGE;
 
 public class SurveysCreatedByUserCommand implements Command {
     @Override
@@ -34,14 +38,22 @@ public class SurveysCreatedByUserCommand implements Command {
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
 
-            int creatorId = ((User)session.getAttribute(ATTRIBUTE_USER)).getUserId();
+            int creatorId = ((User)session.getAttribute(SESSION_ATTRIBUTE_USER)).getUserId();
             List<Survey> surveys = service.findCreatorSurveysCommonInfoSearch(DEFAULT_FILTER_ID_ALL, DEFAULT_SEARCH_WORDS, DEFAULT_ORDER, DEFAULT_FILTER_STR_ALL, creatorId);
 
             request.setAttribute(REQUEST_ATTRIBUTE_USER_SURVEYS, surveys);
 
-            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+            session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e);
+        }
+
+        ThemeService themeService = ThemeServiceImpl.getInstance();
+        try {
+            List<Theme> themes = themeService.findAllConfirmed();
+            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
         }
 
         return new Router(page, FORWARD);

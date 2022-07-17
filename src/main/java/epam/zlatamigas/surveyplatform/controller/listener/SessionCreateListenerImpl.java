@@ -1,6 +1,7 @@
 package epam.zlatamigas.surveyplatform.controller.listener;
 
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_USER;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_USER;
 
 @WebListener
 public class SessionCreateListenerImpl implements HttpSessionListener {
@@ -24,16 +25,16 @@ public class SessionCreateListenerImpl implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se) {
 
         HttpSession session = se.getSession();
-        session.setAttribute(SESSION_ATTRIBUTE_PARAMETER_LOCALISATION, DEFAULT_LOCALISATION);
-        session.setAttribute(ATTRIBUTE_USER, new User.UserBuilder().setRole(UserRole.GUEST).getUser());
 
-        /* Session is created. */
-        logger.info("---------------> session created: " + se.getSession().getId());
+        session.setAttribute(SESSION_ATTRIBUTE_PARAMETER_LOCALISATION, DEFAULT_LOCALISATION);
+        session.setAttribute(SESSION_ATTRIBUTE_USER, new User.UserBuilder().setRole(UserRole.GUEST).getUser());
+
+        logger.info("Session created: {}", se.getSession().getId());
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        /* Session is destroyed. */
-        logger.info("---------------> session destroyed: " + se.getSession().getId());
+
+        logger.info("Session destroyed: {}", se.getSession().getId());
     }
 }

@@ -49,25 +49,9 @@
                         <fmt:message key="header.navbar.surveys"/>
                     </a>
                 </li>
-
-                <li class="nav-item dropdown">
-
-                    <a class="nav-link" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-globe"></i>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=en">English</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=ru">Русский</a>
-                    </div>
-                </li>
             </ul>
 
-            <ul class="navbar-nav justify-content-end align-items-center">
-
+            <ul class="navbar-nav justify-content-end">
                 <c:choose>
                     <c:when test="${sessionScope.user != null && sessionScope.user.role != UserRole.GUEST}">
                         <li class="nav-item">
@@ -88,25 +72,7 @@
                                 </c:when>
                             </c:choose>
                         </li>
-                        <li class="nav-item">
-                            <form action="controller">
-                                <input type="hidden" name="command" value="${CommandType.LOGOUT}">
-                                <button type="submit" class="btn btn-logout">
-                                    <fmt:message key="header.navbar.logout"/>
-                                </button>
-                            </form>
-                        </li>
                     </c:when>
-                    <c:otherwise>
-                        <li class="nav-item">
-                            <form action="controller">
-                                <input type="hidden" name="command" value="${CommandType.START_SIGN_IN}">
-                                <button type="submit" class="btn btn-login">
-                                    <fmt:message key="header.navbar.login"/>
-                                </button>
-                            </form>
-                        </li>
-                    </c:otherwise>
                 </c:choose>
                 </li>
             </ul>

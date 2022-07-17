@@ -18,7 +18,9 @@ import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_THEME_EXISTS;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
@@ -28,19 +30,8 @@ public class AddThemeCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page = THEMES_CONFIRMED;
-
-        String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
-        if (searchWordsStr == null) {
-            searchWordsStr = DEFAULT_SEARCH_WORDS;
-        }
-        String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
-        if (orderTypeName == null) {
-            orderTypeName = DEFAULT_ORDER;
-        }
-
-        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, searchWordsStr);
-        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
+        String page = (String) session.getAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE);
+        PageChangeType pageChangeType = FORWARD;
 
         String themeName = request.getParameter(PARAMETER_THEME_NAME);
 
@@ -50,30 +41,50 @@ public class AddThemeCommand implements Command {
 
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
-            if (validationFeedback.isEmpty()) {
+            boolean result = !validationFeedback.isEmpty();
 
-                User user = (User)session.getAttribute(ATTRIBUTE_USER);
+            if (validationFeedback.isEmpty()) {
+                User user = (User)session.getAttribute(SESSION_ATTRIBUTE_USER);
                 if(user != null && user.getRole() != null){
-                    boolean result = switch (user.getRole()){
+                    result = switch (user.getRole()){
                         case ADMIN -> themeService.insertConfirmedTheme(themeName);
                         case USER -> themeService.insertWaitingTheme(themeName);
                         default -> false;
                     };
                     if (!result) {
                         request.setAttribute(REQUEST_ATTRIBUTE_THEME_EXISTS, MESSAGE_INVALID_THEME_EXISTS);
+                    } else {
+                        pageChangeType = REDIRECT;
                     }
                 }
             } else {
                 request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
             }
-            List<Theme> themes = themeService.findConfirmedSearch(searchWordsStr, orderTypeName);
-            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
+
+            if(!result) {
+
+                String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
+                if (searchWordsStr == null) {
+                    searchWordsStr = DEFAULT_SEARCH_WORDS;
+                }
+                String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
+                if (orderTypeName == null) {
+                    orderTypeName = DEFAULT_ORDER;
+                }
+
+                request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, searchWordsStr);
+                request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
+
+                List<Theme> themes = themeService.findConfirmedSearch(searchWordsStr, orderTypeName);
+                request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
+            }
+
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, FORWARD);
+        return new Router(page, pageChangeType);
     }
 }

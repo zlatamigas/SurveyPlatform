@@ -50,7 +50,7 @@ public class FinishSignUpCommand implements Command {
                 throw new CommandException(e.getMessage(), e);
             }
 
-            session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+            session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
         } else {
             request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }

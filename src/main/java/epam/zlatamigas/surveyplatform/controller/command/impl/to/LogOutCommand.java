@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_CURRENT_PAGE;
 
 public class LogOutCommand implements Command {
     @Override
@@ -24,7 +24,7 @@ public class LogOutCommand implements Command {
         session = request.getSession();
 
         session.setAttribute(SESSION_ATTRIBUTE_PARAMETER_LOCALISATION, localisation);
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, REDIRECT);
     }

@@ -18,17 +18,17 @@ public class ConfirmPasswordKeyCommand implements Command {
         HttpSession session = request.getSession();
         String page;
 
-        int key = (int)session.getAttribute(ATTRIBUTE_CHANGE_PASSWORD_KEY);
+        int key = (int)session.getAttribute(SESSION_ATTRIBUTE_CHANGE_PASSWORD_KEY);
         int receivedKey = Integer.parseInt(request.getParameter(PARAMETER_FORGOT_PASSWORD_CHANGE_KEY));
 
         if(receivedKey == key){
-            session.removeAttribute(ATTRIBUTE_CHANGE_PASSWORD_KEY);
+            session.removeAttribute(SESSION_ATTRIBUTE_CHANGE_PASSWORD_KEY);
             page = FORGOT_PASSWORD_CHANGE_PASSWORD;
         } else {
             page = FORGOT_PASSWORD_RECEIVE_KEY;
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

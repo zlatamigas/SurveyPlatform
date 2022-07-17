@@ -5,15 +5,14 @@ import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
-import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.service.ThemeService;
 import epam.zlatamigas.surveyplatform.service.impl.ThemeServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
@@ -22,7 +21,7 @@ public class RejectThemeCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page = PageNavigation.THEMES_WAITING;
+        String page = THEMES_WAITING;
 
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
@@ -37,7 +36,7 @@ public class RejectThemeCommand implements Command {
             throw new CommandException(e);
         }
 
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, REDIRECT);
     }

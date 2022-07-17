@@ -6,7 +6,7 @@ import epam.zlatamigas.surveyplatform.exception.CommandException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.ATTRIBUTE_CURRENT_PAGE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_CURRENT_PAGE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.HOME;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 
@@ -16,7 +16,7 @@ public class HomeCommand implements Command {
 
         HttpSession session = request.getSession();
         String page = HOME;
-        session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);
     }

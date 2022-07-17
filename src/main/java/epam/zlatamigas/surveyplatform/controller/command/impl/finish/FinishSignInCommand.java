@@ -50,7 +50,7 @@ public class FinishSignInCommand implements Command {
                     User user = userFromDb.get();
 
                     if(user.getStatus() == UserStatus.ACTIVE){
-                        session.setAttribute(ATTRIBUTE_USER, user);
+                        session.setAttribute(SESSION_ATTRIBUTE_USER, user);
                         page = HOME;
                         pageChangeType = REDIRECT;
                     } else {
@@ -61,7 +61,7 @@ public class FinishSignInCommand implements Command {
                     request.setAttribute(REQUEST_ATTRIBUTE_USER_INVALID, MESSAGE_INVALID_USER_EXISTS_LOGIN);
                 }
 
-                session.setAttribute(ATTRIBUTE_CURRENT_PAGE, page);
+                session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
             } catch (ServiceException e) {
                 throw new CommandException(e.getMessage(), e);
             }
