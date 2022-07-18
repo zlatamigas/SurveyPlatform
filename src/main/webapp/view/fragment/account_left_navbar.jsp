@@ -21,7 +21,7 @@
     <div class="dropdown-divider"></div>
 
     <a id="navUserSurveys" class="nav-link" role="tab" aria-selected="false"
-       href="${pageContext.request.contextPath}/controller?command=${CommandType.SURVEY_CREATED_BY_USER}"><fmt:message key="leftnav.navbar.usersurveys"/></a>
+       href="${pageContext.request.contextPath}/controller?command=${CommandType.USER_SURVEYS}"><fmt:message key="leftnav.navbar.usersurveys"/></a>
 
 
 

@@ -6,6 +6,7 @@ import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
 import epam.zlatamigas.surveyplatform.model.entity.Theme;
+import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 import epam.zlatamigas.surveyplatform.service.ThemeService;
 import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
@@ -24,6 +25,10 @@ public class StartEditSurveyCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
+        HttpSession session = request.getSession();
+        String page = EDIT_SURVEY;
+
+        User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
         boolean createNew = Boolean.parseBoolean(request.getParameter(PARAMETER_CREATE_NEW_SURVEY));
 
         Survey survey = null;
@@ -34,7 +39,7 @@ public class StartEditSurveyCommand implements Command {
 
             SurveyService surveyService = SurveyServiceImpl.getInstance();
             try {
-               survey = surveyService.findCreatorSurveyInfo(surveyId).orElse(new Survey());
+               survey = surveyService.findCreatorSurveyInfo(surveyId, user.getUserId()).orElse(new Survey());
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }
@@ -48,8 +53,6 @@ public class StartEditSurveyCommand implements Command {
             throw new CommandException(e);
         }
 
-        HttpSession session = request.getSession();
-        String page = EDIT_SURVEY;
 
         session.setAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY, survey);
         session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);

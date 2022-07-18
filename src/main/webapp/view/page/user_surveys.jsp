@@ -48,7 +48,7 @@
                 <div class="search-container">
                     <form id="userSurveySearchForm" action="controller" method="get">
                         <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}"
-                               value="${CommandType.SEARCH_SURVEY_CREATED_BY_USER}">
+                               value="${CommandType.USER_SURVEYS}">
                         <div class="form-row row-search">
                             <div class="col">
                                 <input type="text" class="form-control input-search"

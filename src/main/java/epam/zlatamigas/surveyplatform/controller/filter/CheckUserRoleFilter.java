@@ -45,12 +45,9 @@ public class CheckUserRoleFilter implements Filter {
                         CONFIRM_CHANGE_PASSWORD_KEY,
                         CHANGE_PASSWORD,
                         // List data
-                        LIST_SURVEYS,
-                        SEARCH_SURVEYS,
+                        SURVEYS,
                         USERS,
-                        SEARCH_USERS,
-                        SURVEY_CREATED_BY_USER,
-                        SEARCH_SURVEY_CREATED_BY_USER,
+                        USER_SURVEYS,
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
@@ -68,7 +65,6 @@ public class CheckUserRoleFilter implements Filter {
                         CANCEL_SURVEY_ATTEMPT,
                         SURVEY_RESULT,
                         THEMES_CONFIRMED,
-                        SEARCH_THEMES_CONFIRMED,
                         THEMES_WAITING,
                         CONFIRM_THEME,
                         REJECT_THEME,
@@ -92,10 +88,8 @@ public class CheckUserRoleFilter implements Filter {
                         CONFIRM_CHANGE_PASSWORD_KEY,
                         CHANGE_PASSWORD,
                         // List data
-                        LIST_SURVEYS,
-                        SEARCH_SURVEYS,
-                        SURVEY_CREATED_BY_USER,
-                        SEARCH_SURVEY_CREATED_BY_USER,
+                        SURVEYS,
+                        USER_SURVEYS,
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
@@ -115,7 +109,6 @@ public class CheckUserRoleFilter implements Filter {
                         USER_ACCOUNT,
                         // Themes
                         THEMES_CONFIRMED,
-                        SEARCH_THEMES_CONFIRMED,
                         ADD_THEME
                 ),
                 GUEST, EnumSet.of(
@@ -132,8 +125,7 @@ public class CheckUserRoleFilter implements Filter {
                         CONFIRM_CHANGE_PASSWORD_KEY,
                         CHANGE_PASSWORD,
                         // List data
-                        LIST_SURVEYS,
-                        SEARCH_SURVEYS,
+                        SURVEYS,
                         // Participate in survey
                         START_SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,

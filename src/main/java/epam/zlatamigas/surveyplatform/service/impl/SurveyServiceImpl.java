@@ -179,10 +179,10 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Optional<Survey> findCreatorSurveyInfo(int surveyId) throws ServiceException {
+    public Optional<Survey> findCreatorSurveyInfo(int surveyId, int creatorId) throws ServiceException {
 
         try {
-            return surveyDao.findCreatorSurveyInfo(surveyId);
+            return surveyDao.findCreatorSurveyInfo(surveyId, creatorId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -147,7 +147,7 @@
 
     <div class="bottom-actions-container">
         <div class="btn-group-custom">
-            <a href="${pageContext.request.contextPath}/controller?command=${CommandType.SURVEY_CREATED_BY_USER}"
+            <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USER_SURVEYS}"
                class="btn btn-warning"><fmt:message key="button.cancel"/></a>
         </div>
     </div>

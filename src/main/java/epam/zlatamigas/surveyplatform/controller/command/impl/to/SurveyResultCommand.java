@@ -5,6 +5,7 @@ import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
 import epam.zlatamigas.surveyplatform.model.entity.Survey;
+import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
 
@@ -22,10 +23,12 @@ public class SurveyResultCommand implements Command {
         HttpSession session = request.getSession();
         String page = SURVEY_RESULT;
 
+        User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
+
         int surveyId = Integer.parseInt(request.getParameter(PARAMETER_SURVEY_ID));
         SurveyService surveyService = SurveyServiceImpl.getInstance();
         try {
-            Survey survey = surveyService.findCreatorSurveyInfo(surveyId).orElse(new Survey());
+            Survey survey = surveyService.findCreatorSurveyInfo(surveyId, user.getUserId()).orElse(new Survey());
             survey.getQuestions().forEach(surveyQuestion -> surveyQuestion.getAnswers().sort( (a1, a2) -> a2.getSelectedCount() - a1.getSelectedCount()));
             request.setAttribute(REQUEST_ATTRIBUTE_SURVEY_RESULT, survey);
         } catch (ServiceException e) {

@@ -33,18 +33,14 @@ public enum CommandType {
     CHANGE_PASSWORD(new ChangePasswordCommand()),
 
     // List started surveys
-    LIST_SURVEYS(new SurveysCommand()),
-    SEARCH_SURVEYS(new SearchSurveysCommand()),
+    SURVEYS(new SurveysCommand()),
 
     // List created surveys of specified user (for survey creator)
-    SURVEY_CREATED_BY_USER(new SurveysCreatedByUserCommand()),
-    SEARCH_SURVEY_CREATED_BY_USER(new SearchSurveysCreatedByUserCommand()),
+    USER_SURVEYS(new UserSurveysCommand()),
 
     // List users and themes data (admin)
     USERS(new UsersCommand()),
-    SEARCH_USERS(new SearchUsersCommand()),
     THEMES_CONFIRMED(new ThemesConfirmedCommand()),
-    SEARCH_THEMES_CONFIRMED(new SearchThemesConfirmedCommand()),
     THEMES_WAITING(new ThemesWaitingCommand()),
 
     // CRUD survey and its parts (for survey creator)

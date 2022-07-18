@@ -40,7 +40,7 @@
                     <h5 class="card-title"><fmt:message key="home.participate.header"/></h5>
                     <p class="card-text"></p>
                     <a class="btn btn-outline-custom"
-                       href="${pageContext.request.contextPath}/controller?command=${CommandType.LIST_SURVEYS}">
+                       href="${pageContext.request.contextPath}/controller?command=${CommandType.SURVEYS}">
                         <fmt:message key="home.participate.button"/>
                     </a>
                 </div>

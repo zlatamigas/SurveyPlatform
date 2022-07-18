@@ -76,7 +76,7 @@ public class SurveyDaoImpl implements SurveyDao {
     private static final String FIND_CREATOR_SURVEY_BY_ID_STATEMENT = """
             SELECT survey_name, survey_status, survey_description, theme_id, creator_id 
             FROM surveys  
-            WHERE id_survey = ?
+            WHERE id_survey = ? AND creator_id = ?
             """;
     private static final String FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT = """
             SELECT id_question, formulation, select_multiple 
@@ -330,7 +330,7 @@ public class SurveyDaoImpl implements SurveyDao {
     }
 
     @Override
-    public Optional<Survey> findCreatorSurveyInfo(int surveyId) throws DaoException {
+    public Optional<Survey> findCreatorSurveyInfo(int surveyId, int creatorId) throws DaoException {
         Optional<Survey> surveyOptional = Optional.empty();
 
         Map<Integer, Theme> themes = findThemes();
@@ -341,6 +341,7 @@ public class SurveyDaoImpl implements SurveyDao {
 
             try (PreparedStatement psFindSurvey = connection.prepareStatement(FIND_CREATOR_SURVEY_BY_ID_STATEMENT)) {
                 psFindSurvey.setInt(1, surveyId);
+                psFindSurvey.setInt(2, creatorId);
                 try (ResultSet rsSurvey = psFindSurvey.executeQuery()) {
                     if (rsSurvey.next()) {
 
@@ -610,7 +611,7 @@ public class SurveyDaoImpl implements SurveyDao {
     @Override
     public boolean update(Survey survey) throws DaoException {
 
-        Optional<Survey> oldSurveyOptional = findCreatorSurveyInfo(survey.getSurveyId());
+        Optional<Survey> oldSurveyOptional = findCreatorSurveyInfo(survey.getSurveyId(), survey.getCreator().getUserId());
         if (oldSurveyOptional.isEmpty()) {
             logger.error("Survey does not exist: id_survey = {}", survey.getSurveyId());
             return false;

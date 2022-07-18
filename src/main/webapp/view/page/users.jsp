@@ -45,7 +45,7 @@
 
                 <div class="search-container">
                     <form action="controller" method="get">
-                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SEARCH_USERS}">
+                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.USERS}">
                         <div class="form-row row-search">
                             <div class="col">
                                 <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">

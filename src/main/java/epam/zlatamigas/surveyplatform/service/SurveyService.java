@@ -47,10 +47,11 @@ public interface SurveyService {
      * Find info about specified survey: question info with statistics info.
      *
      * @param surveyId Survey id to use for search.
+     * @param creatorId Creator id to use for search.
      * @return Surveys with common info with question and answer data with statistics.
      * @throws ServiceException If a database access error occurs.
      */
-    Optional<Survey> findCreatorSurveyInfo(int surveyId) throws ServiceException;
+    Optional<Survey> findCreatorSurveyInfo(int surveyId, int creatorId) throws ServiceException;
 
     /**
      * Find preview info (name, description, theme) about started surveys according to

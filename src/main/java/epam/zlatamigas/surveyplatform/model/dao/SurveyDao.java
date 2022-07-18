@@ -59,10 +59,11 @@ public interface SurveyDao extends BaseDao<Survey> {
      * Find info about specified survey: question info with statistics info.
      *
      * @param surveyId Survey id to use for search.
+     * @param creatorId Creator id to use for search.
      * @return Surveys with common info with question and answer data with statistics.
      * @throws DaoException If a database access error occurs.
      */
-    Optional<Survey> findCreatorSurveyInfo(int surveyId) throws DaoException;
+    Optional<Survey> findCreatorSurveyInfo(int surveyId, int creatorId) throws DaoException;
 
     /**
      * Find preview info (name, description, theme) about started surveys according to
