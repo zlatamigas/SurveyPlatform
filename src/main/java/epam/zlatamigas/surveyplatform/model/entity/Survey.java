@@ -1,5 +1,6 @@
 package epam.zlatamigas.surveyplatform.model.entity;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,8 @@ public class Survey extends AbstractEntity implements Cloneable {
     private Theme theme;
     private User creator;
     private List<SurveyQuestion> questions;
+    private LocalDateTime startDateTime;
+    private LocalDateTime closeDateTime;
 
     public Survey() {
         surveyId = 0;
@@ -82,6 +85,22 @@ public class Survey extends AbstractEntity implements Cloneable {
         return questions.remove(surveyQuestion);
     }
 
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public LocalDateTime getCloseDateTime() {
+        return closeDateTime;
+    }
+
+    public void setCloseDateTime(LocalDateTime closeDateTime) {
+        this.closeDateTime = closeDateTime;
+    }
+
     public static class SurveyBuilder {
         private final Survey survey;
 
@@ -124,6 +143,16 @@ public class Survey extends AbstractEntity implements Cloneable {
             return this;
         }
 
+        public SurveyBuilder setStartDateTime(LocalDateTime startDateTime) {
+            survey.setStartDateTime(startDateTime);
+            return this;
+        }
+
+        public SurveyBuilder setCloseDateTime(LocalDateTime closeDateTime) {
+            survey.setCloseDateTime(closeDateTime);
+            return this;
+        }
+
         public Survey getSurvey() {
             return survey;
         }
@@ -147,7 +176,11 @@ public class Survey extends AbstractEntity implements Cloneable {
                 && theme.equals(survey.theme)
                 && creator != null
                 && creator.equals(survey.creator)
-                && status == survey.status;
+                && status == survey.status
+                && startDateTime != null
+                && startDateTime.equals(survey.startDateTime)
+                && closeDateTime != null
+                && closeDateTime.equals(survey.closeDateTime);
     }
 
     @Override
@@ -162,6 +195,8 @@ public class Survey extends AbstractEntity implements Cloneable {
         hash = seed * hash + (status != null ? status.hashCode() : 0);
         hash = seed * hash + (theme != null ? theme.hashCode() : 0);
         hash = seed * hash + (creator != null ? creator.hashCode() : 0);
+        hash = seed * hash + (startDateTime != null ? startDateTime.hashCode() : 0);
+        hash = seed * hash + (closeDateTime != null ? closeDateTime.hashCode() : 0);
         for (SurveyQuestion question : questions) {
             hash = seed * hash + (question != null ? question.hashCode() : 0);
         }
@@ -184,6 +219,8 @@ public class Survey extends AbstractEntity implements Cloneable {
                 .setTheme(theme)
                 .setCreator(creator)
                 .setQuestions(surveyQuestions)
+                .setStartDateTime(startDateTime)
+                .setCloseDateTime(closeDateTime)
                 .getSurvey();
 
         return survey;
@@ -198,6 +235,8 @@ public class Survey extends AbstractEntity implements Cloneable {
         sb.append(", status=").append(status);
         sb.append(", theme=").append(theme);
         sb.append(", creator=").append(creator);
+        sb.append(", start=").append(startDateTime);
+        sb.append(", close=").append(closeDateTime);
         sb.append(", questions:\n").append(questions.stream().map(q -> '\t' + q.toString() + '\n').collect(Collectors.joining()));
         sb.append('}');
         return sb.toString();

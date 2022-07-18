@@ -3,6 +3,7 @@ package epam.zlatamigas.surveyplatform.model.dao;
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.entity.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,16 +105,6 @@ public interface SurveyDao extends BaseDao<Survey> {
                                                     int userId) throws DaoException;
 
     /**
-     * Update participant survey result.
-     *
-     * @param surveyAttempt Survey attempt, containing User with actual ID, Survey with
-     *                      list of questions with info about user answers.
-     * @return True if all data was successfully updated.
-     * @throws DaoException If a database access error occurs.
-     */
-    boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws DaoException;
-
-    /**
      * Change status of existing survey.
      *
      * @param surveyId ID of Survey to update.
@@ -122,6 +113,36 @@ public interface SurveyDao extends BaseDao<Survey> {
      * @throws DaoException If a database access error occurs.
      */
     boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws DaoException;
+
+    /**
+     * Change status of existing survey to started.
+     *
+     * @param surveyId ID of Survey to update.
+     * @param startDateTime   Survey start date and time.
+     * @return True if survey with surveyId exists.
+     * @throws DaoException If a database access error occurs.
+     */
+    boolean updateSurveyStarted(int surveyId, LocalDateTime startDateTime) throws DaoException;
+
+    /**
+     * Change status of existing survey to closed.
+     *
+     * @param surveyId ID of Survey to update.
+     * @param closeDateTime   Survey close date and time.
+     * @return True if survey with surveyId exists.
+     * @throws DaoException If a database access error occurs.
+     */
+    boolean updateSurveyClosed(int surveyId, LocalDateTime closeDateTime) throws DaoException;
+
+    /**
+     * Update participant survey result.
+     *
+     * @param surveyAttempt Survey attempt, containing User with actual ID, Survey with
+     *                      list of questions with info about user answers.
+     * @return True if all data was successfully updated.
+     * @throws DaoException If a database access error occurs.
+     */
+    boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws DaoException;
 
     /**
      * Update survey.

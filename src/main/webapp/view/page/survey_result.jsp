@@ -28,6 +28,7 @@
         <div class="padding-container">
             <h1 class="header-text">${requestScope.survey_result.name}</h1>
             <h5 class="subheader-text">${requestScope.survey_result.theme.themeName}</h5>
+            <h5 class="subheader-text">${requestScope.survey_result.startDateTime} - ${requestScope.survey_result.closeDateTime}</h5>
 
             <c:if test="${requestScope.survey_result.description != ''}">
                 <div class="description-text">${requestScope.survey_result.description}</div>

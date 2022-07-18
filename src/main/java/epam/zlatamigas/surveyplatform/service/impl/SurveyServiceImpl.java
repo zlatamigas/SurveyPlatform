@@ -226,13 +226,19 @@ public class SurveyServiceImpl implements SurveyService {
     @Override
     public boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws ServiceException {
 
+        LocalDateTime dateTime = LocalDateTime.now();
+
         if (status == null) {
             logger.error("Passed null as SurveyStatus object");
             return false;
         }
 
         try {
-            return surveyDao.updateSurveyStatus(surveyId, status);
+            return switch (status){
+                case STARTED -> surveyDao.updateSurveyStarted(surveyId, dateTime);
+                case CLOSED -> surveyDao.updateSurveyClosed(surveyId, dateTime);
+                default -> surveyDao.updateSurveyStatus(surveyId, status);
+            };
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

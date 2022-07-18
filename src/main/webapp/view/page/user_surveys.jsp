@@ -173,6 +173,7 @@
                                                     </c:when>
                                                 </c:choose>
                                             </p>
+                                            <p class="card-text">${survey.startDateTime} - ${survey.closeDateTime}</p>
                                             <p class="card-text">${survey.description}</p>
                                             <div class="btn-toolbar justify-content-end" role="toolbar">
 

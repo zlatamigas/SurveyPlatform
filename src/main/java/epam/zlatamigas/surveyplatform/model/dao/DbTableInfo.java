@@ -11,6 +11,8 @@ public final class DbTableInfo {
     public static final String SURVEYS_TABLE_NAME_COLUMN = "survey_name";
     public static final String SURVEYS_TABLE_DESCRIPTION_COLUMN = "survey_description";
     public static final String SURVEYS_TABLE_STATUS_COLUMN = "survey_status";
+    public static final String SURVEYS_TABLE_START_DATE_TIME_COLUMN = "start_date_time";
+    public static final String SURVEYS_TABLE_CLOSE_DATE_TIME_COLUMN = "close_date_time";
     public static final String SURVEYS_TABLE_FK_THEME_ID_COLUMN = "theme_id";
     public static final String SURVEYS_TABLE_FK_CREATOR_ID_COLUMN = "creator_id";
 

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -42,10 +43,21 @@ public class SurveyDaoImpl implements SurveyDao {
             WHERE id_survey = ?;
             """;
     private static final String UPDATE_SURVEY_STATUS_STATEMENT = """
-            UPDATE surveys 
-            SET survey_status = ?  
+            UPDATE surveys
+            SET survey_status = ?
             WHERE id_survey = ?;
             """;
+    private static final String UPDATE_SURVEY_STATUS_STARTED = """
+            UPDATE surveys 
+            SET survey_status = 'STARTED', start_date_time = CONVERT(?, DATETIME)  
+            WHERE id_survey = ?;
+            """;
+    private static final String UPDATE_SURVEY_STATUS_CLOSED = """
+            UPDATE surveys 
+            SET survey_status = 'CLOSED', close_date_time = CONVERT(?, DATETIME)  
+            WHERE id_survey = ?;
+            """;
+
     private static final String UPDATE_SURVEY_QUESTION_STATEMENT = """
             UPDATE questions 
             SET select_multiple = ?, formulation = ?, survey_id = ? 
@@ -74,7 +86,9 @@ public class SurveyDaoImpl implements SurveyDao {
             WHERE id_survey = ? AND survey_status = 'STARTED'
             """;
     private static final String FIND_CREATOR_SURVEY_BY_ID_STATEMENT = """
-            SELECT survey_name, survey_status, survey_description, theme_id, creator_id 
+            SELECT survey_name, survey_status, survey_description, theme_id, creator_id, 
+            DATE_FORMAT(start_date_time, '%Y-%m-%d %T') AS start_date_time,  
+            DATE_FORMAT(close_date_time, '%Y-%m-%d %T') AS close_date_time  
             FROM surveys  
             WHERE id_survey = ? AND creator_id = ?
             """;
@@ -90,7 +104,9 @@ public class SurveyDaoImpl implements SurveyDao {
             """;
 
     private static final String FIND_CREATOR_SURVEYS_COMMON_INFO_BASE_STATEMENT = """
-            SELECT id_survey, survey_name, survey_description, theme_id, survey_status 
+            SELECT id_survey, survey_name, survey_description, theme_id, survey_status, 
+            DATE_FORMAT(start_date_time, '%Y-%m-%d %T') AS start_date_time,  
+            DATE_FORMAT(close_date_time, '%Y-%m-%d %T') AS close_date_time  
             FROM surveys 
             WHERE creator_id = ? 
             """;
@@ -358,6 +374,15 @@ public class SurveyDaoImpl implements SurveyDao {
                                         .setUserId(rsSurvey.getInt(SURVEYS_TABLE_FK_CREATOR_ID_COLUMN)).getUser())
                                 .getSurvey();
 
+                        String startDateTime = rsSurvey.getString(SURVEYS_TABLE_START_DATE_TIME_COLUMN);
+                        if(startDateTime != null) {
+                            survey.setStartDateTime(LocalDateTime.parse(startDateTime, dateTimeFormatter));
+                        }
+                        String closeDateTime = rsSurvey.getString(SURVEYS_TABLE_CLOSE_DATE_TIME_COLUMN);
+                        if(closeDateTime != null) {
+                            survey.setCloseDateTime(LocalDateTime.parse(closeDateTime, dateTimeFormatter));
+                        }
+
                         //Find survey questions
 
                         try (PreparedStatement psFindSurveyQuestion = connection.prepareStatement(FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT)) {
@@ -509,6 +534,15 @@ public class SurveyDaoImpl implements SurveyDao {
                                 .setTheme(theme)
                                 .getSurvey();
 
+                        String startDateTime = rsSurvey.getString(SURVEYS_TABLE_START_DATE_TIME_COLUMN);
+                        if(startDateTime != null) {
+                            survey.setStartDateTime(LocalDateTime.parse(startDateTime, dateTimeFormatter));
+                        }
+                        String closeDateTime = rsSurvey.getString(SURVEYS_TABLE_CLOSE_DATE_TIME_COLUMN);
+                        if(closeDateTime != null) {
+                            survey.setCloseDateTime(LocalDateTime.parse(closeDateTime, dateTimeFormatter));
+                        }
+
                         surveys.add(survey);
                     }
                 }
@@ -537,6 +571,40 @@ public class SurveyDaoImpl implements SurveyDao {
         }
     }
 
+    @Override
+    public boolean updateSurveyStarted(int surveyId, LocalDateTime startDateTime) throws DaoException {
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement psInsertSurvey = connection.prepareStatement(UPDATE_SURVEY_STATUS_STARTED)) {
+
+            String dateTime = startDateTime.format(dateTimeFormatter);
+            psInsertSurvey.setString(1, dateTime);
+            psInsertSurvey.setInt(2, surveyId);
+            return psInsertSurvey.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            logger.error("Failed to update survey with id_survey = {}: {}", surveyId, e.getMessage());
+            throw new DaoException("Failed to update survey with id_survey = " + surveyId, e);
+        }
+    }
+
+    @Override
+    public boolean updateSurveyClosed(int surveyId, LocalDateTime closeDateTime) throws DaoException {
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement psInsertSurvey = connection.prepareStatement(UPDATE_SURVEY_STATUS_CLOSED)) {
+
+            String dateTime = closeDateTime.format(dateTimeFormatter);
+            psInsertSurvey.setString(1, dateTime);
+            psInsertSurvey.setInt(2, surveyId);
+            return psInsertSurvey.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            logger.error("Failed to update survey with id_survey = {}: {}", surveyId, e.getMessage());
+            throw new DaoException("Failed to update survey with id_survey = " + surveyId, e);
+        }
+    }
+    
     @Override
     public boolean updateParticipantSurveyResult(SurveyUserAttempt surveyAttempt) throws DaoException {
         Connection connection = null;
