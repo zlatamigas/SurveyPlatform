@@ -41,14 +41,17 @@ public class SurveyServiceImpl implements SurveyService {
         if (survey != null) {
 
             if (survey.getCreator() == null
-                    || survey.getName() == null
-                    || survey.getStatus() == null) {
+                    || survey.getName() == null) {
                 logger.error("Passed invalid Survey data: creator = {}, name = {}, status = {}",
                         survey.getCreator(), survey.getName(), survey.getStatus());
                 return false;
             }
 
-            if (survey.getQuestions() == null) {
+            survey.setStatus(SurveyStatus.NOT_STARTED);
+
+            if (survey.getQuestions() != null) {
+                survey.getQuestions().forEach(q -> q.getAnswers().forEach(a -> a.setSelectedCount(0)));
+            } else {
                 survey.setQuestions(new ArrayList<>());
             }
 

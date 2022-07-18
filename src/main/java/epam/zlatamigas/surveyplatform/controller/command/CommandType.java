@@ -54,6 +54,7 @@ public enum CommandType {
     DELETE_SURVEY(new DeleteSurveyCommand()),
     CHANGE_SURVEY_STATUS_CLOSED(new ChangeSurveyStatusClosedCommand()),
     CHANGE_SURVEY_STATUS_STARTED(new ChangeSurveyStatusStartedCommand()),
+    RESTART_SURVEY(new RestartSurveyCommand()),
 
     // Participate in survey
     START_SURVEY_ATTEMPT(new StartSurveyAttemptCommand()),

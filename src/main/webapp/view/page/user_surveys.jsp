@@ -225,6 +225,11 @@
                                                             </button>
                                                         </c:when>
                                                         <c:when test="${survey.status == SurveyStatus.CLOSED}">
+                                                            <button type="button"
+                                                                    data-toggle="modal" data-target="#restartSurvey${survey.surveyId}"
+                                                                    class="btn btn-outline-success">
+                                                                <i class="fas fa-redo"></i>
+                                                            </button>
                                                             <button form="viewResultSurveyForm${survey.surveyId}"
                                                                     type="submit"
                                                                     class="btn btn-outline-primary">
@@ -305,7 +310,35 @@
                                                         </div>
                                                     </c:when>
                                                     <c:when test="${survey.status == SurveyStatus.CLOSED}">
-
+                                                        <div id="restartSurvey${survey.surveyId}"
+                                                             class="modal fade" tabindex="-1"  aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered ">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            <fmt:message key="confirm.restart.survey.header"/>
+                                                                        </h5>
+                                                                        <button type="button" class="close" data-dismiss="modal">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <fmt:message key="confirm.restart.survey"/> ${survey.name}<fmt:message key="confirm.questionmark"/>
+                                                                        <fmt:message key="confirm.restart.survey.description"/>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button form="userSurveySearchForm"
+                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.RESTART_SURVEY}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                                formmethod="post"
+                                                                                type="submit"
+                                                                                class="btn btn-success">
+                                                                            <fmt:message key="button.survey.restart"/>
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </c:when>
                                                 </c:choose>
                                                 <c:if test="${survey.status != SurveyStatus.STARTED}">

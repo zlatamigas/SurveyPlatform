@@ -59,6 +59,7 @@ public class CheckUserRoleFilter implements Filter {
                         DELETE_SURVEY,
                         CHANGE_SURVEY_STATUS_CLOSED,
                         CHANGE_SURVEY_STATUS_STARTED,
+                        RESTART_SURVEY,
                         // Participate in survey
                         START_SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,
@@ -101,6 +102,7 @@ public class CheckUserRoleFilter implements Filter {
                         DELETE_SURVEY,
                         CHANGE_SURVEY_STATUS_CLOSED,
                         CHANGE_SURVEY_STATUS_STARTED,
+                        RESTART_SURVEY,
                         // Participate in survey
                         START_SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,

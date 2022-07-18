@@ -13,9 +13,6 @@ import java.util.Optional;
  */
 public interface SurveyService {
 
-    int FILTER_THEMES_ALL = 0;
-    int FILTER_THEMES_NONE = -1;
-
     /**
      * Insert new survey.
      *
@@ -46,7 +43,7 @@ public interface SurveyService {
     /**
      * Find info about specified survey: question info with statistics info.
      *
-     * @param surveyId Survey id to use for search.
+     * @param surveyId  Survey id to use for search.
      * @param creatorId Creator id to use for search.
      * @return Surveys with common info with question and answer data with statistics.
      * @throws ServiceException If a database access error occurs.
@@ -57,9 +54,9 @@ public interface SurveyService {
      * Find preview info (name, description, theme) about started surveys according to
      * requested filter and search parameters.
      *
-     * @param filterThemeId If > 0 use as theme id,
-     *                      FILTER_THEMES_ALL (0) - all themes,
-     *                      FILTER_THEMES_NONE (-1) - surveys without theme.
+     * @param filterThemeId  If > 0 use as theme id,
+     *                       FILTER_THEMES_ALL (0) - all themes,
+     *                       FILTER_THEMES_NONE (-1) - surveys without theme.
      * @param searchWordsStr Words contained in survey name. Case insensitive.
      *                       If array size is 0, then all survey names are acceptable.
      * @param orderTypeName  Order type: ASC - ascending, DESC - descending.
@@ -74,9 +71,9 @@ public interface SurveyService {
      * Find preview info (name, description, status, theme) about all surveys created by user according to
      * requested filter and search parameters.
      *
-     * @param filterThemeId If > 0 use as theme id,
-     *                      FILTER_THEMES_ALL (0) - all themes,
-     *                      FILTER_THEMES_NONE (-1) - surveys without theme.
+     * @param filterThemeId    If > 0 use as theme id,
+     *                         FILTER_THEMES_ALL (0) - all themes,
+     *                         FILTER_THEMES_NONE (-1) - surveys without theme.
      * @param searchWordsStr   Words contained in survey name. Case insensitive.
      *                         If array size is 0, then all survey names are acceptable.
      * @param orderTypeName    Order type: ASC - ascending, DESC - descending.

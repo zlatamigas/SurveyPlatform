@@ -98,7 +98,7 @@
                     values = [''];
 
                     <c:forEach var="answer" items="${question.answers}">
-                    titles.push('${answer.answer}');
+                    titles.push(`${answer.answer}`);
                     values.push(${answer.selectedCount});
                     </c:forEach>
 
