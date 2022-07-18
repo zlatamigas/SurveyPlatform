@@ -32,6 +32,7 @@ public final class DataHolder {
 
     // Request attribute
     // Listed data
+    public static final String REQUEST_ATTRIBUTE_AVAILABLE_THEMES_LIST = "available_themes_list";
     public static final String REQUEST_ATTRIBUTE_SURVEYS = "surveys";
     public static final String REQUEST_ATTRIBUTE_USER_SURVEYS = "user_surveys";
     public static final String REQUEST_ATTRIBUTE_USERS = "users";

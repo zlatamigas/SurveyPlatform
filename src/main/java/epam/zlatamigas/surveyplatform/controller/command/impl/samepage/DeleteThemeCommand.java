@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
@@ -23,37 +23,16 @@ public class DeleteThemeCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
-        HttpSession session = request.getSession();
-
-        String page = (String) session.getAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE);
-
-        String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
-        if(searchWordsStr == null){
-            searchWordsStr = DEFAULT_SEARCH_WORDS;
-        }
-        String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
-        if(orderTypeName == null){
-            orderTypeName = DEFAULT_ORDER;
-        }
-
-        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS, searchWordsStr);
-        request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
-
-        String themeIdParameter = request.getParameter(PARAMETER_THEME_ID);
-        int themeId = Integer.parseInt(themeIdParameter);
-
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
-            themeService.delete(themeId);
+            String themeIdParameter = request.getParameter(PARAMETER_THEME_ID);
+            int themeId = Integer.parseInt(themeIdParameter);
 
-            List<Theme> themes = themeService.findConfirmedSearch(searchWordsStr, orderTypeName);
-            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
-        } catch (ServiceException e) {
+            themeService.delete(themeId);
+        } catch (ServiceException | NumberFormatException e) {
             throw new CommandException(e);
         }
 
-        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
-
-        return new Router(page, REDIRECT);
+        return new Router(URL_REDIRECT_THEMES_CONFIRMED, FORWARD);
     }
 }

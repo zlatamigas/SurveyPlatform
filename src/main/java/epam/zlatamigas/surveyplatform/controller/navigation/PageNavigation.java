@@ -30,6 +30,7 @@ public final class PageNavigation {
     public static final String CREATE_USER = "/view/page/create_user.jsp";
 
     public static final String URL_REDIRECT_USER_SURVEYS = "/SEARCH_SURVEY_CREATED_BY_USER";
+    public static final String URL_REDIRECT_THEMES_CONFIRMED = "/THEMES_CONFIRMED";
 
     public static final String URL_CONTROLLER_WITH_PARAMETERS_PATTERN = "/controller?%s";
     public static final String URL_REDIRECT_BASE_PATTERN = "/controller?command=%s";

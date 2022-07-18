@@ -51,7 +51,7 @@
                     <select id="theme" class="form-control" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID}">
                         <option value="0" <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="filter.all"/></option>
                         <option value="-1" <c:if test="${requestScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="filter.none"/></option>
-                        <c:forEach items="${requestScope.requested_themes}" var="theme">
+                        <c:forEach items="${requestScope.available_themes_list}" var="theme">
                             <option value="${theme.themeId}" <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
                         </c:forEach>
                     </select>

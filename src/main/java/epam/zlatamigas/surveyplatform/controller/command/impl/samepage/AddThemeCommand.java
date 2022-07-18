@@ -18,6 +18,7 @@ import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_CONFIRMED;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_REDIRECT_THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
@@ -31,7 +32,6 @@ public class AddThemeCommand implements Command {
 
         HttpSession session = request.getSession();
         String page = (String) session.getAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE);
-        PageChangeType pageChangeType = FORWARD;
 
         String themeName = request.getParameter(PARAMETER_THEME_NAME);
 
@@ -54,7 +54,7 @@ public class AddThemeCommand implements Command {
                     if (!result) {
                         request.setAttribute(REQUEST_ATTRIBUTE_THEME_EXISTS, MESSAGE_INVALID_THEME_EXISTS);
                     } else {
-                        pageChangeType = REDIRECT;
+                        page = URL_REDIRECT_THEMES_CONFIRMED;
                     }
                 }
             } else {
@@ -83,8 +83,6 @@ public class AddThemeCommand implements Command {
             throw new CommandException(e);
         }
 
-        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
-
-        return new Router(page, pageChangeType);
+        return new Router(page, FORWARD);
     }
 }

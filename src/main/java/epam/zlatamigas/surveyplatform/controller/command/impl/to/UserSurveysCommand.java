@@ -71,7 +71,7 @@ public class UserSurveysCommand implements Command {
         ThemeService themeService = ThemeServiceImpl.getInstance();
         try {
             List<Theme> themes = themeService.findAllConfirmed();
-            request.setAttribute(REQUEST_ATTRIBUTE_REQUESTED_THEMES, themes);
+            request.setAttribute(REQUEST_ATTRIBUTE_AVAILABLE_THEMES_LIST, themes);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
