@@ -82,22 +82,72 @@
         </div>
     </div>
 
-    <form id="cancelSurveyAttemptForm" action="controller" method="post">
-        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CANCEL_SURVEY_ATTEMPT}">
-    </form>
-
     <div class="bottom-actions-container">
         <div class="btn-group-custom">
-            <button form="finishSurveyAttemptForm"
-                    formaction="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_SURVEY_ATTEMPT}"
-                    formmethod="post"
-                    type="submit"
+            <button type="button"
+                    data-toggle="modal" data-target="#finishSurveyAttempt"
                     class="btn btn-success">
-                <fmt:message key="button.survey.attempt.finish"/></button>
-            <button form="cancelSurveyAttemptForm" type="submit" class="btn btn-warning">
-                <fmt:message key="button.cancel"/></button>
+                <fmt:message key="button.survey.attempt.finish"/>
+            </button>
+            <button type="button"
+                    data-toggle="modal" data-target="#cancelSurveyAttempt"
+                    class="btn btn-warning">
+                <fmt:message key="button.cancel"/>
+            </button>
         </div>
     </div>
+
+
+
+    <div id="finishSurveyAttempt"
+         class="modal fade" tabindex="-1"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <fmt:message key="confirm.finish.survey"/>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button form="finishSurveyAttemptForm"
+                            formaction="${pageContext.request.contextPath}/controller?command=${CommandType.FINISH_SURVEY_ATTEMPT}"
+                            formmethod="post"
+                            type="submit"
+                            class="btn btn-success">
+                        <fmt:message key="button.survey.attempt.finish"/>
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cancelSurveyAttempt"
+         class="modal fade" tabindex="-1"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <fmt:message key="confirm.cancel.survey"/>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <form action="controller" method="post">
+                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CANCEL_SURVEY_ATTEMPT}">
+                        <button type="submit" class="btn btn-primary"><fmt:message key="button.ok"/></button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </body>

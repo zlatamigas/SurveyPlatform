@@ -206,10 +206,8 @@
                                                 <div class="btn-group" role="group">
                                                     <c:choose>
                                                         <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
-                                                            <button form="userSurveySearchForm"
-                                                                    formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_STARTED}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
-                                                                    formmethod="post"
-                                                                    type="submit"
+                                                            <button type="button"
+                                                                    data-toggle="modal" data-target="#startSurvey${survey.surveyId}"
                                                                     class="btn btn-outline-success">
                                                                 <i class="fas fa-play"></i>
                                                             </button>
@@ -219,16 +217,12 @@
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </button>
                                                         </c:when>
-
                                                         <c:when test="${survey.status == SurveyStatus.STARTED}">
-                                                            <button form="userSurveySearchForm"
-                                                                    formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_CLOSED}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
-                                                                    formmethod="post"
-                                                                    type="submit"
+                                                            <button type="button"
+                                                                    data-toggle="modal" data-target="#stopSurvey${survey.surveyId}"
                                                                     class="btn btn-outline-warning">
                                                                 <i class="fas fa-stop"></i>
                                                             </button>
-
                                                         </c:when>
                                                         <c:when test="${survey.status == SurveyStatus.CLOSED}">
                                                             <button form="viewResultSurveyForm${survey.surveyId}"
@@ -238,18 +232,110 @@
                                                             </button>
                                                         </c:when>
                                                     </c:choose>
-
                                                     <c:if test="${survey.status != SurveyStatus.STARTED}">
-                                                        <button form="userSurveySearchForm"
-                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_SURVEY}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
-                                                                formmethod="post"
-                                                                type="submit"
+                                                        <button type="button"
+                                                                data-toggle="modal" data-target="#deleteSurvey${survey.surveyId}"
                                                                 class="btn btn-outline-danger">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </c:if>
                                                 </div>
 
+                                                <c:choose>
+                                                    <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
+                                                        <div id="startSurvey${survey.surveyId}"
+                                                             class="modal fade" tabindex="-1"  aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered ">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            <fmt:message key="confirm.start.survey.header"/>
+                                                                        </h5>
+                                                                        <button type="button" class="close" data-dismiss="modal">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <fmt:message key="confirm.start.survey"/> ${survey.name}<fmt:message key="confirm.questionmark"/>
+                                                                        <fmt:message key="confirm.start.survey.description"/>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button form="userSurveySearchForm"
+                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_STARTED}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                                formmethod="post"
+                                                                                type="submit"
+                                                                                class="btn btn-success">
+                                                                            <fmt:message key="button.survey.start"/>
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:when test="${survey.status == SurveyStatus.STARTED}">
+                                                        <div id="stopSurvey${survey.surveyId}"
+                                                             class="modal fade" tabindex="-1"  aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered ">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            <fmt:message key="confirm.stop.survey.header"/>
+                                                                        </h5>
+                                                                        <button type="button" class="close" data-dismiss="modal">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <fmt:message key="confirm.stop.survey"/> ${survey.name}<fmt:message key="confirm.questionmark"/>
+                                                                        <fmt:message key="confirm.stop.survey.description"/>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button form="userSurveySearchForm"
+                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_CLOSED}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                                formmethod="post"
+                                                                                type="submit"
+                                                                                class="btn btn-warning">
+                                                                            <fmt:message key="button.survey.stop"/>
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:when test="${survey.status == SurveyStatus.CLOSED}">
+
+                                                    </c:when>
+                                                </c:choose>
+                                                <c:if test="${survey.status != SurveyStatus.STARTED}">
+                                                    <div id="deleteSurvey${survey.surveyId}"
+                                                         class="modal fade" tabindex="-1"  aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered ">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"><fmt:message key="confirm.delete.survey.header"/></h5>
+                                                                    <button type="button" class="close" data-dismiss="modal">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <fmt:message key="confirm.delete.survey"/> ${survey.name}<fmt:message key="confirm.questionmark"/>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button form="userSurveySearchForm"
+                                                                            formaction="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_SURVEY}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                            formmethod="post"
+                                                                            type="submit"
+                                                                            class="btn btn-danger">
+                                                                        <fmt:message key="button.delete"/>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </div>

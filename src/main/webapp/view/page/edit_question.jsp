@@ -83,7 +83,7 @@
             <script>
                 let questionsCount = ${i};
 
-                function removeQuestion(id){
+                function removeAnswer(id){
                     console.log(id)
                     let answerRow = document.getElementById("rowanswer" + id);
                     if(answerRow && answerRow.parentNode) {
@@ -91,7 +91,7 @@
                     }
                 }
 
-                function addQuestion(){
+                function addAnswer(){
 
                     questionsCount++;
                     const pos = questionsCount;
@@ -120,7 +120,7 @@
                     answerDeleteBtn.classList.add("btn","btn-outline-danger","btn-delete-answer");
                     answerDeleteBtn.type = "button";
                     answerDeleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                    answerDeleteBtn.onclick = function(){ removeQuestion(pos);};
+                    answerDeleteBtn.onclick = function(){ removeAnswer(pos);};
 
                     answerDeleteCol.appendChild(answerDeleteBtn);
 
@@ -134,8 +134,8 @@
                 }
             </script>
 
-            <button type="button" class="btn btn-custom-fill" onclick="addQuestion()">
-                <fmt:message key="button.add"/>
+            <button type="button" class="btn btn-custom-fill" onclick="addAnswer()">
+                <i class="fas fa-plus"></i> <fmt:message key="button.survey.answer.add"/>
             </button>
 
         </div>

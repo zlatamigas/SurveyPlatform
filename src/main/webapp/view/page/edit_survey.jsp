@@ -82,7 +82,8 @@
         <div class="content-container">
             <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
                     formmethod="post" type="submit" class="btn btn-custom-fill">
-                <fmt:message key="button.add"/></button>
+                <i class="fas fa-plus"></i> <fmt:message key="button.survey.question.add"/>
+            </button>
             <div class="edit-question-list">
                 <c:set var="i" value="0"/>
                 <c:forEach items="${sessionScope.edited_survey.questions}" var="question">
@@ -132,7 +133,8 @@
             </div>
             <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
                     formmethod="post" type="submit" class="btn btn-custom-fill">
-                <fmt:message key="button.add"/></button>
+                <i class="fas fa-plus"></i> <fmt:message key="button.survey.question.add"/>
+            </button>
         </div>
 
         <div class="bottom-actions-container">

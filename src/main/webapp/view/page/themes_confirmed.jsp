@@ -73,8 +73,8 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
                                     <button type="submit" class="btn btn-success"><fmt:message key="button.add"/></button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
                                 </div>
                             </form>
                         </div>
@@ -161,7 +161,6 @@
                                                                             <fmt:message key="confirm.delete.theme"/> ${theme.themeName}<fmt:message key="confirm.questionmark"/>
                                                                         </div>
                                                                         <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
                                                                             <button form="themesConfirmedSearchForm"
                                                                                     formaction="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_THEME}&${DataHolder.PARAMETER_THEME_ID}=${theme.themeId}"
                                                                                     formmethod="post"
@@ -169,6 +168,7 @@
                                                                                     class="btn btn-danger">
                                                                                 <fmt:message key="button.delete"/>
                                                                             </button>
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
