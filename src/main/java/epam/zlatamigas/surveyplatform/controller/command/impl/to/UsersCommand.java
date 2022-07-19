@@ -50,14 +50,13 @@ public class UsersCommand implements Command {
         request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS, userStatusName);
         request.setAttribute(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE, orderTypeName);
 
-
-        User creator = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
+        User admin = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
 
         UserService service = UserServiceImpl.getInstance();
 
         try{
             List<User> users = service.findUsersBySearch(userRoleName, userStatusName, searchWordsStr, orderTypeName)
-                    .stream().filter(user -> user.getUserId() != creator.getUserId()).collect(Collectors.toList());
+                    .stream().filter(user -> user.getUserId() != admin.getUserId()).collect(Collectors.toList());
             request.setAttribute(REQUEST_ATTRIBUTE_USERS, users);
         } catch (ServiceException e){
             throw new CommandException(e);

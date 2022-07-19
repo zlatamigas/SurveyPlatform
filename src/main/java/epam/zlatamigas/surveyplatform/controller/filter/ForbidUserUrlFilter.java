@@ -25,7 +25,7 @@ public class ForbidUserUrlFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
 
-        redirectUrl = new HashMap<>(11);
+        redirectUrl = new HashMap<>(13);
 
         redirectUrl.put(DEFAULT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name()));
         redirectUrl.put(HOME, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name()));
@@ -37,21 +37,19 @@ public class ForbidUserUrlFilter implements Filter {
         redirectUrl.put(THEMES_CONFIRMED, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.THEMES_CONFIRMED.name()));
         redirectUrl.put(THEMES_WAITING, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.THEMES_WAITING.name()));
         redirectUrl.put(ACCOUNT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.USER_ACCOUNT.name()));
+        redirectUrl.put(SURVEY_ATTEMPT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SURVEY_ATTEMPT));
+        redirectUrl.put(SURVEY_RESULT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SURVEY_RESULT));
         redirectUrl.put(CREATE_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CREATE_USER.name()));
 
-//        FORGOT_PASSWORD,String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name())
-//        FORGOT_PASSWORD_RECEIVE_KEY,String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name())
-//        FORGOT_PASSWORD_CHANGE_PASSWORD ,String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name())
-//        EDIT_SURVEY,String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name())
-//        EDIT_QUESTION,String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name())
-//        SURVEY_ATTEMPT,String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name())
-//        SURVEY_RESULT,String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name())
-//        EDIT_USER,String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name())
-
+//        redirectUrl.put(EDIT_SURVEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_SURVEY.name()));
+//        redirectUrl.put(EDIT_QUESTION, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_QUESTION.name()));
+//        redirectUrl.put(EDIT_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_USER.name()));
+//        redirectUrl.put(CREATE_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CREATE_USER.name()));
+//        redirectUrl.put(FORGOT_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.TO_FORGOT_PASSWORD.name()));
+//        redirectUrl.put(FORGOT_PASSWORD_RECEIVE_KEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SEND_FORGOTTEN_PASSWORD_KEY.name()));
+//        redirectUrl.put(FORGOT_PASSWORD_CHANGE_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.CHANGE_PASSWORD.name()));
     }
 
-    public void destroy() {
-    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

@@ -15,13 +15,12 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageCh
 public class CancelEditSurveyCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+
         HttpSession session = request.getSession();
-        String page = USER_SURVEYS;
 
         session.removeAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY);
         session.removeAttribute(SESSION_ATTRIBUTE_THEMES);
-        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, REDIRECT);
+        return new Router(USER_SURVEYS, REDIRECT);
     }
 }

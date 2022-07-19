@@ -12,12 +12,11 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.Optional;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
@@ -27,29 +26,32 @@ public class StartSurveyAttemptCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+
         HttpSession session = request.getSession();
         String page = SURVEYS;
         PageChangeType pageChangeType = REDIRECT;
 
         String surveyIdStr = request.getParameter(PARAMETER_SURVEY_ID);
 
-        if(surveyIdStr != null && !surveyIdStr.isBlank()){
-            int surveyId = Integer.parseInt(surveyIdStr);
-            try {
-                SurveyService service = SurveyServiceImpl.getInstance();
-                Optional<Survey> survey = service.findParticipantSurveyInfo(surveyId);
+        SurveyService service = SurveyServiceImpl.getInstance();
+        try {
+            if (surveyIdStr != null) {
+                int surveyId = Integer.parseInt(surveyIdStr);
 
-                if(survey.isPresent()){
+                Optional<Survey> survey = service.findParticipantSurveyInfo(surveyId);
+                if (survey.isPresent()) {
+                    session.setAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT, survey.get());
+
                     page = SURVEY_ATTEMPT;
                     pageChangeType = FORWARD;
-                    session.setAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT, survey.get());
                     session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE,
                             String.format(URL_CONTROLLER_WITH_PARAMETERS_PATTERN, request.getQueryString()));
                 }
-
-            } catch (ServiceException e) {
-                logger.error(e);
             }
+        } catch (NumberFormatException e) {
+            logger.warn("Passed invalid {} parameter", PARAMETER_SURVEY_ID);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
         }
 
         return new Router(page, pageChangeType);

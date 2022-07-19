@@ -26,6 +26,7 @@ public class SurveysCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+
         HttpSession session = request.getSession();
         String page = SURVEYS;
 

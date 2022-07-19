@@ -17,11 +17,9 @@ public class CancelCreateUserCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page = USERS;
 
         session.removeAttribute(SESSION_ATTRIBUTE_EDITED_USER);
-        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, REDIRECT);
+        return new Router(USERS, REDIRECT);
     }
 }

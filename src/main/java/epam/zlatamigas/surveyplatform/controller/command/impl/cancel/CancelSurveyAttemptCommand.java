@@ -16,11 +16,9 @@ public class CancelSurveyAttemptCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        String page = SURVEYS;
 
         session.removeAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT);
-        session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
-        return new Router(page, REDIRECT);
+        return new Router(SURVEYS, REDIRECT);
     }
 }

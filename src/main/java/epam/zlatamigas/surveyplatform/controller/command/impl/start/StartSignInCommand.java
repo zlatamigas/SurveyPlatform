@@ -17,6 +17,7 @@ public class StartSignInCommand implements Command {
 
         HttpSession session = request.getSession();
         String page = SIGN_IN;
+
         session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
 
         return new Router(page, FORWARD);

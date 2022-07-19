@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tld/customtag.tld" prefix="ct"%>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
 <%@ page import="epam.zlatamigas.surveyplatform.util.search.SearchParameter" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
@@ -159,8 +160,8 @@
                                          aria-labelledby="heading${survey.surveyId}"
                                          data-parent="#userSurveys">
                                         <div class="card-body">
-                                            <h6 class="card-subtitle mb-2 text-muted">${survey.theme.themeName}</h6>
-                                            <p class="card-subtitle mb-2 text-muted">
+                                            <h5 class="card-subtitle mb-3 text-muted">${survey.theme.themeName}</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">
                                                 <c:choose>
                                                     <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
                                                         <fmt:message key="status.survey.notstarted"/>
@@ -172,8 +173,18 @@
                                                         <fmt:message key="status.survey.closed"/>
                                                     </c:when>
                                                 </c:choose>
-                                            </p>
-                                            <p class="card-text">${survey.startDateTime} - ${survey.closeDateTime}</p>
+                                            </h6>
+
+                                            <c:choose>
+                                                <c:when test="${survey.status == SurveyStatus.STARTED}">
+                                                    <p class="card-subtitle mb-2 text-muted"><fmt:message key="label.survey.startdatetime"/> <ct:local-date-time datetime="${survey.startDateTime}"/></p>
+                                                </c:when>
+                                                <c:when test="${survey.status == SurveyStatus.CLOSED}">
+                                                    <p class="card-subtitle mb-2 text-muted"><fmt:message key="label.survey.startdatetime"/> <ct:local-date-time datetime="${survey.startDateTime}"/></p>
+                                                    <p class="card-subtitle mb-2 text-muted"><fmt:message key="label.survey.closedatetime"/> <ct:local-date-time datetime="${survey.closeDateTime}"/></p>
+                                                </c:when>
+                                            </c:choose>
+
                                             <p class="card-text">${survey.description}</p>
                                             <div class="btn-toolbar justify-content-end" role="toolbar">
 
@@ -188,16 +199,8 @@
                                                            value="${survey.surveyId}">
                                                 </form>
 
-                                                <form id="startSurveyForm${survey.surveyId}" action="controller"
-                                                      method="post">
-                                                    <input type="hidden" name="command"
-                                                           value="${CommandType.CHANGE_SURVEY_STATUS_STARTED}">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
-                                                           value="${survey.surveyId}">
-                                                </form>
-
                                                 <form id="viewResultSurveyForm${survey.surveyId}" action="controller"
-                                                      method="post">
+                                                      method="get">
                                                     <input type="hidden" name="command"
                                                            value="${CommandType.SURVEY_RESULT}">
                                                     <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"

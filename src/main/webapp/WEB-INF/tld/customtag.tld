@@ -23,4 +23,14 @@
         <tag-class>epam.zlatamigas.surveyplatform.util.tag.SurveyAttemptQuestionValidationFeedbackTag</tag-class>
         <body-content>empty</body-content>
     </tag>
+
+    <tag>
+        <name>local-date-time</name>
+        <tag-class>epam.zlatamigas.surveyplatform.util.tag.LocalDateTimeTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>datetime</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>
