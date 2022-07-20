@@ -1,7 +1,6 @@
 package epam.zlatamigas.surveyplatform.controller.command.impl.samepage;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
-import epam.zlatamigas.surveyplatform.controller.command.CommandType;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
@@ -9,36 +8,41 @@ import epam.zlatamigas.surveyplatform.model.entity.SurveyStatus;
 import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.service.SurveyService;
 import epam.zlatamigas.surveyplatform.service.impl.SurveyServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_CURRENT_PAGE;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_SURVEY_ID;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_USER;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_REDIRECT_USER_SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
 
 public class ChangeSurveyStatusStartedCommand implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
 
         SurveyService surveyService = SurveyServiceImpl.getInstance();
-        try {
-            int creatorId = ((User) session.getAttribute(SESSION_ATTRIBUTE_USER)).getUserId();
-            int surveyId = Integer.parseInt(request.getParameter(PARAMETER_SURVEY_ID));
+        String surveyIdStr = request.getParameter(PARAMETER_SURVEY_ID);
+        if (surveyIdStr != null) {
+            try {
+                int surveyId = Integer.parseInt(surveyIdStr);
+                int creatorId = ((User) session.getAttribute(SESSION_ATTRIBUTE_USER)).getUserId();
 
-            if(surveyService.findCreatorSurveyInfo(surveyId, creatorId).isPresent()){
-                surveyService.updateSurveyStatus(surveyId, SurveyStatus.STARTED);
+                if (surveyService.findCreatorSurveyInfo(surveyId, creatorId).isPresent()) {
+                    surveyService.updateSurveyStatus(surveyId, SurveyStatus.STARTED);
+                }
+            } catch (NumberFormatException e) {
+                logger.warn("Passed invalid {} parameter", PARAMETER_SURVEY_ID);
+            } catch (ServiceException e) {
+                throw new CommandException(e);
             }
-
-        } catch (ServiceException | NumberFormatException e) {
-            throw new CommandException(e);
         }
 
         return new Router(URL_REDIRECT_USER_SURVEYS, FORWARD);

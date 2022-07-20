@@ -2,7 +2,6 @@ package epam.zlatamigas.surveyplatform.controller.command.impl.to;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.navigation.DataHolder;
-import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
@@ -16,14 +15,13 @@ import epam.zlatamigas.surveyplatform.service.impl.ThemeServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_CONTROLLER_WITH_PARAMETERS_PATTERN;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_CONTROLLER_WITH_PARAMETERS_PATTERN;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USER_SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 
 public class UserSurveysCommand implements Command {
 
@@ -31,25 +29,24 @@ public class UserSurveysCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page = USER_SURVEYS;
 
         String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
-        if(searchWordsStr == null){
+        if (searchWordsStr == null) {
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
 
         int filterThemeId;
         try {
-           filterThemeId = Integer.parseInt(request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID));
-        } catch (NumberFormatException e){
+            filterThemeId = Integer.parseInt(request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID));
+        } catch (NumberFormatException e) {
             filterThemeId = DEFAULT_FILTER_ID_ALL;
         }
         String surveyStatusName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS);
-        if(surveyStatusName == null){
+        if (surveyStatusName == null) {
             surveyStatusName = DEFAULT_FILTER_STR_ALL;
         }
         String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
-        if(orderTypeName == null){
+        if (orderTypeName == null) {
             orderTypeName = DEFAULT_ORDER;
         }
 
@@ -79,6 +76,6 @@ public class UserSurveysCommand implements Command {
         session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE,
                 String.format(URL_CONTROLLER_WITH_PARAMETERS_PATTERN, request.getQueryString()));
 
-        return new Router(page, FORWARD);
+        return new Router(USER_SURVEYS, FORWARD);
     }
 }

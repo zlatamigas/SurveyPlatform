@@ -24,8 +24,8 @@
 
 <div class="container">
 
-    <form id="cancelEditQuestionForm" action="controller" method="post">
-        <input type="hidden" name="command" value="${CommandType.CANCEL_EDIT_QUESTION}">
+    <form id="cancelEditQuestionForm" action="controller" method="get">
+        <input type="hidden" name="command" value="${CommandType.EDIT_SURVEY}">
     </form>
 
     <form id="editQuestionForm" action="controller" method="post">
@@ -143,8 +143,8 @@
         <div class="bottom-actions-container">
             <div class="btn-group-custom">
                 <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_QUESTION}"
-                        class="btn btn-success"><fmt:message
-                        key="button.save"/></button>
+                        class="btn btn-success">
+                    <fmt:message key="button.save"/></button>
                 <button form="cancelEditQuestionForm" type="submit" class="btn btn-warning">
                     <fmt:message key="button.cancel"/></button>
             </div>

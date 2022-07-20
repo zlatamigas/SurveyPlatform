@@ -33,7 +33,9 @@ public class AddThemeFormValidator implements FormValidator {
 
         Map<String, String> validationResult = new HashMap<>();
 
-        if (!validator.validThemeName(data.get(PARAMETER_THEME_NAME)[0])) {
+        if (data.get(PARAMETER_THEME_NAME) == null
+                || data.get(PARAMETER_THEME_NAME).length == 0
+                || !validator.validThemeName(data.get(PARAMETER_THEME_NAME)[0])) {
             validationResult.put(PARAMETER_THEME_NAME, MESSAGE_INVALID_THEME_NAME);
         }
 

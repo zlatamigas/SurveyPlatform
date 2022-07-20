@@ -1,21 +1,22 @@
 package epam.zlatamigas.surveyplatform.controller;
 
-import java.io.*;
-
-import epam.zlatamigas.surveyplatform.controller.navigation.Router;
-import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.command.CommandType;
-import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import epam.zlatamigas.surveyplatform.controller.navigation.Router;
+import epam.zlatamigas.surveyplatform.exception.CommandException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
 
-@WebServlet(name = "AppController",urlPatterns = { "/controller", "/view/page/controller"})
+@WebServlet(name = "AppController", urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger();
@@ -24,7 +25,7 @@ public class Controller extends HttpServlet {
 
     @Override
     public void init() {
-        logger.info("---------------> Servlet init");
+        logger.info("Servlet init");
     }
 
     @Override
@@ -47,7 +48,7 @@ public class Controller extends HttpServlet {
 
             Router router = command.execute(request);
             String page = router.getPage();
-            switch(router.getType()){
+            switch (router.getType()) {
                 case FORWARD -> request.getRequestDispatcher(page).forward(request, response);
                 case REDIRECT -> response.sendRedirect(request.getContextPath() + page);
                 default -> {
@@ -64,6 +65,6 @@ public class Controller extends HttpServlet {
 
     @Override
     public void destroy() {
-        logger.info("---------------> Servlet destroy");
+        logger.info("Servlet destroy");
     }
 }

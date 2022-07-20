@@ -114,9 +114,9 @@
                                                 <h5>${user.email}</h5>
                                             </div>
                                             <div class="col col-auto">
-                                                <form action="controller" method="post">
+                                                <form action="controller" method="get">
                                                     <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.START_EDIT_USER}">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}" value="${user.userId}">
+                                                    <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ID}" value="${user.userId}">
                                                     <button class="btn btn-info" type="submit"><i class="fas fa-user-edit"></i></button>
                                                 </form>
                                             </div>

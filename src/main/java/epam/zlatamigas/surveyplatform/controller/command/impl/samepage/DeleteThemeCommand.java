@@ -4,33 +4,35 @@ import epam.zlatamigas.surveyplatform.controller.command.Command;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
-import epam.zlatamigas.surveyplatform.model.entity.Theme;
 import epam.zlatamigas.surveyplatform.service.ThemeService;
 import epam.zlatamigas.surveyplatform.service.impl.ThemeServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_THEME_ID;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_REDIRECT_THEMES_CONFIRMED;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
 
 public class DeleteThemeCommand implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
         ThemeService themeService = ThemeServiceImpl.getInstance();
-        try {
-            String themeIdParameter = request.getParameter(PARAMETER_THEME_ID);
-            int themeId = Integer.parseInt(themeIdParameter);
-
-            themeService.delete(themeId);
-        } catch (ServiceException | NumberFormatException e) {
-            throw new CommandException(e);
+        String themeIdStr = request.getParameter(PARAMETER_THEME_ID);
+        if (themeIdStr != null) {
+            try {
+                int themeId = Integer.parseInt(themeIdStr);
+                themeService.delete(themeId);
+            } catch (NumberFormatException e) {
+                logger.warn("Passed invalid {} parameter", PARAMETER_THEME_ID);
+            } catch (ServiceException e) {
+                throw new CommandException(e);
+            }
         }
 
         return new Router(URL_REDIRECT_THEMES_CONFIRMED, FORWARD);

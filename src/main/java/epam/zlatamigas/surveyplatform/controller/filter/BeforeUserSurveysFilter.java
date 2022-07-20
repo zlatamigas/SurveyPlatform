@@ -11,10 +11,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
 
 @WebFilter(filterName = "BeforeUserSurveysFilter",
         urlPatterns = URL_REDIRECT_USER_SURVEYS,
@@ -28,7 +26,7 @@ public class BeforeUserSurveysFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
-        if(searchWordsStr != null){
+        if (searchWordsStr != null) {
             searchWordsStr = URLEncoder.encode(searchWordsStr, StandardCharsets.UTF_8.toString());
         } else {
             searchWordsStr = DEFAULT_SEARCH_WORDS;
@@ -36,15 +34,15 @@ public class BeforeUserSurveysFilter implements Filter {
         int filterThemeId;
         try {
             filterThemeId = Integer.parseInt(request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID));
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             filterThemeId = DEFAULT_FILTER_ID_ALL;
         }
         String surveyStatusName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS);
-        if(surveyStatusName == null){
+        if (surveyStatusName == null) {
             surveyStatusName = DEFAULT_FILTER_STR_ALL;
         }
         String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
-        if(orderTypeName == null){
+        if (orderTypeName == null) {
             orderTypeName = DEFAULT_ORDER;
         }
         String page = String.format(URL_REDIRECT_BASE_PATTERN + URL_REDIRECT_PARAMETER_PATTERN.repeat(4),

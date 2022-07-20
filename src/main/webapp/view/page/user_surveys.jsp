@@ -40,7 +40,7 @@
 
             <div class="content-container">
 
-                <form action="controller" method="post">
+                <form action="controller" method="get">
                     <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
                     <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}" value="true">
                     <button type="submit" class="btn btn-custom-fill"><fmt:message key="button.create"/></button>
@@ -189,7 +189,7 @@
                                             <div class="btn-toolbar justify-content-end" role="toolbar">
 
                                                 <form id="startEditSurveyForm${survey.surveyId}" action="controller"
-                                                      method="post">
+                                                      method="get">
                                                     <input type="hidden" name="command"
                                                            value="${CommandType.START_EDIT_SURVEY}">
                                                     <input type="hidden"

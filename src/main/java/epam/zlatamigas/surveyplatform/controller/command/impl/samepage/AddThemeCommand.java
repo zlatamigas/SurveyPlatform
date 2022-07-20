@@ -27,6 +27,7 @@ import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
 
 public class AddThemeCommand implements Command {
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
@@ -44,9 +45,9 @@ public class AddThemeCommand implements Command {
             boolean result = !validationFeedback.isEmpty();
 
             if (validationFeedback.isEmpty()) {
-                User user = (User)session.getAttribute(SESSION_ATTRIBUTE_USER);
-                if(user != null && user.getRole() != null){
-                    result = switch (user.getRole()){
+                User user = (User) session.getAttribute(SESSION_ATTRIBUTE_USER);
+                if (user != null && user.getRole() != null) {
+                    result = switch (user.getRole()) {
                         case ADMIN -> themeService.insertConfirmedTheme(themeName);
                         case USER -> themeService.insertWaitingTheme(themeName);
                         default -> false;
@@ -61,7 +62,7 @@ public class AddThemeCommand implements Command {
                 request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
             }
 
-            if(!result) {
+            if (!result) {
 
                 String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
                 if (searchWordsStr == null) {

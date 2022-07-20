@@ -12,6 +12,7 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SE
 
 
 public class StartSignInCommand implements Command {
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 

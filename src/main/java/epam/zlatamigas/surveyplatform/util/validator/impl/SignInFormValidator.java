@@ -35,10 +35,14 @@ public class SignInFormValidator implements FormValidator {
 
         Map<String, String> validationResult = new HashMap<>();
 
-        if (!validator.validEmail(data.get(PARAMETER_EMAIL)[0])) {
+        if (data.get(PARAMETER_EMAIL) == null
+                || data.get(PARAMETER_EMAIL).length == 0
+                || !validator.validEmail(data.get(PARAMETER_EMAIL)[0])) {
             validationResult.put(PARAMETER_EMAIL, MESSAGE_INVALID_USER_EMAIL);
         }
-        if (!validator.validPassword(data.get(PARAMETER_PASSWORD)[0])) {
+        if (data.get(PARAMETER_PASSWORD) == null
+                || data.get(PARAMETER_PASSWORD).length == 0
+                || !validator.validPassword(data.get(PARAMETER_PASSWORD)[0])) {
             validationResult.put(PARAMETER_PASSWORD, MESSAGE_INVALID_USER_PASSWORD);
         }
 

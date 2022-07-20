@@ -2,7 +2,6 @@ package epam.zlatamigas.surveyplatform.controller.command;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
-import epam.zlatamigas.surveyplatform.controller.command.impl.cancel.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.ChangePasswordCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.ConfirmPasswordKeyCommand;
 import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.SendForgottenPasswordKeyCommand;
@@ -45,12 +44,11 @@ public enum CommandType {
 
     // CRUD survey and its parts (for survey creator)
     START_EDIT_SURVEY(new StartEditSurveyCommand()),
+    EDIT_SURVEY(new EditSurveyCommand()),
     FINISH_EDIT_SURVEY(new FinishEditSurveyCommand()),
     START_EDIT_QUESTION(new StartEditQuestionCommand()),
     FINISH_EDIT_QUESTION(new FinishEditQuestionCommand()),
     REMOVE_QUESTION(new RemoveQuestionCommand()),
-    CANCEL_EDIT_SURVEY(new CancelEditSurveyCommand()),
-    CANCEL_EDIT_QUESTION(new CancelEditQuestionCommand()),
     DELETE_SURVEY(new DeleteSurveyCommand()),
     CHANGE_SURVEY_STATUS_CLOSED(new ChangeSurveyStatusClosedCommand()),
     CHANGE_SURVEY_STATUS_STARTED(new ChangeSurveyStatusStartedCommand()),
@@ -59,7 +57,6 @@ public enum CommandType {
     // Participate in survey
     START_SURVEY_ATTEMPT(new StartSurveyAttemptCommand()),
     FINISH_SURVEY_ATTEMPT(new FinishSurveyAttemptCommand()),
-    CANCEL_SURVEY_ATTEMPT(new CancelSurveyAttemptCommand()),
 
     // View survey result (for survey creator)
     SURVEY_RESULT(new SurveyResultCommand()),
@@ -76,10 +73,8 @@ public enum CommandType {
     // CRUD user (for admin)
     START_EDIT_USER(new StartEditUserCommand()),
     FINISH_EDIT_USER(new FinishEditUserCommand()),
-    CANCEL_EDIT_USER(new CancelEditUserCommand()),
     START_CREATE_USER(new StartCreateUserCommand()),
-    FINISH_CREATE_USER(new FinishCreateUserCommand()),
-    CANCEL_CREATE_USER(new CancelCreateUserCommand())
+    FINISH_CREATE_USER(new FinishCreateUserCommand())
     ;
 
     private Command command;

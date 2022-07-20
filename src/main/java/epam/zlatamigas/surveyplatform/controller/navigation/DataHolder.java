@@ -6,13 +6,11 @@ public final class DataHolder {
     public static final String SESSION_ATTRIBUTE_PARAMETER_LOCALISATION = "localisation";
     public static final String SESSION_ATTRIBUTE_USER = "user";
     public static final String SESSION_ATTRIBUTE_CURRENT_PAGE = "current_page";
-    public static final String SESSION_ATTRIBUTE_PREVIOUS_PAGE = "previous_page";
     // Listed data
     public static final String SESSION_ATTRIBUTE_THEMES = "themes";
     // Edited data
     public static final String SESSION_ATTRIBUTE_EDITED_SURVEY = "edited_survey";
     public static final String SESSION_ATTRIBUTE_EDITED_QUESTION = "edited_question";
-    public static final String SESSION_ATTRIBUTE_EDITED_USER = "edited_user";
     public static final String SESSION_ATTRIBUTE_SURVEY_ATTEMPT = "survey_attempt";
 
 
@@ -21,13 +19,19 @@ public final class DataHolder {
     public static final String SESSION_ATTRIBUTE_CHANGE_PASSWORD_EMAIL = "change_password_email";
 
 
-    // Request parameter-attribute (used for search)
+    // Request parameter-attribute
+    // Search data
     public static final String REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS = "search_words";
     public static final String REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE = "order_type";
     public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID = "filter_theme_id";
     public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS = "filter_survey_status";
     public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_ROLE = "filter_user_role";
     public static final String REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS = "filter_user_status";
+    // Edit existing user (admin)
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_USER_ID = "user_id";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_USER_EMAIL = "user_email";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE = "user_role";
+    public static final String REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS = "user_status";
 
 
     // Request attribute
@@ -56,9 +60,6 @@ public final class DataHolder {
     // Shared
     public static final String PARAMETER_COMMAND = "command";
     // User
-    public static final String PARAMETER_USER_ID = "user_id";
-    public static final String PARAMETER_USER_ROLE = "user_role";
-    public static final String PARAMETER_USER_STATUS = "user_status";
     public static final String PARAMETER_EMAIL = "email";
     public static final String PARAMETER_PASSWORD = "password";
     public static final String PARAMETER_PASSWORD_REPEAT = "password_repeat";
@@ -79,6 +80,9 @@ public final class DataHolder {
     public static final String PARAMETER_THEME_ID = "theme_id";
     public static final String PARAMETER_THEME_NAME = "theme_name";
 
-    private DataHolder() {};
+    private DataHolder() {
+    }
+
+    ;
 
 }

@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<jsp:include page="/view/fragment/onedit_header.jsp"/>
+<jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container">
 
@@ -67,7 +67,7 @@
                 <div class="form-row">
                     <div class="col form-group">
                         <label><fmt:message key="label.user.role"/> </label>
-                        <select name="${DataHolder.PARAMETER_USER_ROLE}" class="form-control">
+                        <select name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE}" class="form-control">
                             <option value="${UserRole.ADMIN}" >
                                 <fmt:message key="role.admin"/>
                             </option>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col form-group">
                         <label><fmt:message key="label.user.status"/> </label>
-                        <select name="${DataHolder.PARAMETER_USER_STATUS}" class="form-control">
+                        <select name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS}" class="form-control">
                             <option value="${UserStatus.ACTIVE}" selected>
                                 <fmt:message key="status.user.active"/>
                             </option>
@@ -90,8 +90,8 @@
                 </div>
             </form>
 
-            <form id="cancelCreateUserForm" action="controller" method="post">
-                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CANCEL_CREATE_USER}">
+            <form id="cancelCreateUserForm" action="controller" method="get">
+                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.USERS}">
             </form>
         </div>
     </div>

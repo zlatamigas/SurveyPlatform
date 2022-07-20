@@ -32,7 +32,9 @@ public class QuestionFormValidator implements FormValidator {
     public Map<String, String> validateForm(Map<String, String[]> data) {
         Map<String, String> validationResult = new HashMap<>();
 
-        if (!validator.validQuestionFormulation(data.get(PARAMETER_QUESTION_FORMULATION)[0])) {
+        if (data.get(PARAMETER_QUESTION_FORMULATION) == null
+                || data.get(PARAMETER_QUESTION_FORMULATION).length == 0
+                || !validator.validQuestionFormulation(data.get(PARAMETER_QUESTION_FORMULATION)[0])) {
             validationResult.put(PARAMETER_QUESTION_FORMULATION, MESSAGE_INVALID_QUESTION_FORMULATION);
         }
 

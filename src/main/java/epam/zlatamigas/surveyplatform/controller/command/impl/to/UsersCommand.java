@@ -13,35 +13,35 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_CONTROLLER_WITH_PARAMETERS_PATTERN;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_CONTROLLER_WITH_PARAMETERS_PATTERN;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USERS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 
 public class UsersCommand implements Command {
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
         HttpSession session = request.getSession();
-        String page = USERS;
 
         String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
-        if(searchWordsStr == null){
+        if (searchWordsStr == null) {
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
 
         String userRoleName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_ROLE);
-        if(userRoleName == null){
+        if (userRoleName == null) {
             userRoleName = DEFAULT_FILTER_STR_ALL;
         }
         String userStatusName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_FILTER_USER_STATUS);
-        if(userStatusName == null){
+        if (userStatusName == null) {
             userStatusName = DEFAULT_FILTER_STR_ALL;
         }
 
         String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
-        if(orderTypeName == null){
+        if (orderTypeName == null) {
             orderTypeName = DEFAULT_ORDER;
         }
 
@@ -54,17 +54,17 @@ public class UsersCommand implements Command {
 
         UserService service = UserServiceImpl.getInstance();
 
-        try{
+        try {
             List<User> users = service.findUsersBySearch(userRoleName, userStatusName, searchWordsStr, orderTypeName)
                     .stream().filter(user -> user.getUserId() != admin.getUserId()).collect(Collectors.toList());
             request.setAttribute(REQUEST_ATTRIBUTE_USERS, users);
-        } catch (ServiceException e){
+        } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
         session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE,
                 String.format(URL_CONTROLLER_WITH_PARAMETERS_PATTERN, request.getQueryString()));
 
-        return new Router(page, FORWARD);
+        return new Router(USERS, FORWARD);
     }
 }

@@ -1,7 +1,8 @@
 package epam.zlatamigas.surveyplatform.controller.navigation;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.DEFAULT;
-import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
+import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
 public class Router {
 

@@ -34,10 +34,14 @@ public class SurveyEditFormValidator implements FormValidator {
     public Map<String, String> validateForm(Map<String, String[]> data) {
         Map<String, String> validationResult = new HashMap<>();
 
-        if (!validator.validSurveyName(data.get(PARAMETER_SURVEY_NAME)[0])) {
+        if (data.get(PARAMETER_SURVEY_NAME) == null
+                || data.get(PARAMETER_SURVEY_NAME).length == 0
+                || !validator.validSurveyName(data.get(PARAMETER_SURVEY_NAME)[0])) {
             validationResult.put(PARAMETER_SURVEY_NAME, MESSAGE_INVALID_SURVEY_NAME);
         }
-        if (!validator.validUnlimitedText(data.get(PARAMETER_SURVEY_DESCRIPTION)[0])) {
+        if (data.get(PARAMETER_SURVEY_DESCRIPTION) == null
+                || data.get(PARAMETER_SURVEY_DESCRIPTION).length == 0
+                || !validator.validUnlimitedText(data.get(PARAMETER_SURVEY_DESCRIPTION)[0])) {
             validationResult.put(PARAMETER_SURVEY_DESCRIPTION, MESSAGE_INVALID_SURVEY_DESCRIPTION);
         }
 

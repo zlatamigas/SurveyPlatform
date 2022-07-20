@@ -31,11 +31,10 @@ public class StartSurveyAttemptCommand implements Command {
         String page = SURVEYS;
         PageChangeType pageChangeType = REDIRECT;
 
-        String surveyIdStr = request.getParameter(PARAMETER_SURVEY_ID);
-
         SurveyService service = SurveyServiceImpl.getInstance();
-        try {
-            if (surveyIdStr != null) {
+        String surveyIdStr = request.getParameter(PARAMETER_SURVEY_ID);
+        if (surveyIdStr != null) {
+            try {
                 int surveyId = Integer.parseInt(surveyIdStr);
 
                 Optional<Survey> survey = service.findParticipantSurveyInfo(surveyId);
@@ -47,11 +46,11 @@ public class StartSurveyAttemptCommand implements Command {
                     session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE,
                             String.format(URL_CONTROLLER_WITH_PARAMETERS_PATTERN, request.getQueryString()));
                 }
+            } catch (NumberFormatException e) {
+                logger.warn("Passed invalid {} parameter", PARAMETER_SURVEY_ID);
+            } catch (ServiceException e) {
+                throw new CommandException(e);
             }
-        } catch (NumberFormatException e) {
-            logger.warn("Passed invalid {} parameter", PARAMETER_SURVEY_ID);
-        } catch (ServiceException e) {
-            throw new CommandException(e);
         }
 
         return new Router(page, pageChangeType);

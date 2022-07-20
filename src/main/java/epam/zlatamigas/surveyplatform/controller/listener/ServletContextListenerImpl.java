@@ -1,11 +1,12 @@
 package epam.zlatamigas.surveyplatform.controller.listener;
 
 import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @WebListener
 public class ServletContextListenerImpl implements ServletContextListener {

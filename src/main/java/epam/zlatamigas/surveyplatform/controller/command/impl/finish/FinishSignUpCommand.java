@@ -11,7 +11,6 @@ import epam.zlatamigas.surveyplatform.util.validator.FormValidator;
 import epam.zlatamigas.surveyplatform.util.validator.impl.SignUpFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
@@ -22,21 +21,21 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageCh
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_USER_EXISTS_LOGUP;
 
 public class FinishSignUpCommand implements Command {
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
-        HttpSession session = request.getSession();
         String page = SIGN_UP;
         PageChangeType pageChangeType = FORWARD;
-
-        String email = request.getParameter(PARAMETER_EMAIL);
-        String password = request.getParameter(PARAMETER_PASSWORD);
 
         FormValidator validator = SignUpFormValidator.getInstance();
         Map<String, String[]> requestParameters = request.getParameterMap();
         Map<String, String> validationFeedback = validator.validateForm(requestParameters);
 
         if (validationFeedback.isEmpty()) {
+            String email = request.getParameter(PARAMETER_EMAIL);
+            String password = request.getParameter(PARAMETER_PASSWORD);
+
             UserService service = UserServiceImpl.getInstance();
             try {
                 if (service.signUpUser(email, password)) {
@@ -45,12 +44,9 @@ public class FinishSignUpCommand implements Command {
                 } else {
                     request.setAttribute(REQUEST_ATTRIBUTE_USER_EXISTS, MESSAGE_INVALID_USER_EXISTS_LOGUP);
                 }
-
             } catch (ServiceException e) {
                 throw new CommandException(e.getMessage(), e);
             }
-
-            session.setAttribute(SESSION_ATTRIBUTE_CURRENT_PAGE, page);
         } else {
             request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
         }

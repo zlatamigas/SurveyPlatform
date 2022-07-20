@@ -24,13 +24,12 @@ import static epam.zlatamigas.surveyplatform.model.entity.UserRole.*;
 @WebFilter(
         filterName = "CheckUserRoleFilter",
         dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
-        urlPatterns = {"/controller", "/view/page/controller"})
+        urlPatterns = {"/controller"})
 public class CheckUserRoleFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private Map<UserRole, EnumSet<CommandType>> userCommands ;
-
+    private Map<UserRole, EnumSet<CommandType>> userCommands;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -54,8 +53,7 @@ public class CheckUserRoleFilter implements Filter {
                         START_EDIT_QUESTION,
                         FINISH_EDIT_QUESTION,
                         REMOVE_QUESTION,
-                        CANCEL_EDIT_SURVEY,
-                        CANCEL_EDIT_QUESTION,
+                        EDIT_SURVEY,
                         DELETE_SURVEY,
                         CHANGE_SURVEY_STATUS_CLOSED,
                         CHANGE_SURVEY_STATUS_STARTED,
@@ -63,7 +61,6 @@ public class CheckUserRoleFilter implements Filter {
                         // Participate in survey
                         START_SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,
-                        CANCEL_SURVEY_ATTEMPT,
                         SURVEY_RESULT,
                         THEMES_CONFIRMED,
                         THEMES_WAITING,
@@ -74,10 +71,8 @@ public class CheckUserRoleFilter implements Filter {
                         USER_ACCOUNT,
                         START_EDIT_USER,
                         FINISH_EDIT_USER,
-                        CANCEL_EDIT_USER,
                         START_CREATE_USER,
-                        FINISH_CREATE_USER,
-                        CANCEL_CREATE_USER
+                        FINISH_CREATE_USER
                 ),
                 USER, EnumSet.of(
                         DEFAULT,
@@ -97,8 +92,7 @@ public class CheckUserRoleFilter implements Filter {
                         START_EDIT_QUESTION,
                         FINISH_EDIT_QUESTION,
                         REMOVE_QUESTION,
-                        CANCEL_EDIT_SURVEY,
-                        CANCEL_EDIT_QUESTION,
+                        EDIT_SURVEY,
                         DELETE_SURVEY,
                         CHANGE_SURVEY_STATUS_CLOSED,
                         CHANGE_SURVEY_STATUS_STARTED,
@@ -106,7 +100,6 @@ public class CheckUserRoleFilter implements Filter {
                         // Participate in survey
                         START_SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,
-                        CANCEL_SURVEY_ATTEMPT,
                         SURVEY_RESULT,
                         USER_ACCOUNT,
                         // Themes
@@ -130,8 +123,7 @@ public class CheckUserRoleFilter implements Filter {
                         SURVEYS,
                         // Participate in survey
                         START_SURVEY_ATTEMPT,
-                        FINISH_SURVEY_ATTEMPT,
-                        CANCEL_SURVEY_ATTEMPT
+                        FINISH_SURVEY_ATTEMPT
                 )
         );
     }
@@ -156,9 +148,5 @@ public class CheckUserRoleFilter implements Filter {
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
-    }
-
-    @Override
-    public void destroy() {
     }
 }

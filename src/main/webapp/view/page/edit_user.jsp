@@ -18,13 +18,13 @@
 </head>
 <body>
 
-<jsp:include page="/view/fragment/onedit_header.jsp"/>
+<jsp:include page="/view/fragment/header.jsp"/>
 
 <div class="container">
 
     <form id="finishEditUserForm" action="controller" method="post">
         <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_EDIT_USER}">
-        <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}" value="${sessionScope.edited_user.userId}">
+        <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ID}" value="${requestScope.user_id}">
 
         <div class="content-container">
             <div class="padding-container">
@@ -37,7 +37,7 @@
                         <p class="card-text"><fmt:message key="label.email"/></p>
                     </div>
                     <div class="col">
-                        <p class="form-control">${sessionScope.edited_user.email}</p>
+                        <p class="form-control">${requestScope.user_email}</p>
                     </div>
                 </div>
                 <div class="row align-items-center form-group">
@@ -45,11 +45,11 @@
                         <p class="card-text"><fmt:message key="label.user.role"/></p>
                     </div>
                     <div class="col">
-                            <select name="${DataHolder.PARAMETER_USER_ROLE}" class="form-control">
-                                <option value="${UserRole.ADMIN}" <c:if test="${sessionScope.edited_user.role == UserRole.ADMIN}">selected</c:if>>
+                            <select name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE}" class="form-control">
+                                <option value="${UserRole.ADMIN}" <c:if test="${requestScope.user_role == UserRole.ADMIN}">selected</c:if>>
                                     <fmt:message key="role.admin"/>
                                 </option>
-                                <option value="${UserRole.USER}" <c:if test="${sessionScope.edited_user.role == UserRole.USER}">selected</c:if>>
+                                <option value="${UserRole.USER}" <c:if test="${requestScope.user_role == UserRole.USER}">selected</c:if>>
                                     <fmt:message key="role.user"/>
                                 </option>
                             </select>
@@ -60,11 +60,11 @@
                         <p class="card-text"><fmt:message key="label.user.status"/></p>
                     </div>
                     <div class="col">
-                        <select name="${DataHolder.PARAMETER_USER_STATUS}" class="form-control">
-                            <option value="${UserStatus.ACTIVE}" <c:if test="${sessionScope.edited_user.status == UserStatus.ACTIVE}">selected</c:if>>
+                        <select name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS}" class="form-control">
+                            <option value="${UserStatus.ACTIVE}" <c:if test="${requestScope.user_status == UserStatus.ACTIVE}">selected</c:if>>
                                 <fmt:message key="status.user.active"/>
                             </option>
-                            <option value="${UserStatus.BANNED}" <c:if test="${sessionScope.edited_user.status == UserStatus.BANNED}">selected</c:if>>
+                            <option value="${UserStatus.BANNED}" <c:if test="${requestScope.user_status == UserStatus.BANNED}">selected</c:if>>
                                 <fmt:message key="status.user.banned"/>
                             </option>
                         </select>
@@ -74,8 +74,8 @@
         </div>
 
     </form>
-    <form id="cancelEditUserForm" action="controller" method="post">
-        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CANCEL_EDIT_USER}">
+    <form id="cancelEditUserForm" action="controller" method="get">
+        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.USERS}">
     </form>
 
     <div class="bottom-actions-container">

@@ -34,16 +34,30 @@ public class SignUpFormValidator implements FormValidator {
 
         Map<String, String> validationResult = new HashMap<>();
 
-        if (!data.get(PARAMETER_EMAIL)[0].matches(EMAIL_PATTERN)) {
+        if (data.get(PARAMETER_EMAIL) == null
+                || data.get(PARAMETER_EMAIL).length == 0
+                || !data.get(PARAMETER_EMAIL)[0].matches(EMAIL_PATTERN)) {
             validationResult.put(PARAMETER_EMAIL, MESSAGE_INVALID_USER_EMAIL);
         }
-        String password = data.get(PARAMETER_PASSWORD)[0];
-        String passwordRepeat = data.get(PARAMETER_PASSWORD_REPEAT)[0];
-        if (!validator.validPassword(password)) {
+
+        if(data.get(PARAMETER_PASSWORD) != null && data.get(PARAMETER_PASSWORD).length != 0){
+            String password = data.get(PARAMETER_PASSWORD)[0];
+
+            if (!validator.validPassword(password)) {
+                validationResult.put(PARAMETER_PASSWORD, MESSAGE_INVALID_USER_PASSWORD);
+            }
+
+            if(data.get(PARAMETER_PASSWORD_REPEAT) != null && data.get(PARAMETER_PASSWORD_REPEAT).length != 0) {
+                String passwordRepeat = data.get(PARAMETER_PASSWORD_REPEAT)[0];
+
+                if (!passwordRepeat.equals(password) || !validator.validPassword(passwordRepeat)) {
+                    validationResult.put(PARAMETER_PASSWORD_REPEAT, MESSAGE_INVALID_USER_PASSWORD_REPEAT);
+                }
+            } else {
+                validationResult.put(PARAMETER_PASSWORD_REPEAT, MESSAGE_INVALID_USER_PASSWORD_REPEAT);
+            }
+        } else {
             validationResult.put(PARAMETER_PASSWORD, MESSAGE_INVALID_USER_PASSWORD);
-        }
-        if (!passwordRepeat.equals(password) || !validator.validPassword(passwordRepeat)) {
-            validationResult.put(PARAMETER_PASSWORD_REPEAT, MESSAGE_INVALID_USER_PASSWORD_REPEAT);
         }
 
         return validationResult;

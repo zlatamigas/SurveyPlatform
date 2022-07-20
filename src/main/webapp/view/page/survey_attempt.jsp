@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<jsp:include page="/view/fragment/header.jsp"/>
+<jsp:include page="/view/fragment/onedit_header.jsp"/>
 
 <div class="container">
 
@@ -139,7 +139,7 @@
                 </div>
                 <div class="modal-footer">
                     <form action="controller" method="post">
-                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CANCEL_SURVEY_ATTEMPT}">
+                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SURVEYS}">
                         <button type="submit" class="btn btn-primary"><fmt:message key="button.ok"/></button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>

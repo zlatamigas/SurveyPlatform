@@ -25,8 +25,8 @@
 
 <div class="container">
 
-    <form id="cancelEditSurveyForm" action="controller" method="post">
-        <input type="hidden" name="command" value="${CommandType.CANCEL_EDIT_SURVEY}">
+    <form id="cancelEditSurveyForm" action="controller" method="get">
+        <input type="hidden" name="command" value="${CommandType.USER_SURVEYS}">
     </form>
 
     <form id="editSurveyForm" action="controller" method="post">

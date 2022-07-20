@@ -10,9 +10,11 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
-import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
+import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
 
 @WebFilter(filterName = "BeforeThemesConfirmedFilter",
         urlPatterns = URL_REDIRECT_THEMES_CONFIRMED,
@@ -26,13 +28,13 @@ public class BeforeThemesConfirmedFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String searchWordsStr = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS);
-        if(searchWordsStr != null){
+        if (searchWordsStr != null) {
             searchWordsStr = URLEncoder.encode(searchWordsStr, StandardCharsets.UTF_8.toString());
         } else {
             searchWordsStr = DEFAULT_SEARCH_WORDS;
         }
         String orderTypeName = request.getParameter(REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE);
-        if(orderTypeName == null){
+        if (orderTypeName == null) {
             orderTypeName = DEFAULT_ORDER;
         }
         String page = String.format(URL_REDIRECT_BASE_PATTERN + URL_REDIRECT_PARAMETER_PATTERN.repeat(2),

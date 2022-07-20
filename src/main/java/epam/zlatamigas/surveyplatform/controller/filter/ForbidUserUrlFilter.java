@@ -29,22 +29,27 @@ public class ForbidUserUrlFilter implements Filter {
 
         redirectUrl.put(DEFAULT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name()));
         redirectUrl.put(HOME, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name()));
+
         redirectUrl.put(SIGN_IN, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SIGN_IN.name()));
         redirectUrl.put(SIGN_UP, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SIGN_UP.name()));
+
         redirectUrl.put(SURVEYS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SURVEYS.name()));
         redirectUrl.put(USER_SURVEYS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.USER_SURVEYS.name()));
         redirectUrl.put(USERS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.USERS.name()));
         redirectUrl.put(THEMES_CONFIRMED, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.THEMES_CONFIRMED.name()));
         redirectUrl.put(THEMES_WAITING, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.THEMES_WAITING.name()));
+
         redirectUrl.put(ACCOUNT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.USER_ACCOUNT.name()));
+
         redirectUrl.put(SURVEY_ATTEMPT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SURVEY_ATTEMPT));
         redirectUrl.put(SURVEY_RESULT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SURVEY_RESULT));
+
+        redirectUrl.put(EDIT_SURVEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_SURVEY.name()));
+        redirectUrl.put(EDIT_QUESTION, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_QUESTION.name()));
+
+        redirectUrl.put(EDIT_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_USER.name()));
         redirectUrl.put(CREATE_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CREATE_USER.name()));
 
-//        redirectUrl.put(EDIT_SURVEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_SURVEY.name()));
-//        redirectUrl.put(EDIT_QUESTION, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_QUESTION.name()));
-//        redirectUrl.put(EDIT_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_USER.name()));
-//        redirectUrl.put(CREATE_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CREATE_USER.name()));
 //        redirectUrl.put(FORGOT_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.TO_FORGOT_PASSWORD.name()));
 //        redirectUrl.put(FORGOT_PASSWORD_RECEIVE_KEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SEND_FORGOTTEN_PASSWORD_KEY.name()));
 //        redirectUrl.put(FORGOT_PASSWORD_CHANGE_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.CHANGE_PASSWORD.name()));
@@ -58,7 +63,7 @@ public class ForbidUserUrlFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String pagePath = request.getServletPath();
-        if(redirectUrl.containsKey(pagePath)){
+        if (redirectUrl.containsKey(pagePath)) {
             response.sendRedirect(request.getContextPath() + redirectUrl.get(pagePath));
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
