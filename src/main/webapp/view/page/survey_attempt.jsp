@@ -150,5 +150,6 @@
 
 </div>
 
+<jsp:include page="/view/fragment/footer.jsp"/>
 </body>
 </html>

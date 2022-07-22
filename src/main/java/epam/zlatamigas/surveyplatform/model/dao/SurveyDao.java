@@ -150,4 +150,13 @@ public interface SurveyDao extends BaseDao<Survey> {
      */
     @Override
     boolean update(Survey survey) throws DaoException;
+
+    /**
+     * Count of attempts of specified survey.
+     *
+     * @param surveyId ID of Survey.
+     * @return Count of survey attempts if survey exists, otherwise Optional.empty().
+     * @throws DaoException If a database access error occurs.
+     */
+    Optional<Integer> countSurveyAttempts(int surveyId) throws DaoException;
 }

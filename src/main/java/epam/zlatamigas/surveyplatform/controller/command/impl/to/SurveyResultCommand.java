@@ -47,6 +47,8 @@ public class SurveyResultCommand implements Command {
                             .forEach(surveyQuestion -> surveyQuestion.getAnswers()
                                     .sort((a1, a2) -> a2.getSelectedCount() - a1.getSelectedCount()));
                     request.setAttribute(REQUEST_ATTRIBUTE_SURVEY_RESULT, survey.get());
+                    int attemptCount = surveyService.countSurveyAttempts(surveyId).orElse(0);
+                    request.setAttribute(REQUEST_ATTRIBUTE_SURVEY_ATTEMPT_COUNT, attemptCount);
 
                     page = SURVEY_RESULT;
                     pageChangeType = FORWARD;

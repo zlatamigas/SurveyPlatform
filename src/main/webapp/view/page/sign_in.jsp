@@ -45,7 +45,8 @@
                         <fmt:message key="${requestScope.form_invalid.email}"/>
                     </c:if>
                 </div>
-                <label><fmt:message key="label.email"/></label>
+                <label><fmt:message key="label.email"/>
+                </label>
                 <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}"
                        placeholder="<fmt:message key="placeholder.email"/>">
             </div>
@@ -55,7 +56,13 @@
                         <fmt:message key="${requestScope.form_invalid.password}"/>
                     </c:if>
                 </div>
-                <label><fmt:message key="label.password"/></label>
+                <label><fmt:message key="label.password"/>
+                    <a tabindex="0"
+                       data-toggle="popover" data-trigger="hover"
+                       data-content="<fmt:message key="popover.hint.password"/>">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </label>
                 <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}"
                        placeholder="<fmt:message key="placeholder.password"/>">
                 <div style=" text-align: end;">
@@ -73,5 +80,7 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="/view/fragment/footer.jsp"/>
 </body>
 </html>

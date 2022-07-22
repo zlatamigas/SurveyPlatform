@@ -25,7 +25,7 @@ public interface SurveyService {
     /**
      * Delete survey by id.
      *
-     * @param surveyId Survey id.
+     * @param surveyId  Survey id.
      * @param creatorId ID of survey creator.
      * @return True if existing survey was deleted, otherwise false.
      * @throws ServiceException If a database access error occurs.
@@ -102,8 +102,8 @@ public interface SurveyService {
     /**
      * Change status of existing survey.
      *
-     * @param surveyId ID of Survey to update.
-     * @param status   Survey status to set.
+     * @param surveyId  ID of Survey to update.
+     * @param status    Survey status to set.
      * @param creatorId ID of survey creator.
      * @return True if survey with surveyId exists.
      * @throws ServiceException If a database access error occurs.
@@ -113,10 +113,19 @@ public interface SurveyService {
     /**
      * Update survey.
      *
-     * @param survey Survey, containing questions and answers with valid IDs.
+     * @param survey    Survey, containing questions and answers with valid IDs.
      * @param creatorId ID of survey creator.
      * @return True if survey and all its parts was updated successfully,otherwise false.
      * @throws ServiceException If a database access error occurs.
      */
     boolean update(Survey survey, int creatorId) throws ServiceException;
+
+    /**
+     * Count of attempts of specified survey.
+     *
+     * @param surveyId ID of Survey.
+     * @return Count of survey attempts if survey exists, otherwise Optional.empty().
+     * @throws ServiceException If a database access error occurs.
+     */
+    Optional<Integer> countSurveyAttempts(int surveyId) throws ServiceException;
 }

@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
 <jsp:include page="/view/fragment/header.jsp"/>
 <script>
     let activeLink = document.getElementById("navHome");
@@ -76,6 +77,10 @@
         </div>
     </div>
 
+
 </div>
+
+<jsp:include page="/view/fragment/footer.jsp"/>
+
 </body>
 </html>

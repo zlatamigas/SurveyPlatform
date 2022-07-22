@@ -321,4 +321,13 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Cannot send key to email: " + email);
         }
     }
+
+    @Override
+    public boolean deleteUser(int userId) throws ServiceException {
+        try {
+            return userDao.delete(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

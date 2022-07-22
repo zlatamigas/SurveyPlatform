@@ -69,8 +69,16 @@
                                             </c:if>
                                         </p>
                                     </div>
-                                    <input id="inputThemeName" type="text" name="${DataHolder.PARAMETER_THEME_NAME}" class="form-control">
-
+                                    <div class="form-group">
+                                        <label><fmt:message key="label.theme.name"/>
+                                            <a tabindex="0"
+                                                  data-toggle="popover" data-trigger="hover"
+                                                  data-content="<fmt:message key="popover.hint.theme.name"/>">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        </label>
+                                        <input id="inputThemeName" type="text" name="${DataHolder.PARAMETER_THEME_NAME}" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-success"><fmt:message key="button.add"/></button>
@@ -208,5 +216,7 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="/view/fragment/footer.jsp"/>
 </body>
 </html>

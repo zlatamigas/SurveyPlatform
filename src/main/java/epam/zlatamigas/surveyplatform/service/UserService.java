@@ -97,4 +97,13 @@ public interface UserService {
      * @throws ServiceException Thrown when key was not sent.
      */
     int requestChangePassword(String email) throws ServiceException;
+
+    /**
+     * Delete user by id.
+     *
+     * @param userId User id.
+     * @return Tru if existing user was deleted, otherwise false..
+     * @throws ServiceException If a database access error occurs.
+     */
+    boolean deleteUser(int userId) throws ServiceException;
 }

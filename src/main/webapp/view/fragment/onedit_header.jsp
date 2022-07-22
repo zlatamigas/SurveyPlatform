@@ -13,6 +13,7 @@
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/css/bootstrap.min.css">
     <script src="${pageContext.request.contextPath}/static/lib/jquery-3.5.1/jquery-3.5.1.slim.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/lib/popper/popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/js/bootstrap.bundle.min.js"></script>
 
     <%-- Fontawesome Icons --%>
@@ -21,6 +22,12 @@
 
     <%-- Custom style --%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css">
+
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
 </head>
 
 <header>

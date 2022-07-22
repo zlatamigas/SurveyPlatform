@@ -2,7 +2,6 @@ package epam.zlatamigas.surveyplatform.model.dao.impl;
 
 import epam.zlatamigas.surveyplatform.exception.DaoException;
 import epam.zlatamigas.surveyplatform.model.connection.ConnectionPool;
-import epam.zlatamigas.surveyplatform.model.dao.BaseDao;
 import epam.zlatamigas.surveyplatform.model.dao.DbOrderType;
 import epam.zlatamigas.surveyplatform.model.dao.SurveyDao;
 import epam.zlatamigas.surveyplatform.model.entity.*;
@@ -22,7 +21,7 @@ public class SurveyDaoImpl implements SurveyDao {
     private static final Logger logger = LogManager.getLogger();
 
     //Get all themes
-    private static final String FIND_ALL_THEMES = "SELECT id_theme, theme_name, theme_status FROM themes";
+    private static final String FIND_ALL_THEMES_STATEMENT = "SELECT id_theme, theme_name, theme_status FROM themes";
 
     //Insert survey info statements
     private static final String INSERT_SURVEY_STATEMENT =
@@ -31,9 +30,9 @@ public class SurveyDaoImpl implements SurveyDao {
             "INSERT INTO questions(select_multiple, formulation, survey_id) VALUES (?,?,?)";
     private static final String INSERT_SURVEY_QUESTION_ANSWER_STATEMENT =
             "INSERT INTO question_answers(answer, selected_count, question_id) VALUES (?,?,?)";
-    public static final String INSERT_SURVEY_USER_ATTEMPT =
+    public static final String INSERT_SURVEY_USER_ATTEMPT_STATEMENT =
             "INSERT INTO survey_user_attempts(finished_date_time, survey_id, user_id) VALUES (CONVERT(?, DATETIME), ?, ?)";
-    public static final String INSERT_SURVEY_GUEST_ATTEMPT =
+    public static final String INSERT_SURVEY_GUEST_ATTEMPT_STATEMENT =
             "INSERT INTO survey_user_attempts(finished_date_time, survey_id) VALUES (CONVERT(?, DATETIME), ?)";
 
     //Update survey info statements
@@ -47,12 +46,12 @@ public class SurveyDaoImpl implements SurveyDao {
             SET survey_status = ?
             WHERE id_survey = ?;
             """;
-    private static final String UPDATE_SURVEY_STATUS_STARTED = """
+    private static final String UPDATE_SURVEY_STATUS_STARTED_STATEMENT = """
             UPDATE surveys 
             SET survey_status = 'STARTED', start_date_time = CONVERT(?, DATETIME)  
             WHERE id_survey = ?;
             """;
-    private static final String UPDATE_SURVEY_STATUS_CLOSED = """
+    private static final String UPDATE_SURVEY_STATUS_CLOSED_STATEMENT = """
             UPDATE surveys 
             SET survey_status = 'CLOSED', close_date_time = CONVERT(?, DATETIME)  
             WHERE id_survey = ?;
@@ -121,6 +120,9 @@ public class SurveyDaoImpl implements SurveyDao {
     private static final String WHERE_NAME_CONTAINS_STATEMENT = "AND INSTR(LOWER(survey_name), LOWER(?)) > 0 ";
     private static final String ORDER_BY_SURVEY_NAME_STATEMENT = "ORDER BY survey_name ";
 
+    public static final String COUNT_SURVEY_ATTEMPTS_STATEMENT =
+            "SELECT COUNT(id_survey_user_attempt) FROM survey_user_attempts WHERE survey_id = ?";
+
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private static SurveyDaoImpl instance;
@@ -139,7 +141,7 @@ public class SurveyDaoImpl implements SurveyDao {
         Map<Integer, Theme> themes = new HashMap<>();
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(FIND_ALL_THEMES);
+             PreparedStatement ps = connection.prepareStatement(FIND_ALL_THEMES_STATEMENT);
              ResultSet resultSet = ps.executeQuery()) {
 
             Theme theme;
@@ -617,7 +619,7 @@ public class SurveyDaoImpl implements SurveyDao {
     public boolean updateSurveyStarted(int surveyId, LocalDateTime startDateTime) throws DaoException {
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement psInsertSurvey = connection.prepareStatement(UPDATE_SURVEY_STATUS_STARTED)) {
+             PreparedStatement psInsertSurvey = connection.prepareStatement(UPDATE_SURVEY_STATUS_STARTED_STATEMENT)) {
 
             String dateTime = startDateTime.format(dateTimeFormatter);
             psInsertSurvey.setString(1, dateTime);
@@ -634,7 +636,7 @@ public class SurveyDaoImpl implements SurveyDao {
     public boolean updateSurveyClosed(int surveyId, LocalDateTime closeDateTime) throws DaoException {
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement psInsertSurvey = connection.prepareStatement(UPDATE_SURVEY_STATUS_CLOSED)) {
+             PreparedStatement psInsertSurvey = connection.prepareStatement(UPDATE_SURVEY_STATUS_CLOSED_STATEMENT)) {
 
             String dateTime = closeDateTime.format(dateTimeFormatter);
             psInsertSurvey.setString(1, dateTime);
@@ -661,14 +663,14 @@ public class SurveyDaoImpl implements SurveyDao {
             Survey survey = surveyAttempt.getSurvey();
 
             if (user.getUserId() > 0) {
-                try (PreparedStatement psInsertUserAttempt = connection.prepareStatement(INSERT_SURVEY_USER_ATTEMPT)) {
+                try (PreparedStatement psInsertUserAttempt = connection.prepareStatement(INSERT_SURVEY_USER_ATTEMPT_STATEMENT)) {
                     psInsertUserAttempt.setString(1, dateTime);
                     psInsertUserAttempt.setInt(2, survey.getSurveyId());
                     psInsertUserAttempt.setInt(3, user.getUserId());
                     result = psInsertUserAttempt.executeUpdate() == 1;
                 }
             } else {
-                try (PreparedStatement psInsertGuestAttempt = connection.prepareStatement(INSERT_SURVEY_GUEST_ATTEMPT)) {
+                try (PreparedStatement psInsertGuestAttempt = connection.prepareStatement(INSERT_SURVEY_GUEST_ATTEMPT_STATEMENT)) {
                     psInsertGuestAttempt.setString(1, dateTime);
                     psInsertGuestAttempt.setInt(2, survey.getSurveyId());
                     result = psInsertGuestAttempt.executeUpdate() == 1;
@@ -895,5 +897,33 @@ public class SurveyDaoImpl implements SurveyDao {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
 
+    }
+
+    @Override
+    public Optional<Integer> countSurveyAttempts(int surveyId) throws DaoException {
+
+        if (findById(surveyId).isEmpty()) {
+            logger.error("Survey does not exist: id_survey = {}", surveyId);
+            return Optional.empty();
+        }
+
+        Optional<Integer> count = Optional.empty();
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+
+            try (PreparedStatement psFindSurvey = connection.prepareStatement(COUNT_SURVEY_ATTEMPTS_STATEMENT)) {
+                psFindSurvey.setInt(1, surveyId);
+                try (ResultSet rsCountAttempts = psFindSurvey.executeQuery()) {
+                    if (rsCountAttempts.next()) {
+                        count = Optional.of(rsCountAttempts.getInt(1));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to find survey by id_survey = {} : {}", surveyId, e.getMessage());
+            throw new DaoException("Failed to find survey by id_survey = " + surveyId, e);
+        }
+
+        return count;
     }
 }

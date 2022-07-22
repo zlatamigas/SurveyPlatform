@@ -23,6 +23,7 @@
 
 <jsp:include page="/view/fragment/onedit_header.jsp"/>
 
+
 <div class="container">
 
     <form id="cancelEditSurveyForm" action="controller" method="get">
@@ -47,7 +48,13 @@
                             <fmt:message key="${requestScope.form_invalid.survey_name}"/>
                         </c:if>
                     </div>
-                    <label for="surveyName"><fmt:message key="label.survey.name"/></label>
+                    <label for="surveyName"><fmt:message key="label.survey.name"/>
+                        <a tabindex="0"
+                           data-toggle="popover" data-trigger="hover"
+                           data-content="<fmt:message key="popover.hint.survey.name"/>">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </label>
                     <input name="${DataHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName"
                            minlength="1" maxlength="200"
                            value="${sessionScope.edited_survey.name}">

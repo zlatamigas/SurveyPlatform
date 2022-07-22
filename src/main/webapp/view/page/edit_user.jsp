@@ -44,7 +44,6 @@
 
     <div class="content-container">
         <div class="padding-container">
-
             <form id="finishEditUserForm" action="controller" method="post">
                 <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_EDIT_USER}">
                 <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ID}"
@@ -112,9 +111,57 @@
     </div>
 
     <div class="content-container">
-        <div class="pagination-page-container">
+        <div class="padding-container">
+            <h3 class="text-danger"><i class="fas fa-user-alt-slash"></i> <fmt:message key="confirm.delete.user.header"/></h3>
+            <hr class="my-4"/>
+            <p><fmt:message key="confirm.delete.user.description"/> </p>
 
-            <div id="pagination-page-container">
+            <button type="button"
+                    data-toggle="modal" data-target="#deleteUser"
+                    class="btn btn-danger btn-delete-user">
+                <fmt:message key="button.delete"/>
+            </button>
+            <div id="deleteUser"
+                 class="modal fade" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><fmt:message
+                                    key="confirm.delete.user.header"/></h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <fmt:message key="confirm.delete.user"/> ${requestScope.user_email}
+                            <fmt:message key="confirm.questionmark"/>
+                            <fmt:message key="confirm.delete.user.description"/>
+                        </div>
+                        <div class="modal-footer">
+                            <form action="controller" method="post">
+                                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}"
+                                       value="${CommandType.DELETE_USER}">
+                                <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}"
+                                       value="${requestScope.user_id}">
+                                <button type="submit" class="btn btn-danger">
+                                    <fmt:message key="button.delete"/>
+                                </button>
+                            </form>
+
+                            <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal"><fmt:message
+                                    key="button.cancel"/></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <c:if test="${requestScope.user_surveys.size() > 0}">
+        <div class="content-container">
+            <div class="pagination-page-container">
+
                 <c:forEach var="survey" items="${requestScope.user_surveys}">
                     <div class="card">
                         <div class="card-header">
@@ -146,9 +193,12 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <form action="controller" method="post">
-                                                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.ADMIN_DELETE_SURVEY}">
-                                                        <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
-                                                        <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}" value="${survey.creator.userId}">
+                                                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}"
+                                                               value="${CommandType.ADMIN_DELETE_SURVEY}">
+                                                        <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
+                                                               value="${survey.surveyId}">
+                                                        <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}"
+                                                               value="${survey.creator.userId}">
                                                         <button type="submit" class="btn btn-danger">
                                                             <fmt:message key="button.delete"/>
                                                         </button>
@@ -203,10 +253,11 @@
                         </div>
                     </div>
                 </c:forEach>
-            </div>
 
+            </div>
         </div>
-    </div>
+    </c:if>
+
 
     <div class="bottom-actions-container">
         <div class="btn-group-custom">

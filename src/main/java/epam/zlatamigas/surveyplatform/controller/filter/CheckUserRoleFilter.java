@@ -72,6 +72,7 @@ public class CheckUserRoleFilter implements Filter {
                         // CRUD user
                         START_EDIT_USER,
                         FINISH_EDIT_USER,
+                        DELETE_USER,
                         START_CREATE_USER,
                         FINISH_CREATE_USER,
                         ADMIN_DELETE_SURVEY

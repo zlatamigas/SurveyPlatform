@@ -42,6 +42,7 @@ public final class DataHolder {
     public static final String REQUEST_ATTRIBUTE_USERS = "users";
     public static final String REQUEST_ATTRIBUTE_REQUESTED_THEMES = "requested_themes";
     public static final String REQUEST_ATTRIBUTE_SURVEY_RESULT = "survey_result";
+    public static final String REQUEST_ATTRIBUTE_SURVEY_ATTEMPT_COUNT = "survey_attempt_count";
     // Validation feedback
     public static final String REQUEST_ATTRIBUTE_FORM_INVALID = "form_invalid";
     public static final String REQUEST_ATTRIBUTE_USER_INVALID = "user_invalid";

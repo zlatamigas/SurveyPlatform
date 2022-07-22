@@ -42,7 +42,13 @@
                             <fmt:message key="${requestScope.form_invalid.question_formulation}"/>
                         </c:if>
                     </div>
-                    <label for="questionFormulation"><fmt:message key="label.question.formulation"/></label>
+                    <label for="questionFormulation"><fmt:message key="label.question.formulation"/>
+                        <a tabindex="0"
+                           data-toggle="popover" data-trigger="hover"
+                           data-content="<fmt:message key="popover.hint.question.formulation"/>">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </label>
                     <textarea name="${DataHolder.PARAMETER_QUESTION_FORMULATION}" class="form-control"
                            id="questionFormulation" rows="3">${sessionScope.edited_question.formulation}</textarea>
                 </div>

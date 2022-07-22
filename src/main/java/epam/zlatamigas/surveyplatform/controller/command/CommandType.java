@@ -73,6 +73,7 @@ public enum CommandType {
     // CRUD user (for admin)
     START_EDIT_USER(new StartEditUserCommand()),
     FINISH_EDIT_USER(new FinishEditUserCommand()),
+    DELETE_USER(new DeleteUserCommand()),
     START_CREATE_USER(new StartCreateUserCommand()),
     FINISH_CREATE_USER(new FinishCreateUserCommand()),
     ADMIN_DELETE_SURVEY(new AdminDeleteSurveyCommand())

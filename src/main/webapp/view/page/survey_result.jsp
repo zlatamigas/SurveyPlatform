@@ -31,14 +31,19 @@
             <h5 class="time-text">
                 <ct:local-date-time datetime="${requestScope.survey_result.startDateTime}"/> -
                     <ct:local-date-time datetime="${requestScope.survey_result.closeDateTime}"/></h5>
-
             <c:if test="${requestScope.survey_result.description != ''}">
                 <div class="description-text">${requestScope.survey_result.description}</div>
             </c:if>
+
         </div>
     </div>
 
     <div class="content-container">
+
+        <div class="attempt-count">
+            <p class="attempt-count-text"><fmt:message key="surveyresult.attemptcount"/> ${requestScope.survey_attempt_count}</p>
+        </div>
+
         <div class="edit-question-list">
             <c:forEach var="question" items="${requestScope.survey_result.questions}">
                 <div class="card">
@@ -156,5 +161,6 @@
     </div>
 </div>
 
+<jsp:include page="/view/fragment/footer.jsp"/>
 </body>
 </html>

@@ -296,4 +296,13 @@ public class SurveyServiceImpl implements SurveyService {
 
         return false;
     }
+
+    @Override
+    public Optional<Integer> countSurveyAttempts(int surveyId) throws ServiceException {
+        try {
+            return surveyDao.countSurveyAttempts(surveyId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }
