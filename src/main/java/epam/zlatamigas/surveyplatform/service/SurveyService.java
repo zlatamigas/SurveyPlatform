@@ -25,11 +25,12 @@ public interface SurveyService {
     /**
      * Delete survey by id.
      *
-     * @param id Survey id.
+     * @param surveyId Survey id.
+     * @param creatorId ID of survey creator.
      * @return True if existing survey was deleted, otherwise false.
      * @throws ServiceException If a database access error occurs.
      */
-    boolean delete(int id) throws ServiceException;
+    boolean delete(int surveyId, int creatorId) throws ServiceException;
 
     /**
      * Find info about specified survey: question info without statistics info.
@@ -103,17 +104,19 @@ public interface SurveyService {
      *
      * @param surveyId ID of Survey to update.
      * @param status   Survey status to set.
+     * @param creatorId ID of survey creator.
      * @return True if survey with surveyId exists.
      * @throws ServiceException If a database access error occurs.
      */
-    boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws ServiceException;
+    boolean updateSurveyStatus(int surveyId, SurveyStatus status, int creatorId) throws ServiceException;
 
     /**
      * Update survey.
      *
      * @param survey Survey, containing questions and answers with valid IDs.
+     * @param creatorId ID of survey creator.
      * @return True if survey and all its parts was updated successfully,otherwise false.
      * @throws ServiceException If a database access error occurs.
      */
-    boolean update(Survey survey) throws ServiceException;
+    boolean update(Survey survey, int creatorId) throws ServiceException;
 }

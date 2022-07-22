@@ -76,10 +76,13 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public boolean delete(int id) throws ServiceException {
+    public boolean delete(int surveyId, int creatorId) throws ServiceException {
 
         try {
-            return surveyDao.delete(id);
+            Optional<Survey> survey = surveyDao.findById(surveyId);
+            return survey.isPresent()
+                    && survey.get().getCreator().getUserId() == creatorId
+                    && surveyDao.delete(surveyId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -103,7 +106,7 @@ public class SurveyServiceImpl implements SurveyService {
 
         DbOrderType orderType;
         try {
-            if(orderTypeName != null){
+            if (orderTypeName != null) {
                 orderType = DbOrderType.valueOf(orderTypeName.toUpperCase());
             } else {
                 orderType = DbOrderType.ASC;
@@ -141,7 +144,7 @@ public class SurveyServiceImpl implements SurveyService {
 
         DbOrderType orderType;
         try {
-            if(orderTypeName != null){
+            if (orderTypeName != null) {
                 orderType = DbOrderType.valueOf(orderTypeName.toUpperCase());
             } else {
                 orderType = DbOrderType.ASC;
@@ -185,7 +188,10 @@ public class SurveyServiceImpl implements SurveyService {
     public Optional<Survey> findCreatorSurveyInfo(int surveyId, int creatorId) throws ServiceException {
 
         try {
-            return surveyDao.findCreatorSurveyInfo(surveyId, creatorId);
+            Optional<Survey> survey = surveyDao.findCreatorSurveyInfo(surveyId);
+            return (survey.isPresent() && survey.get().getCreator().getUserId() == creatorId)
+                    ? survey
+                    : Optional.empty();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -224,7 +230,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public boolean updateSurveyStatus(int surveyId, SurveyStatus status) throws ServiceException {
+    public boolean updateSurveyStatus(int surveyId, SurveyStatus status, int creatorId) throws ServiceException {
 
         LocalDateTime dateTime = LocalDateTime.now();
 
@@ -233,11 +239,15 @@ public class SurveyServiceImpl implements SurveyService {
             return false;
         }
 
+
         try {
-            return switch (status){
-                case STARTED -> surveyDao.updateSurveyStarted(surveyId, dateTime);
-                case CLOSED -> surveyDao.updateSurveyClosed(surveyId, dateTime);
-                default -> surveyDao.updateSurveyStatus(surveyId, status);
+            Optional<Survey> survey = surveyDao.findById(surveyId);
+            return survey.isPresent()
+                    && survey.get().getCreator().getUserId() == creatorId
+                    && switch (status) {
+                        case STARTED -> surveyDao.updateSurveyStarted(surveyId, dateTime);
+                        case CLOSED -> surveyDao.updateSurveyClosed(surveyId, dateTime);
+                        default -> surveyDao.updateSurveyStatus(surveyId, status);
             };
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -245,7 +255,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public boolean update(Survey survey) throws ServiceException {
+    public boolean update(Survey survey, int creatorId) throws ServiceException {
 
         if (survey != null) {
 
@@ -257,27 +267,33 @@ public class SurveyServiceImpl implements SurveyService {
                 return false;
             }
 
-            if (survey.getQuestions() == null) {
-                survey.setQuestions(new ArrayList<>());
-            }
-
-            if (survey.getDescription() == null) {
-                survey.setDescription(DEFAULT_DESCRIPTION);
-            }
-
-            if (survey.getTheme() == null) {
-                survey.setTheme(new Theme.ThemeBuilder().setThemeId(-1).getTheme());
-                logger.warn("Set default Theme as Survey theme object");
-            }
-
             try {
-                return surveyDao.update(survey);
+                Optional<Survey> surveyOptional = surveyDao.findById(survey.getSurveyId());
+                if(surveyOptional.isPresent()
+                        && surveyOptional.get().getCreator().getUserId() == survey.getCreator().getUserId()) {
+
+                    if (survey.getQuestions() == null) {
+                        survey.setQuestions(new ArrayList<>());
+                    }
+
+                    if (survey.getDescription() == null) {
+                        survey.setDescription(DEFAULT_DESCRIPTION);
+                    }
+
+                    if (survey.getTheme() == null) {
+                        survey.setTheme(new Theme.ThemeBuilder().setThemeId(-1).getTheme());
+                        logger.warn("Set default Theme as Survey theme object");
+                    }
+
+                    return surveyDao.update(survey);
+                }
             } catch (DaoException e) {
                 throw new ServiceException(e);
             }
         } else {
             logger.error("Passed null as Survey object");
-            return false;
         }
+
+        return false;
     }
 }

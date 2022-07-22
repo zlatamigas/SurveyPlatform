@@ -71,7 +71,7 @@ public class FinishEditSurveyCommand implements Command {
                     if (survey.getSurveyId() == 0) {
                         surveyService.insert(survey);
                     } else {
-                        surveyService.update(survey);
+                        surveyService.update(survey, creator.getUserId());
                     }
                 } catch (ServiceException e) {
                     throw new CommandException(e);

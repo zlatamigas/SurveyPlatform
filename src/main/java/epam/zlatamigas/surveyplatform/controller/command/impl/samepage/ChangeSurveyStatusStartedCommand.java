@@ -35,9 +35,7 @@ public class ChangeSurveyStatusStartedCommand implements Command {
                 int surveyId = Integer.parseInt(surveyIdStr);
                 int creatorId = ((User) session.getAttribute(SESSION_ATTRIBUTE_USER)).getUserId();
 
-                if (surveyService.findCreatorSurveyInfo(surveyId, creatorId).isPresent()) {
-                    surveyService.updateSurveyStatus(surveyId, SurveyStatus.STARTED);
-                }
+                surveyService.updateSurveyStatus(surveyId, SurveyStatus.STARTED, creatorId);
             } catch (NumberFormatException e) {
                 logger.warn("Passed invalid {} parameter", PARAMETER_SURVEY_ID);
             } catch (ServiceException e) {

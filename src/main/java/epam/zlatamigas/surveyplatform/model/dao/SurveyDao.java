@@ -28,24 +28,22 @@ public interface SurveyDao extends BaseDao<Survey> {
     /**
      * Delete survey by id.
      *
-     * @param id Survey id.
+     * @param surveyId Survey id.
      * @return True if existing survey was deleted, otherwise false.
      * @throws DaoException If a database access error occurs.
      */
     @Override
-    boolean delete(int id) throws DaoException;
+    boolean delete(int surveyId) throws DaoException;
 
     /**
-     * Unsupported find operation for survey. For find use methods:
-     * {@link #findCreatorSurveyInfo(int)} or
-     * {@link #findParticipantSurveyInfo(int)}.
+     * Find info about specified survey without questions.
      *
-     * @throws DaoException Never.
-     * @throws UnsupportedOperationException Always.
-     * @deprecated Unsupported operation.
+     * @param surveyId Survey id to use for search.
+     * @return Surveys with common info.
+     * @throws DaoException If a database access error occurs.
      */
     @Override
-    Optional<Survey> findById(int id) throws DaoException;
+    Optional<Survey> findById(int surveyId) throws DaoException;
 
     /**
      * Find info about specified survey: question info without statistics info.
@@ -60,11 +58,10 @@ public interface SurveyDao extends BaseDao<Survey> {
      * Find info about specified survey: question info with statistics info.
      *
      * @param surveyId Survey id to use for search.
-     * @param creatorId Creator id to use for search.
      * @return Surveys with common info with question and answer data with statistics.
      * @throws DaoException If a database access error occurs.
      */
-    Optional<Survey> findCreatorSurveyInfo(int surveyId, int creatorId) throws DaoException;
+    Optional<Survey> findCreatorSurveyInfo(int surveyId) throws DaoException;
 
     /**
      * Find preview info (name, description, theme) about started surveys according to

@@ -71,7 +71,7 @@
                         <div class="col-auto">
                             <button type="button"
                                     class="btn btn-outline-danger btn-delete-answer"
-                                    onclick="removeQuestion(${i});">
+                                    onclick="removeAnswer(${i});">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>

@@ -151,7 +151,7 @@
     <div class="bottom-actions-container">
         <div class="btn-group-custom">
             <a href="${pageContext.request.contextPath}/controller?command=${CommandType.USER_SURVEYS}"
-               class="btn btn-warning"><fmt:message key="button.cancel"/></a>
+               class="btn btn-warning"><fmt:message key="button.back"/></a>
         </div>
     </div>
 </div>

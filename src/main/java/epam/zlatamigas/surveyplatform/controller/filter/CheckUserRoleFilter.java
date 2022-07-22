@@ -69,10 +69,12 @@ public class CheckUserRoleFilter implements Filter {
                         DELETE_THEME,
                         ADD_THEME,
                         USER_ACCOUNT,
+                        // CRUD user
                         START_EDIT_USER,
                         FINISH_EDIT_USER,
                         START_CREATE_USER,
-                        FINISH_CREATE_USER
+                        FINISH_CREATE_USER,
+                        ADMIN_DELETE_SURVEY
                 ),
                 USER, EnumSet.of(
                         DEFAULT,

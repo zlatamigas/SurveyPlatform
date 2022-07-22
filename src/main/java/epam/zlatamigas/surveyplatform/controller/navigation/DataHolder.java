@@ -60,6 +60,7 @@ public final class DataHolder {
     // Shared
     public static final String PARAMETER_COMMAND = "command";
     // User
+    public static final String PARAMETER_USER_ID = "user_id";
     public static final String PARAMETER_EMAIL = "email";
     public static final String PARAMETER_PASSWORD = "password";
     public static final String PARAMETER_PASSWORD_REPEAT = "password_repeat";

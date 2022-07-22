@@ -74,7 +74,8 @@ public enum CommandType {
     START_EDIT_USER(new StartEditUserCommand()),
     FINISH_EDIT_USER(new FinishEditUserCommand()),
     START_CREATE_USER(new StartCreateUserCommand()),
-    FINISH_CREATE_USER(new FinishCreateUserCommand())
+    FINISH_CREATE_USER(new FinishCreateUserCommand()),
+    ADMIN_DELETE_SURVEY(new AdminDeleteSurveyCommand())
     ;
 
     private Command command;

@@ -90,7 +90,7 @@ public class SurveyDaoImpl implements SurveyDao {
             DATE_FORMAT(start_date_time, '%Y-%m-%d %T') AS start_date_time,  
             DATE_FORMAT(close_date_time, '%Y-%m-%d %T') AS close_date_time  
             FROM surveys  
-            WHERE id_survey = ? AND creator_id = ?
+            WHERE id_survey = ? 
             """;
     private static final String FIND_SURVEY_QUESTIONS_BY_SURVEY_ID_STATEMENT = """
             SELECT id_question, formulation, select_multiple 
@@ -255,21 +255,63 @@ public class SurveyDaoImpl implements SurveyDao {
     }
 
     @Override
-    public boolean delete(int id) throws DaoException {
+    public boolean delete(int surveyId) throws DaoException {
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(DELETE_SURVEY_STATEMENT)) {
-            ps.setInt(1, id);
+            ps.setInt(1, surveyId);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            logger.error("Failed to delete survey with id_survey = {} : {}", id, e.getMessage());
-            throw new DaoException("Failed to delete survey with id_survey = " + id, e);
+            logger.error("Failed to delete survey with id_survey = {} : {}", surveyId, e.getMessage());
+            throw new DaoException("Failed to delete survey with id_survey = " + surveyId, e);
         }
     }
 
     @Override
-    public Optional<Survey> findById(int id) throws DaoException {
-        throw new UnsupportedOperationException("Unsupported find operation for survey");
+    public Optional<Survey> findById(int surveyId) throws DaoException {
+        Optional<Survey> surveyOptional = Optional.empty();
+
+        Map<Integer, Theme> themes = findThemes();
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+
+            try (PreparedStatement psFindSurvey = connection.prepareStatement(FIND_CREATOR_SURVEY_BY_ID_STATEMENT)) {
+                psFindSurvey.setInt(1, surveyId);
+                try (ResultSet rsSurvey = psFindSurvey.executeQuery()) {
+                    if (rsSurvey.next()) {
+
+                        int themeId = rsSurvey.getInt(SURVEYS_TABLE_FK_THEME_ID_COLUMN);
+                        Theme theme = themes.containsKey(themeId) ? themes.get(themeId) : new Theme.ThemeBuilder().setThemeId(-1).getTheme();
+
+                        Survey survey = new Survey.SurveyBuilder()
+                                .setSurveyId(surveyId)
+                                .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
+                                .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
+                                .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+                                .setTheme(theme)
+                                .setCreator(new User.UserBuilder()
+                                        .setUserId(rsSurvey.getInt(SURVEYS_TABLE_FK_CREATOR_ID_COLUMN)).getUser())
+                                .getSurvey();
+
+                        String startDateTime = rsSurvey.getString(SURVEYS_TABLE_START_DATE_TIME_COLUMN);
+                        if(startDateTime != null) {
+                            survey.setStartDateTime(LocalDateTime.parse(startDateTime, dateTimeFormatter));
+                        }
+                        String closeDateTime = rsSurvey.getString(SURVEYS_TABLE_CLOSE_DATE_TIME_COLUMN);
+                        if(closeDateTime != null) {
+                            survey.setCloseDateTime(LocalDateTime.parse(closeDateTime, dateTimeFormatter));
+                        }
+
+                        surveyOptional = Optional.of(survey);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to find survey by id_survey = {} : {}", surveyId, e.getMessage());
+            throw new DaoException("Failed to find survey by id_survey = " + surveyId, e);
+        }
+
+        return surveyOptional;
     }
 
     @Override
@@ -346,7 +388,7 @@ public class SurveyDaoImpl implements SurveyDao {
     }
 
     @Override
-    public Optional<Survey> findCreatorSurveyInfo(int surveyId, int creatorId) throws DaoException {
+    public Optional<Survey> findCreatorSurveyInfo(int surveyId) throws DaoException {
         Optional<Survey> surveyOptional = Optional.empty();
 
         Map<Integer, Theme> themes = findThemes();
@@ -357,7 +399,6 @@ public class SurveyDaoImpl implements SurveyDao {
 
             try (PreparedStatement psFindSurvey = connection.prepareStatement(FIND_CREATOR_SURVEY_BY_ID_STATEMENT)) {
                 psFindSurvey.setInt(1, surveyId);
-                psFindSurvey.setInt(2, creatorId);
                 try (ResultSet rsSurvey = psFindSurvey.executeQuery()) {
                     if (rsSurvey.next()) {
 
@@ -531,6 +572,7 @@ public class SurveyDaoImpl implements SurveyDao {
                                 .setName(rsSurvey.getString(SURVEYS_TABLE_NAME_COLUMN))
                                 .setDescription(rsSurvey.getString(SURVEYS_TABLE_DESCRIPTION_COLUMN))
                                 .setStatus(SurveyStatus.valueOf(rsSurvey.getString(SURVEYS_TABLE_STATUS_COLUMN)))
+                                .setCreator(new User.UserBuilder().setUserId(userId).getUser())
                                 .setTheme(theme)
                                 .getSurvey();
 
@@ -679,7 +721,7 @@ public class SurveyDaoImpl implements SurveyDao {
     @Override
     public boolean update(Survey survey) throws DaoException {
 
-        Optional<Survey> oldSurveyOptional = findCreatorSurveyInfo(survey.getSurveyId(), survey.getCreator().getUserId());
+        Optional<Survey> oldSurveyOptional = findCreatorSurveyInfo(survey.getSurveyId());
         if (oldSurveyOptional.isEmpty()) {
             logger.error("Survey does not exist: id_survey = {}", survey.getSurveyId());
             return false;
