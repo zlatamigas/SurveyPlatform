@@ -72,11 +72,11 @@ public interface UserService {
      * Change password for user with requested email.
      *
      * @param email    User email.
-     * @param password New password. Not encrypted.
+     * @param newPassword New password. Not encrypted.
      * @return True, if user exists and password was changed, otherwise false.
      * @throws ServiceException If a database access error occurs.
      */
-    boolean changePassword(String email, String password) throws ServiceException;
+    boolean changePassword(String email, String newPassword) throws ServiceException;
 
     /**
      * Update user role and status.

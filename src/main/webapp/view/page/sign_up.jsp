@@ -21,7 +21,7 @@
 
 <div class="container">
 
-    <div class="authorisation-container">
+    <div class="form-container">
 
         <h1 class="header-text"><fmt:message key="signup.header"/></h1>
         <hr class="my-4">

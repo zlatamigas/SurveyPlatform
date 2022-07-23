@@ -50,9 +50,9 @@ public class ForbidUserUrlFilter implements Filter {
         redirectUrl.put(EDIT_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_USER.name()));
         redirectUrl.put(CREATE_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CREATE_USER.name()));
 
-//        redirectUrl.put(FORGOT_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.TO_FORGOT_PASSWORD.name()));
-//        redirectUrl.put(FORGOT_PASSWORD_RECEIVE_KEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SEND_FORGOTTEN_PASSWORD_KEY.name()));
-//        redirectUrl.put(FORGOT_PASSWORD_CHANGE_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.CHANGE_PASSWORD.name()));
+//        redirectUrl.put(CHANGE_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CHANGE_PASSWORD.name()));
+//        redirectUrl.put(SEND_KEY_ON_EMAIL, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SEND_KEY_ON_EMAIL.name()));
+//        redirectUrl.put(RECEIVE_KEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CONFIRM_KEY.name()));
     }
 
 

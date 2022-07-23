@@ -236,14 +236,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changePassword(String email, String password) throws ServiceException {
+    public boolean changePassword(String email, String newPassword) throws ServiceException {
 
         if (email == null) {
             logger.error("Passed null as email");
             return false;
         }
 
-        if (password == null) {
+        if (newPassword == null) {
             logger.error("Passed null as password");
             return false;
         }
@@ -253,7 +253,7 @@ public class UserServiceImpl implements UserService {
 
             if (dbUser.isPresent()) {
                 PasswordEncoder encoder = new PasswordEncoder();
-                String encodedPassword = encoder.encode(password);
+                String encodedPassword = encoder.encode(newPassword);
 
                 User user = dbUser.get();
 

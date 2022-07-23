@@ -2,10 +2,7 @@ package epam.zlatamigas.surveyplatform.controller.command;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
-import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.ChangePasswordCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.ConfirmPasswordKeyCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.SendForgottenPasswordKeyCommand;
-import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.ToForgotPasswordCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.finish.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.to.*;
@@ -24,12 +21,6 @@ public enum CommandType {
     START_SIGN_UP(new StartSignUpCommand()),
     FINISH_SIGN_UP(new FinishSignUpCommand()),
     LOGOUT(new LogOutCommand()),
-
-    // Change password
-    TO_FORGOT_PASSWORD(new ToForgotPasswordCommand()),
-    SEND_FORGOTTEN_PASSWORD_KEY(new SendForgottenPasswordKeyCommand()),
-    CONFIRM_CHANGE_PASSWORD_KEY(new ConfirmPasswordKeyCommand()),
-    CHANGE_PASSWORD(new ChangePasswordCommand()),
 
     // List started surveys
     SURVEYS(new SurveysCommand()),
@@ -76,7 +67,15 @@ public enum CommandType {
     DELETE_USER(new DeleteUserCommand()),
     START_CREATE_USER(new StartCreateUserCommand()),
     FINISH_CREATE_USER(new FinishCreateUserCommand()),
-    ADMIN_DELETE_SURVEY(new AdminDeleteSurveyCommand())
+    ADMIN_DELETE_SURVEY(new AdminDeleteSurveyCommand()),
+
+    // Change password
+    START_CHANGE_PASSWORD(new StartChangePasswordCommand()),
+    FINISH_CHANGE_PASSWORD(new FinishChangePasswordCommand()),
+    START_SEND_KEY_ON_EMAIL(new StartSendKeyOnEmailCommand()),
+    FINISH_SEND_KEY_ON_EMAIL(new FinishSendKeyOnEmailCommand()),
+    START_CONFIRM_KEY(new StartConfirmKeyCommand()),
+    FINISH_CONFIRM_KEY(new FinishConfirmKeyCommand())
     ;
 
     private Command command;

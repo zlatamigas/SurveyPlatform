@@ -132,29 +132,29 @@ input[type=checkbox], input[type=radio] {
 
 
 /*Authorisation*/
-.authorisation-container{
+.form-container{
     background: #fff;
     border-radius: 10px;
     box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
     margin: 20px;
     padding: 20px;
 }
-.authorisation-container a{
+.form-container a{
     color: var(--light-first-color);
 }
-.authorisation-container a:hover{
+.form-container a:hover{
     color: var(--first-color);
     text-decoration-line: none;
 }
-.authorisation-container .offer-register-container{
+.form-container .offer-register-container{
     text-align: center;
     margin-top: 20px;
 }
-.authorisation-container .btn-outline-custom{
+.form-container .btn-outline-custom{
     color: var(--first-color);
     border-color: var(--first-color);
 }
-.authorisation-container .btn-outline-custom:hover{
+.form-container .btn-outline-custom:hover{
     color: var(--white-color);
     background-color: var(--light-first-color);
     border-color: var(--light-first-color);

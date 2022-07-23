@@ -39,10 +39,6 @@ public class CheckUserRoleFilter implements Filter {
                         HOME,
                         CHANGE_LOCALISATION,
                         LOGOUT,
-                        TO_FORGOT_PASSWORD,
-                        SEND_FORGOTTEN_PASSWORD_KEY,
-                        CONFIRM_CHANGE_PASSWORD_KEY,
-                        CHANGE_PASSWORD,
                         // List data
                         SURVEYS,
                         USERS,
@@ -75,17 +71,16 @@ public class CheckUserRoleFilter implements Filter {
                         DELETE_USER,
                         START_CREATE_USER,
                         FINISH_CREATE_USER,
-                        ADMIN_DELETE_SURVEY
+                        ADMIN_DELETE_SURVEY,
+                        //Change password
+                        START_CHANGE_PASSWORD,
+                        FINISH_CHANGE_PASSWORD
                 ),
                 USER, EnumSet.of(
                         DEFAULT,
                         HOME,
                         CHANGE_LOCALISATION,
                         LOGOUT,
-                        TO_FORGOT_PASSWORD,
-                        SEND_FORGOTTEN_PASSWORD_KEY,
-                        CONFIRM_CHANGE_PASSWORD_KEY,
-                        CHANGE_PASSWORD,
                         // List data
                         SURVEYS,
                         USER_SURVEYS,
@@ -107,7 +102,10 @@ public class CheckUserRoleFilter implements Filter {
                         USER_ACCOUNT,
                         // Themes
                         THEMES_CONFIRMED,
-                        ADD_THEME
+                        ADD_THEME,
+                        //Change password
+                        START_CHANGE_PASSWORD,
+                        FINISH_CHANGE_PASSWORD
                 ),
                 GUEST, EnumSet.of(
                         DEFAULT,
@@ -118,15 +116,18 @@ public class CheckUserRoleFilter implements Filter {
                         FINISH_SIGN_IN,
                         START_SIGN_UP,
                         FINISH_SIGN_UP,
-                        TO_FORGOT_PASSWORD,
-                        SEND_FORGOTTEN_PASSWORD_KEY,
-                        CONFIRM_CHANGE_PASSWORD_KEY,
-                        CHANGE_PASSWORD,
                         // List data
                         SURVEYS,
                         // Participate in survey
                         START_SURVEY_ATTEMPT,
-                        FINISH_SURVEY_ATTEMPT
+                        FINISH_SURVEY_ATTEMPT,
+                        //Change password
+                        START_CHANGE_PASSWORD,
+                        FINISH_CHANGE_PASSWORD,
+                        START_SEND_KEY_ON_EMAIL,
+                        FINISH_SEND_KEY_ON_EMAIL,
+                        START_CONFIRM_KEY,
+                        FINISH_CONFIRM_KEY
                 )
         );
     }
