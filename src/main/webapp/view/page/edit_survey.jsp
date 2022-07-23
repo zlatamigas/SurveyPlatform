@@ -87,7 +87,7 @@
         </div>
 
         <div class="content-container">
-            <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
+            <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
                     formmethod="post" type="submit" class="btn btn-custom-fill">
                 <i class="fas fa-plus"></i> <fmt:message key="button.survey.question.add"/>
             </button>
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="col col-auto">
                                     <div class="btn-group" role="group">
-                                        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
+                                        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
                                                 type="submit" class="btn btn-outline-primary" formmethod="post">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
@@ -138,7 +138,7 @@
                     </div>
                 </c:forEach>
             </div>
-            <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.START_EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
+            <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
                     formmethod="post" type="submit" class="btn btn-custom-fill">
                 <i class="fas fa-plus"></i> <fmt:message key="button.survey.question.add"/>
             </button>
@@ -162,5 +162,6 @@
 
 </div>
 
+<jsp:include page="/view/fragment/footer.jsp"/>
 </body>
 </html>

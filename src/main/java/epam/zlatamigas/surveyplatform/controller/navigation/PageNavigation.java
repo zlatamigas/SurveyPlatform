@@ -7,10 +7,10 @@ public final class PageNavigation {
 
     public static final String SIGN_IN = "/view/page/sign_in.jsp";
     public static final String SIGN_UP = "/view/page/sign_up.jsp";
-    public static final String CHANGE_PASSWORD = "/view/page/change_password.jsp";
 
-    public static final String SEND_KEY_ON_EMAIL = "/view/page/send_key_on_email.jsp";
+    public static final String SEND_KEY_TO_EMAIL = "/view/page/send_key_to_email.jsp";
     public static final String RECEIVE_KEY = "/view/page/receive_key.jsp";
+    public static final String CHANGE_PASSWORD = "/view/page/change_password.jsp";
 
     public static final String SURVEYS = "/view/page/surveys.jsp";
     public static final String USER_SURVEYS = "/view/page/user_surveys.jsp";

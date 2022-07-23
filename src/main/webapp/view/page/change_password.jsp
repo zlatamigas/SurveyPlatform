@@ -41,7 +41,7 @@
                        ${sessionScope.user.email}
                     </c:when>
                     <c:otherwise>
-                       ${requestScope.user_email}
+                       ${sessionScope.change_password_email}
                     </c:otherwise>
                 </c:choose>
                 </p>

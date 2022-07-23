@@ -66,7 +66,7 @@
                 <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}"
                        placeholder="<fmt:message key="placeholder.password"/>">
                 <div style=" text-align: end;">
-                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SEND_KEY_ON_EMAIL}">
+                    <a href="${pageContext.request.contextPath}/controller?command=${CommandType.SEND_KEY}">
                         <fmt:message key="signin.forgotpassword"/></a>
                 </div>
             </div>
@@ -75,7 +75,7 @@
 
         <div class="offer-register-container">
             <p><fmt:message key="signin.registernow"/></p>
-            <a class="btn btn-outline-custom" href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_UP}">
+            <a class="btn btn-outline-custom" href="${pageContext.request.contextPath}/controller?command=${CommandType.SIGN_UP}">
                 <fmt:message key="button.registernow"/></a>
         </div>
     </div>

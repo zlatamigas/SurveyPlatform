@@ -110,7 +110,7 @@
 
                                         <div class="btn-toolbar justify-content-end" role="toolbar">
                                         <form id="startAttemptSurveyForm${survey.surveyId}" action="controller" method="get">
-                                            <input type="hidden" name="command" value="${CommandType.START_SURVEY_ATTEMPT}">
+                                            <input type="hidden" name="command" value="${CommandType.SURVEY_ATTEMPT}">
                                             <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                                             <button form="startAttemptSurveyForm${survey.surveyId}" type="submit" class="btn btn-outline-success">
                                                 <i class="fas fa-play"></i></button>

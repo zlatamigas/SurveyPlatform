@@ -13,6 +13,7 @@ public final class LocalisedMessageKey {
     public static final String MESSAGE_INVALID_USER_EMAIL = "message.invalid.user.email";
     public static final String MESSAGE_INVALID_USER_PASSWORD = "message.invalid.user.password";
     public static final String MESSAGE_INVALID_USER_PASSWORD_REPEAT = "message.invalid.user.password.repeat";
+    public static final String MESSAGE_INVALID_PASSWORD_CHANGE_CONFIRM_KEY = "message.invalid.password.change.confirmkey";
 
     public static final String MESSAGE_INVALID_SURVEY_NAME = "message.invalid.survey.name";
     public static final String MESSAGE_INVALID_SURVEY_DESCRIPTION = "message.invalid.survey.description";
@@ -27,6 +28,9 @@ public final class LocalisedMessageKey {
     public static final String TABLE_TH_ANSWER = "table.result.th.answer";
     public static final String TABLE_TH_SINGLE = "table.result.th.single";
     public static final String TABLE_TH_MULTIPLE = "table.result.th.multiple";
+
+    public static final String MAIL_CHANGE_PASSWORD_HEADER = "mail.changepassword.confirmkey.header";
+    public static final String MAIL_CHANGE_PASSWORD_TEXT_PATTERN = "mail.changepassword.confirmkey.text.pattern";
 
     private LocalisedMessageKey(){};
 }

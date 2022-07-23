@@ -39,7 +39,7 @@
         <div class="col-9">
             <div class="content-container">
                 <form action="controller" method="get">
-                    <input type="hidden" name="command" value="${CommandType.START_CREATE_USER}">
+                    <input type="hidden" name="command" value="${CommandType.CREATE_USER}">
                     <button type="submit" class="btn btn-custom-fill"><fmt:message key="button.create"/></button>
                 </form>
 
@@ -115,7 +115,7 @@
                                             </div>
                                             <div class="col col-auto">
                                                 <form action="controller" method="get">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.START_EDIT_USER}">
+                                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.EDIT_USER}">
                                                     <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ID}" value="${user.userId}">
                                                     <button class="btn btn-info" type="submit"><i class="fas fa-user-edit"></i></button>
                                                 </form>

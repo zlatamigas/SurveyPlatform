@@ -93,10 +93,11 @@ public interface UserService {
      * Send key for changing password to email.
      *
      * @param email Email to send key to.
-     * @return Sent key.
+     * @param locale Required localisation of sent email.
+     * @return Sent key, if user exists in system, otherwise Optional.empty().
      * @throws ServiceException Thrown when key was not sent.
      */
-    int requestChangePassword(String email) throws ServiceException;
+    Optional<Integer> requestChangePassword(String email, String locale) throws ServiceException;
 
     /**
      * Delete user by id.

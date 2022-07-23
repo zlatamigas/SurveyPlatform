@@ -27,8 +27,14 @@
 
         <form action="controller" method="post">
             <input type="hidden" name="command" value="${CommandType.FINISH_CONFIRM_KEY}">
+            <c:if test="${requestScope.password_change_confirm_key_invalid!=null}">
+                <div class="text-danger">
+                    <fmt:message key="${requestScope.password_change_confirm_key_invalid}"/>
+                </div>
+            </c:if>
             <div class="form-group">
-                <input type="text" class="form-control" name="${DataHolder.PARAMETER_FORGOT_PASSWORD_CHANGE_KEY}" placeholder="<fmt:message key="placeholder.receivedkey"/>">
+                <label><fmt:message key="label.password.change.keysenttoemail"/> ${sessionScope.change_password_email}</label>
+                <input type="text" class="form-control" name="${DataHolder.PARAMETER_RECEIVED_PASSWORD_CHANGE_KEY}" placeholder="<fmt:message key="placeholder.receivedkey"/>">
             </div>
             <button type="submit" class="btn btn-custom-fill" ><fmt:message key="button.password.key.confirm"/></button>
         </form>

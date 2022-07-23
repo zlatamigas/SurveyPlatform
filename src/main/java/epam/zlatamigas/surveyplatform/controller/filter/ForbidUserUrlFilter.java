@@ -30,8 +30,8 @@ public class ForbidUserUrlFilter implements Filter {
         redirectUrl.put(DEFAULT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name()));
         redirectUrl.put(HOME, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name()));
 
-        redirectUrl.put(SIGN_IN, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SIGN_IN.name()));
-        redirectUrl.put(SIGN_UP, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SIGN_UP.name()));
+        redirectUrl.put(SIGN_IN, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SIGN_IN.name()));
+        redirectUrl.put(SIGN_UP, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SIGN_UP.name()));
 
         redirectUrl.put(SURVEYS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SURVEYS.name()));
         redirectUrl.put(USER_SURVEYS, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.USER_SURVEYS.name()));
@@ -41,18 +41,18 @@ public class ForbidUserUrlFilter implements Filter {
 
         redirectUrl.put(ACCOUNT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.USER_ACCOUNT.name()));
 
-        redirectUrl.put(SURVEY_ATTEMPT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SURVEY_ATTEMPT));
+        redirectUrl.put(SURVEY_ATTEMPT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SURVEY_ATTEMPT));
         redirectUrl.put(SURVEY_RESULT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SURVEY_RESULT));
 
         redirectUrl.put(EDIT_SURVEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_SURVEY.name()));
-        redirectUrl.put(EDIT_QUESTION, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_QUESTION.name()));
+        redirectUrl.put(EDIT_QUESTION, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.EDIT_QUESTION.name()));
 
-        redirectUrl.put(EDIT_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_EDIT_USER.name()));
-        redirectUrl.put(CREATE_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CREATE_USER.name()));
+        redirectUrl.put(EDIT_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.EDIT_USER.name()));
+        redirectUrl.put(CREATE_USER, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.CREATE_USER.name()));
 
-//        redirectUrl.put(CHANGE_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CHANGE_PASSWORD.name()));
-//        redirectUrl.put(SEND_KEY_ON_EMAIL, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_SEND_KEY_ON_EMAIL.name()));
-//        redirectUrl.put(RECEIVE_KEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.START_CONFIRM_KEY.name()));
+        redirectUrl.put(CHANGE_PASSWORD, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.CHANGE_PASSWORD.name()));
+        redirectUrl.put(SEND_KEY_TO_EMAIL, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SEND_KEY.name()));
+        redirectUrl.put(RECEIVE_KEY, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.CONFIRM_KEY.name()));
     }
 
 

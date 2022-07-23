@@ -3,10 +3,15 @@ package epam.zlatamigas.surveyplatform.controller.command;
 
 import epam.zlatamigas.surveyplatform.controller.command.impl.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.changepassword.*;
-import epam.zlatamigas.surveyplatform.controller.command.impl.finish.*;
-import epam.zlatamigas.surveyplatform.controller.command.impl.samepage.*;
+import epam.zlatamigas.surveyplatform.controller.command.impl.survey.attempt.FinishSurveyAttemptCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.survey.attempt.StartSurveyAttemptCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.survey.question.FinishEditQuestionCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.survey.question.RemoveQuestionCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.survey.question.StartEditQuestionCommand;
+import epam.zlatamigas.surveyplatform.controller.command.impl.theme.*;
+import epam.zlatamigas.surveyplatform.controller.command.impl.survey.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.to.*;
-import epam.zlatamigas.surveyplatform.controller.command.impl.start.*;
+import epam.zlatamigas.surveyplatform.controller.command.impl.user.*;
 
 public enum CommandType {
 
@@ -16,11 +21,11 @@ public enum CommandType {
     CHANGE_LOCALISATION(new ChangeLocalisationCommand()),
 
     // User authentication
-    START_SIGN_IN(new StartSignInCommand()),
+    SIGN_IN(new StartSignInCommand()),
     FINISH_SIGN_IN(new FinishSignInCommand()),
-    START_SIGN_UP(new StartSignUpCommand()),
+    SIGN_UP(new StartSignUpCommand()),
     FINISH_SIGN_UP(new FinishSignUpCommand()),
-    LOGOUT(new LogOutCommand()),
+    LOG_OUT(new LogOutCommand()),
 
     // List started surveys
     SURVEYS(new SurveysCommand()),
@@ -37,7 +42,7 @@ public enum CommandType {
     START_EDIT_SURVEY(new StartEditSurveyCommand()),
     EDIT_SURVEY(new EditSurveyCommand()),
     FINISH_EDIT_SURVEY(new FinishEditSurveyCommand()),
-    START_EDIT_QUESTION(new StartEditQuestionCommand()),
+    EDIT_QUESTION(new StartEditQuestionCommand()),
     FINISH_EDIT_QUESTION(new FinishEditQuestionCommand()),
     REMOVE_QUESTION(new RemoveQuestionCommand()),
     DELETE_SURVEY(new DeleteSurveyCommand()),
@@ -46,7 +51,7 @@ public enum CommandType {
     RESTART_SURVEY(new RestartSurveyCommand()),
 
     // Participate in survey
-    START_SURVEY_ATTEMPT(new StartSurveyAttemptCommand()),
+    SURVEY_ATTEMPT(new StartSurveyAttemptCommand()),
     FINISH_SURVEY_ATTEMPT(new FinishSurveyAttemptCommand()),
 
     // View survey result (for survey creator)
@@ -62,19 +67,19 @@ public enum CommandType {
     USER_ACCOUNT(new UserAccountCommand()),
 
     // CRUD user (for admin)
-    START_EDIT_USER(new StartEditUserCommand()),
+    EDIT_USER(new StartEditUserCommand()),
     FINISH_EDIT_USER(new FinishEditUserCommand()),
     DELETE_USER(new DeleteUserCommand()),
-    START_CREATE_USER(new StartCreateUserCommand()),
+    CREATE_USER(new StartCreateUserCommand()),
     FINISH_CREATE_USER(new FinishCreateUserCommand()),
     ADMIN_DELETE_SURVEY(new AdminDeleteSurveyCommand()),
 
     // Change password
-    START_CHANGE_PASSWORD(new StartChangePasswordCommand()),
+    CHANGE_PASSWORD(new StartChangePasswordCommand()),
     FINISH_CHANGE_PASSWORD(new FinishChangePasswordCommand()),
-    START_SEND_KEY_ON_EMAIL(new StartSendKeyOnEmailCommand()),
-    FINISH_SEND_KEY_ON_EMAIL(new FinishSendKeyOnEmailCommand()),
-    START_CONFIRM_KEY(new StartConfirmKeyCommand()),
+    SEND_KEY(new StartSendKeyToEmailCommand()),
+    FINISH_SEND_KEY(new FinishSendKeyToEmailCommand()),
+    CONFIRM_KEY(new StartConfirmKeyCommand()),
     FINISH_CONFIRM_KEY(new FinishConfirmKeyCommand())
     ;
 

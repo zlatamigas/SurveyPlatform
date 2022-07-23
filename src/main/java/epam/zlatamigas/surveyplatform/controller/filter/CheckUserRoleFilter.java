@@ -38,7 +38,7 @@ public class CheckUserRoleFilter implements Filter {
                         DEFAULT,
                         HOME,
                         CHANGE_LOCALISATION,
-                        LOGOUT,
+                        LOG_OUT,
                         // List data
                         SURVEYS,
                         USERS,
@@ -46,7 +46,7 @@ public class CheckUserRoleFilter implements Filter {
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
-                        START_EDIT_QUESTION,
+                        EDIT_QUESTION,
                         FINISH_EDIT_QUESTION,
                         REMOVE_QUESTION,
                         EDIT_SURVEY,
@@ -55,7 +55,7 @@ public class CheckUserRoleFilter implements Filter {
                         CHANGE_SURVEY_STATUS_STARTED,
                         RESTART_SURVEY,
                         // Participate in survey
-                        START_SURVEY_ATTEMPT,
+                        SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,
                         SURVEY_RESULT,
                         THEMES_CONFIRMED,
@@ -66,28 +66,28 @@ public class CheckUserRoleFilter implements Filter {
                         ADD_THEME,
                         USER_ACCOUNT,
                         // CRUD user
-                        START_EDIT_USER,
+                        EDIT_USER,
                         FINISH_EDIT_USER,
                         DELETE_USER,
-                        START_CREATE_USER,
+                        CREATE_USER,
                         FINISH_CREATE_USER,
                         ADMIN_DELETE_SURVEY,
                         //Change password
-                        START_CHANGE_PASSWORD,
+                        CHANGE_PASSWORD,
                         FINISH_CHANGE_PASSWORD
                 ),
                 USER, EnumSet.of(
                         DEFAULT,
                         HOME,
                         CHANGE_LOCALISATION,
-                        LOGOUT,
+                        LOG_OUT,
                         // List data
                         SURVEYS,
                         USER_SURVEYS,
                         // CRUD survey and its parts
                         START_EDIT_SURVEY,
                         FINISH_EDIT_SURVEY,
-                        START_EDIT_QUESTION,
+                        EDIT_QUESTION,
                         FINISH_EDIT_QUESTION,
                         REMOVE_QUESTION,
                         EDIT_SURVEY,
@@ -96,7 +96,7 @@ public class CheckUserRoleFilter implements Filter {
                         CHANGE_SURVEY_STATUS_STARTED,
                         RESTART_SURVEY,
                         // Participate in survey
-                        START_SURVEY_ATTEMPT,
+                        SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,
                         SURVEY_RESULT,
                         USER_ACCOUNT,
@@ -104,7 +104,7 @@ public class CheckUserRoleFilter implements Filter {
                         THEMES_CONFIRMED,
                         ADD_THEME,
                         //Change password
-                        START_CHANGE_PASSWORD,
+                        CHANGE_PASSWORD,
                         FINISH_CHANGE_PASSWORD
                 ),
                 GUEST, EnumSet.of(
@@ -112,21 +112,21 @@ public class CheckUserRoleFilter implements Filter {
                         HOME,
                         CHANGE_LOCALISATION,
                         // User authentication
-                        START_SIGN_IN,
+                        SIGN_IN,
                         FINISH_SIGN_IN,
-                        START_SIGN_UP,
+                        SIGN_UP,
                         FINISH_SIGN_UP,
                         // List data
                         SURVEYS,
                         // Participate in survey
-                        START_SURVEY_ATTEMPT,
+                        SURVEY_ATTEMPT,
                         FINISH_SURVEY_ATTEMPT,
                         //Change password
-                        START_CHANGE_PASSWORD,
+                        CHANGE_PASSWORD,
                         FINISH_CHANGE_PASSWORD,
-                        START_SEND_KEY_ON_EMAIL,
-                        FINISH_SEND_KEY_ON_EMAIL,
-                        START_CONFIRM_KEY,
+                        SEND_KEY,
+                        FINISH_SEND_KEY,
+                        CONFIRM_KEY,
                         FINISH_CONFIRM_KEY
                 )
         );

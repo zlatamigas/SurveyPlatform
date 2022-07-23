@@ -95,7 +95,7 @@
                         </div>
                         <div class="col-auto">
                             <form action="controller" method="post">
-                                <input type="hidden" name="command" value="${CommandType.START_CHANGE_PASSWORD}">
+                                <input type="hidden" name="command" value="${CommandType.CHANGE_PASSWORD}">
                                 <button type="submit" class="btn btn-dark" ><i class="fas fa-angle-right"></i></button>
                             </form>
                         </div>

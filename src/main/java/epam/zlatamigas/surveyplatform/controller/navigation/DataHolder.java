@@ -13,9 +13,9 @@ public final class DataHolder {
     public static final String SESSION_ATTRIBUTE_EDITED_QUESTION = "edited_question";
     public static final String SESSION_ATTRIBUTE_SURVEY_ATTEMPT = "survey_attempt";
 
-
     // TODO: Change password
-    public static final String SESSION_ATTRIBUTE_CHANGE_PASSWORD_KEY = "change_password_key";
+    public static final String SESSION_ATTRIBUTE_CHANGE_PASSWORD_KEY_RECEIVED = "change_password_key_received";
+    public static final String SESSION_ATTRIBUTE_CHANGE_PASSWORD_KEY_SENT = "change_password_key_sent";
     public static final String SESSION_ATTRIBUTE_CHANGE_PASSWORD_EMAIL = "change_password_email";
 
 
@@ -49,6 +49,7 @@ public final class DataHolder {
     public static final String REQUEST_ATTRIBUTE_USER_EXISTS = "user_exists";
     public static final String REQUEST_ATTRIBUTE_USER_BANNED = "user_banned";
     public static final String REQUEST_ATTRIBUTE_THEME_EXISTS = "theme_exists";
+    public static final String REQUEST_ATTRIBUTE_PASSWORD_CHANGE_CONFIRM_KEY_INVALID = "password_change_confirm_key_invalid";
 
 
     // Button groups
@@ -65,7 +66,7 @@ public final class DataHolder {
     public static final String PARAMETER_EMAIL = "email";
     public static final String PARAMETER_PASSWORD = "password";
     public static final String PARAMETER_PASSWORD_REPEAT = "password_repeat";
-    public static final String PARAMETER_FORGOT_PASSWORD_CHANGE_KEY = "forgot_password_change_key";
+    public static final String PARAMETER_RECEIVED_PASSWORD_CHANGE_KEY = "received_password_change_key";
     // Survey
     public static final String PARAMETER_CREATE_NEW_SURVEY = "create_new_survey";
     public static final String PARAMETER_CREATE_NEW_QUESTION = "create_new_question";

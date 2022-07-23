@@ -11,6 +11,7 @@ import epam.zlatamigas.surveyplatform.service.UserService;
 import epam.zlatamigas.surveyplatform.util.encoder.PasswordEncoder;
 import epam.zlatamigas.surveyplatform.util.keygenerator.ChangePasswordKeyGenerator;
 import epam.zlatamigas.surveyplatform.util.keygenerator.impl.ChangePasswordKeyGeneratorImpl;
+import epam.zlatamigas.surveyplatform.util.locale.ResourceBundleManager;
 import epam.zlatamigas.surveyplatform.util.mail.MailSender;
 import epam.zlatamigas.surveyplatform.util.search.SearchParameter;
 import org.apache.logging.log4j.LogManager;
@@ -21,23 +22,25 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import static epam.zlatamigas.surveyplatform.model.dao.impl.UserDaoImpl.*;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MAIL_CHANGE_PASSWORD_HEADER;
+import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MAIL_CHANGE_PASSWORD_TEXT_PATTERN;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS_DELIMITER;
 
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String MESSAGE_REQUEST_CHANGE_PASSWORD_SUBJECT = "Change password";
-    private static final String MESSAGE_REQUEST_CHANGE_PASSWORD_TEXT = "Your key: %d";
-
     private static UserServiceImpl instance = new UserServiceImpl();
 
     private final UserDaoImpl userDao;
+    private final ResourceBundleManager resourceBundleManager;
 
     private UserServiceImpl() {
         userDao = UserDaoImpl.getInstance();
+        resourceBundleManager = ResourceBundleManager.getInstance();
     }
 
     public static UserServiceImpl getInstance() {
@@ -303,11 +306,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int requestChangePassword(String email) throws ServiceException {
+    public Optional<Integer> requestChangePassword(String email, String locale) throws ServiceException {
 
         if (email == null) {
             logger.error("Passed null as email");
-            throw new ServiceException("Passed null as email");
+            return Optional.empty();
+        }
+
+        try {
+            if (userDao.findByEmail(email).isEmpty()) {
+                logger.error("Cannot find user with email {} in DB", email);
+                return Optional.empty();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
 
         MailSender sender = MailSender.getInstance();
@@ -315,8 +327,12 @@ public class UserServiceImpl implements UserService {
 
         int key = keyGenerator.generateKey();
 
-        if (sender.sendMail(email, MESSAGE_REQUEST_CHANGE_PASSWORD_SUBJECT, String.format(MESSAGE_REQUEST_CHANGE_PASSWORD_TEXT, key))) {
-            return key;
+        ResourceBundle resourceBundle = resourceBundleManager.getResourceBundle(locale);
+
+        if (sender.sendMail(email,
+                resourceBundle.getString(MAIL_CHANGE_PASSWORD_HEADER),
+                String.format(resourceBundle.getString(MAIL_CHANGE_PASSWORD_TEXT_PATTERN), key))) {
+            return Optional.of(key);
         } else {
             throw new ServiceException("Cannot send key to email: " + email);
         }

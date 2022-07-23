@@ -23,6 +23,7 @@ public class MailSender {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String MAIL_PROPERTIES_FILE = "properties/mail.properties";
+    private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
     private static MailSessionFactory factory;
     private static MailSender instance;
@@ -53,7 +54,7 @@ public class MailSender {
             MimeMessage message = new MimeMessage(session);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject(subject);
-            message.setText(text);
+            message.setContent(text, CONTENT_TYPE);
             Transport.send(message);
             logger.info("Message sent to {}", recipient);
             return true;
@@ -80,7 +81,7 @@ public class MailSender {
                 }
             });
             message.setSubject(subject);
-            message.setText(text);
+            message.setContent(text, CONTENT_TYPE);
             Transport.send(message);
             logger.info("Messages sent to {}", recipients.toString());
             return true;

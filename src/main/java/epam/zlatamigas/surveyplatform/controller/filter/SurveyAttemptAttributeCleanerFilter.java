@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.EnumSet;
 
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.FINISH_SURVEY_ATTEMPT;
-import static epam.zlatamigas.surveyplatform.controller.command.CommandType.START_SURVEY_ATTEMPT;
+import static epam.zlatamigas.surveyplatform.controller.command.CommandType.SURVEY_ATTEMPT;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_SURVEY_ATTEMPT;
 
@@ -30,7 +30,7 @@ public class SurveyAttemptAttributeCleanerFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         attemptSurveyCommands = EnumSet.of(
-                START_SURVEY_ATTEMPT,
+                SURVEY_ATTEMPT,
                 FINISH_SURVEY_ATTEMPT
         );
     }

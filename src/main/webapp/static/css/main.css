@@ -125,7 +125,7 @@ input[type=checkbox], input[type=radio] {
 }
 .home-container .card{
     background: var(--white-color);
-    padding: 30px 20px;
+    padding: 20px 20px;
     box-shadow: 2px 2px 5px 5px var(--light-first-color);
     border-radius: 10px;
 }
@@ -542,6 +542,7 @@ nav .dropdown-item:hover{
     color: white;
 }
 .footer-contact a {
+    margin: 0 3px;
     display: inline-block;
     color: white;
     border-radius: 100%;

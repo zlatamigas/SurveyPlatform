@@ -31,7 +31,7 @@ public class SurveyEditAttributeCleanerFilter implements Filter {
                 START_EDIT_SURVEY,
                 EDIT_SURVEY,
                 FINISH_EDIT_SURVEY,
-                START_EDIT_QUESTION,
+                EDIT_QUESTION,
                 FINISH_EDIT_QUESTION,
                 REMOVE_QUESTION
         );

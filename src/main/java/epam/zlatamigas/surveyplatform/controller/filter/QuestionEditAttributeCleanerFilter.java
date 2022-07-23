@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.EnumSet;
 
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.FINISH_EDIT_QUESTION;
-import static epam.zlatamigas.surveyplatform.controller.command.CommandType.START_EDIT_QUESTION;
+import static epam.zlatamigas.surveyplatform.controller.command.CommandType.EDIT_QUESTION;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
 import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_EDITED_QUESTION;
 
@@ -30,7 +30,7 @@ public class QuestionEditAttributeCleanerFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         editQuestionCommands = EnumSet.of(
-                START_EDIT_QUESTION,
+                EDIT_QUESTION,
                 FINISH_EDIT_QUESTION
         );
     }

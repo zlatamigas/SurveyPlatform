@@ -15,7 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <%-- Bootstrap and jQuery --%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/css/bootstrap.min.css">
     <script src="${pageContext.request.contextPath}/static/lib/jquery-3.5.1/jquery-3.5.1.slim.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/lib/bootstrap-4.6.1-dist/js/bootstrap.bundle.min.js"></script>
 
@@ -29,22 +30,22 @@
 <body>
 <div class="container-fluid" style="height: 100%; position: absolute; margin: 0;">
 
-        <div class="row" style="height: 100%">
-            <div class="col">
-                <h3 class="display-4"><fmt:message key="error404.title"/></h3>
-                <hr class="my-4">
+    <div class="row align-items-center" style="height: 100%">
+        <div class="col">
+            <h3 class="display-4"><fmt:message key="error404.title"/></h3>
+            <hr class="my-4">
 
-                <form class="form-inline" action="controller">
-                    <input type="hidden" name="command" value="${CommandType.HOME}">
-                    <label class="mr-sm-2"><fmt:message key="error404.text"/></label>
-                    <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">&#8962;</button>
-                </form>
-            </div>
-            <div class="col" style="text-align: center">
-                <img src="${pageContext.request.contextPath}/static/pict/error_404.png" alt="<fmt:message key="error404.picture.alttext"/>">
-            </div>
+            <form class="form-inline" action="controller">
+                <input type="hidden" name="command" value="${CommandType.HOME}">
+                <label class="mr-sm-2"><fmt:message key="error404.text"/></label>
+                <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">&#8962;</button>
+            </form>
         </div>
-
+        <div class="col" style="text-align: center">
+            <img src="${pageContext.request.contextPath}/static/pict/error_404.png"
+                 alt="<fmt:message key="error404.picture.alttext"/>">
+        </div>
+    </div>
 
 </div>
 </body>

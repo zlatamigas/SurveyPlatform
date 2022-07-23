@@ -97,7 +97,7 @@
                         </li>
                         <li class="nav-item">
                             <form action="controller">
-                                <input type="hidden" name="command" value="${CommandType.LOGOUT}">
+                                <input type="hidden" name="command" value="${CommandType.LOG_OUT}">
                                 <button type="submit" class="btn btn-logout">
                                     <fmt:message key="header.navbar.logout"/>
                                 </button>
@@ -107,7 +107,7 @@
                     <c:otherwise>
                         <li class="nav-item">
                             <form action="controller">
-                                <input type="hidden" name="command" value="${CommandType.START_SIGN_IN}">
+                                <input type="hidden" name="command" value="${CommandType.SIGN_IN}">
                                 <button type="submit" class="btn btn-login">
                                     <fmt:message key="header.navbar.login"/>
                                 </button>

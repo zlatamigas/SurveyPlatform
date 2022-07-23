@@ -67,7 +67,7 @@
                             <h5 class="card-title"><fmt:message key="home.signin.header"/></h5>
                             <p class="card-text"></p>
                             <a class="btn btn-outline-custom"
-                               href="${pageContext.request.contextPath}/controller?command=${CommandType.START_SIGN_IN}">
+                               href="${pageContext.request.contextPath}/controller?command=${CommandType.SIGN_IN}">
                                 <fmt:message key="home.signin.button"/>
                             </a>
                         </div>
