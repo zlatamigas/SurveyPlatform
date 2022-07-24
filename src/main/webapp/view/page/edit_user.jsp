@@ -11,6 +11,7 @@
 <%@ page import="epam.zlatamigas.surveyplatform.util.search.SearchParameter" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyStatus" %>
+<%@ taglib uri="/WEB-INF/tld/customtag.tld" prefix="ct" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -45,7 +46,8 @@
     <div class="content-container">
         <div class="padding-container">
             <form id="finishEditUserForm" action="controller" method="post">
-                <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_EDIT_USER}">
+                <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}"
+                       value="${CommandType.FINISH_EDIT_USER}">
                 <input type="hidden" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ID}"
                        value="${requestScope.user_id}">
 
@@ -65,7 +67,8 @@
                         <p class="card-text"><fmt:message key="label.user.role"/></p>
                     </div>
                     <div class="col">
-                        <select id="selectRole" disabled name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE}"
+                        <select id="selectRole" disabled
+                                name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE}"
                                 class="form-control">
                             <option value="${UserRole.ADMIN}"
                                     <c:if test="${requestScope.user_role == UserRole.ADMIN}">selected</c:if>>
@@ -83,7 +86,8 @@
                         <p class="card-text"><fmt:message key="label.user.status"/></p>
                     </div>
                     <div class="col">
-                        <select id="selectStatus" disabled name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS}"
+                        <select id="selectStatus" disabled
+                                name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS}"
                                 class="form-control">
                             <option value="${UserStatus.ACTIVE}"
                                     <c:if test="${requestScope.user_status == UserStatus.ACTIVE}">selected</c:if>>
@@ -112,9 +116,10 @@
 
     <div class="content-container">
         <div class="padding-container">
-            <h3 class="text-danger"><i class="fas fa-user-alt-slash"></i> <fmt:message key="confirm.delete.user.header"/></h3>
+            <h3 class="text-danger"><i class="fas fa-user-alt-slash"></i> <fmt:message
+                    key="confirm.delete.user.header"/></h3>
             <hr class="my-4"/>
-            <p><fmt:message key="confirm.delete.user.description"/> </p>
+            <p><fmt:message key="confirm.delete.user.description"/></p>
 
             <button type="button"
                     data-toggle="modal" data-target="#deleteUser"
@@ -193,11 +198,14 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <form action="controller" method="post">
-                                                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}"
+                                                        <input type="hidden"
+                                                               name="${AttributeParameterHolder.PARAMETER_COMMAND}"
                                                                value="${CommandType.ADMIN_DELETE_SURVEY}">
-                                                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_SURVEY_ID}"
+                                                        <input type="hidden"
+                                                               name="${AttributeParameterHolder.PARAMETER_SURVEY_ID}"
                                                                value="${survey.surveyId}">
-                                                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_USER_ID}"
+                                                        <input type="hidden"
+                                                               name="${AttributeParameterHolder.PARAMETER_USER_ID}"
                                                                value="${survey.creator.userId}">
                                                         <button type="submit" class="btn btn-danger">
                                                             <fmt:message key="button.delete"/>

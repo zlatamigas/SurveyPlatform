@@ -70,7 +70,7 @@
                     <c:set var="i" value="${i+1}"/>
                     <div id="rowanswer${i}" class="row row-question">
                         <div class="col">
-                            <textarea id="textarea${i}" name="${AttributeParameterHolder.PARAMETER_ANSWER_TEXT}${i}" rows="3"
+                            <textarea id="textarea${i}" name="${AttributeParameterHolder.PARAMETER_ANSWER_TEXT}${i}" rows="2"
                                       class="form-control textarea-answer">${answer.answer}</textarea>
 
                         </div>
@@ -114,7 +114,7 @@
                     let answerTextarea = document.createElement("textarea");
                     answerTextarea.name = "${AttributeParameterHolder.PARAMETER_ANSWER_TEXT}" + pos;
                     answerTextarea.id = "textarea" + pos;
-                    answerTextarea.rows = 3;
+                    answerTextarea.rows = 2;
                     answerTextarea.classList.add("form-control","textarea-answer");
 
                     answerTextCol.appendChild(answerTextarea);
