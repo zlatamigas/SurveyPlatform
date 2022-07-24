@@ -23,7 +23,6 @@ The platform supports the following roles and their corresponded functionality:
 |Survey CRUD|+|+|-|
 |View survey results (created by user)|+|+|-|
 |Request theme|-|+|-|
-|View survey results (all users)|+|-|-|
 |Add theme|+|-|-|
 |User CRUD|+|-|-|
 
