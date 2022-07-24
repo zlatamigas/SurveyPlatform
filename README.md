@@ -12,6 +12,86 @@ Java EE / MySQL / HTML5 / CSS3 / Bootstrap 4 / JavaScript
 ## Functional roles
 
 The platform supports the following roles and their corresponded functionality:
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="center">ADMIN</th>
+<th align="center">USER</th>
+<th align="center">GUEST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Sign in/up</td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+<tr>
+<td align="left">Request change password</td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+<tr>
+<td align="left">View available surveys</td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+<tr>
+<td align="left">Participate in surveys</td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+<tr>
+<td align="left">Log out</td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">Change credentials</td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">Survey CRUD</td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">View survey results (created by user)</td>
+<td align="center">+</td>
+<td align="center">+</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">Request theme</td>
+<td align="center">-</td>
+<td align="center">+</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">Add theme</td>
+<td align="center">+</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left">User CRUD</td>
+<td align="center">+</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+</tbody>
+</table>
+
 ||ADMIN|USER|GUEST|
 | :- | :-: | :-: | :-: |
 |Sign in/up|+|+|+|
