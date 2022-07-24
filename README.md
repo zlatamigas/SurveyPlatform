@@ -13,19 +13,19 @@ Java EE / MySQL / HTML5 / CSS3 / Bootstrap 4 / JavaScript
 
 The platform supports the following roles and their corresponded functionality:
 
-|                                                                                                                  |ADMIN|USER|GUEST|
-| :- | :-: | :-: | :-: |
-|Sign in/up|+|+|+|
-|Request change password|+|+|+|
-|View available surveys|+|+|+|
-|Participate in surveys|+|+|+|
-|Log out|+|+|-|
-|Change credentials|+|+|-|
-|Survey CRUD|+|+|-|
-|View survey results (created by user)|+|+|-|
-|Request theme|-|+|-|
-|Add theme|+|-|-|
-|User CRUD|+|-|-|
+|                                       | ADMIN |  USER | GUEST |
+|                    :-                 |  :-:  |  :-:  |  :-:  |
+|Sign in/up                             |   +   |   +   |   +   |
+|Request change password                |   +   |   +   |   +   |
+|View available surveys                 |   +   |   +   |   +   |
+|Participate in surveys                 |   +   |   +   |   +   |
+|Log out                                |   +   |   +   |   -   |
+|Change credentials                     |   +   |   +   |   -   |
+|Survey CRUD                            |   +   |   +   |   -   |
+|View survey results (created by user)  |   +   |   +   |   -   |
+|Request theme                          |   -   |   +   |   -   |
+|Add theme                              |   +   |   -   |   -   |
+|User CRUD                              |   +   |   -   |   -   |
 
   
 ## Database schema
