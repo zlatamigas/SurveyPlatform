@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 <%@ taglib uri="/WEB-INF/tld/customtag.tld" prefix="ct"%>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
@@ -37,7 +37,7 @@
     <div class="content-container">
         <div class="edit-question-list">
             <form id="finishSurveyAttemptForm" action="controller" method="post">
-                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_SURVEY_ATTEMPT}">
+                <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_SURVEY_ATTEMPT}">
 
                 <c:forEach var="question" items="${sessionScope.survey_attempt.questions}">
                     <div class="card">
@@ -50,7 +50,7 @@
                                 <ct:question-validation-feedback/>
                             </div>
 
-                            <input type="hidden" name="${DataHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}${question.questionId}"
+                            <input type="hidden" name="${AttributeParameterHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}${question.questionId}"
                                    value="${question.selectMultiple}">
 
                             <c:forEach items="${question.answers}" var="answer">
@@ -59,14 +59,14 @@
                                         <c:when test="${question.selectMultiple == true}">
                                             <input type="checkbox" class="form-check-input"
                                                    id="question${question.questionId}Answer${answer.questionAnswerId}"
-                                                   name="${DataHolder.BUTTONGROUP_NAME_CHECKBOX_ANSWERS}${question.questionId}"
+                                                   name="${AttributeParameterHolder.BUTTONGROUP_NAME_CHECKBOX_ANSWERS}${question.questionId}"
                                                    value="${answer.questionAnswerId}"
                                                    <c:if test="${answer.selectedCount == 1}">checked</c:if>>
                                         </c:when>
                                         <c:otherwise>
                                             <input type="radio" class="form-check-input"
                                                    id="question${question.questionId}Answer${answer.questionAnswerId}"
-                                                   name="${DataHolder.BUTTONGROUP_NAME_RADIO_ANSWERS}${question.questionId}"
+                                                   name="${AttributeParameterHolder.BUTTONGROUP_NAME_RADIO_ANSWERS}${question.questionId}"
                                                    value="${answer.questionAnswerId}"
                                                    <c:if test="${answer.selectedCount == 1}">checked</c:if>>
                                         </c:otherwise>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="modal-footer">
                     <form action="controller" method="post">
-                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SURVEYS}">
+                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.SURVEYS}">
                         <button type="submit" class="btn btn-primary"><fmt:message key="button.ok"/></button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="button.cancel"/></button>

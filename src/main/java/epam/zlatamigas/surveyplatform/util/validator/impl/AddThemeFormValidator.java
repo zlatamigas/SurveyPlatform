@@ -6,7 +6,7 @@ import epam.zlatamigas.surveyplatform.util.validator.PatternValidator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_THEME_NAME;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.PARAMETER_THEME_NAME;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.MESSAGE_INVALID_THEME_NAME;
 
 /**

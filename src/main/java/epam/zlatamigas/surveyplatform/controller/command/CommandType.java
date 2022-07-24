@@ -13,6 +13,9 @@ import epam.zlatamigas.surveyplatform.controller.command.impl.survey.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.to.*;
 import epam.zlatamigas.surveyplatform.controller.command.impl.user.*;
 
+/**
+ * All available commands.
+ */
 public enum CommandType {
 
     // Shared
@@ -89,6 +92,12 @@ public enum CommandType {
         this.command = command;
     }
 
+    /**
+     * Define command by command name.
+     *
+     * @param commandStr Command name. Case insensitive.
+     * @return Command if exists in enum, otherwise default command.
+     */
     public static Command define(String commandStr){
 
         CommandType commandType;
@@ -100,6 +109,12 @@ public enum CommandType {
         return commandType.command;
     }
 
+    /**
+     * Define command enum value by command name.
+     *
+     * @param commandStr Command name. Case insensitive.
+     * @return Command enum value if exists, otherwise default DEFAULT.
+     */
     public static CommandType defineCommandType(String commandStr) {
 
         CommandType commandType;

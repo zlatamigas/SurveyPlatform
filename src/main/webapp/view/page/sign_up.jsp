@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
@@ -41,7 +41,7 @@
                     </c:if>
                 </div>
                 <label><fmt:message key="label.email"/></label>
-                <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
+                <input type="text" class="form-control" name="${AttributeParameterHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
             </div>
             <div class="form-group">
                 <div class="text-danger">
@@ -56,7 +56,7 @@
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </label>
-                <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.password"/>">
+                <input type="password" class="form-control" name="${AttributeParameterHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.password"/>">
             </div>
             <div class="form-group">
                 <div class="text-danger">
@@ -71,7 +71,7 @@
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </label>
-                <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
+                <input type="password" class="form-control" name="${AttributeParameterHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
             </div>
             <button type="submit" class="btn btn-custom-fill" ><fmt:message key="button.signup"/></button>
         </form>

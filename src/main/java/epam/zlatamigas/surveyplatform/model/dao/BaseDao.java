@@ -5,7 +5,11 @@ import epam.zlatamigas.surveyplatform.model.entity.AbstractEntity;
 
 import java.util.Optional;
 
+/**
+ * Base DAO.
+ */
 public interface BaseDao<T extends AbstractEntity> {
+
     boolean insert(T t) throws DaoException;
 
     boolean delete(int id) throws DaoException;

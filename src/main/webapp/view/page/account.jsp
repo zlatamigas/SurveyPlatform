@@ -4,7 +4,7 @@
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserStatus" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>

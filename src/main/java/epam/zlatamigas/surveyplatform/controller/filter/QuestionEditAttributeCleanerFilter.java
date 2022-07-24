@@ -2,8 +2,6 @@ package epam.zlatamigas.surveyplatform.controller.filter;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.CommandType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,18 +10,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.EnumSet;
 
-import static epam.zlatamigas.surveyplatform.controller.command.CommandType.FINISH_EDIT_QUESTION;
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.EDIT_QUESTION;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_EDITED_QUESTION;
+import static epam.zlatamigas.surveyplatform.controller.command.CommandType.FINISH_EDIT_QUESTION;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.PARAMETER_COMMAND;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.SESSION_ATTRIBUTE_EDITED_QUESTION;
 
+/**
+ * Filter for cleaning edit question session attributes.
+ */
 @WebFilter(
         filterName = "QuestionEditAttributeCleanerFilter",
         dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
         urlPatterns = {"/controller"})
 public class QuestionEditAttributeCleanerFilter implements Filter {
-
-    private static final Logger logger = LogManager.getLogger();
 
     private EnumSet<CommandType> editQuestionCommands;
 
@@ -45,8 +44,6 @@ public class QuestionEditAttributeCleanerFilter implements Filter {
 
         if (!editQuestionCommands.contains(command)) {
             session.removeAttribute(SESSION_ATTRIBUTE_EDITED_QUESTION);
-
-            logger.info("Clean session attribute: edited question");
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

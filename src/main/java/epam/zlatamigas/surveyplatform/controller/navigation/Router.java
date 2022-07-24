@@ -4,6 +4,9 @@ import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigatio
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 
+/**
+ * Router class, containing page to move to and routing type.
+ */
 public class Router {
 
     private String page = DEFAULT;

@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
@@ -47,7 +47,7 @@
                 </div>
                 <label><fmt:message key="label.email"/>
                 </label>
-                <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}"
+                <input type="text" class="form-control" name="${AttributeParameterHolder.PARAMETER_EMAIL}"
                        placeholder="<fmt:message key="placeholder.email"/>">
             </div>
             <div class="form-group">
@@ -63,7 +63,7 @@
                         <i class="fas fa-info-circle"></i>
                     </a>
                 </label>
-                <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}"
+                <input type="password" class="form-control" name="${AttributeParameterHolder.PARAMETER_PASSWORD}"
                        placeholder="<fmt:message key="placeholder.password"/>">
                 <div style=" text-align: end;">
                     <a href="${pageContext.request.contextPath}/controller?command=${CommandType.SEND_KEY}">

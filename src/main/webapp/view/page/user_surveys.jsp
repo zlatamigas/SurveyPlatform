@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/tld/customtag.tld" prefix="ct"%>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
 <%@ page import="epam.zlatamigas.surveyplatform.util.search.SearchParameter" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyStatus" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
@@ -42,19 +42,19 @@
 
                 <form action="controller" method="get">
                     <input type="hidden" name="command" value="${CommandType.START_EDIT_SURVEY}">
-                    <input type="hidden" name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}" value="true">
+                    <input type="hidden" name="${AttributeParameterHolder.PARAMETER_CREATE_NEW_SURVEY}" value="true">
                     <button type="submit" class="btn btn-custom-fill"><fmt:message key="button.create"/></button>
                 </form>
 
                 <div class="search-container">
                     <form id="userSurveySearchForm" action="controller" method="get">
-                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}"
+                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}"
                                value="${CommandType.USER_SURVEYS}">
                         <div class="form-row row-search">
                             <div class="col">
                                 <input type="text" class="form-control input-search"
                                        placeholder="<fmt:message key="placeholder.search"/>"
-                                       name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}"
+                                       name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}"
                                        value="${requestScope.search_words}">
                             </div>
                             <div class="col-auto">
@@ -68,7 +68,7 @@
                                         <div class="input-group-text"><i class="fas fa-filter"></i></div>
                                     </div>
                                     <select id="theme" class="form-control"
-                                            name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID}">
+                                            name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID}">
                                         <option value="0"
                                                 <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>>
                                             <fmt:message key="filter.all"/></option>
@@ -88,7 +88,7 @@
                                         <div class="input-group-text"><i class="fas fa-tasks"></i></div>
                                     </div>
                                     <select id="filter_survey_status" class="form-control"
-                                            name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS}">
+                                            name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_SURVEY_STATUS}">
                                         <option value="${SearchParameter.DEFAULT_FILTER_STR_ALL}"
                                                 <c:if test="${requestScope.filter_survey_status == SearchParameter.DEFAULT_FILTER_STR_ALL}">selected</c:if>>
                                             <fmt:message key="filter.all"/></option>
@@ -110,7 +110,7 @@
                                         <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                                     </div>
                                     <select id="order" class="form-control"
-                                            name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
+                                            name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
                                         <option value="ASC"
                                                 <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>>
                                             <fmt:message key="order.asc"/></option>
@@ -193,9 +193,9 @@
                                                     <input type="hidden" name="command"
                                                            value="${CommandType.START_EDIT_SURVEY}">
                                                     <input type="hidden"
-                                                           name="${DataHolder.PARAMETER_CREATE_NEW_SURVEY}"
+                                                           name="${AttributeParameterHolder.PARAMETER_CREATE_NEW_SURVEY}"
                                                            value="false">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
+                                                    <input type="hidden" name="${AttributeParameterHolder.PARAMETER_SURVEY_ID}"
                                                            value="${survey.surveyId}">
                                                 </form>
 
@@ -203,7 +203,7 @@
                                                       method="get">
                                                     <input type="hidden" name="command"
                                                            value="${CommandType.SURVEY_RESULT}">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
+                                                    <input type="hidden" name="${AttributeParameterHolder.PARAMETER_SURVEY_ID}"
                                                            value="${survey.surveyId}">
                                                 </form>
 
@@ -270,7 +270,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button form="userSurveySearchForm"
-                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_STARTED}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_STARTED}&${AttributeParameterHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
                                                                                 formmethod="post"
                                                                                 type="submit"
                                                                                 class="btn btn-success">
@@ -301,7 +301,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button form="userSurveySearchForm"
-                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_CLOSED}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_SURVEY_STATUS_CLOSED}&${AttributeParameterHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
                                                                                 formmethod="post"
                                                                                 type="submit"
                                                                                 class="btn btn-warning">
@@ -332,7 +332,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button form="userSurveySearchForm"
-                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.RESTART_SURVEY}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                                formaction="${pageContext.request.contextPath}/controller?command=${CommandType.RESTART_SURVEY}&${AttributeParameterHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
                                                                                 formmethod="post"
                                                                                 type="submit"
                                                                                 class="btn btn-success">
@@ -361,7 +361,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button form="userSurveySearchForm"
-                                                                            formaction="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_SURVEY}&${DataHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
+                                                                            formaction="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_SURVEY}&${AttributeParameterHolder.PARAMETER_SURVEY_ID}=${survey.surveyId}"
                                                                             formmethod="post"
                                                                             type="submit"
                                                                             class="btn btn-danger">

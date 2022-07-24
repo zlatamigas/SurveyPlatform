@@ -10,12 +10,16 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_ORDER;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.DEFAULT_SEARCH_WORDS;
 
+/**
+ * Filter for setting request search parameters before page with confirmed themes.
+ * Works on fictive URL after deleting theme.
+ */
 @WebFilter(filterName = "BeforeThemesConfirmedFilter",
         urlPatterns = URL_REDIRECT_THEMES_CONFIRMED,
         dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST})

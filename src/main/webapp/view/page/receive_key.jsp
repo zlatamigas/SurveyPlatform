@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
@@ -34,7 +34,7 @@
             </c:if>
             <div class="form-group">
                 <label><fmt:message key="label.password.change.keysenttoemail"/> ${sessionScope.change_password_email}</label>
-                <input type="text" class="form-control" name="${DataHolder.PARAMETER_RECEIVED_PASSWORD_CHANGE_KEY}" placeholder="<fmt:message key="placeholder.receivedkey"/>">
+                <input type="text" class="form-control" name="${AttributeParameterHolder.PARAMETER_RECEIVED_PASSWORD_CHANGE_KEY}" placeholder="<fmt:message key="placeholder.receivedkey"/>">
             </div>
             <button type="submit" class="btn btn-custom-fill" ><fmt:message key="button.password.key.confirm"/></button>
         </form>

@@ -2,8 +2,6 @@ package epam.zlatamigas.surveyplatform.controller.filter;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.CommandType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,16 +12,17 @@ import java.util.EnumSet;
 
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.FINISH_SURVEY_ATTEMPT;
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.SURVEY_ATTEMPT;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_COMMAND;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_SURVEY_ATTEMPT;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.PARAMETER_COMMAND;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.SESSION_ATTRIBUTE_SURVEY_ATTEMPT;
 
+/**
+ * Filter for cleaning survey attempt session attributes.
+ */
 @WebFilter(
         filterName = "SurveyAttemptAttributeCleanerFilter",
         dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
         urlPatterns = {"/controller"})
 public class SurveyAttemptAttributeCleanerFilter implements Filter {
-
-    private static final Logger logger = LogManager.getLogger();
 
     private EnumSet<CommandType> attemptSurveyCommands;
 
@@ -45,8 +44,6 @@ public class SurveyAttemptAttributeCleanerFilter implements Filter {
 
         if (!attemptSurveyCommands.contains(command)) {
             session.removeAttribute(SESSION_ATTRIBUTE_SURVEY_ATTEMPT);
-
-            logger.info("Clean session attribute: survey attempt");
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

@@ -1,8 +1,6 @@
 package epam.zlatamigas.surveyplatform.controller.filter;
 
 import epam.zlatamigas.surveyplatform.controller.command.CommandType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,19 +13,22 @@ import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 
+/**
+ * Filter for redirecting user JSP-page requests to corresponding command with sequential checks.
+ */
 @WebFilter(filterName = "ForbidUserUrlFilter",
         urlPatterns = {"/view/page/*"})
 public class ForbidUserUrlFilter implements Filter {
-
-    private static final Logger logger = LogManager.getLogger();
 
     private static Map<String, String> redirectUrl;
 
     public void init(FilterConfig config) throws ServletException {
 
-        redirectUrl = new HashMap<>(13);
+        redirectUrl = new HashMap<>(19);
 
-        redirectUrl.put(DEFAULT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name()));
+        // Common pages
+
+        redirectUrl.put(DEFAULT, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.DEFAULT.name()));
         redirectUrl.put(HOME, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.HOME.name()));
 
         redirectUrl.put(SIGN_IN, String.format(URL_REDIRECT_BASE_PATTERN, CommandType.SIGN_IN.name()));

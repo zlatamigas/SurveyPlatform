@@ -13,7 +13,7 @@ import epam.zlatamigas.surveyplatform.util.validator.impl.SignUpFormValidator;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.CREATE_USER;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USERS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;

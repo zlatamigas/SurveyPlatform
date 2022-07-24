@@ -1,7 +1,7 @@
 package epam.zlatamigas.surveyplatform.controller.command.impl.to;
 
 import epam.zlatamigas.surveyplatform.controller.command.Command;
-import epam.zlatamigas.surveyplatform.controller.navigation.DataHolder;
+import epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder;
 import epam.zlatamigas.surveyplatform.controller.navigation.Router;
 import epam.zlatamigas.surveyplatform.exception.CommandException;
 import epam.zlatamigas.surveyplatform.exception.ServiceException;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.URL_CONTROLLER_WITH_PARAMETERS_PATTERN;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.USER_SURVEYS;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
@@ -60,7 +60,7 @@ public class UserSurveysCommand implements Command {
         SurveyService service = SurveyServiceImpl.getInstance();
         try {
             List<Survey> surveys = service.findCreatorSurveysCommonInfoSearch(filterThemeId, searchWordsStr, orderTypeName, surveyStatusName, user.getUserId());
-            request.setAttribute(DataHolder.REQUEST_ATTRIBUTE_USER_SURVEYS, surveys);
+            request.setAttribute(AttributeParameterHolder.REQUEST_ATTRIBUTE_USER_SURVEYS, surveys);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

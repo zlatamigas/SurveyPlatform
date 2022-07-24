@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Optional;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.HOME;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SIGN_IN;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;

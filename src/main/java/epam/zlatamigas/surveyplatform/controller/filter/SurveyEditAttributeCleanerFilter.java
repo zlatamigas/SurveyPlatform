@@ -2,8 +2,6 @@ package epam.zlatamigas.surveyplatform.controller.filter;
 
 
 import epam.zlatamigas.surveyplatform.controller.command.CommandType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -13,15 +11,16 @@ import java.io.IOException;
 import java.util.EnumSet;
 
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.*;
 
+/**
+ * Filter for cleaning edit survey session attributes.
+ */
 @WebFilter(
         filterName = "SurveyEditAttributeCleanerFilter",
         dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
         urlPatterns = {"/controller"})
 public class SurveyEditAttributeCleanerFilter implements Filter {
-
-    private static final Logger logger = LogManager.getLogger();
 
     private EnumSet<CommandType> editSurveyCommands;
 
@@ -48,8 +47,6 @@ public class SurveyEditAttributeCleanerFilter implements Filter {
         if (!editSurveyCommands.contains(command)) {
             session.removeAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY);
             session.removeAttribute(SESSION_ATTRIBUTE_THEMES);
-
-            logger.info("Clean session attributes: edited survey, themes list");
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

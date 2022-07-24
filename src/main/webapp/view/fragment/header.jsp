@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -65,10 +65,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=en">English</a>
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${AttributeParameterHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=en">English</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${DataHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=ru">Русский</a>
+                           href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${AttributeParameterHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=ru">Русский</a>
                     </div>
                 </li>
             </ul>

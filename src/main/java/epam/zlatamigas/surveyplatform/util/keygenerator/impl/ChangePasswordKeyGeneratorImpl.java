@@ -4,6 +4,9 @@ import epam.zlatamigas.surveyplatform.util.keygenerator.ChangePasswordKeyGenerat
 
 import java.util.Random;
 
+/**
+ * Key generator in specified diapason.
+ */
 public class ChangePasswordKeyGeneratorImpl implements ChangePasswordKeyGenerator {
 
     private static final int MIN_KEY = 1_000_000;
@@ -24,6 +27,11 @@ public class ChangePasswordKeyGeneratorImpl implements ChangePasswordKeyGenerato
         return instance;
     }
 
+    /**
+     * Generate random key in diapason.
+     *
+     * @return Key in [{@link #MIN_KEY}, {@link #MAX_KEY}).
+     */
     @Override
     public int generateKey(){
 

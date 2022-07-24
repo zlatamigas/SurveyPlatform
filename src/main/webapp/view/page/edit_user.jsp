@@ -2,14 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserStatus" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.User" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.Survey" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
 <%@ page import="epam.zlatamigas.surveyplatform.util.search.SearchParameter" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyStatus" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
@@ -45,8 +45,8 @@
     <div class="content-container">
         <div class="padding-container">
             <form id="finishEditUserForm" action="controller" method="post">
-                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_EDIT_USER}">
-                <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ID}"
+                <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.FINISH_EDIT_USER}">
+                <input type="hidden" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ID}"
                        value="${requestScope.user_id}">
 
                 <h1 class="header-text"><fmt:message key="edituser.header"/></h1>
@@ -65,7 +65,7 @@
                         <p class="card-text"><fmt:message key="label.user.role"/></p>
                     </div>
                     <div class="col">
-                        <select id="selectRole" disabled name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE}"
+                        <select id="selectRole" disabled name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE}"
                                 class="form-control">
                             <option value="${UserRole.ADMIN}"
                                     <c:if test="${requestScope.user_role == UserRole.ADMIN}">selected</c:if>>
@@ -83,7 +83,7 @@
                         <p class="card-text"><fmt:message key="label.user.status"/></p>
                     </div>
                     <div class="col">
-                        <select id="selectStatus" disabled name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS}"
+                        <select id="selectStatus" disabled name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS}"
                                 class="form-control">
                             <option value="${UserStatus.ACTIVE}"
                                     <c:if test="${requestScope.user_status == UserStatus.ACTIVE}">selected</c:if>>
@@ -139,9 +139,9 @@
                         </div>
                         <div class="modal-footer">
                             <form action="controller" method="post">
-                                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}"
+                                <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}"
                                        value="${CommandType.DELETE_USER}">
-                                <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}"
+                                <input type="hidden" name="${AttributeParameterHolder.PARAMETER_USER_ID}"
                                        value="${requestScope.user_id}">
                                 <button type="submit" class="btn btn-danger">
                                     <fmt:message key="button.delete"/>
@@ -193,11 +193,11 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <form action="controller" method="post">
-                                                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}"
+                                                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}"
                                                                value="${CommandType.ADMIN_DELETE_SURVEY}">
-                                                        <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}"
+                                                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_SURVEY_ID}"
                                                                value="${survey.surveyId}">
-                                                        <input type="hidden" name="${DataHolder.PARAMETER_USER_ID}"
+                                                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_USER_ID}"
                                                                value="${survey.creator.userId}">
                                                         <button type="submit" class="btn btn-danger">
                                                             <fmt:message key="button.delete"/>

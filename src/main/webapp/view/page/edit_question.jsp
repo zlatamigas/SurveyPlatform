@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -49,12 +49,12 @@
                             <i class="fas fa-info-circle"></i>
                         </a>
                     </label>
-                    <textarea name="${DataHolder.PARAMETER_QUESTION_FORMULATION}" class="form-control"
+                    <textarea name="${AttributeParameterHolder.PARAMETER_QUESTION_FORMULATION}" class="form-control"
                            id="questionFormulation" rows="3">${sessionScope.edited_question.formulation}</textarea>
                 </div>
                 <div class="form-check">
-                    <input type="checkbox" name="${DataHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}" class="form-check-input"
-                           id="questionSelectMultiple" value="${DataHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}"
+                    <input type="checkbox" name="${AttributeParameterHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}" class="form-check-input"
+                           id="questionSelectMultiple" value="${AttributeParameterHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}"
                            <c:if test="${sessionScope.edited_question.selectMultiple == true}">checked="checked"</c:if>/>
                     <label for="questionSelectMultiple"><fmt:message key="label.question.selectmultiple"/></label>
                 </div>
@@ -70,7 +70,7 @@
                     <c:set var="i" value="${i+1}"/>
                     <div id="rowanswer${i}" class="row row-question">
                         <div class="col">
-                            <textarea id="textarea${i}" name="${DataHolder.PARAMETER_ANSWER_TEXT}${i}" rows="3"
+                            <textarea id="textarea${i}" name="${AttributeParameterHolder.PARAMETER_ANSWER_TEXT}${i}" rows="3"
                                       class="form-control textarea-answer">${answer.answer}</textarea>
 
                         </div>
@@ -84,7 +84,7 @@
                     </div>
                 </c:forEach>
             </div>
-            <input id="input-last-answer" type="hidden" name="${DataHolder.PARAMETER_LAST_ANSWER_POSITION}" value="${i}">
+            <input id="input-last-answer" type="hidden" name="${AttributeParameterHolder.PARAMETER_LAST_ANSWER_POSITION}" value="${i}">
 
             <script>
                 let questionsCount = ${i};
@@ -112,7 +112,7 @@
                     answerTextCol.classList.add("col");
 
                     let answerTextarea = document.createElement("textarea");
-                    answerTextarea.name = "${DataHolder.PARAMETER_ANSWER_TEXT}" + pos;
+                    answerTextarea.name = "${AttributeParameterHolder.PARAMETER_ANSWER_TEXT}" + pos;
                     answerTextarea.id = "textarea" + pos;
                     answerTextarea.rows = 3;
                     answerTextarea.classList.add("form-control","textarea-answer");
@@ -148,7 +148,7 @@
 
         <div class="bottom-actions-container">
             <div class="btn-group-custom">
-                <button type="submit" formmethod="post" formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_QUESTION}"
+                <button type="submit" formmethod="post" formaction="controller?${AttributeParameterHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_QUESTION}"
                         class="btn btn-success">
                     <fmt:message key="button.save"/></button>
                 <button form="cancelEditQuestionForm" type="submit" class="btn btn-warning">

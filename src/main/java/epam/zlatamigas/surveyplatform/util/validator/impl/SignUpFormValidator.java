@@ -6,12 +6,12 @@ import epam.zlatamigas.surveyplatform.util.validator.PatternValidator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.*;
 import static epam.zlatamigas.surveyplatform.util.locale.LocalisedMessageKey.*;
 import static epam.zlatamigas.surveyplatform.util.validator.PatternValidator.EMAIL_PATTERN;
 
 /**
- * Sign up form validator. Checks email and password validity and equation of password and repeat password.
+ * Sign up form validator. Checks email and password validity and equality between password and repeated password.
  */
 public class SignUpFormValidator implements FormValidator {
 

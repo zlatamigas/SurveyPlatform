@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.PARAMETER_THEME_ID;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.PARAMETER_THEME_ID;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.THEMES_WAITING;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.REDIRECT;
 

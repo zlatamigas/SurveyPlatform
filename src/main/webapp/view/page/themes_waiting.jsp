@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -58,15 +58,15 @@
                                             </div>
                                             <div class="col col-auto">
                                                 <form action="controller" method="post">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.CONFIRM_THEME}">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
+                                                    <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.CONFIRM_THEME}">
+                                                    <input type="hidden" name="${AttributeParameterHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
                                                     <button class="btn btn-success" type="submit"><i class="fas fa-check"></i></button>
                                                 </form>
                                             </div>
                                             <div class="col col-auto">
                                                 <form action="controller" method="post">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.REJECT_THEME}">
-                                                    <input type="hidden" name="${DataHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
+                                                    <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.REJECT_THEME}">
+                                                    <input type="hidden" name="${AttributeParameterHolder.PARAMETER_THEME_ID}" value="${theme.themeId}">
                                                     <button class="btn btn-danger" type="submit"><i class="fas fa-times"></i></button>
                                                 </form>
                                             </div>

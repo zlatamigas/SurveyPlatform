@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.SurveyStatus" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
 
@@ -55,9 +55,9 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.ADD_THEME}">
-                                    <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
-                                    <input type="hidden" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}" value="${requestScope.order_type}">
+                                    <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.ADD_THEME}">
+                                    <input type="hidden" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                    <input type="hidden" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}" value="${requestScope.order_type}">
 
                                     <div id="themeValidationFeedback" class="text-danger">
                                         <p>
@@ -77,7 +77,7 @@
                                             <i class="fas fa-info-circle"></i>
                                         </a>
                                         </label>
-                                        <input id="inputThemeName" type="text" name="${DataHolder.PARAMETER_THEME_NAME}" class="form-control">
+                                        <input id="inputThemeName" type="text" name="${AttributeParameterHolder.PARAMETER_THEME_NAME}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -103,10 +103,10 @@
 
                 <div class="search-container">
                     <form  id="themesConfirmedSearchForm" action="controller" method="get">
-                        <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.THEMES_CONFIRMED}">
+                        <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.THEMES_CONFIRMED}">
                         <div class="form-row row-search">
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -119,7 +119,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                                     </div>
-                                    <select id="order" class="form-control" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
+                                    <select id="order" class="form-control" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
                                         <option value="ASC" <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
                                         <option value="DESC" <c:if test="${requestScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
                                     </select>
@@ -170,7 +170,7 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button form="themesConfirmedSearchForm"
-                                                                                    formaction="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_THEME}&${DataHolder.PARAMETER_THEME_ID}=${theme.themeId}"
+                                                                                    formaction="${pageContext.request.contextPath}/controller?command=${CommandType.DELETE_THEME}&${AttributeParameterHolder.PARAMETER_THEME_ID}=${theme.themeId}"
                                                                                     formmethod="post"
                                                                                     type="submit"
                                                                                     class="btn btn-danger">

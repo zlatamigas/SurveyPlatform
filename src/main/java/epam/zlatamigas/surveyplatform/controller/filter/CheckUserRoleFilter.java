@@ -1,12 +1,9 @@
 package epam.zlatamigas.surveyplatform.controller.filter;
 
-
 import epam.zlatamigas.surveyplatform.controller.command.CommandType;
 import epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation;
 import epam.zlatamigas.surveyplatform.model.entity.User;
 import epam.zlatamigas.surveyplatform.model.entity.UserRole;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -18,16 +15,17 @@ import java.util.EnumSet;
 import java.util.Map;
 
 import static epam.zlatamigas.surveyplatform.controller.command.CommandType.*;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.*;
 import static epam.zlatamigas.surveyplatform.model.entity.UserRole.*;
 
+/**
+ * Filter for checking user role access to commands.
+ */
 @WebFilter(
         filterName = "CheckUserRoleFilter",
         dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST},
         urlPatterns = {"/controller"})
 public class CheckUserRoleFilter implements Filter {
-
-    private static final Logger logger = LogManager.getLogger();
 
     private Map<UserRole, EnumSet<CommandType>> userCommands;
 

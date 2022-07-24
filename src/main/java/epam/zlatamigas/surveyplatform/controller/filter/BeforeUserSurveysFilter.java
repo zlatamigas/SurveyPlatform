@@ -10,10 +10,14 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.*;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.*;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.*;
 import static epam.zlatamigas.surveyplatform.util.search.SearchParameter.*;
 
+/**
+ * Filter for setting request search parameters before page with user surveys.
+ * Works on fictive URL after starting/stopping/deleting user survey.
+ */
 @WebFilter(filterName = "BeforeUserSurveysFilter",
         urlPatterns = URL_REDIRECT_USER_SURVEYS,
         dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST})

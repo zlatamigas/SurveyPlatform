@@ -1,7 +1,7 @@
 package epam.zlatamigas.surveyplatform.util.validator;
 
 /**
- * Pattern holder and validator.
+ * Pattern holder and single value validator.
  */
 public final class PatternValidator {
 

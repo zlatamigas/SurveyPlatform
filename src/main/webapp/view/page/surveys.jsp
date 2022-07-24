@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -33,10 +33,10 @@
 
         <div class="search-container">
             <form action="controller" method="get">
-                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.SURVEYS}">
+                <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.SURVEYS}">
                 <div class="form-row row-search">
                     <div class="col">
-                        <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                        <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -48,7 +48,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fas fa-filter"></i></div>
                     </div>
-                    <select id="theme" class="form-control" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID}">
+                    <select id="theme" class="form-control" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_FILTER_THEME_ID}">
                         <option value="0" <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="filter.all"/></option>
                         <option value="-1" <c:if test="${requestScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="filter.none"/></option>
                         <c:forEach items="${requestScope.available_themes_list}" var="theme">
@@ -62,7 +62,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
                     </div>
-                    <select id="order" class="form-control" name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
+                    <select id="order" class="form-control" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}">
                         <option value="ASC" <c:if test="${requestScope.order_type == 'ASC'}">selected</c:if>><fmt:message key="order.asc"/></option>
                         <option value="DESC" <c:if test="${requestScope.order_type == 'DESC'}">selected</c:if>><fmt:message key="order.desc"/></option>
                     </select>
@@ -111,7 +111,7 @@
                                         <div class="btn-toolbar justify-content-end" role="toolbar">
                                         <form id="startAttemptSurveyForm${survey.surveyId}" action="controller" method="get">
                                             <input type="hidden" name="command" value="${CommandType.SURVEY_ATTEMPT}">
-                                            <input type="hidden" name="${DataHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
+                                            <input type="hidden" name="${AttributeParameterHolder.PARAMETER_SURVEY_ID}" value="${survey.surveyId}">
                                             <button form="startAttemptSurveyForm${survey.surveyId}" type="submit" class="btn btn-outline-success">
                                                 <i class="fas fa-play"></i></button>
                                         </form>

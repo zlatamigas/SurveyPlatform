@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.SIGN_IN;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType.FORWARD;
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_CURRENT_PAGE;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.SESSION_ATTRIBUTE_CURRENT_PAGE;
 
 
 public class StartSignInCommand implements Command {

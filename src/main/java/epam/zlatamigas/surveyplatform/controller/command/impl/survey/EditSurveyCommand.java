@@ -7,7 +7,7 @@ import epam.zlatamigas.surveyplatform.exception.CommandException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static epam.zlatamigas.surveyplatform.controller.navigation.DataHolder.SESSION_ATTRIBUTE_EDITED_SURVEY;
+import static epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder.SESSION_ATTRIBUTE_EDITED_SURVEY;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.EDIT_SURVEY;
 import static epam.zlatamigas.surveyplatform.controller.navigation.PageNavigation.HOME;
 import static epam.zlatamigas.surveyplatform.controller.navigation.Router.PageChangeType;

@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserStatus" %>
 <%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
 
@@ -43,7 +43,7 @@
                         </c:if>
                     </div>
                     <label><fmt:message key="label.email"/></label>
-                    <input type="text" class="form-control" name="${DataHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
+                    <input type="text" class="form-control" name="${AttributeParameterHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
                 </div>
                 <div class="form-group">
                     <div class="text-danger">
@@ -58,7 +58,7 @@
                             <i class="fas fa-info-circle"></i>
                         </a>
                     </label>
-                    <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.email"/>">
+                    <input type="password" class="form-control" name="${AttributeParameterHolder.PARAMETER_PASSWORD}" placeholder="<fmt:message key="placeholder.email"/>">
                 </div>
                 <div class="form-group">
                     <div class="text-danger">
@@ -73,12 +73,12 @@
                             <i class="fas fa-info-circle"></i>
                         </a>
                     </label>
-                    <input type="password" class="form-control" name="${DataHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
+                    <input type="password" class="form-control" name="${AttributeParameterHolder.PARAMETER_PASSWORD_REPEAT}" placeholder="<fmt:message key="placeholder.password.repeat"/>">
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label><fmt:message key="label.user.role"/> </label>
-                        <select name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE}" class="form-control">
+                        <select name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_ROLE}" class="form-control">
                             <option value="${UserRole.ADMIN}" >
                                 <fmt:message key="role.admin"/>
                             </option>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="col form-group">
                         <label><fmt:message key="label.user.status"/> </label>
-                        <select name="${DataHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS}" class="form-control">
+                        <select name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_USER_STATUS}" class="form-control">
                             <option value="${UserStatus.ACTIVE}" selected>
                                 <fmt:message key="status.user.active"/>
                             </option>
@@ -102,7 +102,7 @@
             </form>
 
             <form id="cancelCreateUserForm" action="controller" method="get">
-                <input type="hidden" name="${DataHolder.PARAMETER_COMMAND}" value="${CommandType.USERS}">
+                <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.USERS}">
             </form>
         </div>
     </div>

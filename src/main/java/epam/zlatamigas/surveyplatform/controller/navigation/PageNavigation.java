@@ -1,5 +1,8 @@
 package epam.zlatamigas.surveyplatform.controller.navigation;
 
+/**
+ * Class with paths to pages and patterns for routing requests.
+ */
 public final class PageNavigation {
 
     public static final String DEFAULT = "/view/page/home.jsp";

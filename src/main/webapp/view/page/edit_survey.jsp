@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.DataHolder" %>
+<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>
@@ -55,13 +55,13 @@
                             <i class="fas fa-info-circle"></i>
                         </a>
                     </label>
-                    <input name="${DataHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName"
+                    <input name="${AttributeParameterHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName"
                            minlength="1" maxlength="200"
                            value="${sessionScope.edited_survey.name}">
                 </div>
                 <div class="form-group">
                     <label for="surveyTheme"><fmt:message key="label.survey.theme"/></label>
-                    <select name="${DataHolder.PARAMETER_SURVEY_THEME_ID}" id="surveyTheme" class="form-control">
+                    <select name="${AttributeParameterHolder.PARAMETER_SURVEY_THEME_ID}" id="surveyTheme" class="form-control">
 
                         <option <c:if test="${sessionScope.edited_survey.theme.themeId == -1}">selected</c:if>
                                 value="-1">
@@ -80,14 +80,14 @@
                         </c:if>
                     </div>
                     <label for="surveyDescription"><fmt:message key="label.survey.description"/> </label>
-                    <textarea name="${DataHolder.PARAMETER_SURVEY_DESCRIPTION}" class="form-control" id="surveyDescription"
+                    <textarea name="${AttributeParameterHolder.PARAMETER_SURVEY_DESCRIPTION}" class="form-control" id="surveyDescription"
                               rows="3">${sessionScope.edited_survey.description}</textarea>
                 </div>
             </div>
         </div>
 
         <div class="content-container">
-            <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
+            <button formaction="controller?${AttributeParameterHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${AttributeParameterHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
                     formmethod="post" type="submit" class="btn btn-custom-fill">
                 <i class="fas fa-plus"></i> <fmt:message key="button.survey.question.add"/>
             </button>
@@ -102,11 +102,11 @@
                                 </div>
                                 <div class="col col-auto">
                                     <div class="btn-group" role="group">
-                                        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=false&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
+                                        <button formaction="controller?${AttributeParameterHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${AttributeParameterHolder.PARAMETER_CREATE_NEW_QUESTION}=false&${AttributeParameterHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
                                                 type="submit" class="btn btn-outline-primary" formmethod="post">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
-                                        <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_QUESTION}&${DataHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
+                                        <button formaction="controller?${AttributeParameterHolder.PARAMETER_COMMAND}=${CommandType.REMOVE_QUESTION}&${AttributeParameterHolder.PARAMETER_QUESTION_ID}=${question.questionId}"
                                                 type="submit" class="btn btn-outline-danger" formmethod="post">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -138,7 +138,7 @@
                     </div>
                 </c:forEach>
             </div>
-            <button formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${DataHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
+            <button formaction="controller?${AttributeParameterHolder.PARAMETER_COMMAND}=${CommandType.EDIT_QUESTION}&${AttributeParameterHolder.PARAMETER_CREATE_NEW_QUESTION}=true"
                     formmethod="post" type="submit" class="btn btn-custom-fill">
                 <i class="fas fa-plus"></i> <fmt:message key="button.survey.question.add"/>
             </button>
@@ -147,7 +147,7 @@
         <div class="bottom-actions-container">
             <div class="btn-group-custom">
                 <button formmethod="post"
-                        formaction="controller?${DataHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_SURVEY}"
+                        formaction="controller?${AttributeParameterHolder.PARAMETER_COMMAND}=${CommandType.FINISH_EDIT_SURVEY}"
                         type="submit" class="btn btn-success">
                     <c:choose>
                     <c:when test="${sessionScope.edited_survey.surveyId > 0}"><fmt:message key="button.save"/></c:when>
