@@ -30,7 +30,7 @@ The platform supports the following roles and their corresponded functionality.
 |Request theme                          |   -   |   +   |   -   |
 |Add theme                              |   +   |   -   |   -   |
 |User CRUD                              |   +   |   -   |   -   |
-
+<br>
   
 ## Database schema
 
