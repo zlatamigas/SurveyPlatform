@@ -49,7 +49,7 @@ MySQL database is used to store data.
 4. Change the app.properties file, located in the resources/properties/ folder, based on your database configurations.
 5. Build the project using maven.
 6. Add new Tomcat 9.0.62 configuration to the project.
-7. Run Tomcat and open http://localhost:8089/ on the browser
+7. Run Tomcat and open http://localhost:8089/ on the browser.
 8. Log in as admin, change password and create new users. Admin default account is admin@admin.com, password - 12345678.
 
 ## Usage
