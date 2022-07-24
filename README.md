@@ -4,14 +4,15 @@
 ||ADMIN|USER|GUEST|
 | :- | :-: | :-: | :-: |
 |Sign in/up|+|+|+|
+|Request change password|+|+|+|
 |View available surveys|+|+|+|
 |Participate in surveys|+|+|+|
 |Log out|+|+|-|
 |Change credentials|+|+|-|
 |Survey CRUD|+|+|-|
-|Add theme request|+|+|-|
 |View survey results (created by user)|+|+|-|
 |View survey results (finished by user)|+|+|-|
+|Request theme|-|+|-|
 |View survey results (all users)|+|-|-|
 |Add theme|+|-|-|
 |User CRUD|+|-|-|
