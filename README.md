@@ -22,7 +22,6 @@ The platform supports the following roles and their corresponded functionality:
 |Change credentials|+|+|-|
 |Survey CRUD|+|+|-|
 |View survey results (created by user)|+|+|-|
-|View survey results (finished by user)|+|+|-|
 |Request theme|-|+|-|
 |View survey results (all users)|+|-|-|
 |Add theme|+|-|-|
