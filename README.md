@@ -31,32 +31,29 @@ The platform supports the following roles and their corresponded functionality:
 <p align="center">
   <kbd> <img alt="Database" src="https://user-images.githubusercontent.com/64004682/180656166-7c64e0c7-3d5d-47f7-920d-b07dc6e11c0d.png" width="800" style="border-radius:10px"\></kbd> 
 </p>
+<p align="center">Database schema</p>
+<br>
 
 ## Installation
 
 ## Usage
 
-Edit survey (part 1, 2, 3)
-![image](https://user-images.githubusercontent.com/64004682/180653735-0af6a39f-7947-4f39-ac33-e5b647634d22.png)
-![image](https://user-images.githubusercontent.com/64004682/180652893-bacfe82f-702a-4d0c-80f4-31b96a98e83e.png)
-![image](https://user-images.githubusercontent.com/64004682/180652909-2334420a-9c47-4626-bce8-ac06bebd36b3.png)
+<p align="center">
+  <kbd> <img alt="Edit survey" src="https://user-images.githubusercontent.com/64004682/180663466-59c3809d-6870-4e19-9d1c-a131d13dc482.gif" width="800" style="border-radius:10px"\></kbd> 
+</p>
+<p align="center">Sign in and edit survey</p>
+<br>
 
-Edit survey, edit question
-![image](https://user-images.githubusercontent.com/64004682/180652981-02078c23-1d63-4a9b-aeb9-cb803980d3d9.png)
+<p align="center">
+  <kbd> <img alt="Survey attempt" src="https://user-images.githubusercontent.com/64004682/180663470-5ce92f47-aba5-45bd-a19c-eb308b620a42.gif" width="800" style="border-radius:10px"\></kbd> 
+</p>
+<p align="center">Survey attempt</p>
+<br>
 
-Surveys (part 1, 2)
-![image](https://user-images.githubusercontent.com/64004682/180653848-708af50a-66ed-4d87-8f08-cb4bde8b5ee4.png)
-![image](https://user-images.githubusercontent.com/64004682/180653823-da3b5c7a-84fd-409e-b75d-eb3666684872.png)
-
-Survey attempt (part 1, 2)
-![image](https://user-images.githubusercontent.com/64004682/180653982-c2225295-4072-4f72-8a28-b61a36f1f741.png)
-![image](https://user-images.githubusercontent.com/64004682/180654029-a601527d-99c6-4291-993d-46c935ef7f2a.png)
-
-Survey result
-![image](https://user-images.githubusercontent.com/64004682/180654148-5cf40f85-3678-464a-800c-d92e91e3da80.png)
-![image](https://user-images.githubusercontent.com/64004682/180654182-8e5d07e9-fe55-4642-9f85-2570e60b336a.png)
-![image](https://user-images.githubusercontent.com/64004682/180654202-bdb74a97-4347-4de2-9236-bb4639998a3e.png)
-![image](https://user-images.githubusercontent.com/64004682/180654212-bb43b046-e598-4822-bb06-16579740fc8b.png)
-
+<p align="center">
+  <kbd> <img alt="View survey result and theme CRUD" src="https://user-images.githubusercontent.com/64004682/180663476-4ab570e0-40ae-4e96-8131-12013bb17fd5.gif" width="800" style="border-radius:10px"\></kbd> 
+</p>
+<p align="center">View survey result and work with themes</p>
+<br>
 
 ## Contribution
