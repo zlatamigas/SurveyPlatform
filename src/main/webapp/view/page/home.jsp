@@ -27,7 +27,8 @@
 
     <div class="row align-items-center">
         <div class="col col-md-3 offset-md-2">
-            <img src="${pageContext.request.contextPath}/static/pict/survey.jpg" style="width: 100%">
+            <img src="${pageContext.request.contextPath}/static/pict/survey.jpg" style="width: 100%"
+                alt="Survey. Illustration вектор создан(а) storyset - ru.freepik.com">
         </div>
         <div class="col col-md-4 offset-md-1">
             <h5 class="header-text"><fmt:message key="header.navbar.brand"/></h5>

@@ -36,7 +36,7 @@
         <span class="navbar-brand"><fmt:message key="header.navbar.brand"/> </span>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarSupportedContent" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -81,7 +81,6 @@
                         </li>
                     </c:when>
                 </c:choose>
-                </li>
             </ul>
         </div>
     </nav>

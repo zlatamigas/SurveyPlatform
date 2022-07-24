@@ -9,9 +9,9 @@
 <div class="footer-margin">
     <footer class="fixed-bottom footer">
         <div class="footer-contact">
-            <a href="#"><i class="fab fa-vk"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://vk.com/" target="_blank"><i class="fab fa-vk"></i></a>
+            <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <div class="row footer-copyright justify-content-center">
             <p class="text-muted">© Copyright 2022 by Zlata Migas. All Rights Reserved.</p>

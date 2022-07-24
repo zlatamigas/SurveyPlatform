@@ -36,7 +36,7 @@
         <span class="navbar-brand"><fmt:message key="header.navbar.brand"/> </span>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarSupportedContent" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -63,7 +63,7 @@
                        data-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-globe"></i>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu">
                         <a class="dropdown-item"
                            href="${pageContext.request.contextPath}/controller?command=${CommandType.CHANGE_LOCALISATION}&${AttributeParameterHolder.SESSION_ATTRIBUTE_PARAMETER_LOCALISATION}=en">English</a>
                         <div class="dropdown-divider"></div>
@@ -115,7 +115,6 @@
                         </li>
                     </c:otherwise>
                 </c:choose>
-                </li>
             </ul>
         </div>
     </nav>
