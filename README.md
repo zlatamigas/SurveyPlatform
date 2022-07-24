@@ -15,7 +15,7 @@ Java EE / MySQL / HTML5 / CSS3 / Bootstrap 4 / JavaScript
 
 ## Functional roles
 
-The platform supports the following roles and their corresponded functionality:
+The platform supports the following roles and their corresponded functionality.
 
 |                                       | ADMIN |  USER | GUEST |
 |                    :-                 |  :-:  |  :-:  |  :-:  |
@@ -33,6 +33,9 @@ The platform supports the following roles and their corresponded functionality:
 
   
 ## Database schema
+
+MySQL database is used to store data.
+
 </p>
 <p align="center">
   <kbd> <img alt="Database" src="https://user-images.githubusercontent.com/64004682/180656166-7c64e0c7-3d5d-47f7-920d-b07dc6e11c0d.png" width="100%" style="border-radius:10px"\></kbd> 
