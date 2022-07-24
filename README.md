@@ -30,7 +30,7 @@ The platform supports the following roles and their corresponded functionality:
 ## Database schema
 </p>
 <p align="center">
-  <kbd> <img alt="Database" src="" width="800" style="border-radius:10px"\></kbd> 
+  <kbd> <img alt="Database" src="https://user-images.githubusercontent.com/64004682/180656104-18e4c098-0fc9-4718-ad2f-af9b6062e8f9.png" width="800" style="border-radius:10px"\></kbd> 
 </p>
 
 ## Installation
