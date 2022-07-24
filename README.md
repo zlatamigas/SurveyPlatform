@@ -41,7 +41,6 @@ MySQL database is used to store data.
   <kbd> <img alt="Database" src="https://user-images.githubusercontent.com/64004682/180656166-7c64e0c7-3d5d-47f7-920d-b07dc6e11c0d.png" width="100%" style="border-radius:10px"\></kbd> 
 </p>
 <p align="center">Database schema</p>
-<br>
 
 ## Installation
 
@@ -63,6 +62,5 @@ MySQL database is used to store data.
   <kbd> <img alt="View survey result and theme CRUD" src="https://user-images.githubusercontent.com/64004682/180663476-4ab570e0-40ae-4e96-8131-12013bb17fd5.gif" width="100%" style="border-radius:10px"\></kbd> 
 </p>
 <p align="center">View survey result and work with themes</p>
-<br>
 
 ## Contribution
