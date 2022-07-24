@@ -1,5 +1,5 @@
 # Survey
-<p>
+<p align="center">
   <img alt="Survey" src="https://user-images.githubusercontent.com/64004682/180666035-45b3a09c-153c-4554-9e09-52e60cf974c0.jpg" width="300"\>
 </p>
 
