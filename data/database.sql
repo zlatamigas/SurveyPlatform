@@ -34,14 +34,14 @@ CREATE TABLE IF NOT EXISTS `survey_schema`.`users` (
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb3;
 
-INSERT INTO `survey_schema`.`users` (`email`, `password`, `user_role`, `user_status`) VALUES ('admin@admin.com', '7c222fb2927d828af22f592134e8932480637c0d', 'ADMIN', 'ACTIVE');
-
-
 CREATE UNIQUE INDEX `email_UNIQUE` ON `survey_schema`.`users` (`email` ASC) VISIBLE;
 
 CREATE INDEX `role_id_fk_idx` ON `survey_schema`.`users` (`user_role` ASC) VISIBLE;
 
 CREATE INDEX `status_id_fk_idx` ON `survey_schema`.`users` (`user_status` ASC) VISIBLE;
+
+
+INSERT INTO `survey_schema`.`users` (`email`, `password`, `user_role`, `user_status`) VALUES ('admin@admin.com', '7c222fb2927d828af22f592134e8932480637c0d', 'ADMIN', 'ACTIVE');
 
 
 -- -----------------------------------------------------
