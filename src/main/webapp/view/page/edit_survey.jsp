@@ -41,7 +41,6 @@
                     </c:choose>
                 </h1>
                 <hr class="my-4">
-
                 <div class="form-group">
                     <div class="text-danger">
                         <c:if test="${requestScope.form_invalid.survey_name!=null}">

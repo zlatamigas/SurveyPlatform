@@ -29,6 +29,8 @@ public class PatternValidatorTest {
                 {"abc.def@mail#archive.com", false},
                 {"abc.def@mail", false},
                 {"abc.def@mail..com", false},
+                {"12345678901234567890123456789012345@gamil.com", true},
+                {"123456789012345678901234567890123456@gamil.com", false},
                 {"",false},
                 {null, false}
         };

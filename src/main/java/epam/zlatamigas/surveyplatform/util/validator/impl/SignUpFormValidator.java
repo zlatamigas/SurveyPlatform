@@ -36,7 +36,7 @@ public class SignUpFormValidator implements FormValidator {
 
         if (data.get(PARAMETER_EMAIL) == null
                 || data.get(PARAMETER_EMAIL).length == 0
-                || !data.get(PARAMETER_EMAIL)[0].matches(EMAIL_PATTERN)) {
+                || !validator.validEmail(data.get(PARAMETER_EMAIL)[0])) {
             validationResult.put(PARAMETER_EMAIL, MESSAGE_INVALID_USER_EMAIL);
         }
 

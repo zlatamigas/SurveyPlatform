@@ -5,6 +5,7 @@ package epam.zlatamigas.surveyplatform.util.validator;
  */
 public final class PatternValidator {
 
+    public static final int EMAIL_MAX_LENGTH = 45;
     public static final String EMAIL_PATTERN =
             "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
     public static final String PASSWORD_PATTERN =
@@ -28,7 +29,7 @@ public final class PatternValidator {
     }
 
     public boolean validEmail(String email) {
-        return email != null && email.matches(EMAIL_PATTERN);
+        return email != null && email.matches(EMAIL_PATTERN) && email.length() <= EMAIL_MAX_LENGTH;
     }
 
     public boolean validPassword(String password) {

@@ -40,7 +40,13 @@
                         <fmt:message key="${requestScope.form_invalid.email}"/>
                     </c:if>
                 </div>
-                <label><fmt:message key="label.email"/></label>
+                <label><fmt:message key="label.email"/>
+                    <a tabindex="0"
+                       data-toggle="popover" data-trigger="hover"
+                       data-content="<fmt:message key="popover.hint.email"/>">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </label>
                 <input type="text" class="form-control" name="${AttributeParameterHolder.PARAMETER_EMAIL}" placeholder="<fmt:message key="placeholder.email"/>">
             </div>
             <div class="form-group">
