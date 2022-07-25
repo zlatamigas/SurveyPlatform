@@ -70,5 +70,3 @@ MySQL database is used to store data.
   <kbd> <img alt="View survey result and theme CRUD" src="https://user-images.githubusercontent.com/64004682/180663476-4ab570e0-40ae-4e96-8131-12013bb17fd5.gif" width="100%" style="border-radius:10px"\></kbd> 
 </p>
 <p align="center">View survey result and work with themes</p>
-
-## Contribution
