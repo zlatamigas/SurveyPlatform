@@ -1,7 +1,6 @@
 package epam.zlatamigas.surveyplatform.util.encoder;
 
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -11,12 +10,8 @@ import java.security.NoSuchAlgorithmException;
 public final class PasswordEncoder {
 
     private static final String ENCRYPTION_METHOD = "SHA-1";
-
-    private static final byte[] SEED = new byte[]{1, 43, 32, 2, 2, 1, 43, 32, 2, 79, 1, 43, 32, 2, 2, 29};
-
     private static final int BASE = 16;
-    private static final int PASSWORD_LENGTH = 20;
-    private static final BigInteger MOD_BASE = new BigInteger("100000000000000000000");
+    private static final int BIT_32 = 32;
     private static final char ADDITIONAL_SYMBOL = '0';
 
     /**
@@ -28,20 +23,14 @@ public final class PasswordEncoder {
      */
     public String encode(String password) throws NoSuchAlgorithmException {
 
-        MessageDigest messageDigest = MessageDigest.getInstance(ENCRYPTION_METHOD);
-        messageDigest.update(SEED);
-        messageDigest.update(password.getBytes(StandardCharsets.UTF_8));
-        byte[] encodedBytes = messageDigest.digest();
+        MessageDigest md = MessageDigest.getInstance(ENCRYPTION_METHOD);
+        byte[] messageDigest = md.digest(password.getBytes());
 
-        BigInteger bigInteger = new BigInteger(1, encodedBytes);
-        bigInteger = bigInteger.mod(MOD_BASE);
-
-        StringBuilder encodedPassword = new StringBuilder(bigInteger.toString(BASE));
-
-        while (encodedPassword.length() < PASSWORD_LENGTH) {
-            encodedPassword.append(ADDITIONAL_SYMBOL);
+        StringBuilder encryptedPassword = new StringBuilder((new BigInteger(1, messageDigest)).toString(BASE));
+        while (encryptedPassword.length() < BIT_32) {
+            encryptedPassword.insert(0, ADDITIONAL_SYMBOL);
         }
 
-        return encodedPassword.toString();
+        return encryptedPassword.toString();
     }
 }
