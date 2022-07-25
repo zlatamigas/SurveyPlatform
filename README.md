@@ -1,4 +1,8 @@
 # Survey
+<p align="center">
+  <img alt="Survey" src="https://user-images.githubusercontent.com/64004682/180666035-45b3a09c-153c-4554-9e09-52e60cf974c0.jpg" width="300"\>
+</p>
+
 
 ## Description
 Survey is an open platform where anyone can participate in surveys on various topics. 
@@ -11,7 +15,7 @@ Java EE / MySQL / HTML5 / CSS3 / Bootstrap 4 / JavaScript
 
 ## Functional roles
 
-The platform supports the following roles and their corresponded functionality:
+The platform supports the following roles and their corresponded functionality.
 
 |                                       | ADMIN |  USER | GUEST |
 |                    :-                 |  :-:  |  :-:  |  :-:  |
@@ -26,17 +30,27 @@ The platform supports the following roles and their corresponded functionality:
 |Request theme                          |   -   |   +   |   -   |
 |Add theme                              |   +   |   -   |   -   |
 |User CRUD                              |   +   |   -   |   -   |
-
-  
+ 
 ## Database schema
+
+MySQL database is used to store data.
+
 </p>
 <p align="center">
   <kbd> <img alt="Database" src="https://user-images.githubusercontent.com/64004682/180656166-7c64e0c7-3d5d-47f7-920d-b07dc6e11c0d.png" width="100%" style="border-radius:10px"\></kbd> 
 </p>
 <p align="center">Database schema</p>
-<br>
 
 ## Installation
+
+1. Clone the project.
+2. Create a new MySQL database using database.sql from the data folder.
+3. Fill up any valid email service's user and password in the mail.properties file, located in the resources/properties/ folder, for email activation functionality.
+4. Change the app.properties file, located in the resources/properties/ folder, based on your database configurations.
+5. Build the project using maven.
+6. Add new Tomcat 9.0.62 configuration to the project.
+7. Run Tomcat and open http://localhost:8089/ on the browser.
+8. Log in as admin, change password and create new users. Admin default account is admin@admin.com, password - 12345678.
 
 ## Usage
 
@@ -56,6 +70,5 @@ The platform supports the following roles and their corresponded functionality:
   <kbd> <img alt="View survey result and theme CRUD" src="https://user-images.githubusercontent.com/64004682/180663476-4ab570e0-40ae-4e96-8131-12013bb17fd5.gif" width="100%" style="border-radius:10px"\></kbd> 
 </p>
 <p align="center">View survey result and work with themes</p>
-<br>
 
 ## Contribution
