@@ -96,9 +96,7 @@
                         <div class="card-header">
                             <div class="row justify-content-between">
                                 <div class="col">
-                                    <h5 class="card-title">
-                                        <c:out value="${question.formulation}"/>
-                                    </h5>
+                                    <h5 class="card-title"><c:out value="${question.formulation}"/></h5>
                                 </div>
                                 <div class="col col-auto">
                                     <div class="btn-group" role="group">
@@ -131,9 +129,7 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 <c:forEach items="${question.answers}" var="answer">
-                                    <li class="card-text list-group-item">
-                                        <c:out value="${answer.answer}"/>
-                                    </li>
+                                    <li class="card-text list-group-item"><c:out value="${answer.answer}"/></li>
                                 </c:forEach>
                             </ul>
                         </div>

@@ -35,7 +35,7 @@ public class ResultQuestionTableTag extends BodyTagSupport {
             """;
     private static final String TABLE_ROW_FORMAT = """
                         <tr>
-                            <td class=\"col-answer\">%s</td>
+                            <td class=\"col-answer multiline\">%s</td>
                             <td class=\"col-selected-count\">%s</td>
                         </tr>
             """;

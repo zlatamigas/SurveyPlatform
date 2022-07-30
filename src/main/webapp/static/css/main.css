@@ -43,6 +43,7 @@
     padding: 15px;
     border: 2px solid var(--first-color);
     border-radius: 20px;
+    white-space: pre-wrap;
 }
 .attempt-count{
     margin: 20px 0;
@@ -57,6 +58,9 @@
     color: white;
     background-color: var(--first-color);
     border-radius: 35px;
+}
+.multiline {
+    white-space: pre-wrap;
 }
 
 /*Input fields*/
@@ -129,7 +133,6 @@ input[type=checkbox], input[type=radio] {
     box-shadow: 2px 2px 5px 5px var(--light-first-color);
     border-radius: 10px;
 }
-
 
 /*Authorisation*/
 .form-container{
@@ -215,6 +218,9 @@ input[type=checkbox], input[type=radio] {
     background-color: var(--light-first-color);
     border: transparent;
 }
+.content-container .edit-question-list .card>.card-header .card-title{
+    white-space: pre-wrap;
+ }
 .content-container .edit-question-list .card>.card-header .btn-group{
     background-color: var(--white-color);
     border-radius: 5px;
@@ -227,6 +233,12 @@ input[type=checkbox], input[type=radio] {
 }
 .content-container .edit-question-list .card>.card-body{
 
+}
+.content-container .edit-question-list .card>.card-body .card-text{
+    white-space: pre-wrap;
+ }
+.content-container .edit-question-list .card>.card-body .card-list-item{
+    white-space: pre-wrap;
 }
 .content-container .edit-question-list .card>.card-body>.card-select-multiple{
     text-align: center;
@@ -442,8 +454,11 @@ nav .dropdown-item:hover{
     border: transparent;
     /*border-bottom: 1px solid var(--middle-gray-color);*/
 }
-.pagination-page-container .card .card-body{
-
+.pagination-page-container .card .card-header>.card-title{
+    white-space: pre-wrap;
+ }
+.pagination-page-container .card .card-body>.card-text{
+    white-space: pre-wrap;
 }
 
 /*Pagination bottom navbar*/

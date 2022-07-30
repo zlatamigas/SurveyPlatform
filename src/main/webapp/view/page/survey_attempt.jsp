@@ -71,7 +71,7 @@
                                                    <c:if test="${answer.selectedCount == 1}">checked</c:if>>
                                         </c:otherwise>
                                     </c:choose>
-                                    <label class="form-check-label"
+                                    <label class="form-check-label card-list-item"
                                            for="question${question.questionId}Answer${answer.questionAnswerId}"><c:out value="${answer.answer}"/></label>
                                 </div>
                             </c:forEach>
