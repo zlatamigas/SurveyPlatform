@@ -5,7 +5,7 @@
 
 
 ## Description
-Survey is an open platform where anyone can participate in surveys on various topics. 
+SurveyPlatform is an open platform where anyone can participate in surveys on various topics. 
 Registreted users can create and start their own surveys and collect statistics.
 
 The platform supports languages: English and Russian.
