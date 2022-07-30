@@ -43,7 +43,9 @@
                             <p class="card-text"><fmt:message key="label.email"/></p>
                         </div>
                         <div class="col">
-                            <p class="card-text">${sessionScope.user.email}</p>
+                            <p class="card-text">
+                                <c:out value="${sessionScope.user.email}"/>
+                            </p>
                         </div>
                     </div>
                     <div class="row align-items-center">
@@ -79,7 +81,9 @@
                             <p class="card-text"><fmt:message key="label.user.registrationdate"/></p>
                         </div>
                         <div class="col">
-                            <p class="card-text">${sessionScope.user.registrationDate}</p>
+                            <p class="card-text">
+                                <c:out value="${sessionScope.user.registrationDate}"/>
+                            </p>
                         </div>
                     </div>
                 </div>

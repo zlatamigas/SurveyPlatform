@@ -26,13 +26,13 @@
 
     <div class="content-container">
         <div class="padding-container">
-            <h1 class="header-text">${requestScope.survey_result.name}</h1>
-            <h5 class="subheader-text">${requestScope.survey_result.theme.themeName}</h5>
+            <h1 class="header-text"><c:out value="${requestScope.survey_result.name}"/></h1>
+            <h5 class="subheader-text"><c:out value="${requestScope.survey_result.theme.themeName}"/></h5>
             <h5 class="time-text">
                 <ct:local-date-time datetime="${requestScope.survey_result.startDateTime}"/> -
                     <ct:local-date-time datetime="${requestScope.survey_result.closeDateTime}"/></h5>
             <c:if test="${requestScope.survey_result.description != ''}">
-                <div class="description-text">${requestScope.survey_result.description}</div>
+                <div class="description-text"><c:out value="${requestScope.survey_result.description}"/></div>
             </c:if>
 
         </div>
@@ -41,7 +41,7 @@
     <div class="content-container">
 
         <div class="attempt-count">
-            <p class="attempt-count-text"><fmt:message key="surveyresult.attemptcount"/> ${requestScope.survey_attempt_count}</p>
+            <p class="attempt-count-text"><fmt:message key="surveyresult.attemptcount"/> <c:out value="${requestScope.survey_attempt_count}"/></p>
         </div>
 
         <div class="edit-question-list">
@@ -50,7 +50,7 @@
                     <div class="card-header">
                         <div class="row justify-content-between">
                             <div class="col">
-                                <h5 class="card-title">${question.formulation}</h5>
+                                <h5 class="card-title"><c:out value="${question.formulation}"/></h5>
                             </div>
                             <div class="col col-auto">
                                 <div class="btn-group" role="group">
@@ -123,7 +123,7 @@
                     <c:otherwise>
                     answers = [['Answer', 'Selected count']];
                     <c:forEach var="answer" items="${question.answers}">
-                    answers.push(['${answer.answer}', ${answer.selectedCount}]);
+                    answers.push([`${answer.answer}`, ${answer.selectedCount}]);
                     </c:forEach>
 
                     data = google.visualization.arrayToDataTable(answers);

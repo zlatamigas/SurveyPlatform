@@ -56,19 +56,18 @@
                     </label>
                     <input name="${AttributeParameterHolder.PARAMETER_SURVEY_NAME}" type="text" class="form-control" id="surveyName"
                            minlength="1" maxlength="200"
-                           value="${sessionScope.edited_survey.name}">
+                           value="<c:out value="${sessionScope.edited_survey.name}"/>">
                 </div>
                 <div class="form-group">
                     <label for="surveyTheme"><fmt:message key="label.survey.theme"/></label>
                     <select name="${AttributeParameterHolder.PARAMETER_SURVEY_THEME_ID}" id="surveyTheme" class="form-control">
-
                         <option <c:if test="${sessionScope.edited_survey.theme.themeId == -1}">selected</c:if>
                                 value="-1">
                             <fmt:message key="filter.none"/>
                         </option>
                         <c:forEach items="${sessionScope.themes}" var="theme">
                             <option <c:if test="${theme.themeId == sessionScope.edited_survey.theme.themeId}">selected</c:if>
-                                    value="${theme.themeId}">${theme.themeName}</option>
+                                    value="${theme.themeId}"><c:out value="${theme.themeName}"/></option>
                         </c:forEach>
                     </select>
                 </div>
@@ -97,7 +96,9 @@
                         <div class="card-header">
                             <div class="row justify-content-between">
                                 <div class="col">
-                                    <h5 class="card-title">${question.formulation}</h5>
+                                    <h5 class="card-title">
+                                        <c:out value="${question.formulation}"/>
+                                    </h5>
                                 </div>
                                 <div class="col col-auto">
                                     <div class="btn-group" role="group">
@@ -130,7 +131,9 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 <c:forEach items="${question.answers}" var="answer">
-                                    <li class="card-text list-group-item">${answer.answer}</li>
+                                    <li class="card-text list-group-item">
+                                        <c:out value="${answer.answer}"/>
+                                    </li>
                                 </c:forEach>
                             </ul>
                         </div>

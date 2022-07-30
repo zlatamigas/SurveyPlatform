@@ -54,7 +54,7 @@
                                     <div class="card-header">
                                         <div class="row justify-content-between">
                                             <div class="col">
-                                                <h5>${theme.themeName}</h5>
+                                                <h5><c:out value="${theme.themeName}"/></h5>
                                             </div>
                                             <div class="col col-auto">
                                                 <form action="controller" method="post">

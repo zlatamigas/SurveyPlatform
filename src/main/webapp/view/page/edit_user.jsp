@@ -59,7 +59,9 @@
                         <p class="card-text"><fmt:message key="label.email"/></p>
                     </div>
                     <div class="col">
-                        <p class="form-control">${requestScope.user_email}</p>
+                        <p class="form-control">
+                            <c:out value="${requestScope.user_email}"/>
+                        </p>
                     </div>
                 </div>
                 <div class="row align-items-center form-group">
@@ -138,8 +140,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <fmt:message key="confirm.delete.user"/> ${requestScope.user_email}
-                            <fmt:message key="confirm.questionmark"/>
+                            <fmt:message key="confirm.delete.user"/><c:out value="${requestScope.user_email}"/><fmt:message key="confirm.questionmark"/>
                             <fmt:message key="confirm.delete.user.description"/>
                         </div>
                         <div class="modal-footer">
@@ -172,7 +173,9 @@
                         <div class="card-header">
                             <div class="row justify-content-between">
                                 <div class="col">
-                                    <h5 class="card-title">${survey.name}</h5>
+                                    <h5 class="card-title">
+                                        <c:out value="${survey.name}"/>
+                                    </h5>
                                 </div>
                                 <div class="col col-auto">
 
@@ -193,8 +196,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <fmt:message key="confirm.delete.survey"/> ${survey.name}
-                                                    <fmt:message key="confirm.questionmark"/>
+                                                    <fmt:message key="confirm.delete.survey"/><c:out value="${survey.name}"/><fmt:message key="confirm.questionmark"/>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <form action="controller" method="post">
@@ -223,7 +225,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-subtitle mb-3 text-muted">${survey.theme.themeName}</h5>
+                            <h5 class="card-subtitle mb-3 text-muted">
+                                <c:out value="${survey.theme.themeName}"/></h5>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 <c:choose>
                                     <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
@@ -254,7 +257,9 @@
                                 </c:when>
                             </c:choose>
 
-                            <p class="card-text">${survey.description}</p>
+                            <p class="card-text">
+                                <c:out value="${survey.description}"/>
+                            </p>
                             <div class="btn-toolbar justify-content-end" role="toolbar">
 
                             </div>

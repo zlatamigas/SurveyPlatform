@@ -50,7 +50,7 @@
                         </a>
                     </label>
                     <textarea name="${AttributeParameterHolder.PARAMETER_QUESTION_FORMULATION}" class="form-control"
-                           id="questionFormulation" rows="3">${sessionScope.edited_question.formulation}</textarea>
+                           id="questionFormulation" rows="3"><c:out value="${sessionScope.edited_question.formulation}"/></textarea>
                 </div>
                 <div class="form-check">
                     <input type="checkbox" name="${AttributeParameterHolder.PARAMETER_QUESTION_SELECT_MULTIPLE}" class="form-check-input"
@@ -71,8 +71,7 @@
                     <div id="rowanswer${i}" class="row row-question">
                         <div class="col">
                             <textarea id="textarea${i}" name="${AttributeParameterHolder.PARAMETER_ANSWER_TEXT}${i}" rows="2"
-                                      class="form-control textarea-answer">${answer.answer}</textarea>
-
+                                      class="form-control textarea-answer"><c:out value="${answer.answer}"/></textarea>
                         </div>
                         <div class="col-auto">
                             <button type="button"

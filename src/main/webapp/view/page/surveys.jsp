@@ -36,7 +36,7 @@
                 <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.SURVEYS}">
                 <div class="form-row row-search">
                     <div class="col">
-                        <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                        <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="<c:out value="${requestScope.search_words}"/>">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -52,7 +52,9 @@
                         <option value="0" <c:if test="${requestScope.filter_theme_id == 0}">selected</c:if>><fmt:message key="filter.all"/></option>
                         <option value="-1" <c:if test="${requestScope.filter_theme_id == -1}">selected</c:if>><fmt:message key="filter.none"/></option>
                         <c:forEach items="${requestScope.available_themes_list}" var="theme">
-                            <option value="${theme.themeId}" <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
+                            <option value="${theme.themeId}" <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>
+                                <c:out value="${theme.themeName}"/>
+                            </option>
                         </c:forEach>
                     </select>
                 </div>
@@ -92,7 +94,7 @@
 
                                     <div class="row justify-content-between">
                                         <div class="col">
-                                            <h5>${survey.name}</h5>
+                                            <h5><c:out value="${survey.name}"/></h5>
                                         </div>
                                         <div class="col col-auto">
                                             <button class="btn" type="button" data-toggle="collapse"
@@ -105,8 +107,8 @@
                                 <div id="collapse${survey.surveyId}" class="collapse" aria-labelledby="heading${survey.surveyId}"
                                      data-parent="#allSurveys">
                                     <div class="card-body">
-                                        <h6 class="card-subtitle mb-2 text-muted">${survey.theme.themeName}</h6>
-                                        <p class="card-text">${survey.description}</p>
+                                        <h6 class="card-subtitle mb-2 text-muted"><c:out value="${survey.theme.themeName}"/></h6>
+                                        <p class="card-text"><c:out value="${survey.description}"/></p>
 
                                         <div class="btn-toolbar justify-content-end" role="toolbar">
                                         <form id="startAttemptSurveyForm${survey.surveyId}" action="controller" method="get">

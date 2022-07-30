@@ -58,7 +58,7 @@
                 </li>
             </ul>
 
-            <ul class="navbar-nav justify-content-end">
+            <ul class="navbar-nav justify-content-end align-items-center">
                 <c:choose>
                     <c:when test="${sessionScope.user != null && sessionScope.user.role != UserRole.GUEST}">
                         <li class="nav-item">

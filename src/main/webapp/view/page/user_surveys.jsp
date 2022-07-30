@@ -55,7 +55,7 @@
                                 <input type="text" class="form-control input-search"
                                        placeholder="<fmt:message key="placeholder.search"/>"
                                        name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}"
-                                       value="${requestScope.search_words}">
+                                       value="<c:out value="${requestScope.search_words}"/>">
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -77,7 +77,9 @@
                                             <fmt:message key="filter.none"/></option>
                                         <c:forEach items="${requestScope.available_themes_list}" var="theme">
                                             <option value="${theme.themeId}"
-                                                    <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>${theme.themeName}</option>
+                                                    <c:if test="${requestScope.filter_theme_id == theme.themeId}">selected</c:if>>
+                                                        <c:out value="${theme.themeName}"/>
+                                            </option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -144,7 +146,7 @@
                                     <div class="card-header" id="heading${survey.surveyId}">
                                         <div class="row justify-content-between">
                                             <div class="col">
-                                                <h5 class="card-title">${survey.name}</h5>
+                                                <h5 class="card-title"><c:out value="${survey.name}"/></h5>
                                             </div>
                                             <div class="col col-auto">
                                                 <button class="btn" type="button" data-toggle="collapse"
@@ -160,7 +162,7 @@
                                          aria-labelledby="heading${survey.surveyId}"
                                          data-parent="#userSurveys">
                                         <div class="card-body">
-                                            <h5 class="card-subtitle mb-3 text-muted">${survey.theme.themeName}</h5>
+                                            <h5 class="card-subtitle mb-3 text-muted"><c:out value="${survey.theme.themeName}"/></h5>
                                             <h6 class="card-subtitle mb-2 text-muted">
                                                 <c:choose>
                                                     <c:when test="${survey.status == SurveyStatus.NOT_STARTED}">
@@ -185,7 +187,7 @@
                                                 </c:when>
                                             </c:choose>
 
-                                            <p class="card-text">${survey.description}</p>
+                                            <p class="card-text"><c:out value="${survey.description}"/></p>
                                             <div class="btn-toolbar justify-content-end" role="toolbar">
 
                                                 <form id="startEditSurveyForm${survey.surveyId}" action="controller"
@@ -265,7 +267,7 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <fmt:message key="confirm.start.survey"/> ${survey.name}<fmt:message key="confirm.questionmark"/>
+                                                                        <fmt:message key="confirm.start.survey"/> <c:out value="${survey.name}"/><fmt:message key="confirm.questionmark"/>
                                                                         <fmt:message key="confirm.start.survey.description"/>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -296,7 +298,7 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <fmt:message key="confirm.stop.survey"/> ${survey.name}<fmt:message key="confirm.questionmark"/>
+                                                                        <fmt:message key="confirm.stop.survey"/> <c:out value="${survey.name}"/><fmt:message key="confirm.questionmark"/>
                                                                         <fmt:message key="confirm.stop.survey.description"/>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -327,7 +329,7 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <fmt:message key="confirm.restart.survey"/> ${survey.name}<fmt:message key="confirm.questionmark"/>
+                                                                        <fmt:message key="confirm.restart.survey"/> <c:out value="${survey.name}"/><fmt:message key="confirm.questionmark"/>
                                                                         <fmt:message key="confirm.restart.survey.description"/>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -357,7 +359,7 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <fmt:message key="confirm.delete.survey"/> ${survey.name}<fmt:message key="confirm.questionmark"/>
+                                                                    <fmt:message key="confirm.delete.survey"/> <c:out value="${survey.name}"/><fmt:message key="confirm.questionmark"/>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button form="userSurveySearchForm"

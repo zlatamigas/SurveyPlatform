@@ -48,7 +48,7 @@
                         <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.USERS}">
                         <div class="form-row row-search">
                             <div class="col">
-                                <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                <input type="text" class="form-control input-search" placeholder="<fmt:message key="placeholder.search"/>" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="<c:out value="${requestScope.search_words}"/>">
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -111,7 +111,7 @@
                                     <div class="card-header">
                                         <div class="row justify-content-between">
                                             <div class="col">
-                                                <h5>${user.email}</h5>
+                                                <h5><c:out value="${user.email}"/></h5>
                                             </div>
                                             <div class="col col-auto">
                                                 <form action="controller" method="get">

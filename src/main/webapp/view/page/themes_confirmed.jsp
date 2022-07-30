@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.ADD_THEME}">
-                                    <input type="hidden" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                    <input type="hidden" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="<c:out value="${requestScope.search_words}"/>">
                                     <input type="hidden" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_ORDER_TYPE}" value="${requestScope.order_type}">
 
                                     <div id="themeValidationFeedback" class="text-danger">
@@ -106,7 +106,7 @@
                         <input type="hidden" name="${AttributeParameterHolder.PARAMETER_COMMAND}" value="${CommandType.THEMES_CONFIRMED}">
                         <div class="form-row row-search">
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="${requestScope.search_words}">
+                                <input type="text" class="form-control" placeholder="<fmt:message key="placeholder.search"/>" name="${AttributeParameterHolder.REQUEST_ATTRIBUTE_PARAMETER_SEARCH_WORDS}" value="<c:out value="${requestScope.search_words}"/>">
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -147,7 +147,7 @@
                                                 <div class="card-header">
                                                     <div class="row justify-content-between">
                                                         <div class="col">
-                                                            <h5>${theme.themeName}</h5>
+                                                            <h5><c:out value="${theme.themeName}"/></h5>
                                                         </div>
                                                         <div class="col col-auto">
 
@@ -166,7 +166,7 @@
                                                                             </button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <fmt:message key="confirm.delete.theme"/> ${theme.themeName}<fmt:message key="confirm.questionmark"/>
+                                                                            <fmt:message key="confirm.delete.theme"/> <c:out value="${theme.themeName}"/><fmt:message key="confirm.questionmark"/>
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button form="themesConfirmedSearchForm"
@@ -190,7 +190,7 @@
                                         <c:when test="${sessionScope.user.role == UserRole.USER}">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h5>${theme.themeName}</h5>
+                                                    <h5><c:out value="${theme.themeName}"/></h5>
                                                 </div>
                                             </div>
                                         </c:when>

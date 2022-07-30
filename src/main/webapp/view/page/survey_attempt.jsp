@@ -25,11 +25,11 @@
 
     <div class="content-container">
         <div class="padding-container">
-            <h1 class="header-text">${sessionScope.survey_attempt.name}</h1>
-            <h5 class="subheader-text">${sessionScope.survey_attempt.theme.themeName}</h5>
+            <h1 class="header-text"><c:out value="${sessionScope.survey_attempt.name}"/></h1>
+            <h5 class="subheader-text"><c:out value="${sessionScope.survey_attempt.theme.themeName}"/></h5>
 
             <c:if test="${sessionScope.survey_attempt.description != ''}">
-                <div class="description-text">${sessionScope.survey_attempt.description}</div>
+                <div class="description-text"><c:out value="${sessionScope.survey_attempt.description}"/></div>
             </c:if>
         </div>
     </div>
@@ -42,7 +42,7 @@
                 <c:forEach var="question" items="${sessionScope.survey_attempt.questions}">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">${question.formulation}</h5>
+                            <h5 class="card-title"><c:out value="${question.formulation}"/></h5>
                         </div>
                         <div class="card-body">
 
@@ -72,7 +72,7 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <label class="form-check-label"
-                                           for="question${question.questionId}Answer${answer.questionAnswerId}">${answer.answer}</label>
+                                           for="question${question.questionId}Answer${answer.questionAnswerId}"><c:out value="${answer.answer}"/></label>
                                 </div>
                             </c:forEach>
                         </div>

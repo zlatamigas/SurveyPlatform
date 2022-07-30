@@ -3,9 +3,11 @@ package epam.zlatamigas.surveyplatform.util.tag;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestion;
 import epam.zlatamigas.surveyplatform.model.entity.SurveyQuestionAnswer;
 import epam.zlatamigas.surveyplatform.util.locale.ResourceBundleManager;
+import org.apache.taglibs.standard.tag.common.core.Util;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -90,7 +92,8 @@ public class ResultQuestionTableTag extends BodyTagSupport {
                                         ? (double)answer.getSelectedCount() / sumSelected * 100
                                         : sumSelected
                         )) + PERCENTAGE;
-                pageContext.getOut().write(String.format(TABLE_ROW_FORMAT, answer.getAnswer(), selectedCountStr));
+
+                pageContext.getOut().write(String.format(TABLE_ROW_FORMAT,  writeEscapedXml(answer.getAnswer()), selectedCountStr));
             } catch (IOException e){
                 throw new JspTagException(e.getMessage());
             }
@@ -110,4 +113,39 @@ public class ResultQuestionTableTag extends BodyTagSupport {
         }
         return SKIP_BODY;
     }
+
+
+    private static String writeEscapedXml(String str) throws IOException {
+
+        StringBuilder resultStr = new StringBuilder();
+
+        char[] buffer = str.toCharArray();
+        int length = str.length();
+
+        int start = 0;
+
+        for(int i = 0; i < length; ++i) {
+            char c = buffer[i];
+            if (c <= '>') {
+                char[] escaped = Util.specialCharactersRepresentation[c];
+                if (escaped != null) {
+                    if (start < i) {
+                        resultStr.append(buffer, start, i - start);
+                    }
+
+                    for (char e: escaped) {
+                        resultStr.append(e);
+                    }
+                    start = i + 1;
+                }
+            }
+        }
+
+        if (start < length) {
+            resultStr.append(buffer, start, length - start);
+        }
+
+        return resultStr.toString();
+    }
+
 }

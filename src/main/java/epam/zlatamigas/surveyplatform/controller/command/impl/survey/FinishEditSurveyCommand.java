@@ -81,6 +81,7 @@ public class FinishEditSurveyCommand implements Command {
                 pageChangeType = REDIRECT;
 
                 session.removeAttribute(SESSION_ATTRIBUTE_EDITED_SURVEY);
+                session.removeAttribute(SESSION_ATTRIBUTE_THEMES);
             } else {
                 request.setAttribute(REQUEST_ATTRIBUTE_FORM_INVALID, validationFeedback);
             }
@@ -88,8 +89,6 @@ public class FinishEditSurveyCommand implements Command {
             page = HOME;
             pageChangeType = REDIRECT;
         }
-
-        session.removeAttribute(SESSION_ATTRIBUTE_THEMES);
 
         return new Router(page, pageChangeType);
     }

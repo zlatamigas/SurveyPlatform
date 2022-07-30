@@ -38,10 +38,10 @@
                 <p class="form-control">
                 <c:choose>
                     <c:when test="${sessionScope.user != null && sessionScope.user.role != UserRole.GUEST}">
-                       ${sessionScope.user.email}
+                        <c:out value="${sessionScope.user.email}"/>
                     </c:when>
                     <c:otherwise>
-                       ${sessionScope.change_password_email}
+                        <c:out value="${sessionScope.change_password_email}"/>
                     </c:otherwise>
                 </c:choose>
                 </p>
