@@ -10,7 +10,7 @@
 
     <tag>
         <name>survey-question-result</name>
-        <tag-class>epam.zlatamigas.surveyplatform.util.tag.ResultQuestionTableTag</tag-class>
+        <tag-class>com.zlatamigas.surveyplatform.util.tag.ResultQuestionTableTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>question</name>
@@ -20,13 +20,13 @@
 
     <tag>
         <name>question-validation-feedback</name>
-        <tag-class>epam.zlatamigas.surveyplatform.util.tag.SurveyAttemptQuestionValidationFeedbackTag</tag-class>
+        <tag-class>com.zlatamigas.surveyplatform.util.tag.SurveyAttemptQuestionValidationFeedbackTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 
     <tag>
         <name>local-date-time</name>
-        <tag-class>epam.zlatamigas.surveyplatform.util.tag.LocalDateTimeTag</tag-class>
+        <tag-class>com.zlatamigas.surveyplatform.util.tag.LocalDateTimeTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>datetime</name>

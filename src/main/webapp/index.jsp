@@ -1,5 +1,5 @@
 <%@ page contentType="text/html" language="java" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="com.zlatamigas.surveyplatform.controller.command.CommandType" %>
 <html>
 <head>
     <title>Index</title>

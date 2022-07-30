@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.command.CommandType" %>
-<%@ page import="epam.zlatamigas.surveyplatform.util.search.SearchParameter" %>
-<%@ page import="epam.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
-<%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserStatus" %>
-<%@ page import="epam.zlatamigas.surveyplatform.model.entity.UserRole" %>
+<%@ page import="com.zlatamigas.surveyplatform.controller.command.CommandType" %>
+<%@ page import="com.zlatamigas.surveyplatform.util.search.SearchParameter" %>
+<%@ page import="com.zlatamigas.surveyplatform.controller.navigation.AttributeParameterHolder" %>
+<%@ page import="com.zlatamigas.surveyplatform.model.entity.UserStatus" %>
+<%@ page import="com.zlatamigas.surveyplatform.model.entity.UserRole" %>
 
 <fmt:setLocale value="${sessionScope.localisation}" scope="session"/>
 <fmt:setBundle basename="localisation.localisedtext"/>

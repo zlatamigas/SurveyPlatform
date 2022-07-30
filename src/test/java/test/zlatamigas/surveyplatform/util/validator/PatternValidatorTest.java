@@ -1,6 +1,6 @@
 package test.zlatamigas.surveyplatform.util.validator;
 
-import epam.zlatamigas.surveyplatform.util.validator.PatternValidator;
+import com.zlatamigas.surveyplatform.util.validator.PatternValidator;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;

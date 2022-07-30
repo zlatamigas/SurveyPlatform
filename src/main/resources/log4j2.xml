@@ -19,7 +19,7 @@
     </Appenders>
     <Loggers>
 
-        <Logger name="epam.zlatamigas.surveyplatform" level="debug" additivity="false">
+        <Logger name="com.zlatamigas.surveyplatform" level="debug" additivity="false">
             <AppenderRef ref="Logger" level="info"/>
             <AppenderRef ref="STDOUT"/>
         </Logger>

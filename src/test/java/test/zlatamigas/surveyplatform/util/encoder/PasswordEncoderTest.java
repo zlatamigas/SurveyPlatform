@@ -1,6 +1,6 @@
 package test.zlatamigas.surveyplatform.util.encoder;
 
-import epam.zlatamigas.surveyplatform.util.encoder.PasswordEncoder;
+import com.zlatamigas.surveyplatform.util.encoder.PasswordEncoder;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
