@@ -45,8 +45,8 @@ MySQL database is used to store data.
 
 1. Clone the project.
 2. Create a new MySQL database using database.sql from the data folder.
-3. Fill up any valid email service's user and password in the mail.properties file, located in the resources/properties/ folder, for email activation functionality.
-4. Change the app.properties file, located in the resources/properties/ folder, based on your database configurations.
+3. Change the app.properties file, located in the resources/properties/ folder, based on your database configurations.
+4. Fill up any valid email service's user and password in the mail.properties file, located in the resources/properties/ folder, for password change functionality.
 5. Build the project using maven.
 6. Add new Tomcat 9.0.62 configuration to the project.
 7. Run Tomcat and open http://localhost:8089/ on the browser.
